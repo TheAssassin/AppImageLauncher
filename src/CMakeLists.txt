@@ -5,5 +5,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
 
-add_executable(AppImageIntegrator main.cpp)
-target_link_libraries(AppImageIntegrator Qt5::Core Qt5::Widgets libappimage)
+add_executable(AppImageLauncher main.cpp)
+target_link_libraries(AppImageLauncher Qt5::Core Qt5::Widgets libappimage)
