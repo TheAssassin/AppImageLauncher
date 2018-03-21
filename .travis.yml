@@ -11,7 +11,7 @@ before_install:
   - sudo apt-get update -qq
 
 install:
-  - sudo apt-get -y install qt510base librsvg2-bin libfuse-dev desktop-file-utils appstream-util
+  - sudo apt-get -y install qt510base librsvg2-bin libfuse-dev desktop-file-utils
   - source /opt/qt*/bin/qt*-env.sh
 
 script:
