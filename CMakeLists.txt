@@ -4,3 +4,6 @@ project(AppImageLauncher)
 
 add_subdirectory(lib)
 add_subdirectory(src)
+
+# contains install configs for resource files
+add_subdirectory(resources)
