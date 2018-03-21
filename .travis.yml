@@ -1,0 +1,27 @@
+language: cpp
+compiler: gcc
+sudo: required
+dist: trusty
+
+notifications:
+  email: false
+
+before_install:
+  - sudo add-apt-repository ppa:beineri/opt-qt-5.10.1-trusty -y
+  - sudo apt-get update -qq
+
+install:
+  - sudo apt-get -y install qt510base librsvg2-bin libfuse-dev desktop-file-utils appstream-util
+  - source /opt/qt*/bin/qt*-env.sh
+
+script:
+  - bash -ex travis/travis-build.sh
+
+after_success:
+  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+  - bash upload.sh AppImageLauncher*.AppImage
+
+branches:
+  except:
+    - # Do not build tags that we create when we upload to GitHub Releases
+    - /^(?i:continuous)/
