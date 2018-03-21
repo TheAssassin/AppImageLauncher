@@ -1,0 +1,3 @@
+cmake-build-debug*/
+build*/
+*.AppImage*
