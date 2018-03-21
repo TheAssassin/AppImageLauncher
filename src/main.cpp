@@ -67,27 +67,24 @@ int main(int argc, char** argv) {
     QCommandLineParser parser;
     parser.setApplicationDescription("Desktop integration helper for AppImages, for use by Linux distributions");
 
-    parser.addHelpOption();
-    auto versionOption = parser.addVersionOption();
-
-    parser.addPositionalArgument("path", "Path to AppImage", "<path>");
-
-    QStringList args;
-    for (int i = 0; i < argc; i++)
-        args << argv[i];
-
-    parser.parse(args);
-
     QApplication app(argc, argv);
     app.setApplicationDisplayName("AppImageLauncher");
 
+    std::ostringstream version;
+    version << "version " << APPIMAGELAUNCHER_VERSION << " "
+            << "(git commit " << APPIMAGELAUNCHER_GIT_COMMIT << "), built on "
+            << APPIMAGELAUNCHER_BUILD_DATE;
+    app.setApplicationVersion(QString::fromStdString(version.str()));
+
+    parser.addHelpOption();
+    parser.addVersionOption();
+
+    parser.process(app);
+
+    parser.addPositionalArgument("path", "Path to AppImage", "<path>");
+
     if (parser.positionalArguments().empty()) {
         parser.showHelp(1);
-    }
-
-    if (parser.isSet(versionOption)) {
-        std::cerr << "main version 1234" << std::endl;
-        return 0;
     }
 
     const auto pathToAppImage = parser.positionalArguments().first();
