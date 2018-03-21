@@ -46,13 +46,6 @@ if [ "$TRAVIS_BUILD_NUMBER" != "" ]; then
     export VERSION="$TRAVIS_BUILD_NUMBER-$VERSION"
 fi
 
-
-# "unbundle" FLTK binaries
-find AppDir/usr/bin -type f -executable -iname 'fltk*' -print -delete
-find AppDir/usr/bin -type f -executable -iname 'fluid' -print -delete
-# also "unbundle" zsync2 binaries
-find AppDir/usr/bin -type f -executable -iname 'zsync*' -print -delete
-
 # remove other unnecessary data
 find AppDir -type f -iname '*.a' -delete
 rm -rf AppDir/usr/include
@@ -73,9 +66,6 @@ fi
 find AppDir/
 
 unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
-
-# linuxdeployqt uses this for naming the file
-export VERSION=$(git rev-parse --short HEAD)
 
 # bundle application
 ./linuxdeployqt-continuous-x86_64.AppImage \
