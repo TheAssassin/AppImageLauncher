@@ -103,7 +103,7 @@ int main(int argc, char** argv) {
     std::ostringstream explanationStrm;
     explanationStrm << "Integrating it will move the AppImage into a predefined location, "
                     << "and include it in your application launcher." << "\n\n"
-                    << "To remove or update the AppImage, please use the context menu of the application icon in"
+                    << "To remove or update the AppImage, please use the context menu of the application icon in "
                     << "your task bar.";
 
     auto explanation = explanationStrm.str();
