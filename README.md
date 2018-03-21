@@ -1,1 +1,1 @@
-# AppImageIntegrator
+# AppImageLauncher

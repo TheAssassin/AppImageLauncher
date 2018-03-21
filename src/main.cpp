@@ -79,6 +79,7 @@ int main(int argc, char** argv) {
     parser.parse(args);
 
     QApplication app(argc, argv);
+    app.setApplicationDisplayName("AppImageLauncher");
 
     if (parser.positionalArguments().empty()) {
         parser.showHelp(1);
