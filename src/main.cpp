@@ -20,7 +20,7 @@ extern "C" {
 int runAppImage(const QString& pathToAppImage) {
     // first of all, chmod +x the AppImage file, otherwise execv() will complain
 
-    std::vector<char> cPath(PATH_MAX);
+    std::vector<char> cPath(static_cast<unsigned long>(pathToAppImage.size()) + 1, '\0');
     strcpy(cPath.data(), pathToAppImage.toStdString().c_str());
 
     struct stat appImageStat{};
