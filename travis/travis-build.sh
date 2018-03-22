@@ -85,6 +85,6 @@ unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
     -verbose=1 -bundle-non-qt-libs -appimage
 
 # move AppImages to old cwd
-mv AppImageLauncher*.AppImage* "$OLD_CWD"/
+mv AppImageLauncher*.AppImage* appimagelauncher*.deb* "$OLD_CWD"/
 
 popd
