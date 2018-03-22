@@ -35,8 +35,19 @@ add_definitions(-DAPPIMAGELAUNCHER_GIT_COMMIT="${APPIMAGELAUNCHER_GIT_COMMIT}")
 add_definitions(-DAPPIMAGELAUNCHER_BUILD_NUMBER="${APPIMAGELAUNCHER_BUILD_NUMBER}")
 add_definitions(-DAPPIMAGELAUNCHER_BUILD_DATE="${APPIMAGELAUNCHER_BUILD_DATE}")
 
+# set binary runtime rpath to make sure the libappimage.so built and installed by this project is going to be used
+# by the installed binaries (be it the .deb, the AppImage, or whatever)
+# in order to make the whole install tree relocatable, a relative path is used
+set(CMAKE_INSTALL_RPATH "../lib/appimagekit")
+
 add_subdirectory(lib)
 add_subdirectory(src)
 
+# contains global options
+include(cmake/install.cmake)
+
 # contains install configs for resource files
 add_subdirectory(resources)
+
+# packaging
+include(cmake/cpack_deb.cmake)

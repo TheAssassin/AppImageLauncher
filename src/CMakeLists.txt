@@ -12,5 +12,8 @@ install(
     TARGETS
     AppImageLauncher
     RUNTIME DESTINATION bin
-    LIBRARY DESTINATION bin
+    LIBRARY DESTINATION lib
+    COMPONENT AppImageLauncher
 )
+
+install(TARGETS AppImageLauncher DESTINATION bin)
