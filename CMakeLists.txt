@@ -38,7 +38,7 @@ add_definitions(-DAPPIMAGELAUNCHER_BUILD_DATE="${APPIMAGELAUNCHER_BUILD_DATE}")
 # set binary runtime rpath to make sure the libappimage.so built and installed by this project is going to be used
 # by the installed binaries (be it the .deb, the AppImage, or whatever)
 # in order to make the whole install tree relocatable, a relative path is used
-set(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib/appimagekit")
+set(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib/appimagelauncher")
 
 add_subdirectory(lib)
 add_subdirectory(src)
