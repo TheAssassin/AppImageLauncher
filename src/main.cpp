@@ -60,7 +60,9 @@ int runAppImage(const QString& pathToAppImage) {
 }
 
 bool integrateAppImage(const QString& pathToAppImage) {
-    return true;
+    auto rv = appimage_register_in_system(pathToAppImage.toStdString().c_str(), false);
+
+    return rv == 0;
 }
 
 int main(int argc, char** argv) {
