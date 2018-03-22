@@ -33,8 +33,13 @@ cmake "$REPO_ROOT" \
 # create AppDir
 mkdir -p AppDir
 
-# now, compile and install to AppDir
+# now, compile
 make -j$(nproc)
+
+# build Debian package
+cpack -V -G DEB
+
+# install to AppDir
 make install DESTDIR=AppDir
 
 # determine Git commit ID
