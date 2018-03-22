@@ -1,0 +1,5 @@
+#! /bin/bash
+
+echo "Removing AppImageLauncher as interpreter for AppImages"
+
+(set -x; update-binfmts --remove appimage_type2 /usr/bin/AppImageLauncher)

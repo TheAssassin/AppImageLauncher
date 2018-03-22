@@ -1,1 +1,1 @@
-add_subdirectory(AppImageKit)
+add_subdirectory(AppImageKit EXCLUDE_FROM_ALL)

@@ -3,5 +3,5 @@
 install(FILES
     ${PROJECT_BINARY_DIR}/lib/AppImageKit/src/libappimage.so
     DESTINATION lib/appimagekit
-    COMPONENT AppImageLauncher
+    COMPONENT APPIMAGELAUNCHER
 )
