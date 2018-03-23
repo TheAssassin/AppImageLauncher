@@ -4,6 +4,20 @@ project(AppImageLauncher)
 
 set(APPIMAGELAUNCHER_VERSION 1-alpha)
 
+# support for ccache
+# call CMake with -DUSE_CCACHE=ON to make use of it
+set(USE_CCACHE OFF CACHE BOOL "")
+if(USE_CCACHE)
+    find_program(CCACHE ccache)
+    if(CCACHE)
+        message(STATUS "Using ccache")
+        set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ${CCACHE})
+        set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ${CCACHE})
+    else()
+        message(WARNING "USE_CCACHE set, but could not find ccache")
+    endif()
+endif()
+
 # read Git revision ID
 # WARNING: this value will be stored in the CMake cache
 # to update it, you will have to reset the CMake cache
