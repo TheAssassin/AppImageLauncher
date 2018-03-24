@@ -55,11 +55,15 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     // the FUSE "mount" process, when this application is killed...)
     setenv("TARGET_APPIMAGE", fullPathToAppImage.c_str(), true);
 
-    std::ostringstream pathToRuntimeStrm;
-    pathToRuntimeStrm << exeDir.toStdString() << "/../lib/appimagelauncher/runtime";
+    // first attempt: find runtime in expected installation directory
+    auto pathToRuntime = exeDir.toStdString() + "/../lib/appimagelauncher/runtime";
 
-    const auto pathToRuntime = pathToRuntimeStrm.str();
+    // next method: find runtime in expected build location
+    if (!QFile(QString::fromStdString(pathToRuntime)).exists()) {
+        pathToRuntime = exeDir.toStdString() + "/../lib/AppImageKit/src/runtime";
+    }
 
+    // if it can't be found in either location, display error and exit
     if (!QFile(QString::fromStdString(pathToRuntime)).exists()) {
         std::cerr << "runtime not found: no such file or directory: " << pathToRuntime << std::endl;
         return 1;
