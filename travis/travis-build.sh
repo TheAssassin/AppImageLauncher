@@ -28,7 +28,8 @@ pushd "$BUILD_DIR"
 
 cmake "$REPO_ROOT" \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DUSE_CCACHE=ON
 
 # create AppDir
 mkdir -p AppDir
