@@ -39,6 +39,15 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     auto x = pathToAppImage.toStdString();
     auto fullPathToAppImage = QFileInfo(pathToAppImage).absoluteFilePath().toStdString();
 
+    if (appimage_get_type(fullPathToAppImage.c_str(), false) < 2) {
+        QMessageBox::critical(
+            nullptr,
+            "AppImageLauncher error",
+            "AppImageLauncher does not support type 1 AppImages at the moment."
+        );
+        return 1;
+    }
+
     // first of all, chmod +x the AppImage file, otherwise execv() will complain
     if (!makeExecutable(fullPathToAppImage))
         return 1;
@@ -124,6 +133,22 @@ int main(int argc, char** argv) {
 
     if (!QFile(pathToAppImage).exists()) {
         std::cout << "Error: no such file or directory: " << pathToAppImage.toStdString() << std::endl;
+        return 1;
+    }
+
+    const auto type = appimage_get_type(pathToAppImage.toStdString().c_str(), false);
+
+    if (type <= 0) {
+        QMessageBox::critical(nullptr, "AppImageLauncher error", "Not an AppImage: " + pathToAppImage);
+        return 1;
+    }
+
+    if (type == 1) {
+        QMessageBox::critical(
+            nullptr,
+            "AppImageLauncher error",
+            "AppImageLauncher does not support type 1 AppImagesat the moment."
+        );
         return 1;
     }
 
