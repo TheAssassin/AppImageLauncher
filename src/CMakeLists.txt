@@ -8,6 +8,9 @@ find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
 add_executable(AppImageLauncher main.cpp)
 target_link_libraries(AppImageLauncher Qt5::Core Qt5::Widgets libappimage)
 
+# add dependency on runtime to make sure it's built
+add_dependencies(AppImageLauncher runtime)
+
 install(
     TARGETS
     AppImageLauncher

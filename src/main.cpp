@@ -3,52 +3,84 @@
 #include <sstream>
 extern "C" {
     #include <sys/stat.h>
+    #include <libgen.h>
     #include <unistd.h>
 }
 
 // library includes
 #include <QApplication>
 #include <QCommandLineParser>
+#include <QDir>
+#include <QFile>
 #include <QFileDialog>
+#include <QFileInfo>
 #include <QPushButton>
 #include <QMessageBox>
 extern "C" {
     #include <appimage/appimage.h>
 }
 
-// Runs an AppImage. Returns suitable exit code for main application.
-int runAppImage(const QString& pathToAppImage) {
-    // first of all, chmod +x the AppImage file, otherwise execv() will complain
+bool makeExecutable(const std::string& path) {
+    struct stat fileStat{};
 
-    std::vector<char> cPath(static_cast<unsigned long>(pathToAppImage.size()) + 1, '\0');
-    strcpy(cPath.data(), pathToAppImage.toStdString().c_str());
-
-    struct stat appImageStat{};
-
-    if (stat(cPath.data(), &appImageStat) != 0) {
-        std::cerr << "Failed to call stat() on " << pathToAppImage.toStdString() << std::endl;
-        return 1;
+    if (stat(path.c_str(), &fileStat) != 0) {
+        std::cerr << "Failed to call stat() on " << path << std::endl;
+        return false;
     }
 
-    chmod(cPath.data(), appImageStat.st_mode | 0111);
+    return chmod(path.c_str(), fileStat.st_mode | 0111) == 0;
+}
+
+// Runs an AppImage. Returns suitable exit code for main application.
+int runAppImage(const QString& pathToAppImage) {
+    // needs to be converted to std::string to be able to use c_str()
+    // when using QString and then .toStdString().c_str(), the std::string instance will be an rvalue, and the
+    // pointer returned by c_str() will be invalid
+    auto x = pathToAppImage.toStdString();
+    auto fullPathToAppImage = QFileInfo(pathToAppImage).absoluteFilePath().toStdString();
+
+    // first of all, chmod +x the AppImage file, otherwise execv() will complain
+    if (!makeExecutable(fullPathToAppImage))
+        return 1;
+
+    // build path to AppImage runtime
+    // as it might error, check before fork()ing to be able to display an error message beforehand
+    auto exeDir = QFileInfo(QFile("/proc/self/exe").symLinkTarget()).absoluteDir().absolutePath();
 
     // fork and execv()
     int pid = fork();
 
     if (pid <= -1) {
-        std::cout << "fork() error";
+        std::cerr << "fork() error";
         return 1;
     } else if (pid == 0) {
-        // TODO: find a way to use e.g. /lib64/ld-linux-x86-64.so.2 to bypass binfmt_misc when trying to call AppImage
+        // use external runtime _without_ magic bytes to run the AppImage
+        // the original idea was to use /lib64/ld-linux-x86_64.so to run AppImages, but it did complain about some
+        // violated ELF data, and refused to run the AppImage
         // alternatively, the AppImage would have to be mounted by this application, and AppRun would need to be called
         // however, this requires some process management (e.g., killing all processes inside the AppImage and also
         // the FUSE "mount" process, when this application is killed...)
+        setenv("TARGET_APPIMAGE", fullPathToAppImage.c_str(), true);
+
+        std::ostringstream pathToRuntimeStrm;
+        pathToRuntimeStrm << exeDir.toStdString() << "/../lib/appimagelauncher/runtime";
+
+        const auto pathToRuntime = pathToRuntimeStrm.str();
+
+        if (!QFile(QString::fromStdString(pathToRuntime)).exists()) {
+            std::cerr << "runtime not found: no such file or directory: " << pathToRuntime << std::endl;
+            return 1;
+        }
+
+        // need a char pointer instead of a const one, therefore can't use .c_str()
+        std::vector<char> fullPathToAppImageBuf(pathToRuntime.size() + 1, '\0');
+        strcpy(fullPathToAppImageBuf.data(), pathToRuntime.c_str());
 
         auto* args = new char*[2];
-        args[0] = cPath.data();
+        args[0] = fullPathToAppImageBuf.data();
         args[1] = nullptr;
 
-        execv(cPath.data(), args);
+        execv(pathToRuntime.c_str(), args);
 
         const auto& error = errno;
         std::cout << "execv() failed: " << strerror(error) << std::endl;
