@@ -32,7 +32,7 @@ bool makeExecutable(const std::string& path) {
 }
 
 // Runs an AppImage. Returns suitable exit code for main application.
-int runAppImage(const QString& pathToAppImage) {
+int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     // needs to be converted to std::string to be able to use c_str()
     // when using QString and then .toStdString().c_str(), the std::string instance will be an rvalue, and the
     // pointer returned by c_str() will be invalid
@@ -69,16 +69,21 @@ int runAppImage(const QString& pathToAppImage) {
     std::vector<char> fullPathToAppImageBuf(pathToRuntime.size() + 1, '\0');
     strcpy(fullPathToAppImageBuf.data(), pathToRuntime.c_str());
 
-    auto* args = new char*[2];
-    args[0] = fullPathToAppImageBuf.data();
-    args[1] = nullptr;
+    std::vector<char*> args;
+    args.push_back(fullPathToAppImageBuf.data());
 
-    execv(pathToRuntime.c_str(), args);
+    // copy arguments
+    for (int i = 1; i < (argc - 1); i++) {
+        args.push_back(argv[i]);
+    }
+
+    // args need to be null terminated
+    args.push_back(nullptr);
+
+    execv(pathToRuntime.c_str(), args.data());
 
     const auto& error = errno;
     std::cout << "execv() failed: " << strerror(error) << std::endl;
-
-    delete[] args;
 }
 
 bool integrateAppImage(const QString& pathToAppImage) {
@@ -119,7 +124,7 @@ int main(int argc, char** argv) {
     }
 
     if (appimage_is_registered_in_system(pathToAppImage.toStdString().c_str()))
-        return runAppImage(pathToAppImage);
+        return runAppImage(pathToAppImage, argc, argv);
 
     std::ostringstream explanationStrm;
     explanationStrm << "Integrating it will move the AppImage into a predefined location, "
@@ -157,9 +162,9 @@ int main(int argc, char** argv) {
     if (clickedButton == okButton) {
         if (!integrateAppImage(pathToAppImage))
             return 1;
-        return runAppImage(pathToAppImage);
+        return runAppImage(pathToAppImage, argc, argv);
     } else if (clickedButton == runOnceButton) {
-        return runAppImage(pathToAppImage);
+        return runAppImage(pathToAppImage, argc, argv);
     } else if (clickedButton == cancelButton) {
         return 0;
     }
