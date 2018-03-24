@@ -7,13 +7,13 @@ notifications:
   email: false
 
 before_install:
-  - sudo add-apt-repository ppa:beineri/opt-qt-5.10.1-trusty -y
-  - sudo apt-get update -qq
+  #- sudo add-apt-repository ppa:beineri/opt-qt-5.10.1-trusty -y
+  #- sudo apt-get update -qq
 
 install:
   - sudo apt-get -y install qt510base librsvg2-bin libfuse-dev desktop-file-utils ccache
   - ccache -M 5G
-  - source /opt/qt*/bin/qt*-env.sh
+  #- source /opt/qt*/bin/qt*-env.sh
 
 script:
   - bash -ex travis/travis-build.sh
