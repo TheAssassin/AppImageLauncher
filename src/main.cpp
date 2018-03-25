@@ -170,7 +170,7 @@ int main(int argc, char** argv) {
 
     QMessageBox messageBox(
         QMessageBox::Question,
-        "AppImage Desktop Integrator",
+        "Desktop Integration",
         QString::fromStdString(messageStrm.str())
     );
 
