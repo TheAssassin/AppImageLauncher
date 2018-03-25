@@ -147,7 +147,7 @@ int main(int argc, char** argv) {
         QMessageBox::critical(
             nullptr,
             "AppImageLauncher error",
-            "AppImageLauncher does not support type 1 AppImagesat the moment."
+            "AppImageLauncher does not support type 1 AppImages at the moment."
         );
         return 1;
     }
