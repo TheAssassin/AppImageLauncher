@@ -1,5 +1,5 @@
 <p style="text-align: center;">
-![](https://github.com/TheAssassin/AppImageLauncher/raw/master/resources/doc/screenshot.png)
+<img src="https://github.com/TheAssassin/AppImageLauncher/raw/master/resources/doc/screenshot.png"/>
 </p>
 
 # AppImageLauncher
