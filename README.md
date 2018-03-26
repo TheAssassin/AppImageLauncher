@@ -1,4 +1,4 @@
-<p style="text-align: center;">
+<p align="center">
 <img src="https://github.com/TheAssassin/AppImageLauncher/raw/master/resources/doc/screenshot.png"/>
 </p>
 
