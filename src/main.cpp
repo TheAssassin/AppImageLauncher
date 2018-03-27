@@ -100,6 +100,8 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 }
 
 bool integrateAppImage(const QString& pathToAppImage) {
+    // TODO: move to predefined location, for example $HOME/.bin
+
     auto rv = appimage_register_in_system(pathToAppImage.toStdString().c_str(), false);
 
     return rv == 0;
