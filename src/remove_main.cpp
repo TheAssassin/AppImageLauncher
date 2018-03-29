@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
     const auto pathToAppImage = parser.positionalArguments().first();
 
     if (!QFile(pathToAppImage).exists()) {
-        std::cout << "Error: no such file or directory: " << pathToAppImage.toStdString() << std::endl;
+        QMessageBox::critical(nullptr, "Error", QString::fromStdString("Error: no such file or directory: " + pathToAppImage.toStdString()));
         return 1;
     }
 
