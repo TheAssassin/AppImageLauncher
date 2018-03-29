@@ -106,7 +106,15 @@ bool integrateAppImage(const QString& pathToAppImage, const QString& pathToInteg
     const auto oldPath = pathToAppImage.toStdString();
     const auto newPath = pathToIntegratedAppImage.toStdString();
 
-    if (std::rename(oldPath.c_str(), newPath.c_str()) != 0) {
+    // create target directory
+    QDir().mkdir(QFileInfo(QFile(pathToIntegratedAppImage)).dir().absolutePath());
+
+    // need to check whether file exists
+    // if it does, the existing AppImage needs to be removed before rename can be called
+    if (QFile(pathToIntegratedAppImage).exists()) {
+        QFile(pathToIntegratedAppImage).remove();
+    }
+    if (!QFile(pathToAppImage).rename(pathToIntegratedAppImage)) {
         QMessageBox::critical(nullptr, "Error", "Failed to move AppImage to target location");
         return false;
     }
