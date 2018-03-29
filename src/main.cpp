@@ -140,6 +140,10 @@ bool integrateAppImage(const QString& pathToAppImage, const QString& pathToInteg
     }
 
     // append AppImageLauncher desktop actions
+    // TODO: Make sure the Actions= key is appended to the [Desktop Entry] section
+    // some users might define their own actions, and if we just append to the file, we might append to such an action
+    // instead of the [Desktop Entry]
+    // we might consider using GLib's key file parser for this, or write some helpers for this purpose in libappimage
     ifs << "Actions=Remove;" << std::endl << std::endl
         << "[Desktop Action Remove]" << std::endl
         << "Name=Remove from system" << std::endl
