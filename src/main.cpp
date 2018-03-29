@@ -101,16 +101,13 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     std::cout << "execv() failed: " << strerror(error) << std::endl;
 }
 
-bool integrateAppImage(QString& pathToAppImage) {
+bool integrateAppImage(const QString& pathToAppImage, const QString& pathToIntegratedAppImage) {
     // need std::strings to get working pointers with .c_str()
     const auto oldPath = pathToAppImage.toStdString();
-    const auto newPath = std::string(getenv("HOME")) + "/.bin/" + basename(const_cast<char*>(oldPath.c_str()));
+    const auto newPath = pathToIntegratedAppImage.toStdString();
 
     if (std::rename(oldPath.c_str(), newPath.c_str()) != 0)
         return false;
-
-    pathToAppImage = QString::fromStdString(newPath);
-
     auto rv = appimage_register_in_system(newPath.c_str(), false);
 
     if (rv != 0)
@@ -216,7 +213,10 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    if (appimage_is_registered_in_system(pathToAppImage.toStdString().c_str()))
+    auto pathToIntegratedAppImage = QString(getenv("HOME")) + "/.bin/" + basename(const_cast<char*>(pathToAppImage.toStdString().c_str()));;
+
+    // need to check target path
+    if (appimage_is_registered_in_system(pathToIntegratedAppImage.toStdString().c_str()))
         return runAppImage(pathToAppImage, argc, argv);
 
     std::ostringstream explanationStrm;
@@ -253,7 +253,7 @@ int main(int argc, char** argv) {
     const auto* clickedButton = messageBox.clickedButton();
 
     if (clickedButton == okButton) {
-        if (!integrateAppImage(pathToAppImage))
+        if (!integrateAppImage(pathToAppImage, pathToIntegratedAppImage))
             return 1;
         return runAppImage(pathToAppImage, argc, argv);
     } else if (clickedButton == runOnceButton) {
