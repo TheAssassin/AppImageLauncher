@@ -230,8 +230,8 @@ int main(int argc, char** argv) {
 
     auto pathToIntegratedAppImage = QString(getenv("HOME")) + "/.bin/" + basename(const_cast<char*>(pathToAppImage.toStdString().c_str()));;
 
-    // need to check target path
-    if (appimage_is_registered_in_system(pathToIntegratedAppImage.toStdString().c_str()))
+    // check whether AppImage has been integrated
+    if (appimage_is_registered_in_system(pathToAppImage.toStdString().c_str()))
         return runAppImage(pathToAppImage, argc, argv);
 
     std::ostringstream explanationStrm;
