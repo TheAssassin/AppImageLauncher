@@ -270,7 +270,7 @@ int main(int argc, char** argv) {
     if (clickedButton == okButton) {
         if (!integrateAppImage(pathToAppImage, pathToIntegratedAppImage))
             return 1;
-        return runAppImage(pathToAppImage, argc, argv);
+        return runAppImage(pathToIntegratedAppImage, argc, argv);
     } else if (clickedButton == runOnceButton) {
         return runAppImage(pathToAppImage, argc, argv);
     } else if (clickedButton == cancelButton) {
