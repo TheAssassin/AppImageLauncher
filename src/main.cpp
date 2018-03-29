@@ -1,4 +1,5 @@
 // system includes
+#include <fstream>
 #include <iostream>
 #include <sstream>
 extern "C" {
@@ -102,17 +103,39 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 
 bool integrateAppImage(QString& pathToAppImage) {
     // need std::strings to get working pointers with .c_str()
-    auto oldPath = pathToAppImage.toStdString();
-    auto newPath = std::string(getenv("HOME")) + "/.bin/" + basename(const_cast<char*>(oldPath.c_str()));
+    const auto oldPath = pathToAppImage.toStdString();
+    const auto newPath = std::string(getenv("HOME")) + "/.bin/" + basename(const_cast<char*>(oldPath.c_str()));
 
     if (std::rename(oldPath.c_str(), newPath.c_str()) != 0)
         return false;
 
     pathToAppImage = QString::fromStdString(newPath);
 
-    auto rv = appimage_register_in_system(pathToAppImage.toStdString().c_str(), false);
+    auto rv = appimage_register_in_system(newPath.c_str(), false);
 
-    return rv == 0;
+    if (rv != 0)
+        return false;
+
+    auto* desktopFilePath = appimage_registered_desktop_file_path(newPath.c_str(), NULL, false);
+
+    // sanity check -- if the file doesn't exist, the function returns NULL
+    if (desktopFilePath == NULL)
+        return false;
+
+    // open for appending
+    std::ofstream ifs(desktopFilePath, std::ios::app);
+    if (!ifs)
+        return false;
+
+    // append AppImageLauncher desktop actions
+    ifs << std::endl
+        << "[Desktop Action Remove]" << std::endl
+        << "Name=Remove from system" << std::endl
+        // TODO: properly escape path -- single quotes are not failsafe
+        // we should probably write a library supporting the desktop file standard's escaping, for use in libappimage
+        << "Exec=" << CMAKE_INSTALL_PREFIX << "/lib/appimagelauncher/remove '" << newPath << "'" << std::endl;
+
+    return true;
 }
 
 int main(int argc, char** argv) {

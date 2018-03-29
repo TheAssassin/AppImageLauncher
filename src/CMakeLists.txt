@@ -7,6 +7,9 @@ find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
 
 add_executable(AppImageLauncher main.cpp)
 target_link_libraries(AppImageLauncher Qt5::Core Qt5::Widgets libappimage)
+target_compile_definitions(AppImageLauncher
+    PRIVATE -DCMAKE_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}"
+)
 
 # add dependency on runtime to make sure it's built
 add_dependencies(AppImageLauncher runtime)
