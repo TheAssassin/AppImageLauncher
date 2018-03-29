@@ -29,7 +29,7 @@ install(
 add_executable(remove remove_main.cpp)
 target_link_libraries(remove Qt5::Core Qt5::Widgets libappimage)
 # see AppImageLauncher for a description
-set_target_properties(AppImageLauncher PROPERTIES INSTALL_RPATH "\$ORIGIN")
+set_target_properties(remove PROPERTIES INSTALL_RPATH "\$ORIGIN")
 
 install(
     TARGETS remove
