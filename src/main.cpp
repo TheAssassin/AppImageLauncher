@@ -16,6 +16,7 @@ extern "C" {
 #include <QFileInfo>
 #include <QPushButton>
 #include <QMessageBox>
+#include <QString>
 extern "C" {
     #include <appimage/appimage.h>
 }
@@ -108,9 +109,6 @@ bool integrateAppImage(const QString& pathToAppImage) {
 }
 
 int main(int argc, char** argv) {
-    QCommandLineParser parser;
-    parser.setApplicationDescription("Desktop integration helper for AppImages, for use by Linux distributions");
-
     QApplication app(argc, argv);
     app.setApplicationDisplayName("AppImageLauncher");
 
@@ -120,18 +118,52 @@ int main(int argc, char** argv) {
             << APPIMAGELAUNCHER_BUILD_DATE;
     app.setApplicationVersion(QString::fromStdString(version.str()));
 
-    parser.addHelpOption();
-    parser.addVersionOption();
+    std::ostringstream usage;
+    usage << "Usage: " << argv[0] << " [options] <path>" << std::endl
+          << "Desktop integration helper for AppImages, for use by Linux distributions." << std::endl
+          << std::endl
+          << "Options:" << std::endl
+          << "  --appimagelauncher-help     Display this help and exit" << std::endl
+          << "  --appimagelauncher-version  Display version and exit" << std::endl
+          << std::endl
+          << "Arguments:"
+          << "  path                        Path to AppImage (mandatory)" << std::endl;
 
-    parser.process(app);
+    auto displayVersion = [&app]() {
+        std::cerr << "AppImageLauncher " << app.applicationVersion().toStdString() << std::endl;
+    };
 
-    parser.addPositionalArgument("path", "Path to AppImage", "<path>");
-
-    if (parser.positionalArguments().empty()) {
-        parser.showHelp(1);
+    // display usage and exit if path to AppImage is missing
+    if (argc <= 1) {
+        displayVersion();
+        std::cerr << std::endl;
+        std::cerr << usage.str();
+        return 1;
     }
 
-    const auto pathToAppImage = parser.positionalArguments().first();
+    // search for appimagelauncher arguments in args list
+    for (int i = 0; i < argc; i++) {
+        QString arg = argv[i];
+
+        // reserved argument space
+        const QString prefix = "--appimagelauncher-";
+        if (arg.startsWith(prefix)) {
+            if (arg == prefix + "help") {
+                displayVersion();
+                std::cerr << std::endl;
+                std::cerr << usage.str();
+                return 0;
+            } else if (arg == prefix + "version") {
+                displayVersion();
+                return 0;
+            } else {
+                std::cerr << "Unknown AppImageLauncher option: " << arg.toStdString() << std::endl;
+                return 1;
+            }
+        }
+    }
+
+    const auto pathToAppImage = QString(argv[1]);
 
     if (!QFile(pathToAppImage).exists()) {
         std::cout << "Error: no such file or directory: " << pathToAppImage.toStdString() << std::endl;
