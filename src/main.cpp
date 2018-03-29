@@ -100,8 +100,15 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     std::cout << "execv() failed: " << strerror(error) << std::endl;
 }
 
-bool integrateAppImage(const QString& pathToAppImage) {
-    // TODO: move to predefined location, for example $HOME/.bin
+bool integrateAppImage(QString& pathToAppImage) {
+    // need std::strings to get working pointers with .c_str()
+    auto oldPath = pathToAppImage.toStdString();
+    auto newPath = std::string(getenv("HOME")) + "/.bin/" + basename(const_cast<char*>(oldPath.c_str()));
+
+    if (std::rename(oldPath.c_str(), newPath.c_str()) != 0)
+        return false;
+
+    pathToAppImage = QString::fromStdString(newPath);
 
     auto rv = appimage_register_in_system(pathToAppImage.toStdString().c_str(), false);
 
@@ -163,7 +170,7 @@ int main(int argc, char** argv) {
         }
     }
 
-    const auto pathToAppImage = QString(argv[1]);
+    auto pathToAppImage = QString(argv[1]);
 
     if (!QFile(pathToAppImage).exists()) {
         std::cout << "Error: no such file or directory: " << pathToAppImage.toStdString() << std::endl;
