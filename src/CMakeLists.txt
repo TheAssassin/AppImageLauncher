@@ -10,6 +10,10 @@ target_link_libraries(AppImageLauncher Qt5::Core Qt5::Widgets libappimage)
 target_compile_definitions(AppImageLauncher
     PRIVATE -DCMAKE_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}"
 )
+# set binary runtime rpath to make sure the libappimage.so built and installed by this project is going to be used
+# by the installed binaries (be it the .deb, the AppImage, or whatever)
+# in order to make the whole install tree relocatable, a relative path is used
+set_target_properties(AppImageLauncher PROPERTIES INSTALL_RPATH "\$ORIGIN/../lib/appimagelauncher")
 
 # add dependency on runtime to make sure it's built
 add_dependencies(AppImageLauncher runtime)
@@ -24,6 +28,8 @@ install(
 
 add_executable(remove remove_main.cpp)
 target_link_libraries(remove Qt5::Core Qt5::Widgets libappimage)
+# see AppImageLauncher for a description
+set_target_properties(AppImageLauncher PROPERTIES INSTALL_RPATH "\$ORIGIN")
 
 install(
     TARGETS remove
