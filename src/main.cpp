@@ -140,12 +140,12 @@ bool integrateAppImage(const QString& pathToAppImage, const QString& pathToInteg
     }
 
     // append AppImageLauncher desktop actions
-    ifs << std::endl
+    ifs << "Actions=Remove;" << std::endl << std::endl
         << "[Desktop Action Remove]" << std::endl
         << "Name=Remove from system" << std::endl
         // TODO: properly escape path -- single quotes are not failsafe
         // we should probably write a library supporting the desktop file standard's escaping, for use in libappimage
-        << "Exec=" << CMAKE_INSTALL_PREFIX << "/lib/appimagelauncher/remove '" << newPath << "'" << std::endl;
+        << "Exec=" << CMAKE_INSTALL_PREFIX << "/lib/appimagelauncher/remove " << newPath << std::endl;
 
     return true;
 }
