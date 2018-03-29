@@ -17,3 +17,12 @@ install(
     RUNTIME DESTINATION bin COMPONENT APPIMAGELAUNCHER
     LIBRARY DESTINATION lib COMPONENT APPIMAGELAUNCHER
 )
+
+
+add_executable(remove remove_main.cpp)
+target_link_libraries(remove Qt5::Core Qt5::Widgets libappimage)
+
+install(
+    TARGETS remove
+    RUNTIME DESTINATION lib/appimagelauncher COMPONENT APPIMAGELAUNCHER
+)
