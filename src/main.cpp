@@ -106,8 +106,11 @@ bool integrateAppImage(const QString& pathToAppImage, const QString& pathToInteg
     const auto oldPath = pathToAppImage.toStdString();
     const auto newPath = pathToIntegratedAppImage.toStdString();
 
-    if (std::rename(oldPath.c_str(), newPath.c_str()) != 0)
+    if (std::rename(oldPath.c_str(), newPath.c_str()) != 0) {
+        QMessageBox::critical(nullptr, "Error", "Failed to move AppImage to target location");
         return false;
+    }
+
     auto rv = appimage_register_in_system(newPath.c_str(), false);
 
     if (rv != 0)
@@ -116,13 +119,17 @@ bool integrateAppImage(const QString& pathToAppImage, const QString& pathToInteg
     auto* desktopFilePath = appimage_registered_desktop_file_path(newPath.c_str(), NULL, false);
 
     // sanity check -- if the file doesn't exist, the function returns NULL
-    if (desktopFilePath == NULL)
+    if (desktopFilePath == NULL) {
+        QMessageBox::critical(nullptr, "Error", "Failed to find integrated desktop file");
         return false;
+    }
 
     // open for appending
     std::ofstream ifs(desktopFilePath, std::ios::app);
-    if (!ifs)
+    if (!ifs) {
+        QMessageBox::critical(nullptr, "Error", "Failed to open desktop file to append desktop action");
         return false;
+    }
 
     // append AppImageLauncher desktop actions
     ifs << std::endl
