@@ -3,3 +3,8 @@
 echo "Removing AppImageLauncher as interpreter for AppImages"
 
 (set -x; update-binfmts --package appimage --remove appimage-type2 /usr/bin/AppImageLauncher)
+
+# unregister MIME associations
+# TODO: make sure this works across all supported distributions
+(set -x; sed 's/.*application\/vnd\.appimage.*//g' /usr/share/applications/mimeinfo.cache)
+(set -x; sed 's/.*application\/x-appimage.*//g' /usr/share/applications/mimeinfo.cache)
