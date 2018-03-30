@@ -1,11 +1,6 @@
 // system includes
 #include <iostream>
 #include <sstream>
-extern "C" {
-    #include <sys/stat.h>
-    #include <libgen.h>
-    #include <unistd.h>
-}
 
 // library includes
 #include <QApplication>
