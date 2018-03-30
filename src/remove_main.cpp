@@ -69,7 +69,7 @@ int main(int argc, char** argv) {
 
     auto clickedButton = QMessageBox::question(
         nullptr,
-        "AppImage remove",
+        "Please confirm",
         "Are you sure you want to remove this AppImage?\n\n" + pathToAppImage,
         QMessageBox::No | QMessageBox::Yes,
         QMessageBox::No
