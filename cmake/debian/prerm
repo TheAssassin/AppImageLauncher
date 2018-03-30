@@ -6,5 +6,5 @@ echo "Removing AppImageLauncher as interpreter for AppImages"
 
 # unregister MIME associations
 # TODO: make sure this works across all supported distributions
-(set -x; sed -i 's/.*application\/vnd\.appimage.*//g' /usr/share/applications/mimeinfo.cache)
-(set -x; sed -i 's/.*application\/x-appimage.*//g' /usr/share/applications/mimeinfo.cache)
+(set -x; sed -i '/.*application\/vnd\.appimage.*/d' /usr/share/applications/mimeinfo.cache)
+(set -x; sed -i '/.*application\/x-appimage.*/d' /usr/share/applications/mimeinfo.cache)
