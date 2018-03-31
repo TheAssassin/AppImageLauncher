@@ -88,7 +88,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     args.push_back(fullPathToAppImageBuf.data());
 
     // copy arguments
-    for (int i = 1; i < (argc - 1); i++) {
+    for (int i = 1; i < argc; i++) {
         args.push_back(argv[i]);
     }
 
