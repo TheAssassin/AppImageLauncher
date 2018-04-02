@@ -232,7 +232,9 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    auto pathToIntegratedAppImage = QString(getenv("HOME")) + "/.bin/" + basename(const_cast<char*>(pathToAppImage.toStdString().c_str()));;
+    auto integratedAppImagesDestination = QString(getenv("HOME")) + "/.bin/";
+
+    auto pathToIntegratedAppImage = integratedAppImagesDestination + basename(const_cast<char*>(pathToAppImage.toStdString().c_str()));;
 
     // check whether AppImage has been integrated
     if (appimage_is_registered_in_system(pathToAppImage.toStdString().c_str()))
@@ -240,9 +242,13 @@ int main(int argc, char** argv) {
 
     std::ostringstream explanationStrm;
     explanationStrm << "Integrating it will move the AppImage into a predefined location, "
-                    << "and include it in your application launcher." << "\n\n"
+                    << "and include it in your application launcher." << std::endl
+                    << std::endl
                     << "To remove or update the AppImage, please use the context menu of the application icon in "
-                    << "your task bar.";
+                    << "your task bar." << std::endl
+                    << std::endl
+                    << "The directory the integrated AppImages are stored in is currently set to:" << std::endl
+                    << integratedAppImagesDestination.toStdString() << std::endl;
 
     auto explanation = explanationStrm.str();
 
