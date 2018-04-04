@@ -234,7 +234,11 @@ int main(int argc, char** argv) {
 
     auto integratedAppImagesDestination = QString(getenv("HOME")) + "/.bin/";
 
-    auto pathToIntegratedAppImage = integratedAppImagesDestination + basename(const_cast<char*>(pathToAppImage.toStdString().c_str()));;
+    auto pathToIntegratedAppImage = integratedAppImagesDestination + basename(const_cast<char*>(pathToAppImage.toStdString().c_str()));
+
+    // AppImages in AppImages are not supposed to be integrated
+    if (pathToAppImage.startsWith("/tmp/.mount_"))
+        return runAppImage(pathToAppImage, argc, argv);
 
     // check whether AppImage has been integrated
     if (appimage_is_registered_in_system(pathToAppImage.toStdString().c_str()))
