@@ -75,13 +75,13 @@ unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
 
 # bundle application
 ./linuxdeployqt-continuous-x86_64.AppImage \
-    AppDir/usr/share/applications/AppImageLauncher.desktop \
+    AppDir/usr/share/applications/appimagelauncher.desktop \
     $LINUXDEPLOYQT_ARGS \
     -verbose=1 -bundle-non-qt-libs
 
 # bundle application
 ./linuxdeployqt-continuous-x86_64.AppImage \
-    AppDir/usr/share/applications/AppImageLauncher.desktop \
+    AppDir/usr/share/applications/appimagelauncher.desktop \
     $LINUXDEPLOYQT_ARGS \
     -verbose=1 -bundle-non-qt-libs -appimage
 

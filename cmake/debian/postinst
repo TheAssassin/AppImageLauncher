@@ -4,5 +4,5 @@ echo "Installing AppImageLauncher as interpreter for AppImages"
 (set -x; update-binfmts --package appimage --install appimage-type2 /usr/bin/AppImageLauncher --magic 'AI\x02' --offset 8)
 
 echo "Registering MIME type associations"
-(set -x; xdg-mime default AppImageLauncher.desktop application/vnd.appimage);
-(set -x; xdg-mime default AppImageLauncher.desktop application/x-appimage);
+(set -x; xdg-mime default appimagelauncher.desktop application/vnd.appimage);
+(set -x; xdg-mime default appimagelauncher.desktop application/x-appimage);
