@@ -33,12 +33,16 @@ set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
 # Debian packaging global options
 set(CPACK_DEBIAN_COMPRESSION_TYPE xz)
 
+# versioning
+# it appears setting CPACK_DEBIAN_PACKAGE_VERSION doesn't work, hence setting CPACK_PACKAGE_VERSION
+set(CPACK_PACKAGE_VERSION ${APPIMAGELAUNCHER_VERSION})
+set(CPACK_DEBIAN_PACKAGE_RELEASE "git${APPIMAGELAUNCHER_GIT_COMMIT}")
+
 # bash is required to run install hooks
 set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_PREDEPENDS bash)
 
+# package name
 set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_NAME "appimagelauncher")
-set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_VERSION "${APPIMAGELAUNCHER_VERSION}")
-set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_RELEASE "git${APPIMAGELAUNCHER_GIT_COMMIT}")
 
 # TODO: packagers watch out: you should set this to depend on a libappimage package, and avoid installing the library
 # to a custom location in install.cmake
