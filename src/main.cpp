@@ -247,7 +247,7 @@ int main(int argc, char** argv) {
                     << "To remove or update the AppImage, please use the context menu of the application icon in "
                     << "your task bar or launcher." << std::endl
                     << std::endl
-                    << "The directory the integrated AppImages are stored in is currently set to:" << std::endl<
+                    << "The directory the integrated AppImages are stored in is currently set to:" << std::endl
                     << integratedAppImagesDestination.toStdString() << std::endl;
 
     auto explanation = explanationStrm.str();
