@@ -1,9 +1,10 @@
 [Desktop Entry]
+Version=1.0
 Type=Application
 Exec=AppImageLauncher %f
-TryExec=AppImageLauncher %f
-Icon=AppImageLauncher
-MimeType=application/x-iso9660-appimage;application/vnd.appimage;
-Categories=System;
 Name=AppImageLauncher
+Icon=AppImageLauncher
+Terminal=false
+Categories=Utility;
+MimeType=application/x-iso9660-appimage;application/vnd.appimage;
 NoDisplay=true
