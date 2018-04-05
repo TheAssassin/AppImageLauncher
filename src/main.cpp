@@ -193,6 +193,7 @@ int main(int argc, char** argv) {
 
         // reserved argument space
         const QString prefix = "--appimagelauncher-";
+
         if (arg.startsWith(prefix)) {
             if (arg == prefix + "help") {
                 displayVersion();
@@ -247,6 +248,27 @@ int main(int argc, char** argv) {
     // ignore terminal apps (fixes #2)
     if (appimage_is_terminal_app(pathToAppImage.toStdString().c_str()))
         return runAppImage(pathToAppImage, argc, argv);
+
+    // type 2 specific checks
+    if (type == 2) {
+        // check parameters
+        {
+            for (int i = 0; i < argc; i++) {
+                QString arg = argv[i];
+
+                // reserved argument space
+                const QString prefix = "--appimage-";
+
+                if (arg.startsWith(prefix)) {
+                    // don't annoy users who try to mount or extract AppImages
+                    if (arg == prefix + "mount" || arg == prefix + "extract") {
+                        return runAppImage(pathToAppImage, argc, argv);
+                    }
+                }
+            }
+        }
+
+    }
 
     std::ostringstream explanationStrm;
     explanationStrm << "Integrating it will move the AppImage into a predefined location, "
