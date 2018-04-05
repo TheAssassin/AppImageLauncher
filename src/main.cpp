@@ -244,6 +244,10 @@ int main(int argc, char** argv) {
     if (appimage_is_registered_in_system(pathToAppImage.toStdString().c_str()))
         return runAppImage(pathToAppImage, argc, argv);
 
+    // ignore terminal apps (fixes #2)
+    if (appimage_is_terminal_app(pathToAppImage.toStdString().c_str()))
+        return runAppImage(pathToAppImage, argc, argv);
+
     std::ostringstream explanationStrm;
     explanationStrm << "Integrating it will move the AppImage into a predefined location, "
                     << "and include it in your application launcher." << std::endl
