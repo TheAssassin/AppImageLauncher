@@ -6,5 +6,5 @@ Name=AppImageLauncher
 Icon=AppImageLauncher
 Terminal=false
 Categories=Utility;
-MimeType=application/x-iso9660-appimage;application/vnd.appimage;
+MimeType=application/x-iso9660-appimage;application/x-appimage;application/vnd.appimage;
 NoDisplay=true
