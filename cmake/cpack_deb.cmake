@@ -37,6 +37,7 @@ set(CPACK_DEBIAN_COMPRESSION_TYPE xz)
 # it appears setting CPACK_DEBIAN_PACKAGE_VERSION doesn't work, hence setting CPACK_PACKAGE_VERSION
 set(CPACK_PACKAGE_VERSION ${APPIMAGELAUNCHER_VERSION})
 
+# use git hash as package release
 set(CPACK_DEBIAN_PACKAGE_RELEASE "git${APPIMAGELAUNCHER_GIT_COMMIT}")
 
 # append build ID, similar to AppImage naming
