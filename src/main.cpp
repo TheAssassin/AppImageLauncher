@@ -123,10 +123,10 @@ bool integrateAppImage(const QString& pathToAppImage, const QString& pathToInteg
     if (appimage_register_in_system(newPath.c_str(), false) != 0)
         return false;
 
-    const auto* desktopFilePath = appimage_registered_desktop_file_path(newPath.c_str(), NULL, false);
+    const auto* desktopFilePath = appimage_registered_desktop_file_path(newPath.c_str(), nullptr, false);
 
     // sanity check -- if the file doesn't exist, the function returns NULL
-    if (desktopFilePath == NULL) {
+    if (desktopFilePath == nullptr) {
         QMessageBox::critical(nullptr, "Error", "Failed to find integrated desktop file");
         return false;
     }
@@ -327,7 +327,6 @@ int main(int argc, char** argv) {
                 }
             }
         }
-
     }
 
     std::ostringstream explanationStrm;
