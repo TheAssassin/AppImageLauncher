@@ -87,7 +87,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 
     // if it can't be found in either location, display error and exit
     if (!QFile(QString::fromStdString(pathToRuntime)).exists()) {
-        std::cerr << "runtime not found: no such file or directory: " << pathToRuntime << std::endl;
+        QMessageBox::critical(nullptr, "Error", QString::fromStdString("runtime not found: no such file or directory: " + pathToRuntime));
         return 1;
     }
 
