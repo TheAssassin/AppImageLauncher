@@ -31,6 +31,14 @@ bool makeExecutable(const std::string& path) {
         return false;
     }
 
+    // no action required when file is executable already
+    // this could happen in scenarios when an AppImage is in a read-only location
+    if ((fileStat.st_uid == getuid() && fileStat.st_mode & 0100) ||
+        (fileStat.st_gid == getgid() && fileStat.st_mode & 0010) ||
+        (fileStat.st_mode & 0001)) {
+        return true;
+    }
+
     return chmod(path.c_str(), fileStat.st_mode | 0111) == 0;
 }
 
@@ -52,8 +60,10 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     }
 
     // first of all, chmod +x the AppImage file, otherwise execv() will complain
-    if (!makeExecutable(fullPathToAppImage))
+    if (!makeExecutable(fullPathToAppImage)) {
+        QMessageBox::critical(nullptr, "Error", QString::fromStdString("Could not make AppImage executable: " + fullPathToAppImage));
         return 1;
+    }
 
     // build path to AppImage runtime
     // as it might error, check before fork()ing to be able to display an error message beforehand
