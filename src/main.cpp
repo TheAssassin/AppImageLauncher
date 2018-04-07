@@ -6,6 +6,7 @@ extern "C" {
     #include <sys/stat.h>
     #include <libgen.h>
     #include <unistd.h>
+    #include <glib.h>
 }
 
 // library includes
@@ -119,12 +120,10 @@ bool integrateAppImage(const QString& pathToAppImage, const QString& pathToInteg
         return false;
     }
 
-    auto rv = appimage_register_in_system(newPath.c_str(), false);
-
-    if (rv != 0)
+    if (appimage_register_in_system(newPath.c_str(), false) != 0)
         return false;
 
-    auto* desktopFilePath = appimage_registered_desktop_file_path(newPath.c_str(), NULL, false);
+    const auto* desktopFilePath = appimage_registered_desktop_file_path(newPath.c_str(), NULL, false);
 
     // sanity check -- if the file doesn't exist, the function returns NULL
     if (desktopFilePath == NULL) {
@@ -132,25 +131,86 @@ bool integrateAppImage(const QString& pathToAppImage, const QString& pathToInteg
         return false;
     }
 
-    // open for appending
-    std::ofstream ifs(desktopFilePath, std::ios::app);
-    if (!ifs) {
-        QMessageBox::critical(nullptr, "Error", "Failed to open desktop file to append desktop action");
+    // check that file exists
+    if (!QFile(desktopFilePath).exists())
+        return false;
+
+    /* write AppImageLauncher specific entries to desktop file
+     *
+     * unfortunately, QSettings doesn't work as a desktop file reader/writer, and libqtxdg isn't really meant to be
+     * used by projects via add_subdirectory/ExternalProject
+     * a system dependency is not an option for this project, and we link to glib already anyway, so let's just use
+     * glib, which is known to work
+     */
+    auto desktopFile = g_key_file_new();
+
+    GError *error = nullptr;
+    const auto flags = GKeyFileFlags(G_KEY_FILE_KEEP_COMMENTS | G_KEY_FILE_KEEP_TRANSLATIONS);
+
+    // for people who don't want to create memory leaks when using C APIs, C++11's lambdas provide a great option to
+    // clean up those data
+    auto cleanup = [&error, &desktopFile]() {
+        if (desktopFile != nullptr)
+            g_key_file_free(desktopFile);
+
+        if (error != nullptr)
+            g_error_free(error);
+    };
+
+    auto handleError = [&error, &desktopFile, &cleanup]() {
+        std::ostringstream ss;
+        ss << "Failed to load desktop file: " << std::endl << error->message;
+        QMessageBox::critical(nullptr, "Error", QString::fromStdString(ss.str()));
+
+        cleanup();
+    };
+
+    if (!g_key_file_load_from_file(desktopFile, desktopFilePath, flags, &error)) {
+        handleError();
         return false;
     }
 
-    // append AppImageLauncher desktop actions
-    // TODO: Make sure the Actions= key is appended to the [Desktop Entry] section
-    // some users might define their own actions, and if we just append to the file, we might append to such an action
-    // instead of the [Desktop Entry]
-    // we might consider using GLib's key file parser for this, or write some helpers for this purpose in libappimage
-    ifs << "Actions=Remove;" << std::endl << std::endl
-        << "[Desktop Action Remove]" << std::endl
-        << "Name=Remove from system" << std::endl
-        // TODO: properly escape path -- single quotes are not failsafe
-        // we should probably write a library supporting the desktop file standard's escaping, for use in libappimage
-        << "Exec=" << CMAKE_INSTALL_PREFIX << "/lib/appimagelauncher/remove " << newPath << std::endl;
+    auto convertToCharPointerList = [](const std::vector<std::string>& stringList) {
+        std::vector<const char*> pointerList;
 
+        // reserve space to increase efficiency
+        pointerList.reserve(stringList.size());
+
+        // convert string list to list of const char pointers
+        for (const auto& action : stringList) {
+            pointerList.push_back(action.c_str());
+        }
+
+        return pointerList;
+    };
+
+    std::vector<std::string> desktopActions = {"Remove"};
+
+    g_key_file_set_string_list(
+        desktopFile,
+        G_KEY_FILE_DESKTOP_GROUP,
+        G_KEY_FILE_DESKTOP_KEY_ACTIONS,
+        convertToCharPointerList(desktopActions).data(),
+        desktopActions.size()
+    );
+
+    // add Remove action
+    const auto removeSectionName = "Desktop Action Remove";
+
+    g_key_file_set_string(desktopFile, removeSectionName, "Name", "Remove from system");
+
+    // TODO: properly escape path -- single quotes are not failsafe
+    // we should probably write a library supporting the desktop file standard's escaping, for use in libappimage
+    std::ostringstream execPath;
+    execPath << CMAKE_INSTALL_PREFIX << "/lib/appimagelauncher/remove " << newPath;
+    g_key_file_set_string(desktopFile, removeSectionName, "Exec", execPath.str().c_str());
+
+    if (!g_key_file_save_to_file(desktopFile, desktopFilePath, &error)) {
+        handleError();
+        return false;
+    }
+
+    cleanup();
     return true;
 }
 
