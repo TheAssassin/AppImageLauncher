@@ -10,7 +10,7 @@ pkg_check_modules(GLIB REQUIRED glib-2.0)
 include_directories(${GLIB_INCLUDE_DIRS})
 
 add_executable(AppImageLauncher main.cpp)
-target_link_libraries(AppImageLauncher Qt5::Core Qt5::Widgets ${GLIB_LIBRARIES} libappimage)
+target_link_libraries(AppImageLauncher Qt5::Core Qt5::Widgets ${GLIB_LIBRARIES} libappimage xdg-basedir)
 target_compile_definitions(AppImageLauncher
     PRIVATE -DCMAKE_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}"
 )

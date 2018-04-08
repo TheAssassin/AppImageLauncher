@@ -7,17 +7,20 @@ extern "C" {
     #include <libgen.h>
     #include <unistd.h>
     #include <glib.h>
+    #include <xdg-basedir.h>
 }
 
 // library includes
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDir>
+#include <QDirIterator>
 #include <QFile>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QPushButton>
 #include <QMessageBox>
+#include <QRegularExpression>
 #include <QString>
 extern "C" {
     #include <appimage/appimage.h>
@@ -112,6 +115,61 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     std::cout << "execv() failed: " << strerror(error) << std::endl;
 }
 
+QMap<QString, QString> findCollisions(const QString& currentNameEntry) {
+    QMap<QString, QString> collisions;
+
+    // default locations of desktop files on systems
+    const auto directories = {QString("/usr/share/applications/"), QString(xdg_data_home()) + "/applications/"};
+
+    for (const auto& directory : directories) {
+        QDirIterator iterator(directory, QDirIterator::FollowSymlinks);
+
+        while (iterator.hasNext()) {
+            const auto& filename = iterator.next();
+
+            if (!QFileInfo(filename).isFile() || !filename.endsWith(".desktop"))
+                continue;
+
+            GKeyFile* desktopFile = g_key_file_new();
+            GError* error = nullptr;
+
+            auto cleanup = [&desktopFile, &error]() {
+                if (desktopFile != nullptr) {
+                    g_key_file_free(desktopFile);
+                    desktopFile = nullptr;
+                }
+
+                if (error != nullptr) {
+                    g_error_free(error);
+                    error = nullptr;
+                }
+            };
+
+            // if the key file parser can't load the file, it's most likely not a valid desktop file, so we just skip this file
+            if (!g_key_file_load_from_file(desktopFile, filename.toStdString().c_str(), G_KEY_FILE_KEEP_TRANSLATIONS, &error)) {
+                cleanup();
+                continue;
+            }
+
+            auto* nameEntry = g_key_file_get_string(desktopFile, G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_NAME, &error);
+
+            // invalid desktop file, needs to be skipped
+            if (nameEntry == nullptr) {
+                cleanup();
+                continue;
+            }
+
+            if (QString(nameEntry).trimmed().startsWith(currentNameEntry.trimmed())) {
+                collisions[filename] = QString(nameEntry);
+            }
+
+            cleanup();
+        }
+    }
+
+    return collisions;
+}
+
 bool integrateAppImage(const QString& pathToAppImage, const QString& pathToIntegratedAppImage) {
     // need std::strings to get working pointers with .c_str()
     const auto oldPath = pathToAppImage.toStdString();
@@ -178,6 +236,44 @@ bool integrateAppImage(const QString& pathToAppImage, const QString& pathToInteg
     if (!g_key_file_load_from_file(desktopFile, desktopFilePath, flags, &error)) {
         handleError();
         return false;
+    }
+
+    const auto* nameEntry = g_key_file_get_string(desktopFile, G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_NAME, &error);
+
+    if (nameEntry == nullptr) {
+        QMessageBox::warning(nullptr, "Warning", "AppImage has invalid desktop file");
+    }
+
+    // TODO: support multilingual collisions
+    auto collisions = findCollisions(nameEntry);
+
+    // make sure to remove own entry
+    collisions.remove(QString(desktopFilePath));
+
+    if (!collisions.empty()) {
+        // collisions are resolved like in the filesystem: a monotonically increasing number in brackets is appended to
+        // the Name
+        // in order to keep the number monotonically increasing, we look for the highest number in brackets in the
+        // existing entries, add 1 to it, and append it in brackets to the current desktop file's Name entry
+
+        unsigned int currentNumber = 1;
+
+        QRegularExpression regex("^.*([0-9]+)$");
+
+        for (const auto& fileName : collisions) {
+            const auto& currentNameEntry = collisions[fileName];
+
+            auto match = regex.match(currentNameEntry);
+
+            if (match.hasMatch()) {
+                const unsigned int num = match.captured(0).toUInt();
+                if (num > currentNumber)
+                    currentNumber = num;
+            }
+        }
+
+        auto newName = QString(nameEntry) + " (" + QString::number(currentNumber) + ")";
+        g_key_file_set_string(desktopFile, G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_NAME, newName.toStdString().c_str());
     }
 
     auto convertToCharPointerList = [](const std::vector<std::string>& stringList) {
