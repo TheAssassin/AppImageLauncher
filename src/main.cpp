@@ -267,8 +267,8 @@ bool integrateAppImage(const QString& pathToAppImage, const QString& pathToInteg
 
             if (match.hasMatch()) {
                 const unsigned int num = match.captured(0).toUInt();
-                if (num > currentNumber)
-                    currentNumber = num;
+                if (num >= currentNumber)
+                    currentNumber = num + 1;
             }
         }
 
