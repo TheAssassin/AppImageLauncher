@@ -31,14 +31,18 @@ cmake "$REPO_ROOT" \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DUSE_CCACHE=ON
 
-# create AppDir
-mkdir -p AppDir
-
 # now, compile
 make -j$(nproc)
 
 # build Debian package
 cpack -V -G DEB
+
+# build source tarball
+cpack --config CPackSourceConfig.cmake -V
+
+# build AppImage
+# create AppDir
+mkdir -p AppDir
 
 # install to AppDir
 make install DESTDIR=AppDir
@@ -86,6 +90,6 @@ unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
     -verbose=1 -bundle-non-qt-libs -appimage
 
 # move AppImages to old cwd
-mv AppImageLauncher*.AppImage* appimagelauncher*.deb* "$OLD_CWD"/
+mv AppImageLauncher*.AppImage* appimagelauncher*.deb* appimagelauncher*.tar* "$OLD_CWD"/
 
 popd
