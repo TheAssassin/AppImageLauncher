@@ -2,3 +2,5 @@ cmake-build-debug*/
 build*/
 .idea/
 *.AppImage*
+*.deb*
+*.tar*
