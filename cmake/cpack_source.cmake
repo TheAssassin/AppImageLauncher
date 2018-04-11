@@ -14,7 +14,7 @@ set(CPACK_SOURCE_IGNORE_FILES
     "\\\\..*deb.*$"
     "/.git/"
     "/.idea/"
-    )
+)
 
 # source tarball filename (without extension)
 set(CPACK_SOURCE_PACKAGE_FILE_NAME appimagelauncher-git${APPIMAGELAUNCHER_GIT_COMMIT}.source)
