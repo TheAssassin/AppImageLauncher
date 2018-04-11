@@ -32,7 +32,6 @@ if(NOT GIT STREQUAL "GIT-NOTFOUND")
         WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
         OUTPUT_VARIABLE APPIMAGELAUNCHER_GIT_COMMIT
         OUTPUT_STRIP_TRAILING_WHITESPACE
-        OUTPUT_QUIET
         ERROR_QUIET
         RESULT_VARIABLE GIT_RESULT
     )
@@ -43,7 +42,7 @@ if(NOT GIT STREQUAL "GIT-NOTFOUND")
     endif()
 endif()
 
-if(NOT GIT_RESULT OR NOT GIT_RESULT EQUAL 0)
+if(NOT GIT_RESULT EQUAL 0)
     # git call failed or git hasn't been found, might happen when calling CMake in an extracted source tarball
     # therefore we try to find the git commit cache file
     # if it doesn't exist, refuse to configure
@@ -59,7 +58,7 @@ if(NOT GIT_RESULT OR NOT GIT_RESULT EQUAL 0)
 endif()
 
 if("${APPIMAGELAUNCHER_GIT_COMMIT}" STREQUAL "")
-    message(FATAL_ERROR "Git commit ID cache file empty")
+    message(FATAL_ERROR "Invalid git commit ID: ${APPIMAGELAUNCHER_GIT_COMMIT}")
 endif()
 
 message(STATUS "Git commit: ${APPIMAGELAUNCHER_GIT_COMMIT}")
