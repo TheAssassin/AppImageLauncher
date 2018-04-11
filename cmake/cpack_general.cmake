@@ -23,6 +23,8 @@ set(CPACK_COMPONENT_APPIMAGELAUNCHER_PACKAGE_DESCRIPTION "AppImageLauncher")
 set(CPACK_COMPONENT_APPIMAGELAUNCHER_PACKAGE_SECTION misc)
 
 # ignore files
+# requires four backslashes to escape dots etc., probably because the values are evaluated twice,
+# once by CMake and then by CPack
 set(CPACK_SOURCE_IGNORE_FILES
     "/.*build.*/"
     "/.*-prefix/"
