@@ -49,11 +49,11 @@ make install DESTDIR=AppDir
 
 # determine Git commit ID
 # linuxdeployqt uses this for naming the file
-export VERSION=$(cd "$REPO_ROOT" && git rev-parse --short HEAD)
+export VERSION="git"$(cd "$REPO_ROOT" && git rev-parse --short HEAD)
 
 # prepend Travis build number if possible
 if [ "$TRAVIS_BUILD_NUMBER" != "" ]; then
-    export VERSION="$TRAVIS_BUILD_NUMBER-$VERSION"
+    export VERSION="travis$TRAVIS_BUILD_NUMBER-$VERSION"
 fi
 
 # remove other unnecessary data
