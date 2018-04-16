@@ -111,6 +111,7 @@ add_subdirectory(resources)
 include(cmake/cpack_general.cmake)
 include(cmake/cpack_source.cmake)
 include(cmake/cpack_deb.cmake)
+include(cmake/cpack_rpm.cmake)
 
 # must be the last instruction
 include(CPack)

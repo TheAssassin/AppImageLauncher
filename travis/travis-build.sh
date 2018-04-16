@@ -37,6 +37,9 @@ make -j$(nproc)
 # build Debian package
 cpack -V -G DEB
 
+# build RPM package
+cpack -V -G RPM
+
 # build source tarball
 cpack --config CPackSourceConfig.cmake -V
 
@@ -90,6 +93,6 @@ unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
     -verbose=1 -bundle-non-qt-libs -appimage
 
 # move AppImages to old cwd
-mv AppImageLauncher*.AppImage* appimagelauncher*.deb* appimagelauncher*.tar* "$OLD_CWD"/
+mv AppImageLauncher*.AppImage* appimagelauncher*.{deb,rpm}* appimagelauncher*.tar* "$OLD_CWD"/
 
 popd

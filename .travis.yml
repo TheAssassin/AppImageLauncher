@@ -21,7 +21,7 @@ script:
 
 after_success:
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
-  - bash upload.sh AppImageLauncher*.AppImage* appimagelauncher*.deb appimagelauncher*.tar*
+  - bash upload.sh AppImageLauncher*.AppImage* appimagelauncher*.{deb,rpm} appimagelauncher*.tar*
 
 branches:
   except:
