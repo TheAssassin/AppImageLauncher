@@ -390,6 +390,10 @@ int main(int argc, char** argv) {
         return 1;
     }
 
+    // check for X-AppImage-Integrate=false
+    if (appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str()))
+        return runAppImage(pathToAppImage, argc, argv);
+
     if (type == 1) {
         QMessageBox::critical(
             nullptr,
