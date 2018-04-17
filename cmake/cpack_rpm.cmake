@@ -50,6 +50,5 @@ set(CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION
 )
 
 # add postinst and prerm hooks to RPM package
-# TODO: find out how to set up binfmt support on openSUSE etc.
-#set(CPACK_RPM_POST_INSTALL_SCRIPT_FILE "${PROJECT_SOURCE_DIR}/cmake/rpm/post-install")
-#set(CPACK_RPM_PRE_UNINSTALL_SCRIPT_FILE "${PROJECT_SOURCE_DIR}/cmake/rpm/pre-uninstall")
+set(CPACK_RPM_POST_INSTALL_SCRIPT_FILE "${PROJECT_SOURCE_DIR}/cmake/rpm/post-install")
+set(CPACK_RPM_PRE_UNINSTALL_SCRIPT_FILE "${PROJECT_SOURCE_DIR}/cmake/rpm/pre-uninstall")
