@@ -290,7 +290,7 @@ bool integrateAppImage(const QString& pathToAppImage, const QString& pathToInteg
         return pointerList;
     };
 
-    std::vector<std::string> desktopActions = {"Remove"};
+    std::vector<std::string> desktopActions = {"Remove", "Update"};
 
     g_key_file_set_string_list(
         desktopFile,
@@ -301,15 +301,26 @@ bool integrateAppImage(const QString& pathToAppImage, const QString& pathToInteg
     );
 
     // add Remove action
-    const auto removeSectionName = "Desktop Action Remove";
+    {
+        const auto removeSectionName = "Desktop Action Remove";
 
-    g_key_file_set_string(desktopFile, removeSectionName, "Name", "Remove from system");
+        g_key_file_set_string(desktopFile, removeSectionName, "Name", "Remove AppImage from system");
 
-    // TODO: properly escape path -- single quotes are not failsafe
-    // we should probably write a library supporting the desktop file standard's escaping, for use in libappimage
-    std::ostringstream execPath;
-    execPath << CMAKE_INSTALL_PREFIX << "/lib/appimagelauncher/remove " << newPath;
-    g_key_file_set_string(desktopFile, removeSectionName, "Exec", execPath.str().c_str());
+        std::ostringstream removeExecPath;
+        removeExecPath << CMAKE_INSTALL_PREFIX << "/lib/appimagelauncher/remove " << newPath;
+        g_key_file_set_string(desktopFile, removeSectionName, "Exec", removeExecPath.str().c_str());
+    }
+
+    // add Update action
+    {
+        const auto updateSectionName = "Desktop Action Update";
+
+        g_key_file_set_string(desktopFile, updateSectionName, "Name", "Update AppImage");
+
+        std::ostringstream updateExecPath;
+        updateExecPath << CMAKE_INSTALL_PREFIX << "/lib/appimagelauncher/update " << newPath;
+        g_key_file_set_string(desktopFile, updateSectionName, "Exec", updateExecPath.str().c_str());
+    }
 
     if (!g_key_file_save_to_file(desktopFile, desktopFilePath, &error)) {
         handleError();
