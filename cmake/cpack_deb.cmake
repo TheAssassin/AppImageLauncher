@@ -37,7 +37,7 @@ set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_NAME "appimagelauncher")
 
 # TODO: packagers watch out: you should set this to depend on a libappimage package, and avoid installing the library
 # to a custom location in install.cmake
-set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_DEPENDS "libqt5widgets5 (>= 5.2.1), libqt5gui5 (>= 5.2.1), libqt5core5a (>= 5.2.1), binfmt-support (>= 2.0)")
+set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_DEPENDS "libqt5widgets5 (>= 5.2.1), libqt5gui5 (>= 5.2.1), libqt5core5a (>= 5.2.1), binfmt-support (>= 2.0), libcurl3")
 # improve dependency list
 set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 

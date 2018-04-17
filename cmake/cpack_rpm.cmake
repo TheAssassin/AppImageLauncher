@@ -39,7 +39,7 @@ set(CPACK_RPM_APPIMAGELAUNCHER_PACKAGE_NAME "appimagelauncher")
 
 # TODO: packagers watch out: you should set this to depend on a libappimage package, and avoid installing the library
 # to a custom location in install.cmake
-set(CPACK_RPM_APPIMAGELAUNCHER_PACKAGE_DREQUIRES "pkgconfig(Qt5Widgets) (>= 5.2.1), pkgconfig(Qt5Gui) (>= 5.2.1), pkgconfig(Qt5Core) (>= 5.2.1)")
+set(CPACK_RPM_APPIMAGELAUNCHER_PACKAGE_DREQUIRES "pkgconfig(Qt5Widgets) (>= 5.2.1), pkgconfig(Qt5Gui) (>= 5.2.1), pkgconfig(Qt5Core) (>= 5.2.1), libcurl4")
 # deactivate automatic generation of dependency list
 # it wants to add libappimage.so to the list of dependencies, which is actually shipped by the package
 set(CPACK_RPM_PACKAGE_AUTOREQ OFF)
