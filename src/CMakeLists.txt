@@ -39,3 +39,14 @@ install(
     TARGETS remove
     RUNTIME DESTINATION lib/appimagelauncher COMPONENT APPIMAGELAUNCHER
 )
+
+
+add_executable(update update_main.cpp)
+target_link_libraries(update Qt5::Core Qt5::Widgets libappimage libappimageupdate-qt)
+# see AppImageLauncher for a description
+set_target_properties(update PROPERTIES INSTALL_RPATH "\$ORIGIN")
+
+install(
+    TARGETS update
+    RUNTIME DESTINATION lib/appimagelauncher COMPONENT APPIMAGELAUNCHER
+)
