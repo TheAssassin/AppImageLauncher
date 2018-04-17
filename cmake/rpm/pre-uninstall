@@ -5,7 +5,7 @@ echo "Removing AppImageLauncher as interpreter for AppImages"
 UPDATE_BINFMTS=update-binfmts
 
 # TODO: configure the prefix path with CMake
-if ! type -q "$UPDATE_BINFMTS" 2>&1 1>/dev/null && ! which "$UPDATE_BINFMTS" 2>&1 1>/dev/null; then
+if ! (type "$UPDATE_BINFMTS" 2>&1 1>/dev/null) && ! (which "$UPDATE_BINFMTS" 2>&1 1>/dev/null); then
     UPDATE_BINFMTS=/usr/lib/appimagelauncher/update-binfmts
 fi
 
