@@ -57,8 +57,8 @@ int main(int argc, char** argv) {
 
     const auto type = appimage_get_type(pathToAppImage.toStdString().c_str(), false);
 
-    if (type <= 0) {
-        QMessageBox::critical(nullptr, "AppImage remove error", "Not an AppImage: " + pathToAppImage);
+    if (type <= 0 || type > 2) {
+        QMessageBox::critical(nullptr, "AppImage remove helper error", "Not an AppImage: " + pathToAppImage);
         return 1;
     }
 
