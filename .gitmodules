@@ -1,3 +1,6 @@
 [submodule "lib/AppImageKit"]
 	path = lib/AppImageKit
 	url = https://github.com/AppImage/AppImageKit.git
+[submodule "lib/AppImageUpdate"]
+	path = lib/AppImageUpdate
+	url = https://github.com/AppImage/AppImageUpdate.git
