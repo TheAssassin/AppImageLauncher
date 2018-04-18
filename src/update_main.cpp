@@ -80,6 +80,7 @@ int main(int argc, char** argv) {
     }
 
     appimage::update::qt::QtUpdater updater(pathToAppImage);
+    updater.enableRunUpdatedAppImageButton(false);
 
     if (!updater.checkForUpdates()) {
         QMessageBox::information(nullptr, "No updates found", "Could not find updates for AppImage " + pathToAppImage);
