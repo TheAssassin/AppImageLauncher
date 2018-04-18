@@ -40,6 +40,11 @@ bool makeExecutable(const std::string& path) {
 }
 
 
+QString buildPathToIntegratedAppImage(const QString& pathToAppImage) {
+    return integratedAppImagesDestination + basename(const_cast<char*>(pathToAppImage.toStdString().c_str()));
+}
+
+
 QMap<QString, QString> findCollisions(const QString& currentNameEntry) {
     QMap<QString, QString> collisions;
 
@@ -94,6 +99,7 @@ QMap<QString, QString> findCollisions(const QString& currentNameEntry) {
 
     return collisions;
 }
+
 
 bool integrateAppImage(const QString& pathToAppImage, const QString& pathToIntegratedAppImage) {
     // need std::strings to get working pointers with .c_str()

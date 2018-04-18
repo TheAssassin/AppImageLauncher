@@ -181,10 +181,6 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    auto integratedAppImagesDestination = QString(getenv("HOME")) + "/.bin/";
-
-    auto pathToIntegratedAppImage = integratedAppImagesDestination + basename(const_cast<char*>(pathToAppImage.toStdString().c_str()));
-
     // AppImages in AppImages are not supposed to be integrated
     if (pathToAppImage.startsWith("/tmp/.mount_"))
         return runAppImage(pathToAppImage, argc, argv);
@@ -253,6 +249,8 @@ int main(int argc, char** argv) {
     messageBox.exec();
 
     const auto* clickedButton = messageBox.clickedButton();
+
+    auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
 
     if (clickedButton == okButton) {
         if (!integrateAppImage(pathToAppImage, pathToIntegratedAppImage))
