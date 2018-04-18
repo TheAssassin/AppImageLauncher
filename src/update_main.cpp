@@ -16,6 +16,9 @@ extern "C" {
 }
 #include <appimage/update/qt-ui.h>
 
+// local includes
+#include "shared.h"
+
 
 int main(int argc, char** argv) {
     QCommandLineParser parser;
@@ -99,7 +102,9 @@ int main(int argc, char** argv) {
     }
 
     if (!appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str())) {
-        if (!appimage_register_in_system(pathToUpdatedAppImage.toStdString().c_str(), false)) {
+        const auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
+
+        if (!integrateAppImage(pathToUpdatedAppImage, pathToIntegratedAppImage)) {
             criticalUpdaterError("Failed to register updated AppImage in system");
             return 1;
         }
