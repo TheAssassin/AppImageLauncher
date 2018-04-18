@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
 
 find_package(PkgConfig)
-pkg_check_modules(GLIB REQUIRED glib-2.0)
+pkg_check_modules(GLIB REQUIRED glib-2.0>=2.40)
 include_directories(${GLIB_INCLUDE_DIRS})
 
 add_executable(AppImageLauncher main.cpp)
