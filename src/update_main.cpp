@@ -4,6 +4,7 @@
 
 // library includes
 #include <QApplication>
+#include <QCheckBox>
 #include <QCommandLineParser>
 #include <QDir>
 #include <QFile>
@@ -80,6 +81,34 @@ int main(int argc, char** argv) {
 
     appimage::update::qt::QtUpdater updater(pathToAppImage);
 
+    if (!updater.checkForUpdates()) {
+        QMessageBox::information(nullptr, "No updates found", "Could not find updates for AppImage " + pathToAppImage);
+        return 0;
+    }
+
+    bool removeAfterUpdate = false;
+
+    {
+        const auto message = "An update has been found for the AppImage " + pathToAppImage + ".\n\n" +
+                             "Do you want to perform the update?\n";
+
+        QMessageBox messageBox(QMessageBox::Icon::Question, "Update found", message, QMessageBox::Ok | QMessageBox::Cancel);
+
+        QCheckBox removeCheckBox("Remove old AppImage after successful update");
+        removeCheckBox.setChecked(false);
+
+        messageBox.setCheckBox(&removeCheckBox);
+
+        switch (messageBox.exec()) {
+            case QMessageBox::Ok:
+                break;
+            default:
+                return 0;
+        }
+
+        removeAfterUpdate = removeCheckBox.isChecked();
+    }
+
     // perform update
     updater.show();
 
@@ -110,14 +139,16 @@ int main(int argc, char** argv) {
         }
     }
 
-    if (hasBeenRegisteredBefore && !appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false)) {
-        criticalUpdaterError("Failed to unregister old AppImage in system");
-        return 1;
-    }
+    if (removeAfterUpdate) {
+        if (hasBeenRegisteredBefore && !appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false)) {
+            criticalUpdaterError("Failed to unregister old AppImage in system");
+            return 1;
+        }
 
-    if (!QFile::remove(pathToAppImage)) {
-        criticalUpdaterError("Failed to remove old AppImage");
-        return 1;
+        if (!QFile::remove(pathToAppImage)) {
+            criticalUpdaterError("Failed to remove old AppImage");
+            return 1;
+        }
     }
 
     // we're done!
