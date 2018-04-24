@@ -18,8 +18,18 @@ install(
 
 # TODO: find alternative to the following "workaround" (a pretty dirty hack, actually...)
 # bundle update-binfmts as a fallback for distros which don't have it installed
-install(
-    FILES /usr/sbin/update-binfmts
-    PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
-    DESTINATION lib/appimagelauncher COMPONENT APPIMAGELAUNCHER
+find_program(UPDATE_BINFMTS
+    NAMES update-binfmts
+    PATHS /usr/sbin
 )
+
+if(EXISTS ${UPDATE_BINFMTS})
+    message(STATUS "Found update-binfmts, bundling: ${UPDATE_BINFMTS}")
+    install(
+        FILES /usr/sbin/update-binfmts
+        PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+        DESTINATION lib/appimagelauncher COMPONENT APPIMAGELAUNCHER
+    )
+else()
+    message(WARNING "update-binfmts could not be found. Please install the binfmt-support package if you intend to build RPM packages.")
+endif()
