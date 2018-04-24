@@ -23,7 +23,7 @@ find_program(UPDATE_BINFMTS
     PATHS /usr/sbin
 )
 
-if(EXISTS ${UPDATE_BINFMTS})
+if(NOT UPDATE_BINFMTS STREQUAL UPDATE_BINFMTS-NOTFOUND AND EXISTS ${UPDATE_BINFMTS})
     message(STATUS "Found update-binfmts, bundling: ${UPDATE_BINFMTS}")
     install(
         FILES /usr/sbin/update-binfmts
