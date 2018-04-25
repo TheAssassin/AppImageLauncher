@@ -21,8 +21,18 @@ Being the launcher for AppImages, AppImageLauncher can control how the system tr
 
 AppImageLauncher is supposed to integrate deeply in the systems. Therefore, an installation via native system packages is the preferred way to install AppImageLauncher. This way, AppImageLauncher's package can perform the necessary steps to have your system use it for all AppImage invocations.
 
-At the moment, only Debian-based systems are supported. The packages are built on Ubuntu trusty, and _should_ work on all major systems releasted after 2014. You can find the latest builds of the `.deb` archive on the [release page](https://github.com/TheAssassin/AppImageLauncher/releases).
-Please beware that the version number is merely cosmetic, and will not change, although the package may be updated. As AppImageLauncher is still under heavy development, there is no package archive provided for you to use, so you will have to install it by hand. Please refer to your operating system's manual to find out how to install the packages. There is a step-by-step [tutorial on askubuntu.com](https://askubuntu.com/questions/40779/how-do-i-install-a-deb-file-via-the-command-line) that shows how to install them using a terminal. If you prefer to use the graphical user interface, you should be able to double-click the downloaded file, or drag-and-drop the package into the software center, which will take care of the installation.
+AppImageLauncher is built on Ubuntu trusty. The Debian and RPM packages provided on the [release page](https://github.com/TheAssassin/AppImageLauncher/releases) are tested on the following platforms:
+
+  - Ubuntu trusty (14.04) and newer
+  - Debian stable (jessie, 8) and newer
+  - Netrunner 17 and newer
+  - openSUSE Leap 42 and newer
+  - openSUSE Tumbleweed
+
+The installation of packages on systems with a set of packages similar to one of the listed ones (e.g., Linux Mint, Fedora, etc.) should work as well.
+
+Arch Linux, Manjaro, Antergos and Netrunner Rolling users can use AUR to install AppImageLauncher by installing [appimagelauncher-git](https://aur.archlinux.org/packages/appimagelauncher-git) (thanks @NuLogicSystems for setting up the build).
+
 
 ### AppImage
 
