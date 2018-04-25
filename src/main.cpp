@@ -63,6 +63,9 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     // the FUSE "mount" process, when this application is killed...)
     setenv("TARGET_APPIMAGE", fullPathToAppImage.c_str(), true);
 
+    // suppress desktop integration script
+    setenv("DESKTOPINTEGRATION", "AppImageLauncher", true);
+
     // first attempt: find runtime in expected installation directory
     auto pathToRuntime = exeDir.toStdString() + "/../lib/appimagelauncher/runtime";
 
