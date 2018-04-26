@@ -13,7 +13,6 @@ extern "C" {
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDir>
-#include <QDebug>
 #include <QDirIterator>
 #include <QFile>
 #include <QFileDialog>
@@ -45,14 +44,11 @@ bool cleanUpOldDesktopFiles() {
 
         auto* desktopFile = g_key_file_new();
 
-        qDebug() << "Checking desktop file" << desktopFilePath;
-
         auto cleanup = [&desktopFile]() {
             g_key_file_free(desktopFile);
         };
 
         if (!g_key_file_load_from_file(desktopFile, desktopFilePath.toStdString().c_str(), G_KEY_FILE_NONE, nullptr)) {
-            qDebug() << "Failed to load desktop file with GLib key parser, skipping";
             cleanup();
             continue;
         }
@@ -61,7 +57,6 @@ bool cleanUpOldDesktopFiles() {
 
         // if there is no Exec value in the file, the desktop file is apparently broken, therefore we skip the file
         if (execValue == nullptr) {
-            qDebug() << "Desktop file misses Exec= key, skipping";
             cleanup();
             continue;
         }
@@ -85,7 +80,6 @@ bool cleanUpOldDesktopFiles() {
         // FIXME: the split command for the Exec value might not work if there's a space in the filename
         // we really need a parser that understands the desktop file escaping
         if (!QFile(appImagePath).exists()) {
-            qInfo() << "Removing stale desktop file" << desktopFilePath;
             QFile(desktopFilePath).remove();
         }
 
