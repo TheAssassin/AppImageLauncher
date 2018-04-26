@@ -1,2 +1,2 @@
 # Launch AppImages with AppImageLauncher
-:appimage-type2:M:8:414902::@CMAKE_INSTALL_PREFIX@/bin/AppImageLauncher:
+:appimage-type2:M:8:AI\x02::@CMAKE_INSTALL_PREFIX@/bin/AppImageLauncher:
