@@ -10,6 +10,15 @@ find_package(PkgConfig)
 pkg_check_modules(glib REQUIRED glib-2.0>=2.40 IMPORTED_TARGET)
 
 
+# disable Qt debug messages except for debug builds
+if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+    message(STATUS "CMake build type is ${CMAKE_BUILD_TYPE}, hence disabling debug messages in AppImageLauncher")
+    add_definitions(-DQT_NO_DEBUG_OUTPUT)
+    add_definitions(-DQT_NO_INFO_OUTPUT)
+    add_definitions(-DQT_NO_WARNING_OUTPUT)
+endif()
+
+
 # utility library
 add_library(shared STATIC shared.h shared.cpp)
 target_link_libraries(shared PUBLIC PkgConfig::glib Qt5::Core Qt5::Widgets xdg-basedir libappimage)
