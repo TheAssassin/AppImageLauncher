@@ -1,0 +1,25 @@
+#! /bin/bash
+
+echo "Installing AppImageLauncher as interpreter for AppImages"
+
+# as there's no _real_ package that we could use as a dependency to take care of the kernel module,
+# we need to make sure that the kernel module is loaded manually
+modprobe -v binfmt_misc
+
+UPDATE_BINFMTS=update-binfmts
+
+if ! (type "$UPDATE_BINFMTS" &>/dev/null) && ! (which "$UPDATE_BINFMTS" &>/dev/null); then
+    UPDATE_BINFMTS=@CMAKE_INSTALL_PREFIX@/lib/appimagelauncher/update-binfmts
+
+    if [ ! -f "$UPDATE_BINFMTS" ]; then
+        UPDATE_BINFMTS=
+    fi
+fi
+
+if [ "$UPDATE_BINFMTS" != "" ]; then
+    mkdir -p /var/lib/binfmts
+
+    (set -x; "$UPDATE_BINFMTS" --package appimage --install appimage-type2 @CMAKE_INSTALL_PREFIX@/bin/AppImageLauncher --magic 'AI\x02' --offset 8)
+else
+    (set -x; systemctl restart systemd-binfmt)
+fi

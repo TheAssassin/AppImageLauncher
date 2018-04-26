@@ -1,0 +1,3 @@
+#! /bin/bash
+
+exec @CMAKE_INSTALL_PREFIX@/lib/appimagelauncher/install-scripts/pre-uninstall

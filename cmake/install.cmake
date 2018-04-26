@@ -33,3 +33,33 @@ if(NOT UPDATE_BINFMTS STREQUAL UPDATE_BINFMTS-NOTFOUND AND EXISTS ${UPDATE_BINFM
 else()
     message(WARNING "update-binfmts could not be found. Please install the binfmt-support package if you intend to build RPM packages.")
 endif()
+
+# install scripts
+configure_file(
+    ${PROJECT_SOURCE_DIR}/resources/install-scripts/post-install.in
+    ${PROJECT_BINARY_DIR}/resources/install-scripts/post-install
+    @ONLY
+)
+configure_file(
+    ${PROJECT_SOURCE_DIR}/resources/install-scripts/pre-uninstall.in
+    ${PROJECT_BINARY_DIR}/resources/install-scripts/pre-uninstall
+    @ONLY
+)
+
+install(
+    FILES ${PROJECT_BINARY_DIR}/resources/install-scripts/post-install ${PROJECT_BINARY_DIR}/resources/install-scripts/pre-uninstall
+    PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+    DESTINATION lib/appimagelauncher/install-scripts COMPONENT APPIMAGELAUNCHER
+)
+
+# binfmt.d config file -- used as a fallback, if update-binfmts is not available
+configure_file(
+    ${PROJECT_SOURCE_DIR}/resources/binfmt.d/appimage.conf.in
+    ${PROJECT_BINARY_DIR}/resources/binfmt.d/appimage.conf
+    @ONLY
+)
+
+install(
+    FILES ${PROJECT_BINARY_DIR}/resources/binfmt.d/appimage.conf
+    DESTINATION lib/binfmt.d COMPONENT APPIMAGELAUNCHER
+)
