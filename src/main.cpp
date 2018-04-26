@@ -85,6 +85,8 @@ bool cleanUpOldDesktopFiles() {
 
         cleanup();
     }
+
+    return true;
 }
 
 
