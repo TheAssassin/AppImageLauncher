@@ -42,5 +42,16 @@ set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_DEPENDS "libqt5widgets5 (>= 5.2.1), li
 set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
 # add postinst and prerm hooks to Debian package
+configure_file(
+    ${PROJECT_SOURCE_DIR}/cmake/debian/postinst.in
+    ${PROJECT_BINARY_DIR}/cmake/debian/postinst
+    @ONLY
+)
+configure_file(
+    ${PROJECT_SOURCE_DIR}/cmake/debian/prerm.in
+    ${PROJECT_BINARY_DIR}/cmake/debian/prerm
+    @ONLY
+)
+
 set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA
-    "${PROJECT_SOURCE_DIR}/cmake/debian/postinst;${PROJECT_SOURCE_DIR}/cmake/debian/prerm")
+    "${PROJECT_BINARY_DIR}/cmake/debian/postinst;${PROJECT_BINARY_DIR}/cmake/debian/prerm")

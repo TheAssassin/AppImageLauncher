@@ -1,0 +1,19 @@
+#! /bin/bash
+
+echo "Removing AppImageLauncher as interpreter for AppImages"
+
+UPDATE_BINFMTS=update-binfmts
+
+if ! (type "$UPDATE_BINFMTS" &>/dev/null) && ! (which "$UPDATE_BINFMTS" &>/dev/null); then
+    UPDATE_BINFMTS=@CMAKE_INSTALL_PREFIX@/lib/appimagelauncher/update-binfmts
+
+    if [ ! -f "$UPDATE_BINFMTS" ]; then
+        UPDATE_BINFMTS=
+    fi
+fi
+
+if [ "$UPDATE_BINFMTS" != "" ]; then
+    (set -x; "$UPDATE_BINFMTS" --package appimage --remove appimage-type2 @CMAKE_INSTALL_PREFIX@/bin/AppImageLauncher)
+else
+    (set -x; systemctl restart systemd-binfmt)
+fi
