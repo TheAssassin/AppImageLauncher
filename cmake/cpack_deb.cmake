@@ -48,10 +48,10 @@ configure_file(
     @ONLY
 )
 configure_file(
-    ${PROJECT_SOURCE_DIR}/cmake/debian/prerm.in
-    ${PROJECT_BINARY_DIR}/cmake/debian/prerm
+    ${PROJECT_SOURCE_DIR}/cmake/debian/postrm.in
+    ${PROJECT_BINARY_DIR}/cmake/debian/postrm
     @ONLY
 )
 
 set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA
-    "${PROJECT_BINARY_DIR}/cmake/debian/postinst;${PROJECT_BINARY_DIR}/cmake/debian/prerm")
+    "${PROJECT_BINARY_DIR}/cmake/debian/postinst;${PROJECT_BINARY_DIR}/cmake/debian/postrm")

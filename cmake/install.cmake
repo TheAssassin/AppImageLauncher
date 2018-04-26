@@ -41,13 +41,13 @@ configure_file(
     @ONLY
 )
 configure_file(
-    ${PROJECT_SOURCE_DIR}/resources/install-scripts/pre-uninstall.in
-    ${PROJECT_BINARY_DIR}/resources/install-scripts/pre-uninstall
+    ${PROJECT_SOURCE_DIR}/resources/install-scripts/post-uninstall.in
+    ${PROJECT_BINARY_DIR}/resources/install-scripts/post-uninstall
     @ONLY
 )
 
 install(
-    FILES ${PROJECT_BINARY_DIR}/resources/install-scripts/post-install ${PROJECT_BINARY_DIR}/resources/install-scripts/pre-uninstall
+    FILES ${PROJECT_BINARY_DIR}/resources/install-scripts/post-install ${PROJECT_BINARY_DIR}/resources/install-scripts/post-uninstall
     PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
     DESTINATION lib/appimagelauncher/install-scripts COMPONENT APPIMAGELAUNCHER
 )

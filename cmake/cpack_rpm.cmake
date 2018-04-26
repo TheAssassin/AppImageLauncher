@@ -56,10 +56,10 @@ configure_file(
     @ONLY
 )
 configure_file(
-    ${PROJECT_SOURCE_DIR}/cmake/rpm/pre-uninstall.in
-    ${PROJECT_BINARY_DIR}/cmake/rpm/pre-uninstall
+    ${PROJECT_SOURCE_DIR}/cmake/rpm/post-uninstall.in
+    ${PROJECT_BINARY_DIR}/cmake/rpm/post-uninstall
     @ONLY
 )
 
 set(CPACK_RPM_POST_INSTALL_SCRIPT_FILE "${PROJECT_BINARY_DIR}/cmake/rpm/post-install")
-set(CPACK_RPM_PRE_UNINSTALL_SCRIPT_FILE "${PROJECT_BINARY_DIR}/cmake/rpm/pre-uninstall")
+set(CPACK_RPM_PRE_UNINSTALL_SCRIPT_FILE "${PROJECT_BINARY_DIR}/cmake/rpm/post-uninstall")
