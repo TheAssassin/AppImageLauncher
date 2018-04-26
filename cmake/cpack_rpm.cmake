@@ -47,6 +47,7 @@ set(CPACK_RPM_PACKAGE_AUTOREQ OFF)
 # avoid conflicts with the filesystem package
 set(CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION
     /usr/share/applications
+    /usr/lib/binfmt.d
 )
 
 # add postinst and prerm hooks to RPM package
