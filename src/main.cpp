@@ -147,6 +147,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     strcpy(fullPathToAppImageBuf.data(), pathToRuntime.c_str());
 
     std::vector<char*> args;
+
     args.push_back(fullPathToAppImageBuf.data());
 
     // copy arguments
@@ -329,9 +330,15 @@ int main(int argc, char** argv) {
     auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
 
     if (clickedButton == okButton) {
-        if (!integrateAppImage(pathToAppImage, pathToIntegratedAppImage))
+        // check whether integration was successful
+        auto rv = integrateAppImage(pathToAppImage, pathToIntegratedAppImage);
+        if (rv == INTEGRATION_FAILED) {
             return 1;
-        return runAppImage(pathToIntegratedAppImage, argc, argv);
+        } else if (rv == INTEGRATION_ABORTED) {
+            return runAppImage(pathToAppImage, argc, argv);
+        } else {
+            return runAppImage(pathToIntegratedAppImage, argc, argv);
+        }
     } else if (clickedButton == runOnceButton) {
         return runAppImage(pathToAppImage, argc, argv);
     } else if (clickedButton == cancelButton) {

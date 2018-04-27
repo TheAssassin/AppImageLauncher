@@ -101,7 +101,7 @@ QMap<QString, QString> findCollisions(const QString& currentNameEntry) {
 }
 
 
-bool integrateAppImage(const QString& pathToAppImage, const QString& pathToIntegratedAppImage) {
+IntegrationState integrateAppImage(const QString& pathToAppImage, const QString& pathToIntegratedAppImage) {
     // need std::strings to get working pointers with .c_str()
     const auto oldPath = pathToAppImage.toStdString();
     const auto newPath = pathToIntegratedAppImage.toStdString();
@@ -112,27 +112,46 @@ bool integrateAppImage(const QString& pathToAppImage, const QString& pathToInteg
     // need to check whether file exists
     // if it does, the existing AppImage needs to be removed before rename can be called
     if (QFile(pathToIntegratedAppImage).exists()) {
+        std::ostringstream message;
+        message << "AppImage with same filename has already been integrated." << std::endl
+                << std::endl
+                << "Do you wish to overwrite the existing AppImage?" << std::endl
+                << "Choosing No will run the AppImage once, and leave the system in its current state.";
+
+        auto rv = QMessageBox::warning(
+            nullptr,
+            "Warning",
+            QString::fromStdString(message.str()),
+            QMessageBox::Yes | QMessageBox::No,
+            QMessageBox::Yes
+        );
+
+        if (rv == QMessageBox::No) {
+            return INTEGRATION_ABORTED;
+        }
+
         QFile(pathToIntegratedAppImage).remove();
     }
+
     if (!QFile(pathToAppImage).rename(pathToIntegratedAppImage)) {
         QMessageBox::critical(nullptr, "Error", "Failed to move AppImage to target location");
-        return false;
+        return INTEGRATION_FAILED;
     }
 
     if (appimage_register_in_system(newPath.c_str(), false) != 0)
-        return false;
+        return INTEGRATION_FAILED;
 
     const auto* desktopFilePath = appimage_registered_desktop_file_path(newPath.c_str(), nullptr, false);
 
     // sanity check -- if the file doesn't exist, the function returns NULL
     if (desktopFilePath == nullptr) {
         QMessageBox::critical(nullptr, "Error", "Failed to find integrated desktop file");
-        return false;
+        return INTEGRATION_FAILED;
     }
 
     // check that file exists
     if (!QFile(desktopFilePath).exists())
-        return false;
+        return INTEGRATION_FAILED;
 
     /* write AppImageLauncher specific entries to desktop file
      *
@@ -166,7 +185,7 @@ bool integrateAppImage(const QString& pathToAppImage, const QString& pathToInteg
 
     if (!g_key_file_load_from_file(desktopFile, desktopFilePath, flags, &error)) {
         handleError();
-        return false;
+        return INTEGRATION_FAILED;
     }
 
     const auto* nameEntry = g_key_file_get_string(desktopFile, G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_NAME, &error);
@@ -255,9 +274,9 @@ bool integrateAppImage(const QString& pathToAppImage, const QString& pathToInteg
 
     if (!g_key_file_save_to_file(desktopFile, desktopFilePath, &error)) {
         handleError();
-        return false;
+        return INTEGRATION_FAILED;
     }
 
     cleanup();
-    return true;
+    return INTEGRATION_SUCCESSFUL;
 }
