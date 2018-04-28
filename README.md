@@ -24,6 +24,7 @@ AppImageLauncher is supposed to integrate deeply in the systems. Therefore, an i
 AppImageLauncher is built on Ubuntu trusty. The Debian and RPM packages provided on the [release page](https://github.com/TheAssassin/AppImageLauncher/releases) are tested on the following platforms:
 
   - Ubuntu trusty (14.04) and newer
+    - **Important:** Ubuntu bionic (and newer) broke with the backwards compatibility of its `libcurl` packages, therefore users of these systems need to install the special `bionic` package
   - Debian stable (jessie, 8) and newer
   - Netrunner 17 and newer
   - openSUSE Leap 42 and newer
