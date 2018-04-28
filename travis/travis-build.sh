@@ -37,11 +37,18 @@ make -j$(nproc)
 # build Debian package
 cpack -V -G DEB
 
+# build Debian package for Ubuntu bionic
+# https://github.com/TheAssassin/AppImageLauncher/issues/28
+cmake . -DCPACK_DEBIAN_COMPATIBILITY_LEVEL=bionic
+make preinstall -j$(nproc)
+cpack -V -G DEB
+
 # build RPM package
 cpack -V -G RPM
 
 # build source tarball
-cpack --config CPackSourceConfig.cmake -V
+# generates a lot of output, therefore not run in verbose mode
+cpack --config CPackSourceConfig.cmake
 
 # build AppImage
 # create AppDir
