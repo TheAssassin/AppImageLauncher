@@ -102,6 +102,11 @@ if [ "$BIONIC" == "" ]; then
 fi
 
 # move AppImages to old cwd
-mv AppImageLauncher*.AppImage* appimagelauncher*.{deb,rpm}* appimagelauncher*.tar* "$OLD_CWD"/
+if [ "$BIONIC" == "" ]; then
+    mv AppImageLauncher*.AppImage* appimagelauncher*.{deb,rpm}* appimagelauncher*.tar* "$OLD_CWD"/
+else
+    mv appimagelauncher*.deb* "$OLD_CWD"/
+
+fi
 
 popd

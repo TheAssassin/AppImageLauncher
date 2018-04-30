@@ -7,8 +7,7 @@ notifications:
   email: false
 
 env:
-  - BIONIC=false
-  - BIONIC=true
+  - BIONIC=
 
 install:
   #- sudo apt-get -y install qt510base librsvg2-bin libfuse-dev desktop-file-utils ccache
@@ -23,7 +22,7 @@ script:
 # no install step, but works with docker
 matrix:
   include:
-    - env: BIONIC=true
+    - env: BIONIC=1
       services:
         - docker
       install:
@@ -32,7 +31,8 @@ matrix:
 after_success:
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
   - if [ "$TRAVIS_BRANCH" != "master" ]; then export TRAVIS_EVENT_TYPE=pull_request; fi
-  - bash upload.sh AppImageLauncher*.AppImage* appimagelauncher*.{deb,rpm} appimagelauncher*.tar*
+  - if [ "$BIONIC" == "" ]; then bash upload.sh AppImageLauncher*.AppImage* appimagelauncher*.{deb,rpm}* appimagelauncher*.tar*; fi
+  - if [ "$BIONIC" != "" ]; then bash upload.sh appimagelauncher*.deb*; fi
 
 branches:
   except:
