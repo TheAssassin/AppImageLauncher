@@ -19,7 +19,7 @@ script:
 # no install step, but works with docker
 matrix:
   include:
-    - env: BIONIC=0
+    - env: BIONIC=
     - env: BIONIC=1
       services:
         - docker
