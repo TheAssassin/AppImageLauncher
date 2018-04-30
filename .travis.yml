@@ -6,18 +6,27 @@ dist: trusty
 notifications:
   email: false
 
-before_install:
-  #- sudo add-apt-repository ppa:beineri/opt-qt-5.10.1-trusty -y
-  #- sudo apt-get update -qq
+env:
+  - BIONIC=false
+  - BIONIC=true
 
 install:
   #- sudo apt-get -y install qt510base librsvg2-bin libfuse-dev desktop-file-utils ccache
-  - sudo apt-get -y install qt5-default libqt5core5a libqt5gui5 libcurl4-openssl-dev libqt5widgets5 librsvg2-bin libfuse-dev desktop-file-utils ccache rpm libcurl3
+  - sudo apt-get -y install qtbase5-dev libqt5core5a libqt5gui5 libcurl4-openssl-dev libqt5widgets5 librsvg2-bin libfuse-dev desktop-file-utils ccache rpm libcurl3
   - ccache -M 5G
   #- source /opt/qt*/bin/qt*-env.sh
 
 script:
   - bash -ex travis/travis-build.sh
+
+# hack to get proper bionic images
+# no install step, but works with docker
+matrix:
+  - env: BIONIC=true
+    services:
+      - docker
+    install:
+    script: bash -ex travis/travis-bionic.sh
 
 after_success:
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
