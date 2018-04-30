@@ -22,11 +22,12 @@ script:
 # hack to get proper bionic images
 # no install step, but works with docker
 matrix:
-  - env: BIONIC=true
-    services:
-      - docker
-    install:
-    script: bash -ex travis/travis-bionic.sh
+  include:
+    - env: BIONIC=true
+      services:
+        - docker
+      install:
+      script: bash -ex travis/travis-bionic.sh
 
 after_success:
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
