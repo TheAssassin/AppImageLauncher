@@ -138,8 +138,10 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
         return INTEGRATION_FAILED;
     }
 
-    if (appimage_register_in_system(newPath.c_str(), false) != 0)
+    if (appimage_register_in_system(newPath.c_str(), false) != 0) {
+        QMessageBox::critical(nullptr, "Error", "Failed to register AppImage in system via libappimage");
         return INTEGRATION_FAILED;
+    }
 
     const auto* desktopFilePath = appimage_registered_desktop_file_path(newPath.c_str(), nullptr, false);
 
@@ -150,8 +152,10 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
     }
 
     // check that file exists
-    if (!QFile(desktopFilePath).exists())
+    if (!QFile(desktopFilePath).exists()) {
+        QMessageBox::critical(nullptr, "Error", "Couldn't find integrated AppImage's desktop file");
         return INTEGRATION_FAILED;
+    }
 
     /* write AppImageLauncher specific entries to desktop file
      *
