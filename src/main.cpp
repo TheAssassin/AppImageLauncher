@@ -18,9 +18,11 @@ extern "C" {
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QMessageBox>
+#include <QProcess>
 #include <QPushButton>
 #include <QRegularExpression>
 #include <QString>
+#include <QTemporaryDir>
 extern "C" {
     #include <appimage/appimage.h>
     #include <xdg-basedir.h>
@@ -98,11 +100,15 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     auto x = pathToAppImage.toStdString();
     auto fullPathToAppImage = QFileInfo(pathToAppImage).absoluteFilePath().toStdString();
 
-    if (appimage_get_type(fullPathToAppImage.c_str(), false) < 2) {
+    auto type = appimage_get_type(fullPathToAppImage.c_str(), false);
+    if (type < 1 || type > 3) {
+        std::ostringstream message;
+        message << "AppImageLauncher does not support type " << type << " AppImages at the moment.";
+
         QMessageBox::critical(
             nullptr,
             "AppImageLauncher error",
-            "AppImageLauncher does not support type 1 AppImages at the moment."
+            QString::fromStdString(message.str())
         );
         return 1;
     }
@@ -117,53 +123,129 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     // as it might error, check before fork()ing to be able to display an error message beforehand
     auto exeDir = QFileInfo(QFile("/proc/self/exe").symLinkTarget()).absoluteDir().absolutePath();
 
-    // use external runtime _without_ magic bytes to run the AppImage
-    // the original idea was to use /lib64/ld-linux-x86_64.so to run AppImages, but it did complain about some
-    // violated ELF data, and refused to run the AppImage
-    // alternatively, the AppImage would have to be mounted by this application, and AppRun would need to be called
-    // however, this requires some process management (e.g., killing all processes inside the AppImage and also
-    // the FUSE "mount" process, when this application is killed...)
-    setenv("TARGET_APPIMAGE", fullPathToAppImage.c_str(), true);
+    if (type == 1) {
+        auto size = appimage_get_elf_size(fullPathToAppImage.c_str());
 
-    // suppress desktop integration script
-    setenv("DESKTOPINTEGRATION", "AppImageLauncher", true);
+        QFile appImage(QString::fromStdString(fullPathToAppImage));
 
-    // first attempt: find runtime in expected installation directory
-    auto pathToRuntime = exeDir.toStdString() + "/../lib/appimagelauncher/runtime";
+        if (!appImage.open(QIODevice::ReadOnly)) {
+            QMessageBox::critical(nullptr, "Error", "Failed to open AppImage for reading: " + pathToAppImage);
+            return 1;
+        }
 
-    // next method: find runtime in expected build location
-    if (!QFile(QString::fromStdString(pathToRuntime)).exists()) {
-        pathToRuntime = exeDir.toStdString() + "/../lib/AppImageKit/src/runtime";
+        // copy AppImage to temp dir
+        QTemporaryDir tempDir("/tmp/AppImageLauncher-type1-XXXXXX");
+
+        if (!tempDir.isValid()) {
+            QMessageBox::critical(nullptr, "Error", "Failed to create temporary directory");
+            return 1;
+        }
+
+        tempDir.setAutoRemove(true);
+
+        // copy AppImage to temporary directory
+        auto tempAppImagePath = QDir(tempDir.path()).absoluteFilePath(QFileInfo(appImage).fileName());
+
+        if (!appImage.copy(tempAppImagePath)) {
+            QMessageBox::critical(nullptr, "Error", "Failed to create temporary copy of type 1 AppImage");
+        }
+
+        QFile tempAppImage(tempAppImagePath);
+
+        if (!tempAppImage.open(QFile::ReadWrite)) {
+            QMessageBox::critical(nullptr, "Error", "Failed to open temporary AppImage copy for writing");
+            return 1;
+        }
+
+        // nuke magic bytes
+        if (!tempAppImage.seek(8)) {
+            QMessageBox::critical(nullptr, "Error", "Failed to remove magic bytes from temporary AppImage copy");
+            return 1;
+        }
+        if (tempAppImage.write(QByteArray(3, '\0')) != 3) {
+            QMessageBox::critical(nullptr, "Error", "Failed to remove magic bytes from temporary AppImage copy");
+            return 1;
+        }
+
+        auto tempAppImageFileName = tempAppImage.fileName().toStdString();
+
+        // actually _write_ changes
+        tempAppImage.close();
+
+        makeExecutable(tempAppImageFileName);
+
+        // need a char pointer instead of a const one, therefore can't use .c_str()
+        std::vector<char> argv0Buffer(tempAppImageFileName.size() + 1, '\0');
+        strcpy(argv0Buffer.data(), tempAppImageFileName.c_str());
+
+        std::vector<char*> args;
+
+        args.push_back(argv0Buffer.data());
+
+        // copy arguments
+        // starting at index 2, as the first argument is supposed to be the path to an AppImage
+        // all the other arguments can simply be copied
+        for (int i = 2; i < argc; i++) {
+            args.push_back(argv[i]);
+        }
+
+        // args need to be null terminated
+        args.push_back(nullptr);
+
+        execv(tempAppImageFileName.c_str(), args.data());
+
+        const auto& error = errno;
+        std::cout << "execv() failed: " << strerror(error) << std::endl;
+    } else if (type == 2) {
+        // use external runtime _without_ magic bytes to run the AppImage
+        // the original idea was to use /lib64/ld-linux-x86_64.so to run AppImages, but it did complain about some
+        // violated ELF data, and refused to run the AppImage
+        // alternatively, the AppImage would have to be mounted by this application, and AppRun would need to be called
+        // however, this requires some process management (e.g., killing all processes inside the AppImage and also
+        // the FUSE "mount" process, when this application is killed...)
+        setenv("TARGET_APPIMAGE", fullPathToAppImage.c_str(), true);
+
+        // suppress desktop integration script
+        setenv("DESKTOPINTEGRATION", "AppImageLauncher", true);
+
+        // first attempt: find runtime in expected installation directory
+        auto pathToRuntime = exeDir.toStdString() + "/../lib/appimagelauncher/runtime";
+
+        // next method: find runtime in expected build location
+        if (!QFile(QString::fromStdString(pathToRuntime)).exists()) {
+            pathToRuntime = exeDir.toStdString() + "/../lib/AppImageKit/src/runtime";
+        }
+
+        // if it can't be found in either location, display error and exit
+        if (!QFile(QString::fromStdString(pathToRuntime)).exists()) {
+            QMessageBox::critical(nullptr, "Error",
+                QString::fromStdString("runtime not found: no such file or directory: " + pathToRuntime));
+            return 1;
+        }
+
+        // need a char pointer instead of a const one, therefore can't use .c_str()
+        std::vector<char> argv0Buffer(pathToRuntime.size() + 1, '\0');
+        strcpy(argv0Buffer.data(), pathToRuntime.c_str());
+
+        std::vector<char*> args;
+
+        args.push_back(argv0Buffer.data());
+
+        // copy arguments
+        // starting at index 2, as the first argument is supposed to be the path to an AppImage
+        // all the other arguments can simply be copied
+        for (int i = 2; i < argc; i++) {
+            args.push_back(argv[i]);
+        }
+
+        // args need to be null terminated
+        args.push_back(nullptr);
+
+        execv(pathToRuntime.c_str(), args.data());
+
+        const auto& error = errno;
+        std::cout << "execv() failed: " << strerror(error) << std::endl;
     }
-
-    // if it can't be found in either location, display error and exit
-    if (!QFile(QString::fromStdString(pathToRuntime)).exists()) {
-        QMessageBox::critical(nullptr, "Error", QString::fromStdString("runtime not found: no such file or directory: " + pathToRuntime));
-        return 1;
-    }
-
-    // need a char pointer instead of a const one, therefore can't use .c_str()
-    std::vector<char> fullPathToAppImageBuf(pathToRuntime.size() + 1, '\0');
-    strcpy(fullPathToAppImageBuf.data(), pathToRuntime.c_str());
-
-    std::vector<char*> args;
-
-    args.push_back(fullPathToAppImageBuf.data());
-
-    // copy arguments
-    // starting at index 2, as the first argument is supposed to be the path to an AppImage
-    // all the other arguments can simply be copied
-    for (int i = 2; i < argc; i++) {
-        args.push_back(argv[i]);
-    }
-
-    // args need to be null terminated
-    args.push_back(nullptr);
-
-    execv(pathToRuntime.c_str(), args.data());
-
-    const auto& error = errno;
-    std::cout << "execv() failed: " << strerror(error) << std::endl;
 }
 
 int main(int argc, char** argv) {
@@ -248,15 +330,6 @@ int main(int argc, char** argv) {
     // check for X-AppImage-Integrate=false
     if (appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str()))
         return runAppImage(pathToAppImage, argc, argv);
-
-    if (type == 1) {
-        QMessageBox::critical(
-            nullptr,
-            "AppImageLauncher error",
-            "AppImageLauncher does not support type 1 AppImages at the moment."
-        );
-        return 1;
-    }
 
     // AppImages in AppImages are not supposed to be integrated
     if (pathToAppImage.startsWith("/tmp/.mount_"))
