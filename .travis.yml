@@ -8,7 +8,7 @@ notifications:
 
 install:
   #- sudo apt-get -y install qt510base librsvg2-bin libfuse-dev desktop-file-utils ccache
-  - sudo apt-get -y install qtbase5-dev libqt5core5a libqt5gui5 libcurl4-openssl-dev libqt5widgets5 librsvg2-bin libfuse-dev desktop-file-utils ccache rpm libcurl3
+  - sudo apt-get -y install qtbase5-dev libqt5core5a libqt5gui5 libcurl4-openssl-dev libqt5widgets5 librsvg2-bin libfuse-dev desktop-file-utils ccache rpm libcurl3 libbsd-dev
   - ccache -M 5G
   #- source /opt/qt*/bin/qt*-env.sh
 
