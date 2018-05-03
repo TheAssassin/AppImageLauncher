@@ -19,6 +19,7 @@ fi
 if [ "$UPDATE_BINFMTS" != "" ]; then
     mkdir -p /var/lib/binfmts
 
+    (set -x; "$UPDATE_BINFMTS" --package appimage --install appimage-type1 @CMAKE_INSTALL_PREFIX@/bin/AppImageLauncher --magic 'AI\x01' --offset 8)
     (set -x; "$UPDATE_BINFMTS" --package appimage --install appimage-type2 @CMAKE_INSTALL_PREFIX@/bin/AppImageLauncher --magic 'AI\x02' --offset 8)
 else
     (set -x; systemctl restart systemd-binfmt)

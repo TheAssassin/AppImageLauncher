@@ -13,6 +13,7 @@ if ! (type "$UPDATE_BINFMTS" &>/dev/null) && ! (which "$UPDATE_BINFMTS" &>/dev/n
 fi
 
 if [ "$UPDATE_BINFMTS" != "" ]; then
+    (set -x; "$UPDATE_BINFMTS" --package appimage --remove appimage-type1 @CMAKE_INSTALL_PREFIX@/bin/AppImageLauncher)
     (set -x; "$UPDATE_BINFMTS" --package appimage --remove appimage-type2 @CMAKE_INSTALL_PREFIX@/bin/AppImageLauncher)
 else
     (set -x; systemctl restart systemd-binfmt)
