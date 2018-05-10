@@ -109,33 +109,36 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
     // create target directory
     QDir().mkdir(QFileInfo(QFile(pathToIntegratedAppImage)).dir().absolutePath());
 
-    // need to check whether file exists
-    // if it does, the existing AppImage needs to be removed before rename can be called
-    if (QFile(pathToIntegratedAppImage).exists()) {
-        std::ostringstream message;
-        message << "AppImage with same filename has already been integrated." << std::endl
-                << std::endl
-                << "Do you wish to overwrite the existing AppImage?" << std::endl
-                << "Choosing No will run the AppImage once, and leave the system in its current state.";
+    // check whether AppImage is in integration directory already
+    if (QFileInfo(pathToAppImage).absoluteFilePath() != QFileInfo(pathToIntegratedAppImage).absoluteFilePath()) {
+        // need to check whether file exists
+        // if it does, the existing AppImage needs to be removed before rename can be called
+        if (QFile(pathToIntegratedAppImage).exists()) {
+            std::ostringstream message;
+            message << "AppImage with same filename has already been integrated." << std::endl
+                    << std::endl
+                    << "Do you wish to overwrite the existing AppImage?" << std::endl
+                    << "Choosing No will run the AppImage once, and leave the system in its current state.";
 
-        auto rv = QMessageBox::warning(
-            nullptr,
-            "Warning",
-            QString::fromStdString(message.str()),
-            QMessageBox::Yes | QMessageBox::No,
-            QMessageBox::Yes
-        );
+            auto rv = QMessageBox::warning(
+                nullptr,
+                "Warning",
+                QString::fromStdString(message.str()),
+                QMessageBox::Yes | QMessageBox::No,
+                QMessageBox::Yes
+            );
 
-        if (rv == QMessageBox::No) {
-            return INTEGRATION_ABORTED;
+            if (rv == QMessageBox::No) {
+                return INTEGRATION_ABORTED;
+            }
+
+            QFile(pathToIntegratedAppImage).remove();
         }
 
-        QFile(pathToIntegratedAppImage).remove();
-    }
-
-    if (!QFile(pathToAppImage).rename(pathToIntegratedAppImage)) {
-        QMessageBox::critical(nullptr, "Error", "Failed to move AppImage to target location");
-        return INTEGRATION_FAILED;
+        if (!QFile(pathToAppImage).rename(pathToIntegratedAppImage)) {
+            QMessageBox::critical(nullptr, "Error", "Failed to move AppImage to target location");
+            return INTEGRATION_FAILED;
+        }
     }
 
     if (appimage_register_in_system(newPath.c_str(), false) != 0) {
