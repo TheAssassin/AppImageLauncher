@@ -41,7 +41,24 @@ bool makeExecutable(const std::string& path) {
 
 
 QString buildPathToIntegratedAppImage(const QString& pathToAppImage) {
-    return integratedAppImagesDestination + basename(const_cast<char*>(pathToAppImage.toStdString().c_str()));
+    // if type 2 AppImage, we can build a "content-aware" filename
+    // see #7 for details
+    auto digest = getAppImageDigestMd5(pathToAppImage);
+
+    const QFileInfo appImageInfo(pathToAppImage);
+
+    QString baseName = appImageInfo.completeBaseName();
+
+    // if digest is available, append a separator
+    if (!digest.isEmpty())
+        baseName += "_" + digest;
+
+    auto fileName = baseName;
+
+    if (!appImageInfo.completeSuffix().isEmpty())
+        baseName += "." + appImageInfo.completeSuffix();
+
+    return integratedAppImagesDestination + "/" + fileName;
 }
 
 
@@ -286,4 +303,49 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
 
     cleanup();
     return INTEGRATION_SUCCESSFUL;
+}
+
+
+QString getAppImageDigestMd5(const QString& path) {
+    // try to read embedded MD5 digest
+    unsigned long offset = 0, length = 0;
+
+    // first of all, digest calculation is supported only for type 2
+    if (appimage_get_type(path.toStdString().c_str(), false) != 2)
+        return "";
+
+    auto rv = appimage_get_elf_section_offset_and_length(path.toStdString().c_str(), ".digest_md5", &offset, &length);
+
+    QByteArray buffer(16, '\0');
+
+    if (rv && offset != 0 && length != 0) {
+        // open file and read digest from ELF header section
+        QFile file(path);
+
+        if (!file.open(QFile::ReadOnly))
+            return "";
+
+        if (!file.seek(static_cast<qint64>(offset)))
+            return "";
+
+        if (!file.read(buffer.data(), buffer.size()))
+            return "";
+
+        file.close();
+
+        return buffer;
+    } else {
+        // calculate digest
+        if (!appimage_type2_digest_md5(path.toStdString().c_str(), buffer.data()))
+            return "";
+    }
+
+    // create hexadecimal representation
+    auto hexDigest = appimage_hexlify(buffer, static_cast<size_t>(buffer.size()));
+
+    QString hexDigestStr(hexDigest);
+
+    free(hexDigest);
+
+    return hexDigestStr;
 }

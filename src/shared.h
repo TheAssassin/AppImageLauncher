@@ -24,3 +24,8 @@ static const auto integratedAppImagesDestination = QString(getenv("HOME")) + "/.
 
 // build path to standard location for integrated AppImages
 QString buildPathToIntegratedAppImage(const QString& pathToAppImage);
+
+// get AppImage MD5 digest
+// extracts the digest embedded in the file
+// if no such digest has been embedded, it calculates it using libappimage
+QString getAppImageDigestMd5(const QString& path);
