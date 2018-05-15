@@ -122,30 +122,28 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     // suppress desktop integration script
     setenv("DESKTOPINTEGRATION", "AppImageLauncher", true);
 
-    // build path to AppImage runtime
-    // as it might error, check before fork()ing to be able to display an error message beforehand
-    auto exeDir = QFileInfo(QFile("/proc/self/exe").symLinkTarget()).absoluteDir().absolutePath();
+    // create temporary directory for this AppImage run
+    QTemporaryDir tempDir("/tmp/AppImageLauncher-run-XXXXXX");
+
+    if (!tempDir.isValid()) {
+        QMessageBox::critical(nullptr, "Error", "Failed to create temporary directory");
+        return 1;
+    }
+
+    tempDir.setAutoRemove(true);
+
+    // open AppImage for reading
+    QFile appImage(QString::fromStdString(fullPathToAppImage));
+
+    if (!appImage.open(QIODevice::ReadOnly)) {
+        QMessageBox::critical(nullptr, "Error", "Failed to open AppImage for reading: " + pathToAppImage);
+        return 1;
+    }
+
+    // calculate ELF header size
+    auto elfHeaderSize = appimage_get_elf_size(fullPathToAppImage.c_str());
 
     if (type == 1) {
-        auto size = appimage_get_elf_size(fullPathToAppImage.c_str());
-
-        QFile appImage(QString::fromStdString(fullPathToAppImage));
-
-        if (!appImage.open(QIODevice::ReadOnly)) {
-            QMessageBox::critical(nullptr, "Error", "Failed to open AppImage for reading: " + pathToAppImage);
-            return 1;
-        }
-
-        // copy AppImage to temp dir
-        QTemporaryDir tempDir("/tmp/AppImageLauncher-type1-XXXXXX");
-
-        if (!tempDir.isValid()) {
-            QMessageBox::critical(nullptr, "Error", "Failed to create temporary directory");
-            return 1;
-        }
-
-        tempDir.setAutoRemove(true);
-
         // copy AppImage to temporary directory
         auto tempAppImagePath = QDir(tempDir.path()).absoluteFilePath(QFileInfo(appImage).fileName());
 
@@ -200,7 +198,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         const auto& error = errno;
         std::cout << "execv() failed: " << strerror(error) << std::endl;
     } else if (type == 2) {
-        // use external runtime _without_ magic bytes to run the AppImage
+        // extract runtime from AppImage, remove the magic bytes, and run the original AppImage with it
         // the original idea was to use /lib64/ld-linux-x86_64.so to run AppImages, but it did complain about some
         // violated ELF data, and refused to run the AppImage
         // alternatively, the AppImage would have to be mounted by this application, and AppRun would need to be called
@@ -208,24 +206,45 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         // the FUSE "mount" process, when this application is killed...)
         setenv("TARGET_APPIMAGE", fullPathToAppImage.c_str(), true);
 
-        // first attempt: find runtime in expected installation directory
-        auto pathToRuntime = exeDir.toStdString() + "/../lib/appimagelauncher/runtime";
+        // extract runtime and copy it into temporary file
+        QFile tempRuntime(QDir(tempDir.path()).absoluteFilePath(QFileInfo(appImage).fileName() + ".runtime"));
 
-        // next method: find runtime in expected build location
-        if (!QFile(QString::fromStdString(pathToRuntime)).exists()) {
-            pathToRuntime = exeDir.toStdString() + "/../lib/AppImageKit/src/runtime";
+        if (!tempRuntime.open(QFile::WriteOnly))
+            return false;
+
+        const auto chunkSize = 4096;
+
+        const auto tempRuntimePath = QFileInfo(tempRuntime).absoluteFilePath();
+
+        for (size_t currentPos = 0; currentPos < elfHeaderSize; currentPos += chunkSize) {
+            QByteArray buffer(chunkSize, '\0');
+
+            auto currentChunkSize = static_cast<qint64>((currentPos % chunkSize == 0) ? chunkSize : (elfHeaderSize - currentPos));
+
+            if (appImage.read(buffer.data(), currentChunkSize) != currentChunkSize)
+                return false;
+
+            if (tempRuntime.write(buffer.data(), currentChunkSize) != currentChunkSize)
+                return false;
         }
 
-        // if it can't be found in either location, display error and exit
-        if (!QFile(QString::fromStdString(pathToRuntime)).exists()) {
-            QMessageBox::critical(nullptr, "Error",
-                QString::fromStdString("runtime not found: no such file or directory: " + pathToRuntime));
+        // nuke magic bytes
+        if (!tempRuntime.seek(8)) {
+            QMessageBox::critical(nullptr, "Error", "Failed to remove magic bytes from temporary AppImage copy");
+            return 1;
+        }
+        if (tempRuntime.write(QByteArray(3, '\0')) != 3) {
+            QMessageBox::critical(nullptr, "Error", "Failed to remove magic bytes from temporary AppImage copy");
             return 1;
         }
 
+        tempRuntime.close();
+
+        makeExecutable(tempRuntimePath.toStdString());
+
         // need a char pointer instead of a const one, therefore can't use .c_str()
-        std::vector<char> argv0Buffer(pathToRuntime.size() + 1, '\0');
-        strcpy(argv0Buffer.data(), pathToRuntime.c_str());
+        std::vector<char> argv0Buffer(tempRuntimePath.size() + 1, '\0');
+        strcpy(argv0Buffer.data(), tempRuntimePath.toStdString().c_str());
 
         std::vector<char*> args;
 
@@ -241,11 +260,13 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         // args need to be null terminated
         args.push_back(nullptr);
 
-        execv(pathToRuntime.c_str(), args.data());
+        execv(tempRuntimePath.toStdString().c_str(), args.data());
 
         const auto& error = errno;
         std::cout << "execv() failed: " << strerror(error) << std::endl;
     }
+
+    return false;
 }
 
 int main(int argc, char** argv) {
