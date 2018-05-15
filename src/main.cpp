@@ -119,6 +119,9 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         return 1;
     }
 
+    // suppress desktop integration script
+    setenv("DESKTOPINTEGRATION", "AppImageLauncher", true);
+
     // build path to AppImage runtime
     // as it might error, check before fork()ing to be able to display an error message beforehand
     auto exeDir = QFileInfo(QFile("/proc/self/exe").symLinkTarget()).absoluteDir().absolutePath();
@@ -204,9 +207,6 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         // however, this requires some process management (e.g., killing all processes inside the AppImage and also
         // the FUSE "mount" process, when this application is killed...)
         setenv("TARGET_APPIMAGE", fullPathToAppImage.c_str(), true);
-
-        // suppress desktop integration script
-        setenv("DESKTOPINTEGRATION", "AppImageLauncher", true);
 
         // first attempt: find runtime in expected installation directory
         auto pathToRuntime = exeDir.toStdString() + "/../lib/appimagelauncher/runtime";
