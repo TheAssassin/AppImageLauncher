@@ -333,8 +333,6 @@ QString getAppImageDigestMd5(const QString& path) {
             return "";
 
         file.close();
-
-        return buffer;
     } else {
         // calculate digest
         if (!appimage_type2_digest_md5(path.toStdString().c_str(), buffer.data()))
