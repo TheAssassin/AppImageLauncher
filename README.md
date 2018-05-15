@@ -15,6 +15,16 @@ A new solution for native AppImage support has been developed: AppImageLauncher.
 Being the launcher for AppImages, AppImageLauncher can control how the system treats AppImages. It can perform the desktop integration, AppImage removal (also called "uninstallation" sometimes, but as AppImages are not really installed, this term doesn't fit very well), and could be used for many other tasks in the future, like update checks and alike.
 
 
+## Articles about AppImageLauncher
+
+A few articles have been written about AppImageLauncher already:
+
+  - https://www.linuxuprising.com/2018/04/easily-run-and-integrate-appimage-files.html (English)
+  - http://linux-os.net/appimagelauncher-ejecuta-e-integra-facilmente-aplicaciones-en-appimage/ (Spanish)
+    - same article also available here: https://blog.desdelinux.net/appimagelauncher-ejecuta-e-integra-facilmente-aplicaciones-en-appimage/
+  - http://www.edivaldobrito.com.br/integrador-appimagelauncher-no-linux/ (Portuguese)
+
+
 ## Installation
 
 ### System wide Installation
