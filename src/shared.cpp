@@ -14,6 +14,7 @@ extern "C" {
 }
 
 // library includes
+#include <QDebug>
 #include <QDirIterator>
 #include <QMap>
 #include <QMessageBox>
@@ -56,7 +57,7 @@ QString buildPathToIntegratedAppImage(const QString& pathToAppImage) {
     auto fileName = baseName;
 
     if (!appImageInfo.completeSuffix().isEmpty())
-        baseName += "." + appImageInfo.completeSuffix();
+        fileName += "." + appImageInfo.completeSuffix();
 
     return integratedAppImagesDestination + "/" + fileName;
 }
@@ -332,8 +333,6 @@ QString getAppImageDigestMd5(const QString& path) {
             return "";
 
         file.close();
-
-        return buffer;
     } else {
         // calculate digest
         if (!appimage_type2_digest_md5(path.toStdString().c_str(), buffer.data()))
