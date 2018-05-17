@@ -1,86 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="en_US">
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/update_main.cpp" line="28"/>
+        <location filename="../src/update_main.cpp" line="+28"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/update_main.cpp" line="31"/>
+        <location line="+3"/>
         <source>AppImageLauncher update</source>
         <comment>update helper app name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/update_main.cpp" line="66"/>
+        <location line="+35"/>
         <source>Error: no such file or directory: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/update_main.cpp" line="73"/>
+        <location line="+7"/>
         <source>Not an AppImage: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/update_main.cpp" line="80"/>
+        <location line="+7"/>
         <source>The AppImage hasn&apos;t been integrated before. This tool will, however, integrate the updated AppImage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/update_main.cpp" line="83"/>
+        <location line="+3"/>
         <source>Do you wish to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/update_main.cpp" line="85"/>
+        <location line="+2"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/update_main.cpp" line="99"/>
+        <location line="+14"/>
         <source>No updates found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/update_main.cpp" line="100"/>
+        <location line="+1"/>
         <source>Could not find updates for AppImage %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/update_main.cpp" line="108"/>
+        <location line="+8"/>
         <source>An update has been found for the AppImage %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/update_main.cpp" line="110"/>
+        <location line="+2"/>
         <source>Do you want to perform the update?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/update_main.cpp" line="114"/>
+        <location line="+4"/>
         <source>Remove old AppImage after successful update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/update_main.cpp" line="146"/>
+        <location line="+32"/>
         <source>File reported as updated does not exist: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/update_main.cpp" line="154"/>
+        <location line="+8"/>
         <source>Failed to register updated AppImage in system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/update_main.cpp" line="161"/>
+        <location line="+7"/>
         <source>Failed to unregister old AppImage in system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/update_main.cpp" line="166"/>
+        <location line="+5"/>
         <source>Failed to remove old AppImage</source>
         <translation type="unfinished"></translation>
     </message>
