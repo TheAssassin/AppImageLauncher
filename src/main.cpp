@@ -17,12 +17,14 @@ extern "C" {
 #include <QFile>
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QLibraryInfo>
 #include <QMessageBox>
 #include <QProcess>
 #include <QPushButton>
 #include <QRegularExpression>
 #include <QString>
 #include <QTemporaryDir>
+#include <QTranslator>
 extern "C" {
     #include <appimage/appimage.h>
     #include <xdg-basedir.h>
@@ -107,15 +109,19 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 
         QMessageBox::critical(
             nullptr,
-            "AppImageLauncher error",
-            QString::fromStdString(message.str())
+            QApplication::tr("Error"),
+            QApplication::tr(message.str().c_str())
         );
         return 1;
     }
 
     // first of all, chmod +x the AppImage file, otherwise execv() will complain
     if (!makeExecutable(fullPathToAppImage)) {
-        QMessageBox::critical(nullptr, "Error", QString::fromStdString("Could not make AppImage executable: " + fullPathToAppImage));
+        QMessageBox::critical(
+            nullptr,
+            QApplication::tr("Error"),
+            (QApplication::tr("Could not make AppImage executable:").toStdString() + " " + fullPathToAppImage).c_str()
+        );
         return 1;
     }
 
@@ -129,7 +135,11 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         QFile appImage(QString::fromStdString(fullPathToAppImage));
 
         if (!appImage.open(QIODevice::ReadOnly)) {
-            QMessageBox::critical(nullptr, "Error", "Failed to open AppImage for reading: " + pathToAppImage);
+            QMessageBox::critical(
+                nullptr,
+                QApplication::tr("Error"),
+                QApplication::tr("Failed to open AppImage for reading:") + " " + pathToAppImage
+            );
             return 1;
         }
 
@@ -137,7 +147,11 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         QTemporaryDir tempDir("/tmp/AppImageLauncher-type1-XXXXXX");
 
         if (!tempDir.isValid()) {
-            QMessageBox::critical(nullptr, "Error", "Failed to create temporary directory");
+            QMessageBox::critical(
+                nullptr,
+                QApplication::tr("Error"),
+                QApplication::tr("Failed to create temporary directory")
+            );
             return 1;
         }
 
@@ -147,23 +161,40 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         auto tempAppImagePath = QDir(tempDir.path()).absoluteFilePath(QFileInfo(appImage).fileName());
 
         if (!appImage.copy(tempAppImagePath)) {
-            QMessageBox::critical(nullptr, "Error", "Failed to create temporary copy of type 1 AppImage");
+            QMessageBox::critical(
+                nullptr,
+                QApplication::tr("Error"),
+                QApplication::tr("Failed to create temporary copy of type 1 AppImage")
+            );
+            return 1;
         }
 
         QFile tempAppImage(tempAppImagePath);
 
         if (!tempAppImage.open(QFile::ReadWrite)) {
-            QMessageBox::critical(nullptr, "Error", "Failed to open temporary AppImage copy for writing");
+            QMessageBox::critical(
+                nullptr,
+                QApplication::tr("Error"),
+                QApplication::tr("Failed to open temporary AppImage copy for writing")
+            );
             return 1;
         }
 
         // nuke magic bytes
         if (!tempAppImage.seek(8)) {
-            QMessageBox::critical(nullptr, "Error", "Failed to remove magic bytes from temporary AppImage copy");
+            QMessageBox::critical(
+                nullptr,
+                QApplication::tr("Error"),
+                QApplication::tr("Failed to remove magic bytes from temporary AppImage copy")
+            );
             return 1;
         }
         if (tempAppImage.write(QByteArray(3, '\0')) != 3) {
-            QMessageBox::critical(nullptr, "Error", "Failed to remove magic bytes from temporary AppImage copy");
+            QMessageBox::critical(
+                nullptr,
+                QApplication::tr("Error"),
+                QApplication::tr("Failed to remove magic bytes from temporary AppImage copy")
+            );
             return 1;
         }
 
@@ -218,8 +249,11 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 
         // if it can't be found in either location, display error and exit
         if (!QFile(QString::fromStdString(pathToRuntime)).exists()) {
-            QMessageBox::critical(nullptr, "Error",
-                QString::fromStdString("runtime not found: no such file or directory: " + pathToRuntime));
+            QMessageBox::critical(
+                nullptr,
+                QApplication::tr("Error"),
+                QApplication::tr("runtime not found: no such file or directory: ") + QString::fromStdString(pathToRuntime)
+            );
             return 1;
         }
 
@@ -252,6 +286,15 @@ int main(int argc, char** argv) {
     QApplication app(argc, argv);
     app.setApplicationDisplayName("AppImageLauncher");
 
+    // set up translations
+    QTranslator qtTranslator;
+    qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    app.installTranslator(&qtTranslator);
+
+    QTranslator myappTranslator;
+    myappTranslator.load("appimagelauncher_" + QLocale::system().name());
+    app.installTranslator(&myappTranslator);
+
     std::ostringstream version;
     version << "version " << APPIMAGELAUNCHER_VERSION << " "
             << "(git commit " << APPIMAGELAUNCHER_GIT_COMMIT << "), built on "
@@ -283,7 +326,7 @@ int main(int argc, char** argv) {
 
     // clean up old desktop files
     if (!cleanUpOldDesktopFiles()) {
-        std::cerr << "Failed to clean up old desktop files" << std::endl;
+        std::cerr << QApplication::tr("Failed to clean up old desktop files").toStdString() << std::endl;
         return 1;
     }
 
@@ -316,14 +359,17 @@ int main(int argc, char** argv) {
     auto pathToAppImage = QString(argv[1]);
 
     if (!QFile(pathToAppImage).exists()) {
-        std::cout << "Error: no such file or directory: " << pathToAppImage.toStdString() << std::endl;
+        std::cout << QApplication::tr("Error: no such file or directory: ").toStdString() << pathToAppImage.toStdString() << std::endl;
         return 1;
     }
 
     const auto type = appimage_get_type(pathToAppImage.toStdString().c_str(), false);
 
     if (type <= 0 || type > 2) {
-        QMessageBox::critical(nullptr, "AppImageLauncher error", "Not an AppImage: " + pathToAppImage);
+        QMessageBox::critical(
+            nullptr,
+            QApplication::tr("Error"),
+            QApplication::tr("Not an AppImage:") + " " + pathToAppImage);
         return 1;
     }
 
@@ -364,13 +410,14 @@ int main(int argc, char** argv) {
     }
 
     std::ostringstream explanationStrm;
-    explanationStrm << "Integrating it will move the AppImage into a predefined location, "
-                    << "and include it in your application launcher." << std::endl
+    explanationStrm << QApplication::tr("Integrating it will move the AppImage into a predefined location, "
+                       "and include it in your application launcher.").toStdString() << std::endl
                     << std::endl
-                    << "To remove or update the AppImage, please use the context menu of the application icon in "
-                    << "your task bar or launcher." << std::endl
+                    << QApplication::tr("To remove or update the AppImage, please use the context menu of the "
+                       "application icon in your task bar or launcher.").toStdString() << std::endl
                     << std::endl
-                    << "The directory the integrated AppImages are stored in is currently set to:" << std::endl
+                    << QApplication::tr("The directory the integrated AppImages are stored in is currently "
+                                        "set to:").toStdString() << std::endl
                     << integratedAppImagesDestination.toStdString() << std::endl;
 
     auto explanation = explanationStrm.str();
@@ -382,15 +429,15 @@ int main(int argc, char** argv) {
 
     QMessageBox messageBox(
         QMessageBox::Question,
-        "Desktop Integration",
+        QApplication::tr("Desktop Integration"),
         QString::fromStdString(messageStrm.str())
     );
 
-    auto* okButton = messageBox.addButton("Integrate and run", QMessageBox::AcceptRole);
-    auto* runOnceButton = messageBox.addButton("Run once", QMessageBox::ApplyRole);
+    auto* okButton = messageBox.addButton(QApplication::tr("Integrate and run"), QMessageBox::AcceptRole);
+    auto* runOnceButton = messageBox.addButton(QApplication::tr("Run once"), QMessageBox::ApplyRole);
 
     // *whyever* Qt somehow needs a button with "RejectRole" or the X button won't close the current window...
-    auto* cancelButton = messageBox.addButton("Cancel", QMessageBox::RejectRole);
+    auto* cancelButton = messageBox.addButton(QApplication::tr("Cancel"), QMessageBox::RejectRole);
     // ... but it is fine to hide that button after creating it, so it's not displayed
     cancelButton->hide();
 
