@@ -18,6 +18,7 @@ extern "C" {
 #include <QDirIterator>
 #include <QMap>
 #include <QMessageBox>
+#include <QObject>
 #include <QRegularExpression>
 
 
@@ -133,14 +134,14 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
         // if it does, the existing AppImage needs to be removed before rename can be called
         if (QFile(pathToIntegratedAppImage).exists()) {
             std::ostringstream message;
-            message << "AppImage with same filename has already been integrated." << std::endl
+            message << QObject::tr("AppImage with same filename has already been integrated.").toStdString() << std::endl
                     << std::endl
-                    << "Do you wish to overwrite the existing AppImage?" << std::endl
-                    << "Choosing No will run the AppImage once, and leave the system in its current state.";
+                    << QObject::tr("Do you wish to overwrite the existing AppImage?").toStdString() << std::endl
+                    << QObject::tr("Choosing No will run the AppImage once, and leave the system in its current state.").toStdString();
 
             auto rv = QMessageBox::warning(
                 nullptr,
-                "Warning",
+                QObject::tr("Warning"),
                 QString::fromStdString(message.str()),
                 QMessageBox::Yes | QMessageBox::No,
                 QMessageBox::Yes
@@ -154,13 +155,21 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
         }
 
         if (!QFile(pathToAppImage).rename(pathToIntegratedAppImage)) {
-            QMessageBox::critical(nullptr, "Error", "Failed to move AppImage to target location");
+            QMessageBox::critical(
+                nullptr,
+                QObject::tr("Error"),
+                QObject::tr("Failed to move AppImage to target location")
+            );
             return INTEGRATION_FAILED;
         }
     }
 
     if (appimage_register_in_system(newPath.c_str(), false) != 0) {
-        QMessageBox::critical(nullptr, "Error", "Failed to register AppImage in system via libappimage");
+        QMessageBox::critical(
+            nullptr,
+            QObject::tr("Error"),
+            QObject::tr("Failed to register AppImage in system via libappimage")
+        );
         return INTEGRATION_FAILED;
     }
 
@@ -168,13 +177,21 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
 
     // sanity check -- if the file doesn't exist, the function returns NULL
     if (desktopFilePath == nullptr) {
-        QMessageBox::critical(nullptr, "Error", "Failed to find integrated desktop file");
+        QMessageBox::critical(
+            nullptr,
+            QObject::tr("Error"),
+            QObject::tr("Failed to find integrated desktop file")
+        );
         return INTEGRATION_FAILED;
     }
 
     // check that file exists
     if (!QFile(desktopFilePath).exists()) {
-        QMessageBox::critical(nullptr, "Error", "Couldn't find integrated AppImage's desktop file");
+        QMessageBox::critical(
+            nullptr,
+            QObject::tr("Error"),
+            QObject::tr("Couldn't find integrated AppImage's desktop file")
+        );
         return INTEGRATION_FAILED;
     }
 
@@ -202,8 +219,12 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
 
     auto handleError = [&error, &desktopFile, &cleanup]() {
         std::ostringstream ss;
-        ss << "Failed to load desktop file: " << std::endl << error->message;
-        QMessageBox::critical(nullptr, "Error", QString::fromStdString(ss.str()));
+        ss << QObject::tr("Failed to load desktop file:").toStdString() << std::endl << error->message;
+        QMessageBox::critical(
+            nullptr,
+            QObject::tr("Error"),
+            QString::fromStdString(ss.str())
+        );
 
         cleanup();
     };
@@ -216,7 +237,11 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
     const auto* nameEntry = g_key_file_get_string(desktopFile, G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_NAME, &error);
 
     if (nameEntry == nullptr) {
-        QMessageBox::warning(nullptr, "Warning", "AppImage has invalid desktop file");
+        QMessageBox::warning(
+            nullptr,
+            QObject::tr("Warning"),
+            QObject::tr("AppImage has invalid desktop file")
+        );
     }
 
     // TODO: support multilingual collisions
