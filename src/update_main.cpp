@@ -97,7 +97,8 @@ int main(int argc, char** argv) {
         QMessageBox::information(
             nullptr,
             QObject::tr("No updates found"),
-            QObject::tr("Could not find updates for AppImage") + " " + pathToAppImage);
+            QObject::tr("Could not find updates for AppImage %1").arg(pathToAppImage)
+        );
         return 0;
     }
 
