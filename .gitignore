@@ -5,3 +5,4 @@ build*/
 *.deb*
 *.tar*
 cmake/GIT_COMMIT
+squashfs-root/
