@@ -430,7 +430,7 @@ int main(int argc, char** argv) {
     );
 
     auto* okButton = messageBox.addButton(QObject::tr("Integrate and run"), QMessageBox::AcceptRole);
-    auto* runOnceButton = messageBox.addButton(QObject::tr("Run once "), QMessageBox::ApplyRole);
+    auto* runOnceButton = messageBox.addButton(QObject::tr("Run once"), QMessageBox::ApplyRole);
 
     // *whyever* Qt somehow needs a button with "RejectRole" or the X button won't close the current window...
     auto* cancelButton = messageBox.addButton(QObject::tr("Cancel"), QMessageBox::RejectRole);
