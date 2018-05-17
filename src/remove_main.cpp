@@ -9,8 +9,11 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QFileInfo>
-#include <QPushButton>
+#include <QLibraryInfo>
 #include <QMessageBox>
+#include <QObject>
+#include <QPushButton>
+#include <QTranslator>
 extern "C" {
     #include <appimage/appimage.h>
 }
@@ -26,10 +29,9 @@ bool unregisterAppImage(const QString& pathToAppImage) {
 
 int main(int argc, char** argv) {
     QCommandLineParser parser;
-    parser.setApplicationDescription("Removes AppImages after desktop integration, for use by Linux distributions");
-
+    parser.setApplicationDescription(QObject::tr("Removes AppImages after desktop integration, for use by Linux distributions"));
     QApplication app(argc, argv);
-    app.setApplicationDisplayName("AppImageLauncher remove");
+    app.setApplicationDisplayName(QObject::tr("AppImageLauncher remove", "remove helper app name"));
 
     std::ostringstream version;
     version << "version " << APPIMAGELAUNCHER_VERSION << " "
@@ -37,12 +39,21 @@ int main(int argc, char** argv) {
             << APPIMAGELAUNCHER_BUILD_DATE;
     app.setApplicationVersion(QString::fromStdString(version.str()));
 
+    // set up translations
+    QTranslator qtTranslator;
+    qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    app.installTranslator(&qtTranslator);
+
+    QTranslator myappTranslator;
+    myappTranslator.load("appimagelauncher_" + QLocale::system().name());
+    app.installTranslator(&myappTranslator);
+
     parser.addHelpOption();
     parser.addVersionOption();
 
     parser.process(app);
 
-    parser.addPositionalArgument("path", "Path to AppImage", "<path>");
+    parser.addPositionalArgument("path", QObject::tr("Path to AppImage"), QObject::tr("<path>"));
 
     if (parser.positionalArguments().empty()) {
         parser.showHelp(1);
@@ -51,21 +62,24 @@ int main(int argc, char** argv) {
     const auto pathToAppImage = parser.positionalArguments().first();
 
     if (!QFile(pathToAppImage).exists()) {
-        QMessageBox::critical(nullptr, "Error", QString::fromStdString("Error: no such file or directory: " + pathToAppImage.toStdString()));
+        QMessageBox::critical(nullptr, "Error", QObject::tr("Error: no such file or directory: %1").arg(pathToAppImage));
         return 1;
     }
 
     const auto type = appimage_get_type(pathToAppImage.toStdString().c_str(), false);
 
     if (type <= 0 || type > 2) {
-        QMessageBox::critical(nullptr, "AppImage remove helper error", "Not an AppImage: " + pathToAppImage);
+        QMessageBox::critical(
+            nullptr,
+            QObject::tr("AppImage remove helper error"), QObject::tr("Not an AppImage: %1").arg(pathToAppImage)
+        );
         return 1;
     }
 
     auto clickedButton = QMessageBox::question(
         nullptr,
-        "Please confirm",
-        "Are you sure you want to remove this AppImage?\n\n" + pathToAppImage,
+        QObject::tr("Please confirm"),
+        QObject::tr("Are you sure you want to remove this AppImage?") + "\n\n" + pathToAppImage,
         QMessageBox::No | QMessageBox::Yes,
         QMessageBox::No
     );
@@ -76,14 +90,21 @@ int main(int argc, char** argv) {
             auto path = pathToAppImage.toStdString();
 
             if (appimage_unregister_in_system(path.c_str(), false) != 0) {
-                QMessageBox::critical(nullptr, "Error", QString::fromStdString("Failed to unregister AppImage: " + path));
+                QMessageBox::critical(
+                    nullptr,
+                    QObject::tr("Error"),
+                    QObject::tr("Failed to unregister AppImage: %1").arg(QString::fromStdString(path))
+                );
                 return 1;
             }
 
             // now, remove AppImage file
             if (std::remove(path.c_str()) != 0) {
                 auto error = errno;
-                QMessageBox::critical(nullptr, "Error", QString::fromStdString("Failed to remove AppImage: " + std::string(strerror(error))));
+                QMessageBox::critical(
+                    nullptr,
+                    QObject::tr("Error"),
+                    QObject::tr("Failed to remove AppImage: %1").arg(error));
             }
         }
         default: {
