@@ -104,13 +104,10 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 
     auto type = appimage_get_type(fullPathToAppImage.c_str(), false);
     if (type < 1 || type > 3) {
-        std::ostringstream message;
-        message << "AppImageLauncher does not support type " << type << " AppImages at the moment.";
-
         QMessageBox::critical(
             nullptr,
-            QApplication::tr("Error"),
-            QApplication::tr(message.str().c_str())
+            QObject::tr("Error"),
+            QObject::tr("AppImageLauncher does not support type %1 AppImages at the moment.").arg(type)
         );
         return 1;
     }
@@ -119,8 +116,8 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     if (!makeExecutable(fullPathToAppImage)) {
         QMessageBox::critical(
             nullptr,
-            QApplication::tr("Error"),
-            (QApplication::tr("Could not make AppImage executable:").toStdString() + " " + fullPathToAppImage).c_str()
+            QObject::tr("Error"),
+            QObject::tr("Could not make AppImage executable: %1").arg(QString::fromStdString(fullPathToAppImage))
         );
         return 1;
     }
@@ -137,8 +134,8 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         if (!appImage.open(QIODevice::ReadOnly)) {
             QMessageBox::critical(
                 nullptr,
-                QApplication::tr("Error"),
-                QApplication::tr("Failed to open AppImage for reading:") + " " + pathToAppImage
+                QObject::tr("Error"),
+                QObject::tr("Failed to open AppImage for reading: %1").arg(pathToAppImage)
             );
             return 1;
         }
@@ -149,8 +146,8 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         if (!tempDir.isValid()) {
             QMessageBox::critical(
                 nullptr,
-                QApplication::tr("Error"),
-                QApplication::tr("Failed to create temporary directory")
+                QObject::tr("Error"),
+                QObject::tr("Failed to create temporary directory")
             );
             return 1;
         }
@@ -163,8 +160,8 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         if (!appImage.copy(tempAppImagePath)) {
             QMessageBox::critical(
                 nullptr,
-                QApplication::tr("Error"),
-                QApplication::tr("Failed to create temporary copy of type 1 AppImage")
+                QObject::tr("Error"),
+                QObject::tr("Failed to create temporary copy of type 1 AppImage")
             );
             return 1;
         }
@@ -174,8 +171,8 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         if (!tempAppImage.open(QFile::ReadWrite)) {
             QMessageBox::critical(
                 nullptr,
-                QApplication::tr("Error"),
-                QApplication::tr("Failed to open temporary AppImage copy for writing")
+                QObject::tr("Error"),
+                QObject::tr("Failed to open temporary AppImage copy for writing")
             );
             return 1;
         }
@@ -184,16 +181,16 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         if (!tempAppImage.seek(8)) {
             QMessageBox::critical(
                 nullptr,
-                QApplication::tr("Error"),
-                QApplication::tr("Failed to remove magic bytes from temporary AppImage copy")
+                QObject::tr("Error"),
+                QObject::tr("Failed to remove magic bytes from temporary AppImage copy")
             );
             return 1;
         }
         if (tempAppImage.write(QByteArray(3, '\0')) != 3) {
             QMessageBox::critical(
                 nullptr,
-                QApplication::tr("Error"),
-                QApplication::tr("Failed to remove magic bytes from temporary AppImage copy")
+                QObject::tr("Error"),
+                QObject::tr("Failed to remove magic bytes from temporary AppImage copy")
             );
             return 1;
         }
@@ -226,7 +223,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         execv(tempAppImageFileName.c_str(), args.data());
 
         const auto& error = errno;
-        std::cout << "execv() failed: " << strerror(error) << std::endl;
+        std::cout << QObject::tr("execv() failed: %1", "error message").arg(strerror(error)).toStdString() << std::endl;
     } else if (type == 2) {
         // use external runtime _without_ magic bytes to run the AppImage
         // the original idea was to use /lib64/ld-linux-x86_64.so to run AppImages, but it did complain about some
@@ -251,8 +248,8 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         if (!QFile(QString::fromStdString(pathToRuntime)).exists()) {
             QMessageBox::critical(
                 nullptr,
-                QApplication::tr("Error"),
-                QApplication::tr("runtime not found: no such file or directory: ") + QString::fromStdString(pathToRuntime)
+                QObject::tr("Error"),
+                QObject::tr("runtime not found: no such file or directory: %1").arg(QString::fromStdString(pathToRuntime))
             );
             return 1;
         }
@@ -278,7 +275,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         execv(pathToRuntime.c_str(), args.data());
 
         const auto& error = errno;
-        std::cout << "execv() failed: " << strerror(error) << std::endl;
+        std::cout << QObject::tr("execv() failed: %1").arg(strerror(error)).toStdString() << std::endl;
     }
 }
 
@@ -302,15 +299,15 @@ int main(int argc, char** argv) {
     app.setApplicationVersion(QString::fromStdString(version.str()));
 
     std::ostringstream usage;
-    usage << "Usage: " << argv[0] << " [options] <path>" << std::endl
-          << "Desktop integration helper for AppImages, for use by Linux distributions." << std::endl
+    usage << QObject::tr("Usage: %1 [options] <path>").arg(argv[0]).toStdString() << std::endl
+          << QObject::tr("Desktop integration helper for AppImages, for use by Linux distributions.").toStdString() << std::endl
           << std::endl
-          << "Options:" << std::endl
-          << "  --appimagelauncher-help     Display this help and exit" << std::endl
-          << "  --appimagelauncher-version  Display version and exit" << std::endl
+          << QObject::tr("Options:").toStdString() << std::endl
+          << "  --appimagelauncher-help     " << QObject::tr("Display this help and exit").toStdString() << std::endl
+          << "  --appimagelauncher-version  " << QObject::tr("Display version and exit").toStdString() << std::endl
           << std::endl
-          << "Arguments:"
-          << "  path                        Path to AppImage (mandatory)" << std::endl;
+          << QObject::tr("Arguments:").toStdString() << std::endl
+          << "  path                        " << QObject::tr("Path to AppImage (mandatory)").toStdString() << std::endl;
 
     auto displayVersion = [&app]() {
         std::cerr << "AppImageLauncher " << app.applicationVersion().toStdString() << std::endl;
@@ -326,7 +323,7 @@ int main(int argc, char** argv) {
 
     // clean up old desktop files
     if (!cleanUpOldDesktopFiles()) {
-        std::cerr << QApplication::tr("Failed to clean up old desktop files").toStdString() << std::endl;
+        std::cerr << QObject::tr("Failed to clean up old desktop files").toStdString() << std::endl;
         return 1;
     }
 
@@ -350,7 +347,7 @@ int main(int argc, char** argv) {
                 // exit immediately after cleanup
                 return 0;
             } else {
-                std::cerr << "Unknown AppImageLauncher option: " << arg.toStdString() << std::endl;
+                std::cerr << QObject::tr("Unknown AppImageLauncher option: %1").arg(arg).toStdString() << std::endl;
                 return 1;
             }
         }
@@ -359,7 +356,7 @@ int main(int argc, char** argv) {
     auto pathToAppImage = QString(argv[1]);
 
     if (!QFile(pathToAppImage).exists()) {
-        std::cout << QApplication::tr("Error: no such file or directory: ").toStdString() << pathToAppImage.toStdString() << std::endl;
+        std::cout << QObject::tr("Error: no such file or directory: %1").arg(pathToAppImage).toStdString() << std::endl;
         return 1;
     }
 
@@ -368,8 +365,8 @@ int main(int argc, char** argv) {
     if (type <= 0 || type > 2) {
         QMessageBox::critical(
             nullptr,
-            QApplication::tr("Error"),
-            QApplication::tr("Not an AppImage:") + " " + pathToAppImage);
+            QObject::tr("Error"),
+            QObject::tr("Not an AppImage: %1").arg(pathToAppImage));
         return 1;
     }
 
@@ -410,34 +407,33 @@ int main(int argc, char** argv) {
     }
 
     std::ostringstream explanationStrm;
-    explanationStrm << QApplication::tr("Integrating it will move the AppImage into a predefined location, "
+    explanationStrm << QObject::tr("Integrating it will move the AppImage into a predefined location, "
                        "and include it in your application launcher.").toStdString() << std::endl
                     << std::endl
-                    << QApplication::tr("To remove or update the AppImage, please use the context menu of the "
+                    << QObject::tr("To remove or update the AppImage, please use the context menu of the "
                        "application icon in your task bar or launcher.").toStdString() << std::endl
                     << std::endl
-                    << QApplication::tr("The directory the integrated AppImages are stored in is currently "
+                    << QObject::tr("The directory the integrated AppImages are stored in is currently "
                                         "set to:").toStdString() << std::endl
                     << integratedAppImagesDestination.toStdString() << std::endl;
 
     auto explanation = explanationStrm.str();
 
     std::ostringstream messageStrm;
-    messageStrm << pathToAppImage.toStdString() << " "
-                << QObject::tr("has not been integrated into your system.").toStdString() << "\n\n"
+    messageStrm << QObject::tr("%1 has not been integrated into your system.").arg(pathToAppImage).toStdString() << "\n\n"
                 << QObject::tr(explanation.c_str()).toStdString();
 
     QMessageBox messageBox(
         QMessageBox::Question,
-        QApplication::tr("Desktop Integration"),
+        QObject::tr("Desktop Integration"),
         QString::fromStdString(messageStrm.str())
     );
 
-    auto* okButton = messageBox.addButton(QApplication::tr("Integrate and run"), QMessageBox::AcceptRole);
-    auto* runOnceButton = messageBox.addButton(QApplication::tr("Run once"), QMessageBox::ApplyRole);
+    auto* okButton = messageBox.addButton(QObject::tr("Integrate and run"), QMessageBox::AcceptRole);
+    auto* runOnceButton = messageBox.addButton(QObject::tr("Run once "), QMessageBox::ApplyRole);
 
     // *whyever* Qt somehow needs a button with "RejectRole" or the X button won't close the current window...
-    auto* cancelButton = messageBox.addButton(QApplication::tr("Cancel"), QMessageBox::RejectRole);
+    auto* cancelButton = messageBox.addButton(QObject::tr("Cancel"), QMessageBox::RejectRole);
     // ... but it is fine to hide that button after creating it, so it's not displayed
     cancelButton->hide();
 
