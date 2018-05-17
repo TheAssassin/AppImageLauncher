@@ -12,7 +12,7 @@ function(ail_generate_translations)
 
     add_custom_command(
         TARGET i18n POST_BUILD
-        COMMAND ${LUPDATE} "${ARGV0}" -ts "${ARGV1}"
+        COMMAND ${LUPDATE} "${ARGV0}" -ts "${ARGV1}" -no-obsolete
         MAIN_DEPENDENCY "${ARGV0}"
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 
