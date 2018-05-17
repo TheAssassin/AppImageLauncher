@@ -12,14 +12,14 @@ function(ail_generate_translations)
 
     add_custom_command(
         TARGET i18n POST_BUILD
-        COMMAND ${LUPDATE} "${ARGV0}" -ts "${ARGV1}" -no-obsolete
+        COMMAND ${LUPDATE} "${ARGV0}" -ts "${ARGV1}" -no-obsolete -locations relative
         MAIN_DEPENDENCY "${ARGV0}"
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 
     )
 endfunction()
 
-ail_generate_translations(../src/main.cpp        main.ts)
-ail_generate_translations(../src/remove_main.cpp remove.ts)
-ail_generate_translations(../src/update_main.cpp update.ts)
-ail_generate_translations(../src/shared.cpp      shared.ts)
+ail_generate_translations(../src/main.cpp        main.en.ts)
+ail_generate_translations(../src/remove_main.cpp remove.en.ts)
+ail_generate_translations(../src/update_main.cpp update.en.ts)
+ail_generate_translations(../src/shared.cpp      shared.en.ts)
