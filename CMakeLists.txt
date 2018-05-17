@@ -107,6 +107,9 @@ include(cmake/install.cmake)
 # contains install configs for resource files
 add_subdirectory(resources)
 
+# translation management
+add_subdirectory(i18n)
+
 # packaging
 include(cmake/cpack_general.cmake)
 include(cmake/cpack_source.cmake)
