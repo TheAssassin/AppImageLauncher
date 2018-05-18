@@ -288,8 +288,25 @@ int main(int argc, char** argv) {
     qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     app.installTranslator(&qtTranslator);
 
+    // first we need to find the translation directory
+    // if this is run from the source tree, we try a path that can only work within the repository
+    // then, we try the expected install location relative to the main binary
+    auto translationDir = QString(CMAKE_PROJECT_SOURCE_DIR) + "/resources/l10n";
+
+    if (!QDir(translationDir).exists()) {
+        const auto binaryDirPath = app.applicationDirPath();
+
+        translationDir = binaryDirPath + "/../share/appimagelauncher/l10n";
+    }
+
+    const auto systemLocale = QLocale::system().name();
+
+    // we're using primarily short names for translations, so we should load these translations as well
+    const auto shortSystemLocale = systemLocale.split('_')[0];
+
     QTranslator myappTranslator;
-    myappTranslator.load("appimagelauncher_" + QLocale::system().name());
+    myappTranslator.load(translationDir + "/main." + systemLocale + ".qm");
+    myappTranslator.load(translationDir + "/main." + shortSystemLocale + ".qm");
     app.installTranslator(&myappTranslator);
 
     std::ostringstream version;

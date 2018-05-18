@@ -38,6 +38,8 @@ set_target_properties(AppImageLauncher PROPERTIES INSTALL_RPATH "\$ORIGIN/../lib
 # add dependency on runtime to make sure it's built
 add_dependencies(AppImageLauncher runtime)
 
+target_compile_definitions(AppImageLauncher PRIVATE -DCMAKE_PROJECT_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
+
 install(
     TARGETS
     AppImageLauncher
