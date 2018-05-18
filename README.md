@@ -4,6 +4,15 @@
 
 # AppImageLauncher
 
+AppImageLauncher makes your Linux desktop AppImage ready™. By installing it, you won't ever have to worry about AppImages again. You can always double click them without making them executable first, just like you should be able to do nowadays. You can integrate AppImages with a single mouse click, and manage them from your application launcher. Updating and removing AppImages becomes as easy as never before.
+
+Due to its simple but efficient way to integrate into your system, it plays well with other applications that can be used to manage AppImages, for example app stores. However, it doesn't depend on any of those, and can run completely standalone.
+
+Install AppImageLauncher today for your distribution and enjoy using AppImages as easy as never before!
+ 
+
+## About the project
+
 AppImages and Linux desktops, that's two things which don't work together very well currently. Since AppImages are normal executables, it'd suffice if desktop environments like KDE, GNOME, Xfce, ... would assist users in making those files executable, but as we learned recently, some desktop environments consider this a security risk, and want to force users to use app stores.
 
 Being executable isn't really all that is needed to provide a good desktop experience. AppImages should be accessible from the application menus and launchers. This so-called "desktop integration" can't be provided by the AppImages themselves even though some AppImages ship with a "desktop integration script" prompting the user to integrate the AppImages, as there's too many impliciations that require an external software, especially regarding the cleanup and removal of AppImages. Also, if applications are simply made executable, they're still spread all over the users' personal files and folders. The average user doesn't necessarily like a Downloads directory that is full of AppImages with cryptic filenames.
