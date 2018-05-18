@@ -143,93 +143,93 @@
     <message>
         <location line="+3"/>
         <source>To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher.</source>
-        <translation>Pour supprimer ou mettre à jour l&apos;AppImage, utilisez le menu contextuel de l&apos;icône d&apos;application dans votre barre de tâches ou lanceur.</translation>
+        <translation>Pour supprimer ou mettre à jour l&apos;AppImage, utilisez le menu contextuel de l&apos;icône d&apos;application dans votre barre de tâches ou lanceur d&apos;application.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The directory the integrated AppImages are stored in is currently set to:</source>
-        <translation></translation>
+        <translation>Le répertoire où les AppImages intégrées sont stockées est actuellement :</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>%1 has not been integrated into your system.</source>
-        <translation></translation>
+        <translation>%1 n&apos;a pas été intégré à votre système.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Desktop Integration</source>
-        <translation></translation>
+        <translation>Intégration bureau</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Integrate and run</source>
-        <translation></translation>
+        <translation>Intégrer et lancer</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Run once</source>
-        <translation></translation>
+        <translation>Lancer une fois</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cancel</source>
-        <translation></translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../src/remove_main.cpp" line="-36"/>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
-        <translation></translation>
+        <translation>Supprime les AppImages après l&apos;intégration au bureau, destiné à être utilisé par les distributions Linux</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>AppImageLauncher remove</source>
         <comment>remove helper app name</comment>
-        <translation></translation>
+        <translation>Suppression par AppImageLauncher</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Path to AppImage</source>
-        <translation></translation>
+        <translation>Chemin vers l&apos;AppImage</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>&lt;path&gt;</source>
-        <translation></translation>
+        <translation>&lt;chemin&gt;</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>AppImage remove helper error</source>
-        <translation></translation>
+        <translation>Erreur de l&apos;assistant de suppression d&apos;AppImage</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Please confirm</source>
-        <translation></translation>
+        <translation>Veuillez confirmer</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Are you sure you want to remove this AppImage?</source>
-        <translation></translation>
+        <translation>Voulez-vous vraiment supprimer cette AppImage ?</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Failed to unregister AppImage: %1</source>
-        <translation></translation>
+        <translation>Impossible de désenregistrer l&apos;AppImage : %1</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Failed to remove AppImage: %1</source>
-        <translation></translation>
+        <translation>Impossible de supprimer l&apos;AppImage : %1</translation>
     </message>
     <message>
         <location filename="../src/shared.cpp" line="-88"/>
         <source>AppImage with same filename has already been integrated.</source>
-        <translation></translation>
+        <translation>Une AppImage avec le même nom de fichier a déjà été intégrée.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Do you wish to overwrite the existing AppImage?</source>
-        <translation></translation>
+        <translation>Voulez-vous supprimer l&apos;AppImage existante ?</translation>
     </message>
     <message>
         <location line="+1"/>
