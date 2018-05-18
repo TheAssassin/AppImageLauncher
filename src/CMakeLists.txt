@@ -27,6 +27,9 @@ target_compile_definitions(shared
 )
 
 
+set_source_files_properties(shared.cpp PROPERTIES COMPILE_FLAGS -DCMAKE_PROJECT_SOURCE_DIR="\\"${PROJECT_SOURCE_DIR}"\\")
+
+
 # main AppImageLauncher application
 add_executable(AppImageLauncher main.cpp)
 target_link_libraries(AppImageLauncher shared Qt5::Core Qt5::Widgets PkgConfig::glib libappimage)
@@ -38,8 +41,6 @@ set_target_properties(AppImageLauncher PROPERTIES INSTALL_RPATH "\$ORIGIN/../lib
 # add dependency on runtime to make sure it's built
 add_dependencies(AppImageLauncher runtime)
 
-target_compile_definitions(AppImageLauncher PRIVATE -DCMAKE_PROJECT_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
-
 install(
     TARGETS
     AppImageLauncher
@@ -50,7 +51,7 @@ install(
 
 # AppImage removal helper
 add_executable(remove remove_main.cpp)
-target_link_libraries(remove Qt5::Core Qt5::Widgets libappimage)
+target_link_libraries(remove shared Qt5::Core Qt5::Widgets libappimage)
 # see AppImageLauncher for a description
 set_target_properties(remove PROPERTIES INSTALL_RPATH "\$ORIGIN")
 
