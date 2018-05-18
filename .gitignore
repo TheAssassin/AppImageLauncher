@@ -6,3 +6,4 @@ build*/
 *.tar*
 cmake/GIT_COMMIT
 squashfs-root/
+*.qm
