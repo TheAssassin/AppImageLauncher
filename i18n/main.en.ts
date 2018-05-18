@@ -13,12 +13,12 @@
         <location line="+10"/>
         <location line="+8"/>
         <location line="+59"/>
-        <location line="+117"/>
+        <location line="+134"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location line="-258"/>
+        <location line="-275"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher does not support type %1 AppImages at the moment.</translation>
     </message>
@@ -70,7 +70,7 @@
         <translation>execv() failed: %1</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+41"/>
         <source>Usage: %1 [options] &lt;path&gt;</source>
         <translation>Usage: %1 [options] &lt;path&gt;</translation>
     </message>
