@@ -20,10 +20,7 @@ function(ail_generate_translations)
     )
 endfunction()
 
-ail_generate_translations(../src/main.cpp        main.en.ts)
-ail_generate_translations(../src/remove_main.cpp remove.en.ts)
-ail_generate_translations(../src/update_main.cpp update.en.ts)
-ail_generate_translations(../src/shared.cpp      shared.en.ts)
+ail_generate_translations(../src/ ui.en.ts)
 
 
 add_custom_target(l10n ALL)
