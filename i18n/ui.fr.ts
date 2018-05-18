@@ -229,49 +229,49 @@
     <message>
         <location line="+2"/>
         <source>Do you wish to overwrite the existing AppImage?</source>
-        <translation>Voulez-vous supprimer l&apos;AppImage existante ?</translation>
+        <translation>Voulez-vous supprimer l&apos;AppImage déjà existante ?</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Choosing No will run the AppImage once, and leave the system in its current state.</source>
-        <translation></translation>
+        <translation>Sélectionner Non lancera l&apos;AppImage une fois et laissera votre système dans son état actuel.</translation>
     </message>
     <message>
         <location line="+4"/>
         <location line="+98"/>
         <location filename="../src/update_main.cpp" line="+12"/>
         <source>Warning</source>
-        <translation></translation>
+        <translation>Avertissement</translation>
     </message>
     <message>
         <location line="-81"/>
         <source>Failed to move AppImage to target location</source>
-        <translation></translation>
+        <translation>Impossible de déplacer l&apos;AppImage vers son répertoire cible</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Failed to register AppImage in system via libappimage</source>
-        <translation></translation>
+        <translation>Impossible d&apos;enregistrer l&apos;AppImage dans le système via libappimage</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Failed to find integrated desktop file</source>
-        <translation></translation>
+        <translation>Impossible de trouver le fichier &quot;desktop&quot; intégré</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Couldn&apos;t find integrated AppImage&apos;s desktop file</source>
-        <translation></translation>
+        <translation>Impossible de trouver le fichier &quot;desktop&quot; de l&apos;AppImage intégrée</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Failed to load desktop file:</source>
-        <translation></translation>
+        <translation>Impossible de charger le fichier &quot;desktop&quot; :</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>AppImage has invalid desktop file</source>
-        <translation></translation>
+        <translation>L&apos;AppImage a un fichier « desktop » invalide</translation>
     </message>
     <message>
         <location filename="../src/update_main.cpp" line="-51"/>
