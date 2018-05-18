@@ -84,7 +84,7 @@
     <message>
         <location line="+1"/>
         <source>Desktop integration helper for AppImages, for use by Linux distributions.</source>
-        <translation>Hilfsprogramm zur Desktop-Integration von AppImages, zur Verwendung in Linux-Distributionen.</translation>
+        <translation>Hilfsprogramm zur Desktop-Integration von AppImages, zur Verwendung durch Linux-Distributionen.</translation>
     </message>
     <message>
         <location line="+2"/>
