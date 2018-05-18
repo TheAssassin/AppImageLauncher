@@ -26,7 +26,7 @@ ail_generate_translations(../src/update_main.cpp update.en.ts)
 ail_generate_translations(../src/shared.cpp      shared.en.ts)
 
 
-add_custom_target(l10n)
+add_custom_target(l10n ALL)
 
 # generate Qt qm files from translation source files
 function(ail_generate_qm)
