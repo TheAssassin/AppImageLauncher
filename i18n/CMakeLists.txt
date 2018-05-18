@@ -22,6 +22,13 @@ endfunction()
 
 ail_generate_translations(../src/ ui.en.ts)
 
+file(GLOB TS_FILES *.ts)
+
+foreach(TS_FILE IN LISTS TS_FILES)
+    get_filename_component(TS_FILENAME ${TS_FILE} NAME)
+    ail_generate_translations(../src/ ${TS_FILENAME})
+endforeach()
+
 
 add_custom_target(l10n ALL)
 

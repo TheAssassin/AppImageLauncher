@@ -14,7 +14,7 @@
         <location line="+8"/>
         <location line="+59"/>
         <location line="+111"/>
-        <location filename="../src/remove_main.cpp" line="+95"/>
+        <location filename="../src/remove_main.cpp" line="+92"/>
         <location line="+11"/>
         <location filename="../src/shared.cpp" line="+161"/>
         <location line="+10"/>
@@ -124,7 +124,7 @@
     <message>
         <location line="+9"/>
         <location filename="../src/remove_main.cpp" line="-41"/>
-        <location filename="../src/update_main.cpp" line="+66"/>
+        <location filename="../src/update_main.cpp" line="+60"/>
         <source>Error: no such file or directory: %1</source>
         <translation>Error: no such file or directory: %1</translation>
     </message>
@@ -176,7 +176,7 @@
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="../src/remove_main.cpp" line="-42"/>
+        <location filename="../src/remove_main.cpp" line="-36"/>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -187,7 +187,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+16"/>
         <source>Path to AppImage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -274,7 +274,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/update_main.cpp" line="-57"/>
+        <location filename="../src/update_main.cpp" line="-51"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -285,7 +285,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+43"/>
         <source>The AppImage hasn&apos;t been integrated before. This tool will, however, integrate the updated AppImage.</source>
         <translation type="unfinished"></translation>
     </message>
