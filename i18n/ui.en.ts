@@ -178,23 +178,23 @@
     <message>
         <location filename="../src/remove_main.cpp" line="-36"/>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
-        <translation type="unfinished">Removes AppImages after desktop integration, for use by Linux distributions</translation>
+        <translation>Removes AppImages after desktop integration, for use by Linux distributions</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>AppImageLauncher remove</source>
         <comment>remove helper app name</comment>
-        <translation type="unfinished">AppImageLauncher remove</translation>
+        <translation>AppImageLauncher remove</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Path to AppImage</source>
-        <translation type="unfinished">Path to AppImage</translation>
+        <translation>Path to AppImage</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>&lt;path&gt;</source>
-        <translation type="unfinished">&lt;path&gt;</translation>
+        <translation>&lt;path&gt;</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -229,7 +229,7 @@
     <message>
         <location line="+2"/>
         <source>Do you wish to overwrite the existing AppImage?</source>
-        <translation type="unfinished">Do you wish to overwrite the existing AppImage?</translation>
+        <translation>Do you wish to overwrite the existing AppImage?</translation>
     </message>
     <message>
         <location line="+1"/>
