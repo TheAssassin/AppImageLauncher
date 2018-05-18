@@ -53,6 +53,10 @@ The installation of packages on systems with a set of packages similar to one of
 
 Arch Linux, Manjaro, Antergos and Netrunner Rolling users can use AUR to install AppImageLauncher by installing [appimagelauncher-git](https://aur.archlinux.org/packages/appimagelauncher-git) (thanks @NuLogicSystems for setting up the build).
 
+Other systems derived from the listed ones, such as for instance Linux Mint (Ubuntu), should support AppImageLauncher as well. If they don't, please don't hesitate to create an issue on GitHub.
+
+**Note:** If your system is not listed above as supported, please feel free to request support in an issue on GitHub. We can then discuss adding support.   
+
 
 ### AppImage
 
