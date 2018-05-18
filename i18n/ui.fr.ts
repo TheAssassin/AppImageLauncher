@@ -109,41 +109,41 @@
     <message>
         <location line="+1"/>
         <source>Path to AppImage (mandatory)</source>
-        <translation>Chemin vers l&apos;AppImage (obligatoire)</translation>
+        <translation>Chemin vers l&apos;AppImage (requis)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Failed to clean up old desktop files</source>
-        <translation></translation>
+        <translation>Impossible de nettoyer les anciens fichiers &quot;desktop&quot;</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Unknown AppImageLauncher option: %1</source>
-        <translation></translation>
+        <translation>Option non reconnue par AppImageLauncher : %1</translation>
     </message>
     <message>
         <location line="+9"/>
         <location filename="../src/remove_main.cpp" line="-41"/>
         <location filename="../src/update_main.cpp" line="+60"/>
         <source>Error: no such file or directory: %1</source>
-        <translation></translation>
+        <translation>Erreur : pas de tel fichier ou répertoire : %1</translation>
     </message>
     <message>
         <location line="+10"/>
         <location filename="../src/remove_main.cpp" line="+9"/>
         <location filename="../src/update_main.cpp" line="+7"/>
         <source>Not an AppImage: %1</source>
-        <translation></translation>
+        <translation>Pas une AppImage : %1</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</source>
-        <translation></translation>
+        <translation>L&apos;intégrer va déplacer l&apos;AppImage dans un endroit prédéterminé et l&apos;inclure dans votre lanceur d&apos;application.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher.</source>
-        <translation></translation>
+        <translation>Pour supprimer ou mettre à jour l&apos;AppImage, utilisez le menu contextuel de l&apos;icône d&apos;application dans votre barre de tâches ou lanceur.</translation>
     </message>
     <message>
         <location line="+3"/>
