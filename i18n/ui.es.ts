@@ -27,7 +27,7 @@
     <message>
         <location line="-252"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
-        <translation></translation>
+        <translation>AppImageLauncher aun no soporta AppImages tipo %1.</translation>
     </message>
     <message>
         <location line="+10"/>
