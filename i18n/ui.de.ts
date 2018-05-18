@@ -178,166 +178,166 @@
     <message>
         <location filename="../src/remove_main.cpp" line="-36"/>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
-        <translation type="unfinished"></translation>
+        <translation>Entfernt AppImages nach ihrer Desktop-Integration, zur Verwendung durch Linux-Distributionen</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>AppImageLauncher remove</source>
         <comment>remove helper app name</comment>
-        <translation type="unfinished"></translation>
+        <translation>AppImageLauncher Löschhelfer</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Path to AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Pfad zu AppImage</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>&lt;path&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Pfad&gt;</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>AppImage remove helper error</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImage Löschhelfer Fehler</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Please confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte bestätigen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Are you sure you want to remove this AppImage?</source>
-        <translation type="unfinished"></translation>
+        <translation>Sind Sie sicher, dass Sie dieses AppImage entfernen möchten?</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Failed to unregister AppImage: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Deregistrieren des AppImages: %1</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Failed to remove AppImage: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Entfernen des AppImages fehlgeschlagen: %1</translation>
     </message>
     <message>
         <location filename="../src/shared.cpp" line="-88"/>
         <source>AppImage with same filename has already been integrated.</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImage mit gleichem Dateinamen wurde bereits integriert.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Do you wish to overwrite the existing AppImage?</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchten Sie das existierende AppImage überschreiben?</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Choosing No will run the AppImage once, and leave the system in its current state.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bei Klick auf Nein wird das AppImage einmalig ausgeführt, und das System in seinem derzeitigen Zustand belassen.</translation>
     </message>
     <message>
         <location line="+4"/>
         <location line="+98"/>
         <location filename="../src/update_main.cpp" line="+12"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Warnung</translation>
     </message>
     <message>
         <location line="-81"/>
         <source>Failed to move AppImage to target location</source>
-        <translation type="unfinished"></translation>
+        <translation>Verschieben des AppImages in Zielverzeichnis fehlgeschlagen</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Failed to register AppImage in system via libappimage</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Registrieren des AppImages im System via libappimage</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Failed to find integrated desktop file</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche nach integrierter Desktop-Datei fehlgeschlagen</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Couldn&apos;t find integrated AppImage&apos;s desktop file</source>
-        <translation type="unfinished"></translation>
+        <translation>Konnte Desktop-Datei des integrierten AppImages nicht finden</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Failed to load desktop file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Laden der Desktop-Datei:</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>AppImage has invalid desktop file</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImage hat ungültige Desktop-Datei</translation>
     </message>
     <message>
         <location filename="../src/update_main.cpp" line="-51"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisiert AppImages nach Desktop-Integration, zur Verwendung durch Linux-Distributionen</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>AppImageLauncher update</source>
         <comment>update helper app name</comment>
-        <translation type="unfinished"></translation>
+        <translation>AppImageLauncher Update</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>The AppImage hasn&apos;t been integrated before. This tool will, however, integrate the updated AppImage.</source>
-        <translation type="unfinished"></translation>
+        <translation>Das AppImage wurde bisher noch nicht integriert. Dieses Programm wird aber das aktualisierte AppImage integrieren.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Do you wish to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchten Sie fortfahren?</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>No updates found</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Aktualisierungen gefunden</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Could not find updates for AppImage %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Konnte keine Updates finden für AppImage %1</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>An update has been found for the AppImage %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine Aktualisierung wurde gefunden für das AppImage %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Do you want to perform the update?</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchten Sie die Aktualisierung durchführen?</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Remove old AppImage after successful update</source>
-        <translation type="unfinished"></translation>
+        <translation>Entferne altes AppImage nach erfolgreicher Aktualisierung</translation>
     </message>
     <message>
         <location line="+32"/>
         <source>File reported as updated does not exist: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei, die als aktualisiert angegeben wurde, existiert nicht: %1</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Failed to register updated AppImage in system</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Registrieren des aktualisierten AppImages im System</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Failed to unregister old AppImage in system</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Deregistrieren des alten AppImages im System</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Failed to remove old AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Entfernen des alten AppImages</translation>
     </message>
 </context>
 </TS>
