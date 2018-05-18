@@ -4,7 +4,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="+109"/>
+        <location filename="../src/main.cpp" line="+107"/>
         <location line="+10"/>
         <location line="+18"/>
         <location line="+12"/>
@@ -13,10 +13,10 @@
         <location line="+10"/>
         <location line="+8"/>
         <location line="+59"/>
-        <location line="+134"/>
+        <location line="+111"/>
         <location filename="../src/remove_main.cpp" line="+95"/>
         <location line="+11"/>
-        <location filename="../src/shared.cpp" line="+160"/>
+        <location filename="../src/shared.cpp" line="+161"/>
         <location line="+10"/>
         <location line="+12"/>
         <location line="+10"/>
@@ -25,7 +25,7 @@
         <translation>Error</translation>
     </message>
     <message>
-        <location line="-275"/>
+        <location line="-252"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher does not support type %1 AppImages at the moment.</translation>
     </message>
@@ -77,7 +77,7 @@
         <translation>execv() failed: %1</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+18"/>
         <source>Usage: %1 [options] &lt;path&gt;</source>
         <translation>Usage: %1 [options] &lt;path&gt;</translation>
     </message>
