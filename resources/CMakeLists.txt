@@ -12,3 +12,8 @@ install(
     ${CMAKE_CURRENT_SOURCE_DIR}/appimagelauncher.desktop
     DESTINATION share/applications COMPONENT APPIMAGELAUNCHER
 )
+
+install(
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/l10n
+    DESTINATION share/appimagelauncher COMPONENT APPIMAGELAUNCHER
+)
