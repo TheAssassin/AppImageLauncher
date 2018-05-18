@@ -9,6 +9,21 @@ AppImageLauncher makes your Linux desktop AppImage ready™. By installing it, y
 Due to its simple but efficient way to integrate into your system, it plays well with other applications that can be used to manage AppImages, for example app stores. However, it doesn't depend on any of those, and can run completely standalone.
 
 Install AppImageLauncher today for your distribution and enjoy using AppImages as easy as never before!
+
+
+## Features
+
+### AppImage desktop integration
+
+The core feature of AppImageLauncher is the so-called desktop integration. AppImageLauncher allows you to integrate AppImages you download into your application menu or launcher to make it easier for you to launch them. It also takes care of moving them into a central location, where you can find them later if you need access to them again. Furthermore, it sets up the update and removal entries in the launcher for you.
+
+### Update management
+
+AppImageLauncher provides a simple to use update mechanism. After desktop integration, the context menu of the AppImage's entry in the application launcher will have an entry for updating that launches a little helper tool that uses AppImageUpdate internally. Just click the entry and have the tool search and apply updates.
+
+### Remove AppImages from system
+
+Removing integrated AppImages is pretty simple, too. Similar to updating AppImages, you will find an entry in the context menu in the application launcher that triggers a removal tool. You will be asked to confirm the removal. If you choose to do so, the desktop integration is undone, and the file is removed from your system.
  
 
 ## About the project
