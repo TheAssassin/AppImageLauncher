@@ -88,6 +88,11 @@ if [ "$BIONIC" == "" ]; then
 
     unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
 
+    # fix for trusty: default qmake is for qt4
+    if which qmake-qt5 2>&1 1>/dev/null; then
+        export LINUXDEPLOYQT_ARGS="$LINUXDEPLOYQT_ARGS -qmake=$(which qmake-qt5)"
+    fi
+
     # bundle application
     ./linuxdeployqt-continuous-x86_64.AppImage \
         AppDir/usr/share/applications/appimagelauncher.desktop \
