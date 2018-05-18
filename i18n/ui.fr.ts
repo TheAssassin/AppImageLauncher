@@ -22,94 +22,94 @@
         <location line="+10"/>
         <location line="+33"/>
         <source>Error</source>
-        <translation></translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <location line="-252"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
-        <translation></translation>
+        <translation>AppImageLauncher ne prend pas en charge actuellement les AppImages de type %1.</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Could not make AppImage executable: %1</source>
-        <translation></translation>
+        <translation>Impossible de rendre l&apos;AppImage exécutable : %1</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Failed to open AppImage for reading: %1</source>
-        <translation></translation>
+        <translation>Impossible de lire l&apos;AppImage : %1</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Failed to create temporary directory</source>
-        <translation></translation>
+        <translation>Impossible de créer un répertoire temporaire</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Failed to create temporary copy of type 1 AppImage</source>
-        <translation></translation>
+        <translation>Impossible de créer une copie temporaire d&apos;une AppImage de type 1</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Failed to open temporary AppImage copy for writing</source>
-        <translation></translation>
+        <translation>Impossible d&apos;ouvrir une copie temporaire de l&apos;AppImage pour écriture</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+8"/>
         <source>Failed to remove magic bytes from temporary AppImage copy</source>
-        <translation></translation>
+        <translation>Impossible de supprimer les octets magiques de la copie temporaire de l&apos;AppImage</translation>
     </message>
     <message>
         <location line="+33"/>
         <source>execv() failed: %1</source>
         <comment>error message</comment>
-        <translation></translation>
+        <translation>execv() a échoué : %1</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>runtime not found: no such file or directory: %1</source>
-        <translation></translation>
+        <translation>runtime non trouvé : pas de tel fichier ou répertoire : %1</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>execv() failed: %1</source>
-        <translation></translation>
+        <translation>execv() a échoué : %1</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Usage: %1 [options] &lt;path&gt;</source>
-        <translation></translation>
+        <translation>Utilisation : %1 [options] &lt;chemin&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Desktop integration helper for AppImages, for use by Linux distributions.</source>
-        <translation></translation>
+        <translation>Assistant d&apos;intégration au bureau d&apos;AppImages, destiné à être utilisé par les distributions Linux.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Options:</source>
-        <translation></translation>
+        <translation>Options :</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Display this help and exit</source>
-        <translation></translation>
+        <translation>Afficher cette aide et quitter</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Display version and exit</source>
-        <translation></translation>
+        <translation>Afficher la version et quitter</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Arguments:</source>
-        <translation></translation>
+        <translation>Paramètres :</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Path to AppImage (mandatory)</source>
-        <translation></translation>
+        <translation>Chemin vers l&apos;AppImage (obligatoire)</translation>
     </message>
     <message>
         <location line="+16"/>
