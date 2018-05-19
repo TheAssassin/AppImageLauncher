@@ -88,11 +88,21 @@ int main(int argc, char** argv) {
     appimage::update::qt::QtUpdater updater(pathToAppImage);
     updater.enableRunUpdatedAppImageButton(false);
 
-    if (!updater.checkForUpdates()) {
+    auto updateCheckResult = updater.checkForUpdates();
+
+    if (updateCheckResult == 0) {
         QMessageBox::information(
             nullptr,
             QObject::tr("No updates found"),
             QObject::tr("Could not find updates for AppImage %1").arg(pathToAppImage)
+        );
+        return 0;
+    } else if (updateCheckResult != 1) {
+        // FIXME: add ability to gather and display the messages in this case
+        QMessageBox::information(
+            nullptr,
+            QObject::tr("Error"),
+            QObject::tr("Failed to check for updates. Please check the command line output for details.")
         );
         return 0;
     }
