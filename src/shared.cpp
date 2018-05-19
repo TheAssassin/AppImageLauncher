@@ -160,12 +160,25 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
         }
 
         if (!QFile(pathToAppImage).rename(pathToIntegratedAppImage)) {
-            QMessageBox::critical(
+            auto result = QMessageBox::critical(
                 nullptr,
                 QObject::tr("Error"),
-                QObject::tr("Failed to move AppImage to target location")
+                QObject::tr("Failed to move AppImage to target location.\n"
+                            "Try to copy AppImage instead?"),
+                QMessageBox::Ok | QMessageBox::Cancel
             );
-            return INTEGRATION_FAILED;
+
+            if (result == QMessageBox::Cancel)
+                return INTEGRATION_FAILED;
+
+            if (!QFile(pathToAppImage).copy(pathToIntegratedAppImage)) {
+                QMessageBox::critical(
+                    nullptr,
+                    QObject::tr("Error"),
+                    QObject::tr("Failed to copy AppImage to target location")
+                );
+                return INTEGRATION_FAILED;
+            }
         }
     }
 
