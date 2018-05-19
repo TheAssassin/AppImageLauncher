@@ -12,21 +12,12 @@ TranslationManager::TranslationManager(QApplication& app) : app(app) {
     qtTranslator->load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     app.installTranslator(qtTranslator);
 
-    // first we need to find the translation directory
-    // if this is run from the source tree, we try a path that can only work within the repository
-    // then, we try the expected install location relative to the main binary
-    auto translationDir = QString(CMAKE_PROJECT_SOURCE_DIR) + "/resources/l10n";
-
-    if (!QDir(translationDir).exists()) {
-        const auto binaryDirPath = app.applicationDirPath();
-
-        translationDir = binaryDirPath + "/../share/appimagelauncher/l10n";
-    }
-
     const auto systemLocale = QLocale::system().name();
 
     // we're using primarily short names for translations, so we should load these translations as well
     const auto shortSystemLocale = systemLocale.split('_')[0];
+
+    const auto translationDir = getTranslationDir();
 
     auto myappTranslator = new QTranslator();
     myappTranslator->load(translationDir + "/ui." + systemLocale + ".qm");
@@ -43,4 +34,19 @@ TranslationManager::~TranslationManager() {
         delete translator;
         translator = nullptr;
     }
+}
+
+QString TranslationManager::getTranslationDir() {
+    // first we need to find the translation directory
+    // if this is run from the source tree, we try a path that can only work within the repository
+    // then, we try the expected install location relative to the main binary
+    auto translationDir = QString(CMAKE_PROJECT_SOURCE_DIR) + "/resources/l10n";
+
+    if (!QDir(translationDir).exists()) {
+        const auto binaryDirPath = QApplication::applicationDirPath();
+
+        translationDir = binaryDirPath + "/../share/appimagelauncher/l10n";
+    }
+
+    return translationDir;
 }

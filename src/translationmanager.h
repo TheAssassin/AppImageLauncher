@@ -13,6 +13,10 @@ private:
     QList<QTranslator*> installedTranslators;
 
 public:
-    TranslationManager(QApplication& app);
+    explicit TranslationManager(QApplication& app);
     ~TranslationManager();
+
+public:
+    // get translation dir
+    static QString getTranslationDir();
 };
