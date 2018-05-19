@@ -1,6 +1,3 @@
-// own header
-#include "shared.h"
-
 // system includes
 #include <iostream>
 #include <sstream>
@@ -16,12 +13,19 @@ extern "C" {
 // library includes
 #include <QDebug>
 #include <QDirIterator>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonParseError>
 #include <QLibraryInfo>
 #include <QMap>
+#include <QMapIterator>
 #include <QMessageBox>
 #include <QObject>
 #include <QRegularExpression>
 
+// local headers
+#include "shared.h"
+#include "translationmanager.h"
 
 bool makeExecutable(const std::string& path) {
     struct stat fileStat{};
@@ -301,6 +305,74 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
         desktopActions.size()
     );
 
+    // load translations from JSON file(s)
+    QMap<QString, QString> removeActionNameTranslations;
+    QMap<QString, QString> updateActionNameTranslations;
+
+    {
+        QDirIterator i18nDirIterator(TranslationManager::getTranslationDir());
+
+        while(i18nDirIterator.hasNext()) {
+            const auto& filePath = i18nDirIterator.next();
+            const auto& fileName = QFileInfo(filePath).fileName();
+
+            auto x = strdup(fileName.toStdString().c_str());
+
+            if (!QFileInfo(filePath).isFile() || !(fileName.startsWith("desktopfiles.") && fileName.endsWith(".json")))
+                continue;
+
+            // check whether filename's format is alright, otherwise parsing the locale might try to access a
+            // non-existing (or the wrong) member
+            auto splitFilename = fileName.split(".");
+
+            if (splitFilename.size() != 3)
+                continue;
+
+            // parse locale from filename
+            auto locale = splitFilename[1];
+
+            QFile jsonFile(filePath);
+
+            if (!jsonFile.open(QIODevice::ReadOnly)) {
+                QMessageBox::warning(
+                    nullptr,
+                    QMessageBox::tr("Warning"),
+                    QMessageBox::tr("Could not parse desktop file translations:\nCould not open file for reading:\n\n%1").arg(fileName)
+                );
+            }
+
+            // TODO: need to make sure that this doesn't try to read huge files at once
+            auto data = jsonFile.readAll();
+
+            QJsonParseError parseError{};
+            auto jsonDoc = QJsonDocument::fromJson(data, &parseError);
+
+            // show warning on syntax errors and continue
+            if (parseError.error != QJsonParseError::NoError || jsonDoc.isNull() || !jsonDoc.isObject()) {
+                QMessageBox::warning(
+                    nullptr,
+                    QMessageBox::tr("Warning"),
+                    QMessageBox::tr("Could not parse desktop file translations:\nInvalid syntax:\n\n%1").arg(parseError.errorString())
+                );
+            }
+
+            auto jsonObj = jsonDoc.object();
+
+            for (const auto& key : jsonObj.keys()) {
+                auto value = jsonObj[key].toString();
+                auto splitKey = key.split("/");
+
+                if (key.startsWith("Desktop Action update")) {
+                    qDebug() << "update: adding" << value << "for locale" << locale;
+                    updateActionNameTranslations[locale] = value;
+                } else if (key.startsWith("Desktop Action remove")) {
+                    qDebug() << "remove: adding" << value << "for locale" << locale;
+                    removeActionNameTranslations[locale] = value;
+                }
+            }
+        }
+    }
+
     // add Remove action
     {
         const auto removeSectionName = "Desktop Action Remove";
@@ -310,6 +382,13 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
         std::ostringstream removeExecPath;
         removeExecPath << CMAKE_INSTALL_PREFIX << "/lib/appimagelauncher/remove " << newPath;
         g_key_file_set_string(desktopFile, removeSectionName, "Exec", removeExecPath.str().c_str());
+
+        // install translations
+        auto it = QMapIterator<QString, QString>(removeActionNameTranslations);
+        while (it.hasNext()) {
+            auto entry = it.next();
+            g_key_file_set_locale_string(desktopFile, removeSectionName, "Name", entry.key().toStdString().c_str(), entry.value().toStdString().c_str());
+        }
     }
 
     // add Update action
@@ -321,6 +400,13 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
         std::ostringstream updateExecPath;
         updateExecPath << CMAKE_INSTALL_PREFIX << "/lib/appimagelauncher/update " << newPath;
         g_key_file_set_string(desktopFile, updateSectionName, "Exec", updateExecPath.str().c_str());
+
+        // install translations
+        auto it = QMapIterator<QString, QString>(updateActionNameTranslations);
+        while (it.hasNext()) {
+            auto entry = it.next();
+            g_key_file_set_locale_string(desktopFile, updateSectionName, "Name", entry.key().toStdString().c_str(), entry.value().toStdString().c_str());
+        }
     }
 
     if (!g_key_file_save_to_file(desktopFile, desktopFilePath, &error)) {
