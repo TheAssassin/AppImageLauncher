@@ -30,6 +30,7 @@ extern "C" {
 
 // local headers
 #include "shared.h"
+#include "translationmanager.h"
 
 bool cleanUpOldDesktopFiles() {
     auto dirPath = QString(xdg_data_home()) + "/applications";
@@ -287,8 +288,8 @@ int main(int argc, char** argv) {
             << APPIMAGELAUNCHER_BUILD_DATE;
     app.setApplicationVersion(QString::fromStdString(version.str()));
 
-    QList<QTranslator> installedTranslators;
-    installTranslations(app, installedTranslators);
+    // install translations
+    TranslationManager translationManager(app);
 
     std::ostringstream usage;
     usage << QObject::tr("Usage: %1 [options] <path>").arg(argv[0]).toStdString() << std::endl

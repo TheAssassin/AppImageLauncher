@@ -4,9 +4,6 @@
 #include <string>
 
 // library headers
-#include <QApplication>
-#include <QList>
-#include <QTranslator>
 #include <QString>
 
 // makes an existing file executable
@@ -32,7 +29,3 @@ QString buildPathToIntegratedAppImage(const QString& pathToAppImage);
 // extracts the digest embedded in the file
 // if no such digest has been embedded, it calculates it using libappimage
 QString getAppImageDigestMd5(const QString& path);
-
-// install translations for AppImageLauncher UIs
-// callers need to instantiate a QList<QTranslator> in which the created translators will be stored
-bool installTranslations(const QApplication& app, QList<QTranslator>& installedTranslators);

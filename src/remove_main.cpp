@@ -20,6 +20,7 @@ extern "C" {
 
 // local includes
 #include "shared.h"
+#include "translationmanager.h"
 
 bool unregisterAppImage(const QString& pathToAppImage) {
     auto rv = appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false);
@@ -42,8 +43,8 @@ int main(int argc, char** argv) {
             << APPIMAGELAUNCHER_BUILD_DATE;
     app.setApplicationVersion(QString::fromStdString(version.str()));
 
-    QList<QTranslator> installedTranslators;
-    installTranslations(app, installedTranslators);
+    // install translations
+    TranslationManager translationManager(app);
 
     parser.addHelpOption();
     parser.addVersionOption();

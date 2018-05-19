@@ -26,13 +26,14 @@ target_compile_definitions(shared
     PRIVATE -DCMAKE_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}"
 )
 
-
-set_source_files_properties(shared.cpp PROPERTIES COMPILE_FLAGS -DCMAKE_PROJECT_SOURCE_DIR="\\"${PROJECT_SOURCE_DIR}"\\")
+add_library(translationmanager translationmanager.cpp translationmanager.h)
+target_link_libraries(translationmanager PUBLIC Qt5::Core Qt5::Widgets)
+target_compile_definitions(translationmanager PRIVATE -DCMAKE_PROJECT_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
 
 
 # main AppImageLauncher application
 add_executable(AppImageLauncher main.cpp)
-target_link_libraries(AppImageLauncher shared Qt5::Core Qt5::Widgets PkgConfig::glib libappimage)
+target_link_libraries(AppImageLauncher shared translationmanager Qt5::Core Qt5::Widgets PkgConfig::glib libappimage)
 # set binary runtime rpath to make sure the libappimage.so built and installed by this project is going to be used
 # by the installed binaries (be it the .deb, the AppImage, or whatever)
 # in order to make the whole install tree relocatable, a relative path is used
@@ -51,7 +52,7 @@ install(
 
 # AppImage removal helper
 add_executable(remove remove_main.cpp)
-target_link_libraries(remove shared Qt5::Core Qt5::Widgets libappimage)
+target_link_libraries(remove shared translationmanager Qt5::Core Qt5::Widgets libappimage)
 # see AppImageLauncher for a description
 set_target_properties(remove PROPERTIES INSTALL_RPATH "\$ORIGIN")
 
@@ -63,7 +64,7 @@ install(
 
 # AppImage update helper
 add_executable(update update_main.cpp)
-target_link_libraries(update shared Qt5::Core Qt5::Widgets libappimage libappimageupdate-qt)
+target_link_libraries(update shared translationmanager Qt5::Core Qt5::Widgets libappimage libappimageupdate-qt)
 # see AppImageLauncher for a description
 set_target_properties(update PROPERTIES INSTALL_RPATH "\$ORIGIN")
 
