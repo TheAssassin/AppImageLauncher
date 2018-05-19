@@ -13,7 +13,6 @@ extern "C" {
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDir>
-#include <QDirIterator>
 #include <QFile>
 #include <QFileDialog>
 #include <QFileInfo>
