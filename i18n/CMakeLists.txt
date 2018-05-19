@@ -54,3 +54,16 @@ foreach(TS_FILE IN LISTS TS_FILES)
     string(REPLACE .ts .qm QM_FILENAME ${TS_FILENAME})
     ail_generate_qm(${TS_FILENAME} ../resources/l10n/${QM_FILENAME})
 endforeach()
+
+# deploy JSON files
+file(GLOB JSON_FILES *.json)
+
+foreach(JSON_FILE IN LISTS JSON_FILES)
+    get_filename_component(JSON_FILENAME ${JSON_FILE} NAME)
+    add_custom_command(
+        TARGET l10n POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${JSON_FILENAME} ../resources/l10n/${JSON_FILENAME}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        MAIN_DEPENDENCY ${JSON_FILE}
+    )
+endforeach()
