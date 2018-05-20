@@ -32,164 +32,164 @@
     <message>
         <location line="+10"/>
         <source>Could not make AppImage executable: %1</source>
-        <translation></translation>
+        <translation>No se pudo hacer que AppImage sea ejecutable:% 1</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Failed to open AppImage for reading: %1</source>
-        <translation></translation>
+        <translation>Error al abrir AppImage para leer:% 1</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Failed to create temporary directory</source>
-        <translation></translation>
+        <translation>Error al abrir AppImage para leer:% 1</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Failed to create temporary copy of type 1 AppImage</source>
-        <translation></translation>
+        <translation>Error al crear una copia temporal del tipo 1 AppImage</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Failed to open temporary AppImage copy for writing</source>
-        <translation></translation>
+        <translation>Error al abrir la copia temporal de AppImage para escribir</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+8"/>
         <source>Failed to remove magic bytes from temporary AppImage copy</source>
-        <translation></translation>
+        <translation>Error al eliminar los bytes mágicos de la copia temporal de AppImage</translation>
     </message>
     <message>
         <location line="+33"/>
         <source>execv() failed: %1</source>
         <comment>error message</comment>
-        <translation></translation>
+        <translation>Execv () falló:% 1</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>runtime not found: no such file or directory: %1</source>
-        <translation></translation>
+        <translation>tiempo de ejecución no encontrado: no hay tal archivo o directorio:% 1</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>execv() failed: %1</source>
-        <translation></translation>
+        <translation>Execv () falló:% 1</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Usage: %1 [options] &lt;path&gt;</source>
-        <translation></translation>
+        <translation>Uso:% 1 [opciones] &lt;ruta&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Desktop integration helper for AppImages, for use by Linux distributions.</source>
-        <translation></translation>
+        <translation>Ayudante de integración de escritorio para AppImages, para ser utilizado por las distribuciones de Linux.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Options:</source>
-        <translation></translation>
+        <translation>Opciones:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Display this help and exit</source>
-        <translation></translation>
+        <translation>Muestre esta ayuda y salga</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Display version and exit</source>
-        <translation></translation>
+        <translation>Mostrar versión y salir</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Arguments:</source>
-        <translation></translation>
+        <translation>Argumentos:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Path to AppImage (mandatory)</source>
-        <translation></translation>
+        <translation>Ruta hacia AppImage (Obligatorio)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Failed to clean up old desktop files</source>
-        <translation></translation>
+        <translation>Error al limpiar los viejos archivos de escritorio</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Unknown AppImageLauncher option: %1</source>
-        <translation></translation>
+        <translation>Opción de AppImageLauncher desconocida:% 1</translation>
     </message>
     <message>
         <location line="+9"/>
         <location filename="../src/remove_main.cpp" line="-41"/>
         <location filename="../src/update_main.cpp" line="+60"/>
         <source>Error: no such file or directory: %1</source>
-        <translation></translation>
+        <translation>Error: no hay tal archivo o directorio:% 1</translation>
     </message>
     <message>
         <location line="+10"/>
         <location filename="../src/remove_main.cpp" line="+9"/>
         <location filename="../src/update_main.cpp" line="+7"/>
         <source>Not an AppImage: %1</source>
-        <translation></translation>
+        <translation>No es una AppImage:% 1</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</source>
-        <translation></translation>
+        <translation>Integrarlo moverá el AppImage a una ubicación predefinida, y lo incluirá en su iniciador de aplicaciones.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher.</source>
-        <translation></translation>
+        <translation>Para eliminar o actualizar AppImage, utilice el menú contextual del icono de la aplicación en su barra de tareas o iniciador.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The directory the integrated AppImages are stored in is currently set to:</source>
-        <translation></translation>
+        <translation>El directorio en el que están almacenados los AppImages integrados está actualmente configurado para:</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>%1 has not been integrated into your system.</source>
-        <translation></translation>
+        <translation>% 1 no se ha integrado en su sistema.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Desktop Integration</source>
-        <translation></translation>
+        <translation>Integración de escritorio</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Integrate and run</source>
-        <translation></translation>
+        <translation>Integrar y ejecutar</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Run once</source>
-        <translation></translation>
+        <translation>Ejecutar una vez</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cancel</source>
-        <translation></translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../src/remove_main.cpp" line="-36"/>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
-        <translation></translation>
+        <translation>Elimina AppImages después de la integración del escritorio, para ser utilizado por las distribuciones de Linux</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>AppImageLauncher remove</source>
         <comment>remove helper app name</comment>
-        <translation></translation>
+        <translation>AppImageLauncher eliminar</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Path to AppImage</source>
-        <translation></translation>
+        <translation>Ruta a AppImage</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -337,7 +337,7 @@
     <message>
         <location line="+5"/>
         <source>Failed to remove old AppImage</source>
-        <translation></translation>
+        <translation>Error al eliminar la antigua AppImage</translation>
     </message>
 </context>
 </TS>
