@@ -224,115 +224,115 @@
     <message>
         <location filename="../src/shared.cpp" line="-88"/>
         <source>AppImage with same filename has already been integrated.</source>
-        <translation>AppImage con el mismo nonmbre de arachivo ha sido actualmente integrado.</translation>
+        <translation>AppImage con el mismo nombre de archivo ha sido actualmente integrado.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Do you wish to overwrite the existing AppImage?</source>
-        <translation></translation>
+        <translation>Desea sobreescribir la AppImage existente?</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Choosing No will run the AppImage once, and leave the system in its current state.</source>
-        <translation></translation>
+        <translation>Elegir No ejecutará AppImage una vez y dejará el sistema en su estado actual.</translation>
     </message>
     <message>
         <location line="+4"/>
         <location line="+98"/>
         <location filename="../src/update_main.cpp" line="+12"/>
         <source>Warning</source>
-        <translation></translation>
+        <translation>Advertencia</translation>
     </message>
     <message>
         <location line="-81"/>
         <source>Failed to move AppImage to target location</source>
-        <translation></translation>
+        <translation>Error al mover AppImage a la ubicación de destino.</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Failed to register AppImage in system via libappimage</source>
-        <translation></translation>
+        <translation>Error al registrar AppImage en el sistema a través de libappimage</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Failed to find integrated desktop file</source>
-        <translation></translation>
+        <translation>Error al encontrar el archivo de escritorio integrado</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Couldn&apos;t find integrated AppImage&apos;s desktop file</source>
-        <translation></translation>
+        <translation>No se pudo encontrar el archivo de escritorio de AppImage integrado</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Failed to load desktop file:</source>
-        <translation></translation>
+        <translation>Error al cargar el archivo de escritorio:</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>AppImage has invalid desktop file</source>
-        <translation></translation>
+        <translation>AppImage tiene un archivo de escritorio no válido</translation>
     </message>
     <message>
         <location filename="../src/update_main.cpp" line="-51"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
-        <translation></translation>
+        <translation>Actualiza AppImages después de la integración del escritorio, para ser utilizado por las distribuciones de Linux</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>AppImageLauncher update</source>
         <comment>update helper app name</comment>
-        <translation></translation>
+        <translation>Actualización de AppImageLauncher</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>The AppImage hasn&apos;t been integrated before. This tool will, however, integrate the updated AppImage.</source>
-        <translation></translation>
+        <translation>La AppImage no se ha integrado antes. Esta herramienta, sin embargo, integrará la AppImage actualizada.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Do you wish to continue?</source>
-        <translation></translation>
+        <translation>Desea continuar?</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>No updates found</source>
-        <translation></translation>
+        <translation>No se encontraron actualizaciones</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Could not find updates for AppImage %1</source>
-        <translation></translation>
+        <translation>No se pudieron encontrar las actualizaciones para AppImage% 1</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>An update has been found for the AppImage %1</source>
-        <translation></translation>
+        <translation>Se ha encontrado una actualización para AppImage% 1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Do you want to perform the update?</source>
-        <translation></translation>
+        <translation>¿Desea realizar la actualización?</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Remove old AppImage after successful update</source>
-        <translation></translation>
+        <translation>Eliminar AppImage anterior después de una actualización exitosa</translation>
     </message>
     <message>
         <location line="+32"/>
         <source>File reported as updated does not exist: %1</source>
-        <translation></translation>
+        <translation>El archivo informado como actualizado no existe:% 1</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Failed to register updated AppImage in system</source>
-        <translation></translation>
+        <translation>Error al registrar AppImage actualizado en el sistema</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Failed to unregister old AppImage in system</source>
-        <translation></translation>
+        <translation>Error al anular el registro de AppImage anterior en el sistema</translation>
     </message>
     <message>
         <location line="+5"/>
