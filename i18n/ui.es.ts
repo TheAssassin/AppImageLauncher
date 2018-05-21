@@ -189,42 +189,42 @@
     <message>
         <location line="+16"/>
         <source>Path to AppImage</source>
-        <translation>Ruta a AppImage</translation>
+        <translation>Ruta hacia AppImage</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>&lt;path&gt;</source>
-        <translation></translation>
+        <translation>&lt;ruta&gt;</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>AppImage remove helper error</source>
-        <translation></translation>
+        <translation>AppImage eliminar error de ayuda</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Please confirm</source>
-        <translation></translation>
+        <translation>Por favor confirmar</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Are you sure you want to remove this AppImage?</source>
-        <translation></translation>
+        <translation>Está seguro que desea eliminar esta AppImage?</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Failed to unregister AppImage: %1</source>
-        <translation></translation>
+        <translation>Error al anular el registro de AppImage:% 1</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Failed to remove AppImage: %1</source>
-        <translation></translation>
+        <translation>Error al eliminar AppImage:% 1</translation>
     </message>
     <message>
         <location filename="../src/shared.cpp" line="-88"/>
         <source>AppImage with same filename has already been integrated.</source>
-        <translation></translation>
+        <translation>AppImage con el mismo nonmbre de arachivo ha sido actualmente integrado.</translation>
     </message>
     <message>
         <location line="+2"/>
