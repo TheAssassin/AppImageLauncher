@@ -246,7 +246,7 @@
     <message>
         <location line="-81"/>
         <source>Failed to move AppImage to target location</source>
-        <translation>Error al mover AppImage a la ubicación de destino.</translation>
+        <translation>Error al mover AppImage a la ubicación de destino</translation>
     </message>
     <message>
         <location line="+10"/>
