@@ -1,7 +1,0 @@
-#! /bin/bash
-
-# as there's no _real_ package that we could use as a dependency to take care of the kernel module,
-# we need to make sure that the kernel module is loaded manually
-modprobe -v binfmt_misc
-
-exec @CMAKE_INSTALL_PREFIX@/lib/appimagelauncher/install-scripts/post-install

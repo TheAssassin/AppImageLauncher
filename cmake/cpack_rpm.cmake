@@ -52,12 +52,12 @@ set(CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION
 
 # add postinst and prerm hooks to RPM package
 configure_file(
-    ${PROJECT_SOURCE_DIR}/cmake/rpm/post-install.in
+    ${PROJECT_SOURCE_DIR}/resources/install-scripts/post-install.in
     ${PROJECT_BINARY_DIR}/cmake/rpm/post-install
     @ONLY
 )
 configure_file(
-    ${PROJECT_SOURCE_DIR}/cmake/rpm/post-uninstall.in
+    ${PROJECT_SOURCE_DIR}/resources/install-scripts/post-uninstall.in
     ${PROJECT_BINARY_DIR}/cmake/rpm/post-uninstall
     @ONLY
 )

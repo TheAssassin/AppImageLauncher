@@ -54,17 +54,20 @@ endif()
 # improve dependency list
 set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
-# add postinst and prerm hooks to Debian package
+# add postinst and postrm hooks to Debian package
 configure_file(
-    ${PROJECT_SOURCE_DIR}/cmake/debian/postinst.in
+    ${PROJECT_SOURCE_DIR}/resources/install-scripts/post-install.in
     ${PROJECT_BINARY_DIR}/cmake/debian/postinst
     @ONLY
 )
 configure_file(
-    ${PROJECT_SOURCE_DIR}/cmake/debian/postrm.in
-    ${PROJECT_BINARY_DIR}/cmake/debian/postrm
+    ${PROJECT_SOURCE_DIR}//resources/install-scripts/post-uninstall.in
+    ${PROJECT_BINARY_DIR}/cmake/debian/prerm
     @ONLY
 )
 
 set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA
-    "${PROJECT_BINARY_DIR}/cmake/debian/postinst;${PROJECT_BINARY_DIR}/cmake/debian/postrm")
+    "${PROJECT_BINARY_DIR}/cmake/debian/postinst"
+    "${PROJECT_BINARY_DIR}/cmake/debian/prerm"
+    "${PROJECT_BINARY_DIR}/cmake/debian/postrm"
+)
