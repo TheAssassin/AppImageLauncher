@@ -15,6 +15,14 @@ enum IntegrationState {
     INTEGRATION_ABORTED
 };
 
+// installs desktop file for given AppImage, including AppImageLauncher specific modifications
+// set resolveCollisions to false in order to leave the Name entries as-is
+bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions = true);
+
+// update AppImage's existing desktop file with AppImageLauncher specific entries
+// this alias for installDesktopFile does not perform any collision detection and resolving
+bool updateDesktopFile(const QString& pathToAppImage);
+
 // integrates an AppImage using a standard workflow used across all AppImageLauncher applications
 IntegrationState integrateAppImage(const QString& pathToAppImage, const QString& pathToIntegratedAppImage);
 

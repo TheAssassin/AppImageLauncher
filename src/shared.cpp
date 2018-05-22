@@ -124,65 +124,8 @@ QMap<QString, QString> findCollisions(const QString& currentNameEntry) {
     return collisions;
 }
 
-
-IntegrationState integrateAppImage(const QString& pathToAppImage, const QString& pathToIntegratedAppImage) {
-    // need std::strings to get working pointers with .c_str()
-    const auto oldPath = pathToAppImage.toStdString();
-    const auto newPath = pathToIntegratedAppImage.toStdString();
-
-    // create target directory
-    QDir().mkdir(QFileInfo(QFile(pathToIntegratedAppImage)).dir().absolutePath());
-
-    // check whether AppImage is in integration directory already
-    if (QFileInfo(pathToAppImage).absoluteFilePath() != QFileInfo(pathToIntegratedAppImage).absoluteFilePath()) {
-        // need to check whether file exists
-        // if it does, the existing AppImage needs to be removed before rename can be called
-        if (QFile(pathToIntegratedAppImage).exists()) {
-            std::ostringstream message;
-            message << QObject::tr("AppImage with same filename has already been integrated.").toStdString() << std::endl
-                    << std::endl
-                    << QObject::tr("Do you wish to overwrite the existing AppImage?").toStdString() << std::endl
-                    << QObject::tr("Choosing No will run the AppImage once, and leave the system in its current state.").toStdString();
-
-            auto rv = QMessageBox::warning(
-                nullptr,
-                QObject::tr("Warning"),
-                QString::fromStdString(message.str()),
-                QMessageBox::Yes | QMessageBox::No,
-                QMessageBox::Yes
-            );
-
-            if (rv == QMessageBox::No) {
-                return INTEGRATION_ABORTED;
-            }
-
-            QFile(pathToIntegratedAppImage).remove();
-        }
-
-        if (!QFile(pathToAppImage).rename(pathToIntegratedAppImage)) {
-            auto result = QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to move AppImage to target location.\n"
-                            "Try to copy AppImage instead?"),
-                QMessageBox::Ok | QMessageBox::Cancel
-            );
-
-            if (result == QMessageBox::Cancel)
-                return INTEGRATION_FAILED;
-
-            if (!QFile(pathToAppImage).copy(pathToIntegratedAppImage)) {
-                QMessageBox::critical(
-                    nullptr,
-                    QObject::tr("Error"),
-                    QObject::tr("Failed to copy AppImage to target location")
-                );
-                return INTEGRATION_FAILED;
-            }
-        }
-    }
-
-    if (appimage_register_in_system(newPath.c_str(), false) != 0) {
+bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
+    if (appimage_register_in_system(pathToAppImage.toStdString().c_str(), false) != 0) {
         QMessageBox::critical(
             nullptr,
             QObject::tr("Error"),
@@ -191,7 +134,7 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
         return INTEGRATION_FAILED;
     }
 
-    const auto* desktopFilePath = appimage_registered_desktop_file_path(newPath.c_str(), nullptr, false);
+    const auto* desktopFilePath = appimage_registered_desktop_file_path(pathToAppImage.toStdString().c_str(), nullptr, false);
 
     // sanity check -- if the file doesn't exist, the function returns NULL
     if (desktopFilePath == nullptr) {
@@ -262,36 +205,38 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
         );
     }
 
-    // TODO: support multilingual collisions
-    auto collisions = findCollisions(nameEntry);
+    if (resolveCollisions) {
+        // TODO: support multilingual collisions
+        auto collisions = findCollisions(nameEntry);
 
-    // make sure to remove own entry
-    collisions.remove(QString(desktopFilePath));
+        // make sure to remove own entry
+        collisions.remove(QString(desktopFilePath));
 
-    if (!collisions.empty()) {
-        // collisions are resolved like in the filesystem: a monotonically increasing number in brackets is appended to
-        // the Name
-        // in order to keep the number monotonically increasing, we look for the highest number in brackets in the
-        // existing entries, add 1 to it, and append it in brackets to the current desktop file's Name entry
+        if (!collisions.empty()) {
+            // collisions are resolved like in the filesystem: a monotonically increasing number in brackets is
+            // appended to the Name in order to keep the number monotonically increasing, we look for the highest
+            // number in brackets in the existing entries, add 1 to it, and append it in brackets to the current
+            // desktop file's Name entry
 
-        unsigned int currentNumber = 1;
+            unsigned int currentNumber = 1;
 
-        QRegularExpression regex("^.*([0-9]+)$");
+            QRegularExpression regex("^.*([0-9]+)$");
 
-        for (const auto& fileName : collisions) {
-            const auto& currentNameEntry = collisions[fileName];
+            for (const auto& fileName : collisions) {
+                const auto& currentNameEntry = collisions[fileName];
 
-            auto match = regex.match(currentNameEntry);
+                auto match = regex.match(currentNameEntry);
 
-            if (match.hasMatch()) {
-                const unsigned int num = match.captured(0).toUInt();
-                if (num >= currentNumber)
-                    currentNumber = num + 1;
+                if (match.hasMatch()) {
+                    const unsigned int num = match.captured(0).toUInt();
+                    if (num >= currentNumber)
+                        currentNumber = num + 1;
+                }
             }
-        }
 
-        auto newName = QString(nameEntry) + " (" + QString::number(currentNumber) + ")";
-        g_key_file_set_string(desktopFile, G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_NAME, newName.toStdString().c_str());
+            auto newName = QString(nameEntry) + " (" + QString::number(currentNumber) + ")";
+            g_key_file_set_string(desktopFile, G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_NAME, newName.toStdString().c_str());
+        }
     }
 
     auto convertToCharPointerList = [](const std::vector<std::string>& stringList) {
@@ -393,7 +338,7 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
         g_key_file_set_string(desktopFile, removeSectionName, "Name", "Remove AppImage from system");
 
         std::ostringstream removeExecPath;
-        removeExecPath << CMAKE_INSTALL_PREFIX << "/lib/appimagelauncher/remove " << newPath;
+        removeExecPath << CMAKE_INSTALL_PREFIX << "/lib/appimagelauncher/remove " << pathToAppImage.toStdString();
         g_key_file_set_string(desktopFile, removeSectionName, "Exec", removeExecPath.str().c_str());
 
         // install translations
@@ -411,7 +356,7 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
         g_key_file_set_string(desktopFile, updateSectionName, "Name", "Update AppImage");
 
         std::ostringstream updateExecPath;
-        updateExecPath << CMAKE_INSTALL_PREFIX << "/lib/appimagelauncher/update " << newPath;
+        updateExecPath << CMAKE_INSTALL_PREFIX << "/lib/appimagelauncher/update " << pathToAppImage.toStdString();
         g_key_file_set_string(desktopFile, updateSectionName, "Exec", updateExecPath.str().c_str());
 
         // install translations
@@ -424,10 +369,78 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
 
     if (!g_key_file_save_to_file(desktopFile, desktopFilePath, &error)) {
         handleError();
-        return INTEGRATION_FAILED;
+        return false;
     }
 
     cleanup();
+
+    return true;
+}
+
+bool updateDesktopFile(const QString& pathToAppImage) {
+    return installDesktopFile(pathToAppImage, true);
+}
+
+IntegrationState integrateAppImage(const QString& pathToAppImage, const QString& pathToIntegratedAppImage) {
+    // need std::strings to get working pointers with .c_str()
+    const auto oldPath = pathToAppImage.toStdString();
+    const auto newPath = pathToIntegratedAppImage.toStdString();
+
+    // create target directory
+    QDir().mkdir(QFileInfo(QFile(pathToIntegratedAppImage)).dir().absolutePath());
+
+    // check whether AppImage is in integration directory already
+    if (QFileInfo(pathToAppImage).absoluteFilePath() != QFileInfo(pathToIntegratedAppImage).absoluteFilePath()) {
+        // need to check whether file exists
+        // if it does, the existing AppImage needs to be removed before rename can be called
+        if (QFile(pathToIntegratedAppImage).exists()) {
+            std::ostringstream message;
+            message << QObject::tr("AppImage with same filename has already been integrated.").toStdString() << std::endl
+                    << std::endl
+                    << QObject::tr("Do you wish to overwrite the existing AppImage?").toStdString() << std::endl
+                    << QObject::tr("Choosing No will run the AppImage once, and leave the system in its current state.").toStdString();
+
+            auto rv = QMessageBox::warning(
+                nullptr,
+                QObject::tr("Warning"),
+                QString::fromStdString(message.str()),
+                QMessageBox::Yes | QMessageBox::No,
+                QMessageBox::Yes
+            );
+
+            if (rv == QMessageBox::No) {
+                return INTEGRATION_ABORTED;
+            }
+
+            QFile(pathToIntegratedAppImage).remove();
+        }
+
+        if (!QFile(pathToAppImage).rename(pathToIntegratedAppImage)) {
+            auto result = QMessageBox::critical(
+                nullptr,
+                QObject::tr("Error"),
+                QObject::tr("Failed to move AppImage to target location.\n"
+                            "Try to copy AppImage instead?"),
+                QMessageBox::Ok | QMessageBox::Cancel
+            );
+
+            if (result == QMessageBox::Cancel)
+                return INTEGRATION_FAILED;
+
+            if (!QFile(pathToAppImage).copy(pathToIntegratedAppImage)) {
+                QMessageBox::critical(
+                    nullptr,
+                    QObject::tr("Error"),
+                    QObject::tr("Failed to copy AppImage to target location")
+                );
+                return INTEGRATION_FAILED;
+            }
+        }
+    }
+
+    if (!installDesktopFile(pathToIntegratedAppImage))
+        return INTEGRATION_FAILED;
+
     return INTEGRATION_SUCCESSFUL;
 }
 
