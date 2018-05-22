@@ -71,7 +71,7 @@ int main(int argc, char** argv) {
 
     bool hasBeenRegisteredBefore;
 
-    if (!(hasBeenRegisteredBefore = appimage_is_registered_in_system(pathToAppImage.toStdString().c_str()))) {
+    if (!(hasBeenRegisteredBefore = hasAlreadyBeenIntegrated(pathToAppImage))) {
         QString message = QObject::tr("The AppImage hasn't been integrated before. This tool will, however, integrate the "
                           "updated AppImage.") +
                           "\n\n" +

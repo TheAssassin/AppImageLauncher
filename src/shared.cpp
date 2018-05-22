@@ -486,3 +486,7 @@ QString getAppImageDigestMd5(const QString& path) {
 
     return hexDigestStr;
 }
+
+bool hasAlreadyBeenIntegrated(const QString& pathToAppImage) {
+    return appimage_is_registered_in_system(pathToAppImage.toStdString().c_str());
+}

@@ -37,3 +37,6 @@ QString buildPathToIntegratedAppImage(const QString& pathToAppImage);
 // extracts the digest embedded in the file
 // if no such digest has been embedded, it calculates it using libappimage
 QString getAppImageDigestMd5(const QString& path);
+
+// checks whether AppImage has been integrated already
+bool hasAlreadyBeenIntegrated(const QString& pathToAppImage);

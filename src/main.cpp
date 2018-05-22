@@ -371,7 +371,7 @@ int main(int argc, char** argv) {
         return runAppImage(pathToAppImage, argc, argv);
 
     // check whether AppImage has been integrated
-    if (appimage_is_registered_in_system(pathToAppImage.toStdString().c_str())) {
+    if (hasAlreadyBeenIntegrated(pathToAppImage)) {
         if (!updateDesktopFile(pathToAppImage))
             return 1;
 
