@@ -57,8 +57,13 @@ QString buildPathToIntegratedAppImage(const QString& pathToAppImage) {
     QString baseName = appImageInfo.completeBaseName();
 
     // if digest is available, append a separator
-    if (!digest.isEmpty())
-        baseName += "_" + digest;
+    if (!digest.isEmpty()) {
+        const auto digestSuffix = "_" + digest;
+
+        // check whether digest is already contained in filename
+        if (!baseName.endsWith(digestSuffix))
+            baseName += "_" + digest;
+    }
 
     auto fileName = baseName;
 
