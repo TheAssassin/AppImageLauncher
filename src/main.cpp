@@ -362,26 +362,6 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    // check for X-AppImage-Integrate=false
-    if (appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str()))
-        return runAppImage(pathToAppImage, argc, argv);
-
-    // AppImages in AppImages are not supposed to be integrated
-    if (pathToAppImage.startsWith("/tmp/.mount_"))
-        return runAppImage(pathToAppImage, argc, argv);
-
-    // check whether AppImage has been integrated
-    if (hasAlreadyBeenIntegrated(pathToAppImage)) {
-        if (!updateDesktopFile(pathToAppImage))
-            return 1;
-
-        return runAppImage(pathToAppImage, argc, argv);
-    }
-
-    // ignore terminal apps (fixes #2)
-    if (appimage_is_terminal_app(pathToAppImage.toStdString().c_str()))
-        return runAppImage(pathToAppImage, argc, argv);
-
     // type 2 specific checks
     if (type == 2) {
         // check parameters
@@ -401,6 +381,26 @@ int main(int argc, char** argv) {
             }
         }
     }
+
+    // check for X-AppImage-Integrate=false
+    if (appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str()))
+        return runAppImage(pathToAppImage, argc, argv);
+
+    // AppImages in AppImages are not supposed to be integrated
+    if (pathToAppImage.startsWith("/tmp/.mount_"))
+        return runAppImage(pathToAppImage, argc, argv);
+
+    // check whether AppImage has been integrated
+    if (hasAlreadyBeenIntegrated(pathToAppImage)) {
+        if (!updateDesktopFile(pathToAppImage))
+            return 1;
+
+        return runAppImage(pathToAppImage, argc, argv);
+    }
+
+    // ignore terminal apps (fixes #2)
+    if (appimage_is_terminal_app(pathToAppImage.toStdString().c_str()))
+        return runAppImage(pathToAppImage, argc, argv);
 
     std::ostringstream explanationStrm;
     explanationStrm << QObject::tr("Integrating it will move the AppImage into a predefined location, "
