@@ -67,8 +67,11 @@ QString buildPathToIntegratedAppImage(const QString& pathToAppImage) {
 
     auto fileName = baseName;
 
-    if (!appImageInfo.completeSuffix().isEmpty())
-        fileName += "." + appImageInfo.completeSuffix();
+    // must not use completeSuffix() in combination with completeBasename(), otherwise the final filename is composed
+    // incorrectly
+    if (!appImageInfo.suffix().isEmpty()) {
+        fileName += "." + appImageInfo.suffix();
+    }
 
     return integratedAppImagesDestination + "/" + fileName;
 }
