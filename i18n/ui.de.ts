@@ -2,9 +2,53 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de">
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <location filename="../src/main.cpp" line="+432"/>
+        <location filename="../src/shared.cpp" line="+302"/>
+        <location line="+15"/>
+        <source>Warning</source>
+        <translation type="unfinished">Warnung</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>AppImage has already been integrated, but it is not in the current integration destination directory.
+
+Do you want to move it into the new destination?
+Choosing No will run the AppImage once, and leave the AppImage in its current directory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Error</source>
+        <translation type="unfinished">Fehler</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Failed to unregister AppImage before re-integrating it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/shared.cpp" line="-14"/>
+        <source>Could not parse desktop file translations:
+Could not open file for reading:
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Could not parse desktop file translations:
+Invalid syntax:
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="+107"/>
+        <location filename="../src/main.cpp" line="-343"/>
         <location line="+10"/>
         <location line="+18"/>
         <location line="+12"/>
@@ -13,19 +57,21 @@
         <location line="+10"/>
         <location line="+8"/>
         <location line="+59"/>
-        <location line="+111"/>
-        <location filename="../src/remove_main.cpp" line="+92"/>
+        <location line="+112"/>
+        <location filename="../src/remove_main.cpp" line="+93"/>
         <location line="+11"/>
-        <location filename="../src/shared.cpp" line="+161"/>
-        <location line="+10"/>
+        <location filename="../src/shared.cpp" line="-182"/>
         <location line="+12"/>
         <location line="+10"/>
         <location line="+33"/>
+        <location line="+235"/>
+        <location line="+12"/>
+        <location filename="../src/update_main.cpp" line="+104"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location line="-252"/>
+        <location line="-253"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher unterstützt zur Zeit keine AppImages vom Typ %1.</translation>
     </message>
@@ -122,9 +168,9 @@
         <translation>Unbekannte AppImageLauncher-Option: %1</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <location filename="../src/remove_main.cpp" line="-41"/>
-        <location filename="../src/update_main.cpp" line="+60"/>
+        <location filename="../src/update_main.cpp" line="-43"/>
         <source>Error: no such file or directory: %1</source>
         <translation>Fehler: Datei oder Verzeichnis nicht gefunden: %1</translation>
     </message>
@@ -136,7 +182,7 @@
         <translation>Datei ist kein AppImage: %1</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+103"/>
         <source>Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</source>
         <translation>Durch die Integration wird das AppImage in ein vordefiniertes Verzeichnis verschoben, und in das Applikationsmenü aufgenommen.</translation>
     </message>
@@ -222,7 +268,7 @@
         <translation>Entfernen des AppImages fehlgeschlagen: %1</translation>
     </message>
     <message>
-        <location filename="../src/shared.cpp" line="-88"/>
+        <location filename="../src/shared.cpp" line="-35"/>
         <source>AppImage with same filename has already been integrated.</source>
         <translation>AppImage mit gleichem Dateinamen wurde bereits integriert.</translation>
     </message>
@@ -237,19 +283,18 @@
         <translation>Bei Klick auf Nein wird das AppImage einmalig ausgeführt, und das System in seinem derzeitigen Zustand belassen.</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location line="+98"/>
+        <location line="-198"/>
+        <location line="+202"/>
         <location filename="../src/update_main.cpp" line="+12"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location line="-81"/>
         <source>Failed to move AppImage to target location</source>
-        <translation>Verschieben des AppImages in Zielverzeichnis fehlgeschlagen</translation>
+        <translation type="vanished">Verschieben des AppImages in Zielverzeichnis fehlgeschlagen</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="-273"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Fehler beim Registrieren des AppImages im System via libappimage</translation>
     </message>
@@ -274,6 +319,17 @@
         <translation>AppImage hat ungültige Desktop-Datei</translation>
     </message>
     <message>
+        <location line="+218"/>
+        <source>Failed to move AppImage to target location.
+Try to copy AppImage instead?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Failed to copy AppImage to target location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/update_main.cpp" line="-51"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
         <translation>Aktualisiert AppImages nach Desktop-Integration, zur Verwendung durch Linux-Distributionen</translation>
@@ -295,7 +351,7 @@
         <translation>Möchten Sie fortfahren?</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+18"/>
         <source>No updates found</source>
         <translation>Keine Aktualisierungen gefunden</translation>
     </message>
@@ -303,6 +359,11 @@
         <location line="+1"/>
         <source>Could not find updates for AppImage %1</source>
         <translation>Konnte keine Updates finden für AppImage %1</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Failed to check for updates. Please check the command line output for details.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>

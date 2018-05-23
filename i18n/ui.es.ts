@@ -2,9 +2,53 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="es">
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <location filename="../src/main.cpp" line="+432"/>
+        <location filename="../src/shared.cpp" line="+302"/>
+        <location line="+15"/>
+        <source>Warning</source>
+        <translation type="unfinished">Advertencia</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>AppImage has already been integrated, but it is not in the current integration destination directory.
+
+Do you want to move it into the new destination?
+Choosing No will run the AppImage once, and leave the AppImage in its current directory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Failed to unregister AppImage before re-integrating it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/shared.cpp" line="-14"/>
+        <source>Could not parse desktop file translations:
+Could not open file for reading:
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Could not parse desktop file translations:
+Invalid syntax:
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="+107"/>
+        <location filename="../src/main.cpp" line="-343"/>
         <location line="+10"/>
         <location line="+18"/>
         <location line="+12"/>
@@ -13,19 +57,21 @@
         <location line="+10"/>
         <location line="+8"/>
         <location line="+59"/>
-        <location line="+111"/>
-        <location filename="../src/remove_main.cpp" line="+92"/>
+        <location line="+112"/>
+        <location filename="../src/remove_main.cpp" line="+93"/>
         <location line="+11"/>
-        <location filename="../src/shared.cpp" line="+161"/>
-        <location line="+10"/>
+        <location filename="../src/shared.cpp" line="-182"/>
         <location line="+12"/>
         <location line="+10"/>
         <location line="+33"/>
+        <location line="+235"/>
+        <location line="+12"/>
+        <location filename="../src/update_main.cpp" line="+104"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location line="-252"/>
+        <location line="-253"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher aun no soporta AppImages tipo %1.</translation>
     </message>
@@ -122,9 +168,9 @@
         <translation>Opción de AppImageLauncher desconocida:% 1</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <location filename="../src/remove_main.cpp" line="-41"/>
-        <location filename="../src/update_main.cpp" line="+60"/>
+        <location filename="../src/update_main.cpp" line="-43"/>
         <source>Error: no such file or directory: %1</source>
         <translation>Error: no hay tal archivo o directorio:% 1</translation>
     </message>
@@ -136,7 +182,7 @@
         <translation>No es una AppImage:% 1</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+103"/>
         <source>Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</source>
         <translation>Integrarlo moverá el AppImage a una ubicación predefinida, y lo incluirá en su iniciador de aplicaciones.</translation>
     </message>
@@ -222,7 +268,7 @@
         <translation>Error al eliminar AppImage:% 1</translation>
     </message>
     <message>
-        <location filename="../src/shared.cpp" line="-88"/>
+        <location filename="../src/shared.cpp" line="-35"/>
         <source>AppImage with same filename has already been integrated.</source>
         <translation>AppImage con el mismo nombre de archivo ha sido actualmente integrado.</translation>
     </message>
@@ -237,19 +283,18 @@
         <translation>Elegir No ejecutará AppImage una vez y dejará el sistema en su estado actual.</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location line="+98"/>
+        <location line="-198"/>
+        <location line="+202"/>
         <location filename="../src/update_main.cpp" line="+12"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
     </message>
     <message>
-        <location line="-81"/>
         <source>Failed to move AppImage to target location</source>
-        <translation>Error al mover AppImage a la ubicación de destino.</translation>
+        <translation type="vanished">Error al mover AppImage a la ubicación de destino.</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="-273"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Error al registrar AppImage en el sistema a través de libappimage</translation>
     </message>
@@ -274,6 +319,17 @@
         <translation>AppImage tiene un archivo de escritorio no válido</translation>
     </message>
     <message>
+        <location line="+218"/>
+        <source>Failed to move AppImage to target location.
+Try to copy AppImage instead?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Failed to copy AppImage to target location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/update_main.cpp" line="-51"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
         <translation>Actualiza AppImages después de la integración del escritorio, para ser utilizado por las distribuciones de Linux</translation>
@@ -295,7 +351,7 @@
         <translation>Desea continuar?</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+18"/>
         <source>No updates found</source>
         <translation>No se encontraron actualizaciones</translation>
     </message>
@@ -303,6 +359,11 @@
         <location line="+1"/>
         <source>Could not find updates for AppImage %1</source>
         <translation>No se pudieron encontrar las actualizaciones para AppImage% 1</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Failed to check for updates. Please check the command line output for details.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
