@@ -345,7 +345,8 @@ int main(int argc, char** argv) {
         }
     }
 
-    auto pathToAppImage = QString(argv[1]);
+    // sanitize path
+    auto pathToAppImage = QDir(QString(argv[1])).absolutePath();
 
     if (!QFile(pathToAppImage).exists()) {
         std::cout << QObject::tr("Error: no such file or directory: %1").arg(pathToAppImage).toStdString() << std::endl;
@@ -390,17 +391,80 @@ int main(int argc, char** argv) {
     if (pathToAppImage.startsWith("/tmp/.mount_"))
         return runAppImage(pathToAppImage, argc, argv);
 
-    // check whether AppImage has been integrated
-    if (hasAlreadyBeenIntegrated(pathToAppImage)) {
-        if (!updateDesktopFile(pathToAppImage))
-            return 1;
-
-        return runAppImage(pathToAppImage, argc, argv);
-    }
-
     // ignore terminal apps (fixes #2)
     if (appimage_is_terminal_app(pathToAppImage.toStdString().c_str()))
         return runAppImage(pathToAppImage, argc, argv);
+
+    // check for X-AppImage-Integrate=false
+    if (appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str()))
+        return runAppImage(pathToAppImage, argc, argv);
+
+    // AppImages in AppImages are not supposed to be integrated
+    if (pathToAppImage.startsWith("/tmp/.mount_"))
+        return runAppImage(pathToAppImage, argc, argv);
+
+    const auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
+
+    auto integrateAndRunAppImage = [&pathToAppImage, &pathToIntegratedAppImage, argc, &argv]() {
+        // check whether integration was successful
+        auto rv = integrateAppImage(pathToAppImage, pathToIntegratedAppImage);
+        if (rv == INTEGRATION_FAILED) {
+            return 1;
+        } else if (rv == INTEGRATION_ABORTED) {
+            return runAppImage(pathToAppImage, argc, argv);
+        } else {
+            return runAppImage(pathToIntegratedAppImage, argc, argv);
+        }
+    };
+
+    // after checking whether the AppImage can/must be run without integrating it, we now check whether it actually
+    // has been integrated already
+    if (hasAlreadyBeenIntegrated(pathToAppImage)) {
+        auto updateAndRunAppImage = [&pathToAppImage, argc, &argv]() {
+            if (!updateDesktopFile(pathToAppImage))
+                return 1;
+
+            return runAppImage(pathToAppImage, argc, argv);
+        };
+
+        if (isInOldApplicationsDirectory(pathToAppImage)) {
+            auto rv = QMessageBox::warning(
+                nullptr,
+                QMessageBox::tr("Warning"),
+                QMessageBox::tr("AppImage %1 has already been integrated, but it is not in the current integration "
+                                "destination directory."
+                                "\n\n"
+                                "Do you want to move it into the new destination?"
+                                "\n\n"
+                                "Choosing No will run the AppImage once, and leave the AppImage in its current "
+                                "directory."
+                                "\n\n").arg(pathToAppImage) +
+                                // translate separately to share string with the other dialog
+                                QObject::tr("The directory the integrated AppImages are stored in is currently "
+                                    "set to: %1").arg(integratedAppImagesDestination) + "\n",
+                QMessageBox::Yes | QMessageBox::No
+            );
+
+            // if the user selects No, then continue as if the AppImage would not be in this directory
+            if (rv == QMessageBox::Yes) {
+                // unregister AppImage, move, and re-integrate
+                if (appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false) != 0) {
+                    QMessageBox::critical(
+                        nullptr,
+                        QMessageBox::tr("Error"),
+                        QMessageBox::tr("Failed to unregister AppImage before re-integrating it")
+                    );
+                    return 1;
+                }
+
+                return integrateAndRunAppImage();
+            } else {
+                return updateAndRunAppImage();
+            }
+        } else {
+            return updateAndRunAppImage();
+        }
+    }
 
     std::ostringstream explanationStrm;
     explanationStrm << QObject::tr("Integrating it will move the AppImage into a predefined location, "
@@ -439,18 +503,8 @@ int main(int argc, char** argv) {
 
     const auto* clickedButton = messageBox.clickedButton();
 
-    auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
-
     if (clickedButton == okButton) {
-        // check whether integration was successful
-        auto rv = integrateAppImage(pathToAppImage, pathToIntegratedAppImage);
-        if (rv == INTEGRATION_FAILED) {
-            return 1;
-        } else if (rv == INTEGRATION_ABORTED) {
-            return runAppImage(pathToAppImage, argc, argv);
-        } else {
-            return runAppImage(pathToIntegratedAppImage, argc, argv);
-        }
+        return integrateAndRunAppImage();
     } else if (clickedButton == runOnceButton) {
         return runAppImage(pathToAppImage, argc, argv);
     } else if (clickedButton == cancelButton) {
