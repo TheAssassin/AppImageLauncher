@@ -61,7 +61,7 @@ QString buildPathToIntegratedAppImage(const QString& pathToAppImage) {
         const auto digestSuffix = "_" + digest;
 
         // check whether digest is already contained in filename
-        if (!baseName.endsWith(digestSuffix))
+        if (!pathToAppImage.contains(digestSuffix))
             baseName += "_" + digest;
     }
 
