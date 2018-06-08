@@ -138,7 +138,7 @@
     <message>
         <location line="+41"/>
         <source>Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</source>
-        <translation>Интеграция переместит файл AppImage в определённое место и добавит пункт меню.</translation>
+        <translation>Интеграция переместит файл AppImage в определённое заранее место и добавит пункт меню.</translation>
     </message>
     <message>
         <location line="+3"/>
