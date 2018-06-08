@@ -32,17 +32,17 @@
     <message>
         <location line="+10"/>
         <source>Could not make AppImage executable: %1</source>
-        <translation>Невозможно создать исполняемый файл AppImage: %1</translation>
+        <translation>Невозможно сделать файл AppImage исполняемым: %1</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Failed to open AppImage for reading: %1</source>
-        <translation>Ошибка при открытии AppImage для чтения: %1</translation>
+        <translation>Не удалось открыть AppImage для чтения: %1</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Failed to create temporary directory</source>
-        <translation>Не удалось создать временную папку</translation>
+        <translation>Не удалось создать временный каталог</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -69,7 +69,7 @@
     <message>
         <location line="+26"/>
         <source>runtime not found: no such file or directory: %1</source>
-        <translation>рантайм не найден: файл или каталог не существует: %1</translation>
+        <translation>рантайм не найден, файл или каталог не существует: %1</translation>
     </message>
     <message>
         <location line="+26"/>
@@ -84,7 +84,7 @@
     <message>
         <location line="+1"/>
         <source>Desktop integration helper for AppImages, for use by Linux distributions.</source>
-        <translation>Помощник интеграции AppImage-пакетов с окружением рабочего стола, для использования в любом дистрибутиве Linux.</translation>
+        <translation>Помощник интеграции AppImage-пакетов с рабочим столом, подходит для использования в любом дистрибутиве Linux.</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -109,7 +109,7 @@
     <message>
         <location line="+1"/>
         <source>Path to AppImage (mandatory)</source>
-        <translation>Путь к AppImage (обязательно)</translation>
+        <translation>Путь к AppImage (обязателен)</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -119,14 +119,14 @@
     <message>
         <location line="+24"/>
         <source>Unknown AppImageLauncher option: %1</source>
-        <translation>Неизвестная опция AppImageLauncher: %1</translation>
+        <translation>Неизвестная опция для AppImageLauncher: %1</translation>
     </message>
     <message>
         <location line="+9"/>
         <location filename="../src/remove_main.cpp" line="-41"/>
         <location filename="../src/update_main.cpp" line="+60"/>
         <source>Error: no such file or directory: %1</source>
-        <translation>Ошибка: файл или каталог не существует: %1</translation>
+        <translation>Ошибка, файл или каталог не существует: %1</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -138,22 +138,22 @@
     <message>
         <location line="+41"/>
         <source>Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</source>
-        <translation></translation>
+        <translation>Интеграция переместит файл AppImage в определённое место и добавит пункт меню.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher.</source>
-        <translation></translation>
+        <translation>Удалить или обновить AppImage можно в контекстном меню иконки приложения.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The directory the integrated AppImages are stored in is currently set to:</source>
-        <translation></translation>
+        <translation>Каталог для файлов AppImage в данный момент установлен в:</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>%1 has not been integrated into your system.</source>
-        <translation>%1 не был интегрирован в вашу систему.</translation>
+        <translation>%1 не был интегрирован с вашей системой.</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -287,7 +287,7 @@
     <message>
         <location line="+43"/>
         <source>The AppImage hasn&apos;t been integrated before. This tool will, however, integrate the updated AppImage.</source>
-        <translation>Этот AppImage ещё не был интегрирован. Обновлённый AppImage будет интегрирован.</translation>
+        <translation>Этот AppImage ещё не был интегрирован. Это будет сделано с обновлённым AppImage.</translation>
     </message>
     <message>
         <location line="+3"/>
