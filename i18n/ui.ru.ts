@@ -178,18 +178,18 @@
     <message>
         <location filename="../src/remove_main.cpp" line="-36"/>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
-        <translation>Удаляет AppImage-пакеты после интеграции с рабочим столом.</translation>
+        <translation>Удаляет AppImage-пакеты, интегрированные с рабочим столом.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>AppImageLauncher remove</source>
         <comment>remove helper app name</comment>
-        <translation></translation>
+        <translation>AppImageLauncher удаление</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Path to AppImage</source>
-        <translation></translation>
+        <translation>Путь к AppImage</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -199,12 +199,12 @@
     <message>
         <location line="+18"/>
         <source>AppImage remove helper error</source>
-        <translation></translation>
+        <translation>Ошибка средства удаления AppImage</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Please confirm</source>
-        <translation>Подтвердите</translation>
+        <translation>Подтверждение</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -214,7 +214,7 @@
     <message>
         <location line="+14"/>
         <source>Failed to unregister AppImage: %1</source>
-        <translation>Не удалось разрегистрировать AppImage: %1</translation>
+        <translation>Не удалось снять регистрацию AppImage: %1</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -234,7 +234,7 @@
     <message>
         <location line="+1"/>
         <source>Choosing No will run the AppImage once, and leave the system in its current state.</source>
-        <translation>Выбор &quot;Нет&quot; запустит AppImage и оставит систему в текущем состоянии.</translation>
+        <translation>Выбор пункта &quot;Нет&quot; запустит AppImage и оставит систему без изменений.</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -271,12 +271,12 @@
     <message>
         <location line="+21"/>
         <source>AppImage has invalid desktop file</source>
-        <translation>AppImage имеет некорректный desktop-файл</translation>
+        <translation>У этого AppImage некорректный desktop-файл</translation>
     </message>
     <message>
         <location filename="../src/update_main.cpp" line="-51"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
-        <translation>Обновляет AppImage после интеграции с рабочим столом, для использования во всех дистрибутивах Linux</translation>
+        <translation>Обновляет AppImage-пакеты, интегрированные с рабочим столом.</translation>
     </message>
     <message>
         <location line="+3"/>
