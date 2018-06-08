@@ -84,7 +84,7 @@
     <message>
         <location line="+1"/>
         <source>Desktop integration helper for AppImages, for use by Linux distributions.</source>
-        <translation></translation>
+        <translation>Помощник интеграции AppImage-пакетов с окружением рабочего стола, для использования в любом дистрибутиве Linux.</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -94,12 +94,12 @@
     <message>
         <location line="+1"/>
         <source>Display this help and exit</source>
-        <translation>Показать это сообщение и закончить работу</translation>
+        <translation>Показать это сообщение и выйти</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Display version and exit</source>
-        <translation>Показать версию и завершить работу</translation>
+        <translation>Показать версию и выйти</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -153,22 +153,22 @@
     <message>
         <location line="+7"/>
         <source>%1 has not been integrated into your system.</source>
-        <translation></translation>
+        <translation>%1 не был интегрирован в вашу систему.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Desktop Integration</source>
-        <translation></translation>
+        <translation>Интеграция с рабочим столом</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Integrate and run</source>
-        <translation></translation>
+        <translation>Интегрировать и запустить</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Run once</source>
-        <translation>Запустить один раз</translation>
+        <translation>Одиночный запуск</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -194,7 +194,7 @@
     <message>
         <location line="+0"/>
         <source>&lt;path&gt;</source>
-        <translation></translation>
+        <translation>&lt;путь&gt;</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -214,7 +214,7 @@
     <message>
         <location line="+14"/>
         <source>Failed to unregister AppImage: %1</source>
-        <translation></translation>
+        <translation>Не удалось разрегистрировать AppImage: %1</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -234,7 +234,7 @@
     <message>
         <location line="+1"/>
         <source>Choosing No will run the AppImage once, and leave the system in its current state.</source>
-        <translation></translation>
+        <translation>Выбор &quot;Нет&quot; запустит AppImage и оставит систему в текущем состоянии.</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -246,22 +246,22 @@
     <message>
         <location line="-81"/>
         <source>Failed to move AppImage to target location</source>
-        <translation></translation>
+        <translation>Не удалось переместить AppImage в указанное место</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Failed to register AppImage in system via libappimage</source>
-        <translation></translation>
+        <translation>Не удалось зарегистрировать AppImage в системе с помощью libappimage</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Failed to find integrated desktop file</source>
-        <translation></translation>
+        <translation>Не удалось найти интегрированный desktop-файл</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Couldn&apos;t find integrated AppImage&apos;s desktop file</source>
-        <translation></translation>
+        <translation>Не удалось найти интегрированный desktop-файл</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -276,18 +276,18 @@
     <message>
         <location filename="../src/update_main.cpp" line="-51"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
-        <translation></translation>
+        <translation>Обновляет AppImage после интеграции с рабочим столом, для использования во всех дистрибутивах Linux</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>AppImageLauncher update</source>
         <comment>update helper app name</comment>
-        <translation></translation>
+        <translation>Обновление AppImageLauncher</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>The AppImage hasn&apos;t been integrated before. This tool will, however, integrate the updated AppImage.</source>
-        <translation></translation>
+        <translation>Этот AppImage ещё не был интегрирован. Обновлённый AppImage будет интегрирован.</translation>
     </message>
     <message>
         <location line="+3"/>
