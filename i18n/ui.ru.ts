@@ -64,7 +64,7 @@
         <location line="+33"/>
         <source>execv() failed: %1</source>
         <comment>error message</comment>
-        <translation>execv() не выполнился: %1</translation>
+        <translation>execv() не сработал: %1</translation>
     </message>
     <message>
         <location line="+26"/>
@@ -74,7 +74,7 @@
     <message>
         <location line="+26"/>
         <source>execv() failed: %1</source>
-        <translation></translation>
+        <translation>execv() не сработал: %1</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -89,51 +89,51 @@
     <message>
         <location line="+2"/>
         <source>Options:</source>
-        <translation></translation>
+        <translation>Опции:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Display this help and exit</source>
-        <translation></translation>
+        <translation>Показать это сообщение и закончить работу</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Display version and exit</source>
-        <translation></translation>
+        <translation>Показать версию и завершить работу</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Arguments:</source>
-        <translation></translation>
+        <translation>Аргументы:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Path to AppImage (mandatory)</source>
-        <translation></translation>
+        <translation>Путь к AppImage (обязательно)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Failed to clean up old desktop files</source>
-        <translation></translation>
+        <translation>Не удалось очистить старые desktop-файлы</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Unknown AppImageLauncher option: %1</source>
-        <translation></translation>
+        <translation>Неизвестная опция AppImageLauncher: %1</translation>
     </message>
     <message>
         <location line="+9"/>
         <location filename="../src/remove_main.cpp" line="-41"/>
         <location filename="../src/update_main.cpp" line="+60"/>
         <source>Error: no such file or directory: %1</source>
-        <translation></translation>
+        <translation>Ошибка: файл или каталог не существует: %1</translation>
     </message>
     <message>
         <location line="+10"/>
         <location filename="../src/remove_main.cpp" line="+9"/>
         <location filename="../src/update_main.cpp" line="+7"/>
         <source>Not an AppImage: %1</source>
-        <translation></translation>
+        <translation>Это не AppImage: %1</translation>
     </message>
     <message>
         <location line="+41"/>
@@ -168,12 +168,12 @@
     <message>
         <location line="+1"/>
         <source>Run once</source>
-        <translation></translation>
+        <translation>Запустить один раз</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cancel</source>
-        <translation></translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <location filename="../src/remove_main.cpp" line="-36"/>
@@ -204,12 +204,12 @@
     <message>
         <location line="+7"/>
         <source>Please confirm</source>
-        <translation></translation>
+        <translation>Подтвердите</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Are you sure you want to remove this AppImage?</source>
-        <translation></translation>
+        <translation>Вы уверены, что хотите удалить этот AppImage?</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -219,17 +219,17 @@
     <message>
         <location line="+11"/>
         <source>Failed to remove AppImage: %1</source>
-        <translation></translation>
+        <translation>Ошибка при удалении AppImage: %1</translation>
     </message>
     <message>
         <location filename="../src/shared.cpp" line="-88"/>
         <source>AppImage with same filename has already been integrated.</source>
-        <translation></translation>
+        <translation>AppImage с таким же именем уже был интегрирован.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Do you wish to overwrite the existing AppImage?</source>
-        <translation></translation>
+        <translation>Хотите ли вы перезаписать существующий AppImage?</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -241,7 +241,7 @@
         <location line="+98"/>
         <location filename="../src/update_main.cpp" line="+12"/>
         <source>Warning</source>
-        <translation></translation>
+        <translation>Предупреждение</translation>
     </message>
     <message>
         <location line="-81"/>
@@ -266,12 +266,12 @@
     <message>
         <location line="+29"/>
         <source>Failed to load desktop file:</source>
-        <translation></translation>
+        <translation>Не удалось загрузить desktop-файл:</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>AppImage has invalid desktop file</source>
-        <translation></translation>
+        <translation>AppImage имеет некорректный desktop-файл</translation>
     </message>
     <message>
         <location filename="../src/update_main.cpp" line="-51"/>
@@ -292,27 +292,27 @@
     <message>
         <location line="+3"/>
         <source>Do you wish to continue?</source>
-        <translation></translation>
+        <translation>Хотите ли вы продолжить?</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>No updates found</source>
-        <translation></translation>
+        <translation>Обновления не найдены</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Could not find updates for AppImage %1</source>
-        <translation></translation>
+        <translation>Невозможно найти обновления для AppImage %1</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>An update has been found for the AppImage %1</source>
-        <translation></translation>
+        <translation>Найдено обновление для AppImage %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Do you want to perform the update?</source>
-        <translation></translation>
+        <translation>Хотите ли вы совершить обновление?</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -337,7 +337,7 @@
     <message>
         <location line="+5"/>
         <source>Failed to remove old AppImage</source>
-        <translation></translation>
+        <translation>Ошибка при удалении старого AppImage</translation>
     </message>
 </context>
 </TS>
