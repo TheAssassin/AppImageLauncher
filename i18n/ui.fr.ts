@@ -160,7 +160,7 @@ Invalid syntax:
     <message>
         <location line="+16"/>
         <source>Failed to clean up old desktop files</source>
-        <translation>Impossible de nettoyer les anciens fichiers &quot;desktop&quot;</translation>
+        <translation>Impossible de nettoyer les anciens fichiers « desktop »</translation>
     </message>
     <message>
         <location line="+24"/>
@@ -301,17 +301,17 @@ Invalid syntax:
     <message>
         <location line="+12"/>
         <source>Failed to find integrated desktop file</source>
-        <translation>Impossible de trouver le fichier &quot;desktop&quot; intégré</translation>
+        <translation>Impossible de trouver le fichier « desktop » intégré</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Couldn&apos;t find integrated AppImage&apos;s desktop file</source>
-        <translation>Impossible de trouver le fichier &quot;desktop&quot; de l&apos;AppImage intégrée</translation>
+        <translation>Impossible de trouver le fichier « desktop » de l&apos;AppImage intégrée</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Failed to load desktop file:</source>
-        <translation>Impossible de charger le fichier &quot;desktop&quot; :</translation>
+        <translation>Impossible de charger le fichier « desktop » :</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -332,33 +332,33 @@ Try to copy AppImage instead?</source>
     <message>
         <location filename="../src/update_main.cpp" line="-51"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
-        <translation></translation>
+        <translation>Met à jour les AppImages après l&apos;intégration au bureau, destiné à être utilisé par les distributions Linux.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>AppImageLauncher update</source>
         <comment>update helper app name</comment>
-        <translation></translation>
+        <translation>Mise à jour par AppImageLauncher</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>The AppImage hasn&apos;t been integrated before. This tool will, however, integrate the updated AppImage.</source>
-        <translation></translation>
+        <translation>L&apos;AppImage n&apos;a pas été intégrée auparavant. Cependant, cet outil intégrera l&apos;AppImage mise à jour.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Do you wish to continue?</source>
-        <translation></translation>
+        <translation>Voulez-vous continuer ?</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>No updates found</source>
-        <translation></translation>
+        <translation>Pas de mises à jour trouvées</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Could not find updates for AppImage %1</source>
-        <translation></translation>
+        <translation>Impossible de trouver des mises à jour pour l&apos;AppImage %1</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -368,37 +368,37 @@ Try to copy AppImage instead?</source>
     <message>
         <location line="+8"/>
         <source>An update has been found for the AppImage %1</source>
-        <translation></translation>
+        <translation>Une mise à jour a été trouvée pour l&apos;AppImage %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Do you want to perform the update?</source>
-        <translation></translation>
+        <translation>Voulez-vous effectuer la mise à jour ?</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Remove old AppImage after successful update</source>
-        <translation></translation>
+        <translation>Supprimer l&apos;ancienne AppImage après une mise à jour réussie</translation>
     </message>
     <message>
         <location line="+32"/>
         <source>File reported as updated does not exist: %1</source>
-        <translation></translation>
+        <translation>Le fichier signalé comme mis à jour n&apos;existe pas : %1</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Failed to register updated AppImage in system</source>
-        <translation></translation>
+        <translation>Impossible d&apos;enregistrer l&apos;AppImage mise à jour dans le système</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Failed to unregister old AppImage in system</source>
-        <translation></translation>
+        <translation>Impossible de désenregistrer l&apos;ancienne AppImage du système</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Failed to remove old AppImage</source>
-        <translation></translation>
+        <translation>Impossible de supprimer l&apos;ancienne AppImage</translation>
     </message>
 </context>
 </TS>
