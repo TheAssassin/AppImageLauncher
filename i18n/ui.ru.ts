@@ -22,54 +22,54 @@
         <location line="+10"/>
         <location line="+33"/>
         <source>Error</source>
-        <translation></translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <location line="-252"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
-        <translation></translation>
+        <translation>AppImageLauncher в данный момент не поддерживает AppImage %1 типа.</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Could not make AppImage executable: %1</source>
-        <translation></translation>
+        <translation>Невозможно создать исполняемый файл AppImage: %1</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Failed to open AppImage for reading: %1</source>
-        <translation></translation>
+        <translation>Ошибка при открытии AppImage для чтения: %1</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Failed to create temporary directory</source>
-        <translation></translation>
+        <translation>Не удалось создать временную папку</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Failed to create temporary copy of type 1 AppImage</source>
-        <translation></translation>
+        <translation>Не удалось создать временную копию AppImage 1 типа</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Failed to open temporary AppImage copy for writing</source>
-        <translation></translation>
+        <translation>Не удалось открыть временную копию AppImage для записи</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+8"/>
         <source>Failed to remove magic bytes from temporary AppImage copy</source>
-        <translation></translation>
+        <translation>Не удалось стереть сигнатуру из временной копии AppImage</translation>
     </message>
     <message>
         <location line="+33"/>
         <source>execv() failed: %1</source>
         <comment>error message</comment>
-        <translation></translation>
+        <translation>execv() не выполнился: %1</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>runtime not found: no such file or directory: %1</source>
-        <translation></translation>
+        <translation>рантайм не найден: файл или каталог не существует: %1</translation>
     </message>
     <message>
         <location line="+26"/>
@@ -79,7 +79,7 @@
     <message>
         <location line="+18"/>
         <source>Usage: %1 [options] &lt;path&gt;</source>
-        <translation></translation>
+        <translation>Использование: %1 [опции] &lt;путь&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
