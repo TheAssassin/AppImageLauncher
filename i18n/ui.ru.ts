@@ -138,17 +138,17 @@
     <message>
         <location line="+41"/>
         <source>Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</source>
-        <translation>Интеграция переместит файл AppImage в определённое заранее место и добавит пункт меню.</translation>
+        <translation>Интеграция переместит файл AppImage в каталог, определённый заранее, и добавит пункт в меню запуска приложений.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher.</source>
-        <translation>Удалить или обновить AppImage можно в контекстном меню иконки приложения.</translation>
+        <translation>Удалить или обновить AppImage можно в контекстном меню у иконки приложения.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The directory the integrated AppImages are stored in is currently set to:</source>
-        <translation>Каталог для файлов AppImage в данный момент установлен в:</translation>
+        <translation>В данный момент файлы AppImage хранятся в каталоге:</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -178,7 +178,7 @@
     <message>
         <location filename="../src/remove_main.cpp" line="-36"/>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
-        <translation></translation>
+        <translation>Удаляет AppImage-пакеты после интеграции с рабочим столом.</translation>
     </message>
     <message>
         <location line="+2"/>
