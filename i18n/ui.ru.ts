@@ -178,7 +178,7 @@
     <message>
         <location filename="../src/remove_main.cpp" line="-36"/>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
-        <translation>Удаляет AppImage-пакеты, интегрированные с рабочим столом.</translation>
+        <translation>Удаляет AppImage-пакеты, интегрированные с рабочим столом</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -276,13 +276,13 @@
     <message>
         <location filename="../src/update_main.cpp" line="-51"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
-        <translation>Обновляет AppImage-пакеты, интегрированные с рабочим столом.</translation>
+        <translation>Обновляет AppImage-пакеты, интегрированные с рабочим столом</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>AppImageLauncher update</source>
         <comment>update helper app name</comment>
-        <translation>Обновление AppImageLauncher</translation>
+        <translation>AppImageLauncher обновление</translation>
     </message>
     <message>
         <location line="+43"/>
@@ -302,7 +302,7 @@
     <message>
         <location line="+1"/>
         <source>Could not find updates for AppImage %1</source>
-        <translation>Невозможно найти обновления для AppImage %1</translation>
+        <translation>Не удалось найти обновления для AppImage %1</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -317,22 +317,22 @@
     <message>
         <location line="+4"/>
         <source>Remove old AppImage after successful update</source>
-        <translation></translation>
+        <translation>Удалить старый AppImage после успешного обновления</translation>
     </message>
     <message>
         <location line="+32"/>
         <source>File reported as updated does not exist: %1</source>
-        <translation></translation>
+        <translation>Обновлённый файл не существует: %1</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Failed to register updated AppImage in system</source>
-        <translation></translation>
+        <translation>Не удалось зарегистрировать в системе обновлённый AppImage</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Failed to unregister old AppImage in system</source>
-        <translation></translation>
+        <translation>Не удалось снять регистрацию старого AppImage в системе</translation>
     </message>
     <message>
         <location line="+5"/>
