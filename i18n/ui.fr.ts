@@ -342,7 +342,7 @@ Essayer plutôt de la copier ?</translation>
     <message>
         <location filename="../src/update_main.cpp" line="-51"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
-        <translation>Met à jour les AppImages après l&apos;intégration au bureau, destiné à être utilisé par les distributions Linux.</translation>
+        <translation>Met à jour les AppImages après l&apos;intégration au bureau, destiné à être utilisé par les distributions Linux</translation>
     </message>
     <message>
         <location line="+3"/>
