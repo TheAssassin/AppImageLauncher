@@ -8,7 +8,7 @@
         <location filename="../src/shared.cpp" line="+302"/>
         <location line="+15"/>
         <source>Warning</source>
-        <translation type="unfinished">Warnung</translation>
+        <translation>Warnung</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -16,7 +16,10 @@
 
 Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImage wurde bereits integriert, aber befindet sich nicht im aktuell gewählten Zielverzeichnis.
+
+Möchten Sie es in das neue Verzeichnis verschieben?
+Sofern Sie Nein wählen, wird das AppImage einmal ausgeführt, und verbleibt in seinem derzeitigen Verzeichnis.</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -26,7 +29,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
     <message>
         <location line="+1"/>
         <source>Failed to unregister AppImage before re-integrating it</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Deregistrieren des AppImages vor der Reintegration</translation>
     </message>
     <message>
         <location filename="../src/shared.cpp" line="-14"/>
@@ -34,7 +37,10 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
 Could not open file for reading:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Konnte Übersetzungen für Desktop-Datei nicht parsen:
+Konnte Datei nicht zum Lesen öffnen:
+
+%1</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -42,7 +48,10 @@ Could not open file for reading:
 Invalid syntax:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Konnte Übersetzungen für Desktop-Datei nicht parsen:
+Kaputte Syntax:
+
+%1</translation>
     </message>
 </context>
 <context>
@@ -322,12 +331,13 @@ Invalid syntax:
         <location line="+218"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Verschieben des AppImages in Zielverzeichnis.
+Stattdessen versuchen, das AppImage zu kopieren?</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Failed to copy AppImage to target location</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Kopieren des AppImages in Zielverzeichnis.</translation>
     </message>
     <message>
         <location filename="../src/update_main.cpp" line="-51"/>
