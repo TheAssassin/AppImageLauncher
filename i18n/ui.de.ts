@@ -337,7 +337,7 @@ Stattdessen versuchen, das AppImage zu kopieren?</translation>
     <message>
         <location line="+12"/>
         <source>Failed to copy AppImage to target location</source>
-        <translation>Fehler beim Kopieren des AppImages in Zielverzeichnis.</translation>
+        <translation>Fehler beim Kopieren des AppImages in Zielverzeichnis</translation>
     </message>
     <message>
         <location filename="../src/update_main.cpp" line="-51"/>
