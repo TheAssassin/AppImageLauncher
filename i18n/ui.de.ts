@@ -24,7 +24,7 @@ Sofern Sie Nein wählen, wird das AppImage einmal ausgeführt, und verbleibt in 
     <message>
         <location line="+16"/>
         <source>Error</source>
-        <translation type="unfinished">Fehler</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -373,7 +373,7 @@ Stattdessen versuchen, das AppImage zu kopieren?</translation>
     <message>
         <location line="+8"/>
         <source>Failed to check for updates. Please check the command line output for details.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Update-Check. Bitte überprüfen Sie den Kommandozeilen-Log für weitere Details.</translation>
     </message>
     <message>
         <location line="+8"/>
