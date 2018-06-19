@@ -104,6 +104,9 @@ int main(int argc, char** argv) {
                     QObject::tr("Error"),
                     QObject::tr("Failed to remove AppImage: %1").arg(error));
             }
+            
+            // update desktop database
+            system("update-desktop-database ~/.local/share/applications");
         }
         default: {
             // exit without any actions
