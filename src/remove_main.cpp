@@ -102,11 +102,14 @@ int main(int argc, char** argv) {
                 QMessageBox::critical(
                     nullptr,
                     QObject::tr("Error"),
-                    QObject::tr("Failed to remove AppImage: %1").arg(error));
+                    QObject::tr("Failed to remove AppImage: %1").arg(error)
+                );
+                return 1;
             }
             
-            // update desktop database
-            system("update-desktop-database ~/.local/share/applications");
+            // update desktop database and icon caches
+            if (!updateDesktopDatabaseAndIconCaches())
+                return 1;
         }
         default: {
             // exit without any actions

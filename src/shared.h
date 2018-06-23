@@ -23,6 +23,12 @@ bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions = 
 // this alias for installDesktopFile does not perform any collision detection and resolving
 bool updateDesktopFile(const QString& pathToAppImage);
 
+// update desktop database and icon caches of desktop environments
+// this makes sure that:
+//   - outdated entries are removed from the launcher
+//   - icons of freshly integrated AppImages are displayed in the launcher
+bool updateDesktopDatabaseAndIconCaches();
+
 // integrates an AppImage using a standard workflow used across all AppImageLauncher applications
 IntegrationState integrateAppImage(const QString& pathToAppImage, const QString& pathToIntegratedAppImage);
 

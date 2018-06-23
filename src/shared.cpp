@@ -132,6 +132,21 @@ QMap<QString, QString> findCollisions(const QString& currentNameEntry) {
     return collisions;
 }
 
+bool updateDesktopDatabaseAndIconCaches() {
+    auto commands = {
+        "update-desktop-database ~/.local/share/applications",
+        "gtk-update-icon-cache-3.0  ~/.local/share/icons/hicolor/ -t",
+        "gtk-update-icon-cache  ~/.local/share/icons/hicolor/ -t"
+    };
+
+    for (const auto& command : commands) {
+        // exit codes are not evaluated intentionally
+        system(command);
+    }
+
+    return true;
+}
+
 bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
     if (appimage_register_in_system(pathToAppImage.toStdString().c_str(), false) != 0) {
         QMessageBox::critical(
@@ -381,6 +396,10 @@ bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
     }
 
     cleanup();
+
+    // make sure the icons in the launcher are refreshed
+    if (!updateDesktopDatabaseAndIconCaches())
+        return false;
 
     return true;
 }
