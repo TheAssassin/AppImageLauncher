@@ -29,7 +29,13 @@ Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Das AppImage %1 wurde bereits integriert, aber befindet sich nicht im derzeit konfigurierten Zielverzeichnis.
+
+Möchten Sie es in das neue Zielverzeichnis verschieben?
+
+Sollten Sie Nein wählen, wird das AppImage einmalig ausgeführt, und es wird im aktuellen Verzeichnis belassen.
+
+</translation>
     </message>
     <message>
         <location line="+20"/>
@@ -204,7 +210,7 @@ Kaputte Syntax:
     <message>
         <location line="+81"/>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Das derzeit konfigurierte Zielverzeichnis für integrierte AppImages ist: %1</translation>
     </message>
     <message>
         <location line="+27"/>
@@ -395,7 +401,9 @@ Stattdessen versuchen, das AppImage zu kopieren?</translation>
         <source>Failed to check for updates:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Update-Check:
+
+%1</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -417,7 +425,9 @@ Stattdessen versuchen, das AppImage zu kopieren?</translation>
         <source>Failed to update AppImage:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Aktualisieren des AppImages:
+
+%1</translation>
     </message>
     <message>
         <location line="+14"/>
