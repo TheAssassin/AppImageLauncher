@@ -29,7 +29,13 @@ Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>AppImage %1 has already been integrated, but it is not in the current integration destination directory.
+
+Do you want to move it into the new destination?
+
+Choosing No will run the AppImage once, and leave the AppImage in its current directory.
+
+</translation>
     </message>
     <message>
         <location line="+20"/>
@@ -204,7 +210,7 @@ Invalid syntax:
     <message>
         <location line="+81"/>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>The directory the integrated AppImages are stored in is currently set to: %1</translation>
     </message>
     <message>
         <location line="+27"/>
@@ -395,7 +401,9 @@ Try to copy AppImage instead?</translation>
         <source>Failed to check for updates:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to check for updates:
+
+%1</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -417,7 +425,9 @@ Try to copy AppImage instead?</translation>
         <source>Failed to update AppImage:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to update AppImage:
+
+%1</translation>
     </message>
     <message>
         <location line="+14"/>
