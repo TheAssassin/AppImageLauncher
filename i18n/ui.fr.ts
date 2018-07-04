@@ -4,25 +4,35 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/main.cpp" line="+432"/>
-        <location filename="../src/shared.cpp" line="+302"/>
+        <location filename="../src/main.cpp" line="+433"/>
+        <location filename="../src/shared.cpp" line="+320"/>
         <location line="+15"/>
         <source>Warning</source>
         <translation>Avertissement</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>AppImage has already been integrated, but it is not in the current integration destination directory.
 
 Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.</source>
-        <translation>L&apos;AppImage a déjà été intégrée mais n&apos;est pas dans le répertoire d&apos;intégration actuel.
+        <translation type="vanished">L&apos;AppImage a déjà été intégrée mais n&apos;est pas dans le répertoire d&apos;intégration actuel.
 
 Voulez-vous la déplacer vers le nouveau répertoire ?
 Sélectionner « Non » lancera l&apos;AppImage une fois et la laissera dans son répertoire actuel.</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+1"/>
+        <source>AppImage %1 has already been integrated, but it is not in the current integration destination directory.
+
+Do you want to move it into the new destination?
+
+Choosing No will run the AppImage once, and leave the AppImage in its current directory.
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
@@ -57,7 +67,7 @@ Syntaxe invalide :
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="-343"/>
+        <location filename="../src/main.cpp" line="-348"/>
         <location line="+10"/>
         <location line="+18"/>
         <location line="+12"/>
@@ -73,9 +83,10 @@ Syntaxe invalide :
         <location line="+12"/>
         <location line="+10"/>
         <location line="+33"/>
-        <location line="+235"/>
+        <location line="+239"/>
         <location line="+12"/>
-        <location filename="../src/update_main.cpp" line="+104"/>
+        <location filename="../src/update_main.cpp" line="+117"/>
+        <location line="+42"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
@@ -179,7 +190,7 @@ Syntaxe invalide :
     <message>
         <location line="+10"/>
         <location filename="../src/remove_main.cpp" line="-41"/>
-        <location filename="../src/update_main.cpp" line="-43"/>
+        <location filename="../src/update_main.cpp" line="-98"/>
         <source>Error: no such file or directory: %1</source>
         <translation>Erreur : pas de tel fichier ou répertoire : %1</translation>
     </message>
@@ -191,7 +202,12 @@ Syntaxe invalide :
         <translation>Pas une AppImage : %1</translation>
     </message>
     <message>
-        <location line="+103"/>
+        <location line="+81"/>
+        <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
         <source>Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</source>
         <translation>L&apos;intégrer va déplacer l&apos;AppImage dans un endroit prédéterminé et l&apos;inclure dans votre lanceur d&apos;application.</translation>
     </message>
@@ -292,8 +308,8 @@ Syntaxe invalide :
         <translation>Sélectionner Non lancera l&apos;AppImage une fois et laissera votre système dans son état actuel.</translation>
     </message>
     <message>
-        <location line="-198"/>
-        <location line="+202"/>
+        <location line="-202"/>
+        <location line="+206"/>
         <location filename="../src/update_main.cpp" line="+12"/>
         <source>Warning</source>
         <translation>Avertissement</translation>
@@ -303,7 +319,7 @@ Syntaxe invalide :
         <translation type="vanished">Impossible de déplacer l&apos;AppImage vers son répertoire cible</translation>
     </message>
     <message>
-        <location line="-273"/>
+        <location line="-277"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Impossible d&apos;enregistrer l&apos;AppImage dans le système via libappimage</translation>
     </message>
@@ -328,7 +344,7 @@ Syntaxe invalide :
         <translation>L&apos;AppImage a un fichier « desktop » invalide</translation>
     </message>
     <message>
-        <location line="+218"/>
+        <location line="+222"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Impossible de déplacer l&apos;AppImage vers le répertoire cible.
@@ -361,7 +377,7 @@ Essayer plutôt de la copier ?</translation>
         <translation>Voulez-vous continuer ?</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+32"/>
         <source>No updates found</source>
         <translation>Pas de mises à jour trouvées</translation>
     </message>
@@ -371,12 +387,18 @@ Essayer plutôt de la copier ?</translation>
         <translation>Impossible de trouver des mises à jour pour l&apos;AppImage %1</translation>
     </message>
     <message>
-        <location line="+8"/>
         <source>Failed to check for updates. Please check the command line output for details.</source>
-        <translation>Impossible de vérifier les mises à jour. Vérifiez la sortie en ligne de commandes pour plus d&apos;informations.</translation>
+        <translation type="vanished">Impossible de vérifier les mises à jour. Vérifiez la sortie en ligne de commandes pour plus d&apos;informations.</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
+        <source>Failed to check for updates:
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>An update has been found for the AppImage %1</source>
         <translation>Une mise à jour a été trouvée pour l&apos;AppImage %1</translation>
     </message>
@@ -391,7 +413,14 @@ Essayer plutôt de la copier ?</translation>
         <translation>Supprimer l&apos;ancienne AppImage après une mise à jour réussie</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+25"/>
+        <source>Failed to update AppImage:
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>File reported as updated does not exist: %1</source>
         <translation>Le fichier signalé comme mis à jour n&apos;existe pas : %1</translation>
     </message>

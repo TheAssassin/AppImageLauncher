@@ -88,6 +88,20 @@ int main(int argc, char** argv) {
     appimage::update::qt::QtUpdater updater(pathToAppImage);
     updater.enableRunUpdatedAppImageButton(false);
 
+    std::ostringstream updaterStatusMessages;
+
+    updater.connect(
+        &updater,
+        &appimage::update::qt::QtUpdater::newStatusMessage,
+        &updater,
+        [&updater, &updaterStatusMessages](const std::string& newMessage) {
+            if (!updaterStatusMessages.tellp() <= 0)
+                updaterStatusMessages << std::endl;
+
+            updaterStatusMessages << newMessage;
+        }
+    );
+
     auto updateCheckResult = updater.checkForUpdates();
 
     if (updateCheckResult == 0) {
@@ -98,14 +112,16 @@ int main(int argc, char** argv) {
         );
         return 0;
     } else if (updateCheckResult != 1) {
-        // FIXME: add ability to gather and display the messages in this case
         QMessageBox::information(
             nullptr,
             QObject::tr("Error"),
-            QObject::tr("Failed to check for updates. Please check the command line output for details.")
+            QObject::tr("Failed to check for updates:\n\n%1").arg(updaterStatusMessages.str().c_str())
         );
         return 0;
     }
+
+    // clear existing status messages before performing the actual update
+    updaterStatusMessages.clear();
 
     bool removeAfterUpdate = false;
 
@@ -137,8 +153,15 @@ int main(int argc, char** argv) {
     auto rv = app.exec();
 
     // if the update has failed, return immediately
-    if (rv != 0)
+    if (rv != 0) {
+        QMessageBox::information(
+            nullptr,
+            QObject::tr("Error"),
+            QObject::tr("Failed to update AppImage:\n\n%1").arg(updaterStatusMessages.str().c_str())
+        );
+
         return rv;
+    }
 
     // get path to new file, un-integrate old file, remove it, and register updated AppImage
     QString pathToUpdatedAppImage;

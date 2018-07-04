@@ -4,22 +4,25 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/main.cpp" line="+432"/>
-        <location filename="../src/shared.cpp" line="+302"/>
+        <location filename="../src/main.cpp" line="+433"/>
+        <location filename="../src/shared.cpp" line="+320"/>
         <location line="+15"/>
         <source>Warning</source>
         <translation type="unfinished">Advertencia</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>AppImage has already been integrated, but it is not in the current integration destination directory.
+        <source>AppImage %1 has already been integrated, but it is not in the current integration destination directory.
 
 Do you want to move it into the new destination?
-Choosing No will run the AppImage once, and leave the AppImage in its current directory.</source>
+
+Choosing No will run the AppImage once, and leave the AppImage in its current directory.
+
+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+20"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -48,7 +51,7 @@ Invalid syntax:
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="-343"/>
+        <location filename="../src/main.cpp" line="-348"/>
         <location line="+10"/>
         <location line="+18"/>
         <location line="+12"/>
@@ -64,9 +67,10 @@ Invalid syntax:
         <location line="+12"/>
         <location line="+10"/>
         <location line="+33"/>
-        <location line="+235"/>
+        <location line="+239"/>
         <location line="+12"/>
-        <location filename="../src/update_main.cpp" line="+104"/>
+        <location filename="../src/update_main.cpp" line="+117"/>
+        <location line="+42"/>
         <source>Error</source>
         <translation></translation>
     </message>
@@ -170,7 +174,7 @@ Invalid syntax:
     <message>
         <location line="+10"/>
         <location filename="../src/remove_main.cpp" line="-41"/>
-        <location filename="../src/update_main.cpp" line="-43"/>
+        <location filename="../src/update_main.cpp" line="-98"/>
         <source>Error: no such file or directory: %1</source>
         <translation>Error: no hay tal archivo o directorio:% 1</translation>
     </message>
@@ -182,7 +186,12 @@ Invalid syntax:
         <translation>No es una AppImage:% 1</translation>
     </message>
     <message>
-        <location line="+103"/>
+        <location line="+81"/>
+        <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
         <source>Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</source>
         <translation>Integrarlo moverá el AppImage a una ubicación predefinida, y lo incluirá en su iniciador de aplicaciones.</translation>
     </message>
@@ -283,8 +292,8 @@ Invalid syntax:
         <translation>Elegir No ejecutará AppImage una vez y dejará el sistema en su estado actual.</translation>
     </message>
     <message>
-        <location line="-198"/>
-        <location line="+202"/>
+        <location line="-202"/>
+        <location line="+206"/>
         <location filename="../src/update_main.cpp" line="+12"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
@@ -294,7 +303,7 @@ Invalid syntax:
         <translation type="vanished">Error al mover AppImage a la ubicación de destino.</translation>
     </message>
     <message>
-        <location line="-273"/>
+        <location line="-277"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Error al registrar AppImage en el sistema a través de libappimage</translation>
     </message>
@@ -319,7 +328,7 @@ Invalid syntax:
         <translation>AppImage tiene un archivo de escritorio no válido</translation>
     </message>
     <message>
-        <location line="+218"/>
+        <location line="+222"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation type="unfinished"></translation>
@@ -351,7 +360,7 @@ Try to copy AppImage instead?</source>
         <translation>Desea continuar?</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+32"/>
         <source>No updates found</source>
         <translation>No se encontraron actualizaciones</translation>
     </message>
@@ -361,12 +370,14 @@ Try to copy AppImage instead?</source>
         <translation>No se pudieron encontrar las actualizaciones para AppImage% 1</translation>
     </message>
     <message>
-        <location line="+8"/>
-        <source>Failed to check for updates. Please check the command line output for details.</source>
+        <location line="+7"/>
+        <source>Failed to check for updates:
+
+%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+11"/>
         <source>An update has been found for the AppImage %1</source>
         <translation>Se ha encontrado una actualización para AppImage% 1</translation>
     </message>
@@ -381,7 +392,14 @@ Try to copy AppImage instead?</source>
         <translation>Eliminar AppImage anterior después de una actualización exitosa</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+25"/>
+        <source>Failed to update AppImage:
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>File reported as updated does not exist: %1</source>
         <translation>El archivo informado como actualizado no existe:% 1</translation>
     </message>
