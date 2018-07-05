@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
             // first, unregister AppImage
             auto path = pathToAppImage.toStdString();
 
-            if (appimage_unregister_in_system(path.c_str(), false) != 0) {
+            if (!unregisterAppImage(pathToAppImage)) {
                 QMessageBox::critical(
                     nullptr,
                     QObject::tr("Error"),
