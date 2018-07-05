@@ -21,6 +21,7 @@ extern "C" {
 // local includes
 #include "shared.h"
 #include "translationmanager.h"
+#include "trashbin.h"
 
 bool unregisterAppImage(const QString& pathToAppImage) {
     auto rv = appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false);
@@ -85,24 +86,35 @@ int main(int argc, char** argv) {
     switch (clickedButton) {
         case QMessageBox::Yes: {
             // first, unregister AppImage
-            auto path = pathToAppImage.toStdString();
-
             if (!unregisterAppImage(pathToAppImage)) {
                 QMessageBox::critical(
                     nullptr,
                     QObject::tr("Error"),
-                    QObject::tr("Failed to unregister AppImage: %1").arg(QString::fromStdString(path))
+                    QObject::tr("Failed to unregister AppImage: %1").arg(pathToAppImage)
                 );
                 return 1;
             }
 
-            // now, remove AppImage file
-            if (std::remove(path.c_str()) != 0) {
-                auto error = errno;
+            TrashBin bin;
+
+            // now, move AppImage into trash bin
+            if (!bin.disposeAppImage(pathToAppImage)) {
                 QMessageBox::critical(
                     nullptr,
                     QObject::tr("Error"),
-                    QObject::tr("Failed to remove AppImage: %1").arg(error)
+                    QObject::tr("Failed to move AppImage into trash bin directory")
+                );
+                return 1;
+            }
+
+            // run clean up cycle for trash bin
+            // if the current AppImage is ready to be deleted, this call will immediately remove it from the system
+            // otherwise, it'll be cleaned up at some subsequent run of AppImageLauncher or the removal tool
+            if (!bin.cleanUp()) {
+                QMessageBox::critical(
+                    nullptr,
+                    QObject::tr("Error"),
+                    QObject::tr("Failed to clean up AppImage trash bin: %1").arg(bin.path())
                 );
                 return 1;
             }

@@ -29,6 +29,7 @@ extern "C" {
 
 // local headers
 #include "shared.h"
+#include "trashbin.h"
 #include "translationmanager.h"
 
 bool cleanUpOldDesktopFiles() {
@@ -320,6 +321,18 @@ int main(int argc, char** argv) {
             QObject::tr("Error"),
             QObject::tr("Failed to clean up old desktop files")
         );
+    }
+
+    // clean up trash directory
+    {
+        TrashBin bin;
+        if (!bin.cleanUp()) {
+            QMessageBox::critical(
+                nullptr,
+                QObject::tr("Error"),
+                QObject::tr("Failed to clean up AppImage trash bin: %1").arg(bin.path())
+            );
+        }
     }
 
     // search for --appimagelauncher-* arguments in args list

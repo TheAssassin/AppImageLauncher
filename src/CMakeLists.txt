@@ -20,7 +20,7 @@ endif()
 
 
 # utility library
-add_library(shared STATIC shared.h shared.cpp)
+add_library(shared STATIC shared.h shared.cpp trashbin.cpp trashbin.h)
 target_link_libraries(shared PUBLIC PkgConfig::glib Qt5::Core Qt5::Widgets xdg-basedir libappimage)
 target_compile_definitions(shared
     PRIVATE -DCMAKE_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}"
