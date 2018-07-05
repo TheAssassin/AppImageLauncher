@@ -315,8 +315,11 @@ int main(int argc, char** argv) {
 
     // clean up old desktop files
     if (!cleanUpOldDesktopFiles()) {
-        std::cerr << QObject::tr("Failed to clean up old desktop files").toStdString() << std::endl;
-        return 1;
+        QMessageBox::critical(
+            nullptr,
+            QObject::tr("Error"),
+            QObject::tr("Failed to clean up old desktop files")
+        );
     }
 
     // search for --appimagelauncher-* arguments in args list
