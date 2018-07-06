@@ -7,7 +7,10 @@
 #include <QString>
 
 // makes an existing file executable
-bool makeExecutable(const std::string& path);
+bool makeExecutable(const QString& path);
+
+// removes executable bits from file's permissions
+bool makeNonExecutable(const QString& path);
 
 enum IntegrationState {
     INTEGRATION_FAILED = 0,

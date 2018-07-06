@@ -56,7 +56,13 @@ bool TrashBin::disposeAppImage(const QString& pathToAppImage) {
     auto timestamp = QDateTime::currentDateTime().toString(Qt::ISODate);
     auto newPath = d->dir.path() + QString("/") + timestamp + "_" + QFile(pathToAppImage).fileName();
 
-    return QFile(pathToAppImage).rename(newPath);
+    if (!QFile(pathToAppImage).rename(newPath))
+        return false;
+
+    if (!makeNonExecutable(newPath))
+        return false;
+
+    return true;
 }
 
 bool TrashBin::cleanUp() {
@@ -76,8 +82,12 @@ bool TrashBin::cleanUp() {
 
         std::cerr << "Removing AppImage: " << currentPath.toStdString() << std::endl;
 
+        // silently ignore if files can not be removed
+        // they shall be removed on subsequent runs
+        // if this won't happen and the trash directory will only get bigger at some point, we might need to
+        // reconsider this decision
         if (!QFile(currentPath).remove())
-            return false;
+            continue;
     }
 
     return true;

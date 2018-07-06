@@ -27,11 +27,11 @@ extern "C" {
 #include "shared.h"
 #include "translationmanager.h"
 
-bool makeExecutable(const std::string& path) {
+bool makeExecutable(const QString& path) {
     struct stat fileStat{};
 
-    if (stat(path.c_str(), &fileStat) != 0) {
-        std::cerr << "Failed to call stat() on " << path << std::endl;
+    if (stat(path.toStdString().c_str(), &fileStat) != 0) {
+        std::cerr << "Failed to call stat() on " << path.toStdString() << std::endl;
         return false;
     }
 
@@ -43,7 +43,26 @@ bool makeExecutable(const std::string& path) {
         return true;
     }
 
-    return chmod(path.c_str(), fileStat.st_mode | 0111) == 0;
+    return chmod(path.toStdString().c_str(), fileStat.st_mode | 0111) == 0;
+}
+
+bool makeNonExecutable(const QString& path) {
+    struct stat fileStat{};
+
+    if (stat(path.toStdString().c_str(), &fileStat) != 0) {
+        std::cerr << "Failed to call stat() on " << path.toStdString() << std::endl;
+        return false;
+    }
+
+    auto permissions = fileStat.st_mode;
+
+    // remove executable permissions
+    for (const auto permPart : {0100, 0010, 0001}) {
+        if (permissions & permPart)
+            permissions -= permPart;
+    }
+
+    return chmod(path.toStdString().c_str(), permissions) == 0;
 }
 
 

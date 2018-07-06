@@ -99,9 +99,9 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     // when using QString and then .toStdString().c_str(), the std::string instance will be an rvalue, and the
     // pointer returned by c_str() will be invalid
     auto x = pathToAppImage.toStdString();
-    auto fullPathToAppImage = QFileInfo(pathToAppImage).absoluteFilePath().toStdString();
+    auto fullPathToAppImage = QFileInfo(pathToAppImage).absoluteFilePath();
 
-    auto type = appimage_get_type(fullPathToAppImage.c_str(), false);
+    auto type = appimage_get_type(fullPathToAppImage.toStdString().c_str(), false);
     if (type < 1 || type > 3) {
         QMessageBox::critical(
             nullptr,
@@ -116,7 +116,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         QMessageBox::critical(
             nullptr,
             QObject::tr("Error"),
-            QObject::tr("Could not make AppImage executable: %1").arg(QString::fromStdString(fullPathToAppImage))
+            QObject::tr("Could not make AppImage executable: %1").arg(fullPathToAppImage)
         );
         return 1;
     }
