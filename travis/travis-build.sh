@@ -75,7 +75,7 @@ if [ "$BIONIC" == "" ]; then
     # get linuxdeployqt
     wget https://github.com/TheAssassin/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
     wget https://github.com/TheAssassin/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
-    chmod +x linuxdeployqt*-x86_64.AppImage
+    chmod +x linuxdeploy*-x86_64.AppImage
 
     find AppDir/
 
