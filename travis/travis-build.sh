@@ -73,16 +73,9 @@ if [ "$BIONIC" == "" ]; then
 
 
     # get linuxdeployqt
-    wget https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
-    chmod +x linuxdeployqt-continuous-x86_64.AppImage
-
-
-    LINUXDEPLOYQT_ARGS=
-
-    if [ "$CI" == "" ]; then
-        LINUXDEPLOYQT_ARGS="-no-copy-copyright-files"
-    fi
-
+    wget https://github.com/TheAssassin/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+    wget https://github.com/TheAssassin/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
+    chmod +x linuxdeployqt*-x86_64.AppImage
 
     find AppDir/
 
@@ -90,20 +83,12 @@ if [ "$BIONIC" == "" ]; then
 
     # fix for trusty: default qmake is for qt4
     if [ -x /usr/lib/x86_64-linux-gnu/qt5/bin/qmake ]; then
-        export LINUXDEPLOYQT_ARGS="$LINUXDEPLOYQT_ARGS -qmake=/usr/lib/x86_64-linux-gnu/qt5/bin/qmake"
+        export QMAKE="/usr/lib/x86_64-linux-gnu/qt5/bin/qmake"
     fi
 
     # bundle application
-    ./linuxdeployqt-continuous-x86_64.AppImage \
-        AppDir/usr/share/applications/appimagelauncher.desktop \
-        $LINUXDEPLOYQT_ARGS \
-        -verbose=1 -bundle-non-qt-libs
-
-    # bundle application
-    ./linuxdeployqt-continuous-x86_64.AppImage \
-        AppDir/usr/share/applications/appimagelauncher.desktop \
-        $LINUXDEPLOYQT_ARGS \
-        -verbose=1 -bundle-non-qt-libs -appimage
+    export UPDATE_INFORMATION="gh-releases-zsync|TheAssassin|AppImageLauncher|AppImageLauncher*-x86_64.AppImage.zsync"
+    ./linuxdeploy-x86_64.AppImage --init-appdir --appdir AppDir --plugin qt --output appimage
 fi
 
 # move AppImages to old cwd
