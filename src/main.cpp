@@ -126,9 +126,9 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     auto exeDir = QFileInfo(QFile("/proc/self/exe").symLinkTarget()).absoluteDir().absolutePath();
 
     if (type == 1) {
-        auto size = appimage_get_elf_size(fullPathToAppImage.c_str());
+        auto size = appimage_get_elf_size(fullPathToAppImage.toStdString().c_str());
 
-        QFile appImage(QString::fromStdString(fullPathToAppImage));
+        QFile appImage(QString::fromStdString(fullPathToAppImage.toStdString()));
 
         if (!appImage.open(QIODevice::ReadOnly)) {
             QMessageBox::critical(
@@ -194,7 +194,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
             return 1;
         }
 
-        auto tempAppImageFileName = tempAppImage.fileName().toStdString();
+        auto tempAppImageFileName = tempAppImage.fileName();
 
         // actually _write_ changes
         tempAppImage.close();
@@ -203,7 +203,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 
         // need a char pointer instead of a const one, therefore can't use .c_str()
         std::vector<char> argv0Buffer(tempAppImageFileName.size() + 1, '\0');
-        strcpy(argv0Buffer.data(), tempAppImageFileName.c_str());
+        strcpy(argv0Buffer.data(), tempAppImageFileName.toStdString().c_str());
 
         std::vector<char*> args;
 
@@ -219,7 +219,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         // args need to be null terminated
         args.push_back(nullptr);
 
-        execv(tempAppImageFileName.c_str(), args.data());
+        execv(tempAppImageFileName.toStdString().c_str(), args.data());
 
         const auto& error = errno;
         std::cout << QObject::tr("execv() failed: %1", "error message").arg(strerror(error)).toStdString() << std::endl;
@@ -230,7 +230,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         // alternatively, the AppImage would have to be mounted by this application, and AppRun would need to be called
         // however, this requires some process management (e.g., killing all processes inside the AppImage and also
         // the FUSE "mount" process, when this application is killed...)
-        setenv("TARGET_APPIMAGE", fullPathToAppImage.c_str(), true);
+        setenv("TARGET_APPIMAGE", fullPathToAppImage.toStdString().c_str(), true);
 
         // suppress desktop integration script
         setenv("DESKTOPINTEGRATION", "AppImageLauncher", true);
