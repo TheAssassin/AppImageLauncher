@@ -104,20 +104,26 @@ int main(int argc, char** argv) {
 
     auto updateCheckResult = updater.checkForUpdates();
 
-    if (updateCheckResult == 0) {
-        QMessageBox::information(
-            nullptr,
-            QObject::tr("No updates found"),
-            QObject::tr("Could not find updates for AppImage %1").arg(pathToAppImage)
-        );
-        return 0;
-    } else if (updateCheckResult != 1) {
-        QMessageBox::information(
-            nullptr,
-            QObject::tr("Error"),
-            QObject::tr("Failed to check for updates:\n\n%1").arg(updaterStatusMessages.str().c_str())
-        );
-        return 0;
+    switch (updateCheckResult) {
+        case 1:
+            // update available, continue after switch block
+            break;
+        case 0: {
+            QMessageBox::information(
+                nullptr,
+                QObject::tr("No updates found"),
+                QObject::tr("Could not find updates for AppImage %1").arg(pathToAppImage)
+            );
+            return 0;
+        }
+        default: {
+            QMessageBox::information(
+                nullptr,
+                QObject::tr("Error"),
+                QObject::tr("Failed to check for updates:\n\n%1").arg(updaterStatusMessages.str().c_str())
+            );
+            return 1;
+        }
     }
 
     // clear existing status messages before performing the actual update
