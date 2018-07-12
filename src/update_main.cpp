@@ -116,6 +116,18 @@ int main(int argc, char** argv) {
             );
             return 0;
         }
+        case -1: {
+            QMessageBox::information(
+                nullptr,
+                QObject::tr("No update information found"),
+                QObject::tr("Could not find update information in AppImage:\n%1"
+                            "\n"
+                            "\n"
+                            "The AppImage doesn't support updating. Please ask the authors to set up"
+                            "update information to allow for easy updating.").arg(pathToAppImage)
+            );
+            return 0;
+        }
         default: {
             QMessageBox::information(
                 nullptr,
