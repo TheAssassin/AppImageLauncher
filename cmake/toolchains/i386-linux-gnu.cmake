@@ -25,3 +25,6 @@ set(CMAKE_PREFIX_PATH /usr/lib/i386-linux-gnu CACHE STRING "" FORCE)
 
 # makes sure that at least on Ubuntu pkg-config will search for the :i386 packages
 set(ENV{PKG_CONFIG_PATH} /usr/lib/i386-linux-gnu/pkgconfig/ CACHE STRING "" FORCE)
+
+# make qtchooser find qt5
+set(ENV{QT_SELECT} qt5 CACHE STRING "" FORCE)

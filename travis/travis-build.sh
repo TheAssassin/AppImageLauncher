@@ -10,7 +10,7 @@ else
     TEMP_BASE=/tmp
 fi
 
-BUILD_DIR=$(mktemp -d -p "$TEMP_BASE" AppImageUpdate-build-XXXXXX)
+BUILD_DIR=$(mktemp -d -p "$TEMP_BASE" AppImageLauncher-build-XXXXXX)
 
 cleanup () {
     if [ -d "$BUILD_DIR" ]; then
@@ -36,6 +36,7 @@ fi
 
 if [ "$ARCH" == "i386" ]; then
     EXTRA_CMAKE_FLAGS="$EXTRA_CMAKE_FLAGS -DCMAKE_TOOLCHAIN_FILE=$REPO_ROOT/cmake/toolchains/i386-linux-gnu.cmake"
+    export QT_SELECT=qt5
 fi
 
 cmake "$REPO_ROOT" -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RelWithDebInfo $EXTRA_CMAKE_FLAGS -DTRAVIS_BUILD=ON
@@ -91,11 +92,7 @@ if [ "$BIONIC" == "" ]; then
     fi
 
     # bundle application
-    export UPDATE_INFORMATION="gh-releases-zsync|TheAssassin|AppImageLauncher|AppImageLauncher*-x86_64.AppImage.zsync"
-
-    if [ "$ARCH" == "i386" ]; then
-        export QT_SELECT=qt5-i386-linux-gnu
-    fi
+    export UPDATE_INFORMATION="gh-releases-zsync|TheAssassin|AppImageLauncher|AppImageLauncher*-$ARCH.AppImage.zsync"
 
     ./linuxdeploy-x86_64.AppImage --init-appdir --appdir AppDir --plugin qt --output appimage
 fi
