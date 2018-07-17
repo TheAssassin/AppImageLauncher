@@ -67,6 +67,9 @@ matrix:
             - libcairo-dev:i386
             - libgl1-mesa-dev:i386
             - libglu1-mesa-dev:i386
+            - libpng-dev:i386
+            - libfontconfig1-dev:i386
+            - libfreetype6-dev:i386
 
 install:
   - ccache -M 5G
