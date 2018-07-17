@@ -49,6 +49,7 @@ matrix:
             - qtbase5-dev:i386
             - qt5-qmake:i386
             - qtbase5-dev-tools:i386
+            - qttools5-dev-tools:i386
             - libqt5core5a:i386
             - libqt5gui5:i386
             - libcurl4-openssl-dev:i386
