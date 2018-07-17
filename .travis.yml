@@ -6,26 +6,72 @@ dist: trusty
 notifications:
   email: false
 
+matrix:
+  include:
+    # hack to get proper bionic images
+    # no install step, but works with docker
+    - env: BIONIC=1 ARCH=x86_64
+      services:
+        - docker
+      install:
+      script: bash -ex travis/travis-bionic.sh
+    - env: BIONIC=1 ARCH=i386
+      services:
+        - docker
+      install:
+      script: bash -ex travis/travis-bionic.sh
+    - env: BIONIC= ARCH=x86_64
+      addons:
+        apt:
+          update: true
+          packages:
+            - qtbase5-dev
+            - qt5-qmake
+            - libqt5core5a
+            - libqt5gui5
+            - libcurl4-openssl-dev
+            - libqt5widgets5
+            - librsvg2-bin
+            - libfuse-dev
+            - desktop-file-utils
+            - ccache
+            - rpm
+            - libcurl3
+            - libbsd-dev
+    - env: BIONIC= ARCH=i386
+      addons:
+        apt:
+          update: true
+          packages:
+            - gcc-multilib
+            - g++-multilib
+            - libfuse2:i386
+            - qtbase5-dev:i386
+            - qt5-qmake:i386
+            - qtbase5-dev-tools:i386
+            - libqt5core5a:i386
+            - libqt5gui5:i386
+            - libcurl4-openssl-dev:i386
+            - libqt5widgets5:i386
+            - librsvg2-bin:i386
+            - libfuse-dev:i386
+            - desktop-file-utils
+            - ccache
+            - rpm
+            - libcurl3:i386
+            - libbsd-dev:i386
+            - libglib2.0-dev:i386
+            - liblzma-dev:i386
+            - libgtest-dev:i386
+            - libgtest-dev:i386
+            - libcairo-dev:i386
+
 install:
-  - sudo apt-get update
-  #- sudo apt-get -y install qt510base librsvg2-bin libfuse-dev desktop-file-utils ccache
-  - sudo apt-get -y install qtbase5-dev qt5-qmake libqt5core5a libqt5gui5 libcurl4-openssl-dev libqt5widgets5 librsvg2-bin libfuse-dev desktop-file-utils ccache rpm libcurl3 libbsd-dev
   - ccache -M 5G
   #- source /opt/qt*/bin/qt*-env.sh
 
 script:
   - bash -ex travis/travis-build.sh
-
-# hack to get proper bionic images
-# no install step, but works with docker
-matrix:
-  include:
-    - env: BIONIC=
-    - env: BIONIC=1
-      services:
-        - docker
-      install:
-      script: bash -ex travis/travis-bionic.sh
 
 after_success:
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
