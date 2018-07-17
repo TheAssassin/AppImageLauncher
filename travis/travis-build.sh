@@ -92,6 +92,11 @@ if [ "$BIONIC" == "" ]; then
 
     # bundle application
     export UPDATE_INFORMATION="gh-releases-zsync|TheAssassin|AppImageLauncher|AppImageLauncher*-x86_64.AppImage.zsync"
+
+    if [ "$ARCH" == "i386" ]; then
+        export QT_SELECT=qt5-i386-linux-gnu
+    fi
+
     ./linuxdeploy-x86_64.AppImage --init-appdir --appdir AppDir --plugin qt --output appimage
 fi
 
