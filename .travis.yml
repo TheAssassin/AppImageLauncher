@@ -63,7 +63,7 @@ matrix:
             - libbsd-dev:i386
             - libglib2.0-dev:i386
             - liblzma-dev:i386
-            - libgtest-dev:i386
+            - libgtest-dev
             - libcairo-dev:i386
             - libgl1-mesa-dev:i386
             - libglu1-mesa-dev:i386
