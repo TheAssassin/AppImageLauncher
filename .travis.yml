@@ -70,6 +70,7 @@ matrix:
             - libpng-dev:i386
             - libfontconfig1-dev:i386
             - libfreetype6-dev:i386
+            - libarchive-dev:i386
 
 install:
   - ccache -M 5G
