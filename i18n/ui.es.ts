@@ -8,7 +8,7 @@
         <location filename="../src/shared.cpp" line="+320"/>
         <location line="+15"/>
         <source>Warning</source>
-        <translation type="unfinished">Advertencia</translation>
+        <translation>Advertencia</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -19,17 +19,23 @@ Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>AppImage% 1 ya se ha integrado, pero no está en el directorio de destino de integración actual.
+
+¿Quieres moverlo al nuevo destino?
+
+Elegir No ejecutará AppImage una vez, y dejará la AppImage en su directorio actual.
+
+</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Failed to unregister AppImage before re-integrating it</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al eliminar el registro de AppImage antes de volver a integrarlo</translation>
     </message>
     <message>
         <location filename="../src/shared.cpp" line="-14"/>
@@ -37,7 +43,10 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
 Could not open file for reading:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudieron analizar las traducciones de archivos de escritorio:
+No se pudo abrir el archivo para leerlo:
+
+% 1</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -45,7 +54,10 @@ Could not open file for reading:
 Invalid syntax:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudieron analizar las traducciones de archivos de escritorio:
+Sintaxis inválida:
+
+% 1</translation>
     </message>
 </context>
 <context>
@@ -188,7 +200,7 @@ Invalid syntax:
     <message>
         <location line="+81"/>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>El directorio en el que están almacenadas las AppImages integradas actualmente está configurado en:% 1</translation>
     </message>
     <message>
         <location line="+27"/>
@@ -300,7 +312,7 @@ Invalid syntax:
     </message>
     <message>
         <source>Failed to move AppImage to target location</source>
-        <translation type="vanished">Error al mover AppImage a la ubicación de destino.</translation>
+        <translation>Error al mover AppImage a la ubicación de destino</translation>
     </message>
     <message>
         <location line="-277"/>
@@ -331,12 +343,13 @@ Invalid syntax:
         <location line="+222"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al mover AppImage a la ubicación de destino.
+Intenta copiar AppImage en su lugar?</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Failed to copy AppImage to target location</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al copiar AppImage en la ubicación de destino</translation>
     </message>
     <message>
         <location filename="../src/update_main.cpp" line="-51"/>
@@ -374,7 +387,9 @@ Try to copy AppImage instead?</source>
         <source>Failed to check for updates:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al buscar actualizaciones:
+
+% 1</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -396,7 +411,9 @@ Try to copy AppImage instead?</source>
         <source>Failed to update AppImage:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al actualizar AppImage:
+
+% 1</translation>
     </message>
     <message>
         <location line="+14"/>
