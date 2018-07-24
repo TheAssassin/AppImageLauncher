@@ -43,9 +43,6 @@ RUN dpkg --add-architecture i386 && \
         vim-common \
         desktop-file-utils \
         pkg-config
-
-RUN apt-get install -y \
         qttools5-dev-tools:i386 \
-        qt5-qmake-bin:i386
-
-RUN apt-get install -y libarchive-dev:i386
+        qt5-qmake-bin:i386 \
+        libarchive-dev:i386
