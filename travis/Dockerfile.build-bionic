@@ -29,4 +29,5 @@ RUN apt-get update && \
         wget \
         vim-common \
         desktop-file-utils \
-        pkg-config
+        pkg-config \
+        libarchive-dev
