@@ -66,6 +66,8 @@ AppImageLauncher is built on Ubuntu trusty. The Debian and RPM packages provided
 
 The installation of packages on systems with a set of packages similar to one of the listed ones (e.g., Linux Mint, Fedora, etc.) should work as well.
 
+Manjaro and Netrunner Rolling users can install AppImageLauncher with a distribution-provided package called `appimagelauncher`.
+
 Arch Linux, Manjaro, Antergos and Netrunner Rolling users can use AUR to install AppImageLauncher by installing [appimagelauncher-git](https://aur.archlinux.org/packages/appimagelauncher-git) (thanks @NuLogicSystems for setting up the build).
 
 Other systems derived from the listed ones, such as for instance Linux Mint (Ubuntu), should support AppImageLauncher as well. If they don't, please don't hesitate to create an issue on GitHub.
