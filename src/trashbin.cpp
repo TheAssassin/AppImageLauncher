@@ -44,8 +44,10 @@ QString TrashBin::path() {
 }
 
 bool TrashBin::disposeAppImage(const QString& pathToAppImage) {
-    if (!QFile(pathToAppImage).exists())
+    if (!QFile(pathToAppImage).exists()) {
+        std::cerr << "No such file or directory: " << pathToAppImage.toStdString() << std::endl;
         return false;
+    }
 
     // moving AppImages into the trash bin might fail if there's a file with the same filename
     // removing multiple files with the same filenames is a valid use case, though
@@ -54,7 +56,7 @@ bool TrashBin::disposeAppImage(const QString& pathToAppImage) {
     // we could eventually increase the precision of the timestamp
     // for now, this is not necessary
     auto timestamp = QDateTime::currentDateTime().toString(Qt::ISODate);
-    auto newPath = d->dir.path() + QString("/") + timestamp + "_" + QFile(pathToAppImage).fileName();
+    auto newPath = d->dir.path() + QString("/") + timestamp + "_" + QFileInfo(pathToAppImage).fileName();
 
     if (!QFile(pathToAppImage).rename(newPath))
         return false;
