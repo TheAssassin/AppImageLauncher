@@ -392,6 +392,10 @@ bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
         }
     }
 
+    // add version key
+    const auto version = QApplication::applicationVersion().replace("version ", "").toStdString();
+    g_key_file_set_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, "X-AppImageLauncher-Version", version.c_str());
+
     if (!g_key_file_save_to_file(desktopFile.get(), desktopFilePath, error.get())) {
         handleError();
         return false;
