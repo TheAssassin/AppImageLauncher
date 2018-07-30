@@ -1,5 +1,6 @@
 // system includes
 #include <iostream>
+#include <memory>
 #include <sstream>
 extern "C" {
     #include <appimage/appimage.h>
@@ -26,6 +27,16 @@ extern "C" {
 // local headers
 #include "shared.h"
 #include "translationmanager.h"
+
+static void gKeyFileDeleter(GKeyFile* ptr) {
+    if (ptr != nullptr)
+        g_key_file_free(ptr);
+}
+
+static void gErrorDeleter(GError* ptr) {
+    if (ptr != nullptr)
+        g_error_free(ptr);
+}
 
 bool makeExecutable(const QString& path) {
     struct stat fileStat{};
@@ -111,40 +122,22 @@ QMap<QString, QString> findCollisions(const QString& currentNameEntry) {
             if (!QFileInfo(filename).isFile() || !filename.endsWith(".desktop"))
                 continue;
 
-            GKeyFile* desktopFile = g_key_file_new();
-            GError* error = nullptr;
-
-            auto cleanup = [&desktopFile, &error]() {
-                if (desktopFile != nullptr) {
-                    g_key_file_free(desktopFile);
-                    desktopFile = nullptr;
-                }
-
-                if (error != nullptr) {
-                    g_error_free(error);
-                    error = nullptr;
-                }
-            };
+            std::shared_ptr<GKeyFile> desktopFile(g_key_file_new(), gKeyFileDeleter);
+            std::shared_ptr<GError*> error(nullptr, gErrorDeleter);
 
             // if the key file parser can't load the file, it's most likely not a valid desktop file, so we just skip this file
-            if (!g_key_file_load_from_file(desktopFile, filename.toStdString().c_str(), G_KEY_FILE_KEEP_TRANSLATIONS, &error)) {
-                cleanup();
+            if (!g_key_file_load_from_file(desktopFile.get(), filename.toStdString().c_str(), G_KEY_FILE_KEEP_TRANSLATIONS, error.get()))
                 continue;
-            }
 
-            auto* nameEntry = g_key_file_get_string(desktopFile, G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_NAME, &error);
+            auto* nameEntry = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_NAME, error.get());
 
             // invalid desktop file, needs to be skipped
-            if (nameEntry == nullptr) {
-                cleanup();
+            if (nameEntry == nullptr)
                 continue;
-            }
 
             if (QString(nameEntry).trimmed().startsWith(currentNameEntry.trimmed())) {
                 collisions[filename] = QString(nameEntry);
             }
-
-            cleanup();
         }
     }
 
@@ -205,39 +198,29 @@ bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
      * a system dependency is not an option for this project, and we link to glib already anyway, so let's just use
      * glib, which is known to work
      */
-    auto desktopFile = g_key_file_new();
 
-    GError *error = nullptr;
+    std::shared_ptr<GKeyFile> desktopFile(g_key_file_new(), gKeyFileDeleter);
+
+    std::shared_ptr<GError*> error(nullptr, gErrorDeleter);
+
     const auto flags = GKeyFileFlags(G_KEY_FILE_KEEP_COMMENTS | G_KEY_FILE_KEEP_TRANSLATIONS);
 
-    // for people who don't want to create memory leaks when using C APIs, C++11's lambdas provide a great option to
-    // clean up those data
-    auto cleanup = [&error, &desktopFile]() {
-        if (desktopFile != nullptr)
-            g_key_file_free(desktopFile);
-
-        if (error != nullptr)
-            g_error_free(error);
-    };
-
-    auto handleError = [&error, &desktopFile, &cleanup]() {
+    auto handleError = [error, desktopFile]() {
         std::ostringstream ss;
-        ss << QObject::tr("Failed to load desktop file:").toStdString() << std::endl << error->message;
+        ss << QObject::tr("Failed to load desktop file:").toStdString() << std::endl << (*error)->message;
         QMessageBox::critical(
             nullptr,
             QObject::tr("Error"),
             QString::fromStdString(ss.str())
         );
-
-        cleanup();
     };
 
-    if (!g_key_file_load_from_file(desktopFile, desktopFilePath, flags, &error)) {
+    if (!g_key_file_load_from_file(desktopFile.get(), desktopFilePath, flags, error.get())) {
         handleError();
         return INTEGRATION_FAILED;
     }
 
-    const auto* nameEntry = g_key_file_get_string(desktopFile, G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_NAME, &error);
+    const auto* nameEntry = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_NAME, error.get());
 
     if (nameEntry == nullptr) {
         QMessageBox::warning(
@@ -277,7 +260,7 @@ bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
             }
 
             auto newName = QString(nameEntry) + " (" + QString::number(currentNumber) + ")";
-            g_key_file_set_string(desktopFile, G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_NAME, newName.toStdString().c_str());
+            g_key_file_set_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_NAME, newName.toStdString().c_str());
         }
     }
 
@@ -298,7 +281,7 @@ bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
     std::vector<std::string> desktopActions = {"Remove", "Update"};
 
     g_key_file_set_string_list(
-        desktopFile,
+        desktopFile.get(),
         G_KEY_FILE_DESKTOP_GROUP,
         G_KEY_FILE_DESKTOP_KEY_ACTIONS,
         convertToCharPointerList(desktopActions).data(),
@@ -377,17 +360,17 @@ bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
     {
         const auto removeSectionName = "Desktop Action Remove";
 
-        g_key_file_set_string(desktopFile, removeSectionName, "Name", "Remove AppImage from system");
+        g_key_file_set_string(desktopFile.get(), removeSectionName, "Name", "Remove AppImage from system");
 
         std::ostringstream removeExecPath;
         removeExecPath << CMAKE_INSTALL_PREFIX << "/lib/appimagelauncher/remove " << pathToAppImage.toStdString();
-        g_key_file_set_string(desktopFile, removeSectionName, "Exec", removeExecPath.str().c_str());
+        g_key_file_set_string(desktopFile.get(), removeSectionName, "Exec", removeExecPath.str().c_str());
 
         // install translations
         auto it = QMapIterator<QString, QString>(removeActionNameTranslations);
         while (it.hasNext()) {
             auto entry = it.next();
-            g_key_file_set_locale_string(desktopFile, removeSectionName, "Name", entry.key().toStdString().c_str(), entry.value().toStdString().c_str());
+            g_key_file_set_locale_string(desktopFile.get(), removeSectionName, "Name", entry.key().toStdString().c_str(), entry.value().toStdString().c_str());
         }
     }
 
@@ -395,26 +378,24 @@ bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
     {
         const auto updateSectionName = "Desktop Action Update";
 
-        g_key_file_set_string(desktopFile, updateSectionName, "Name", "Update AppImage");
+        g_key_file_set_string(desktopFile.get(), updateSectionName, "Name", "Update AppImage");
 
         std::ostringstream updateExecPath;
         updateExecPath << CMAKE_INSTALL_PREFIX << "/lib/appimagelauncher/update " << pathToAppImage.toStdString();
-        g_key_file_set_string(desktopFile, updateSectionName, "Exec", updateExecPath.str().c_str());
+        g_key_file_set_string(desktopFile.get(), updateSectionName, "Exec", updateExecPath.str().c_str());
 
         // install translations
         auto it = QMapIterator<QString, QString>(updateActionNameTranslations);
         while (it.hasNext()) {
             auto entry = it.next();
-            g_key_file_set_locale_string(desktopFile, updateSectionName, "Name", entry.key().toStdString().c_str(), entry.value().toStdString().c_str());
+            g_key_file_set_locale_string(desktopFile.get(), updateSectionName, "Name", entry.key().toStdString().c_str(), entry.value().toStdString().c_str());
         }
     }
 
-    if (!g_key_file_save_to_file(desktopFile, desktopFilePath, &error)) {
+    if (!g_key_file_save_to_file(desktopFile.get(), desktopFilePath, error.get())) {
         handleError();
         return false;
     }
-
-    cleanup();
 
     // make sure the icons in the launcher are refreshed
     if (!updateDesktopDatabaseAndIconCaches())
