@@ -522,18 +522,6 @@ bool hasAlreadyBeenIntegrated(const QString& pathToAppImage) {
     return appimage_is_registered_in_system(pathToAppImage.toStdString().c_str());
 }
 
-bool isInOldApplicationsDirectory(const QString& pathToAppImage) {
-    const auto homeDirPath = QDir(getenv("HOME")).absolutePath();
-
-    auto oldApplicationsDirectories = {
-        homeDirPath + "/.bin"
-    };
-
-    for (const auto& dirPath : oldApplicationsDirectories) {
-        // the QDirs need to be built from the absolute paths, or the comparison won't work reliably
-        if (QDir(dirPath) == QFileInfo(pathToAppImage).dir())
-            return true;
-    }
-
-    return false;
+bool isInDirectory(const QString& pathToAppImage, const QDir& directory) {
+    return directory == QFileInfo(pathToAppImage).absoluteDir();
 }

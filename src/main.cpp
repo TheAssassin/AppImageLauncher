@@ -443,7 +443,7 @@ int main(int argc, char** argv) {
             return runAppImage(pathToAppImage, argc, argv);
         };
 
-        if (isInOldApplicationsDirectory(pathToAppImage)) {
+        if (!isInDirectory(pathToAppImage, integratedAppImagesDestination)) {
             auto rv = QMessageBox::warning(
                 nullptr,
                 QMessageBox::tr("Warning"),

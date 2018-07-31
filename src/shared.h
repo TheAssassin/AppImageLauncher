@@ -50,5 +50,5 @@ QString getAppImageDigestMd5(const QString& path);
 // checks whether AppImage has been integrated already
 bool hasAlreadyBeenIntegrated(const QString& pathToAppImage);
 
-// checks whether AppImage is in a previous AppImage destination, and should be moved to new directory
-bool isInOldApplicationsDirectory(const QString& pathToAppImage);
+// checks whether file is in a given directory
+bool isInDirectory(const QString& pathToAppImage, const QDir& directory);
