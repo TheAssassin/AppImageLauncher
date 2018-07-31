@@ -29,7 +29,13 @@ Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;AppImage %1 a déjà été intégrée, mais elle n&apos;est pas dans le répertoire de destination des intégrations actuel.
+
+Voulez-vous la déplacer vers la nouvelle destination ?
+
+Sélectionner Non lancera l&apos;AppImage une fois et laissera l&apos;AppImage dans son répertoire actuel.
+
+</translation>
     </message>
     <message>
         <location line="+20"/>
@@ -204,7 +210,7 @@ Syntaxe invalide :
     <message>
         <location line="+81"/>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Le répertoire de destination des intégrations d&apos;AppImage est actuellement défini à : %1</translation>
     </message>
     <message>
         <location line="+27"/>
@@ -395,7 +401,9 @@ Essayer plutôt de la copier ?</translation>
         <source>Failed to check for updates:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de vérifier la disponibilité de mises à jour :
+
+%1</translation>
     </message>
     <message>
         <location line="+11"/>
