@@ -456,8 +456,8 @@ int main(int argc, char** argv) {
                                 "directory."
                                 "\n\n").arg(pathToAppImage) +
                                 // translate separately to share string with the other dialog
-                                QObject::tr("The directory the integrated AppImages are stored in is currently "
-                                    "set to: %1").arg(integratedAppImagesDestination) + "\n",
+                                QObject::tr("The directory the integrated AppImages are stored in is currently set to:\n"
+                                            "%1").arg(integratedAppImagesDestination) + "\n",
                 QMessageBox::Yes | QMessageBox::No
             );
 
