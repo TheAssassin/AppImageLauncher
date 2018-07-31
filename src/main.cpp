@@ -443,7 +443,7 @@ int main(int argc, char** argv) {
             return runAppImage(pathToAppImage, argc, argv);
         };
 
-        if (!isInDirectory(pathToAppImage, integratedAppImagesDestination)) {
+        if (!isInDirectory(pathToAppImage, integratedAppImagesDestination().path())) {
             auto rv = QMessageBox::warning(
                 nullptr,
                 QMessageBox::tr("Warning"),
@@ -457,7 +457,7 @@ int main(int argc, char** argv) {
                                 "\n\n").arg(pathToAppImage) +
                                 // translate separately to share string with the other dialog
                                 QObject::tr("The directory the integrated AppImages are stored in is currently set to:\n"
-                                            "%1").arg(integratedAppImagesDestination) + "\n",
+                                            "%1").arg(integratedAppImagesDestination().path()) + "\n",
                 QMessageBox::Yes | QMessageBox::No
             );
 
@@ -491,7 +491,7 @@ int main(int argc, char** argv) {
                     << std::endl
                     << QObject::tr("The directory the integrated AppImages are stored in is currently "
                                         "set to:").toStdString() << std::endl
-                    << integratedAppImagesDestination.toStdString() << std::endl;
+                    << integratedAppImagesDestination().path().toStdString() << std::endl;
 
     auto explanation = explanationStrm.str();
 

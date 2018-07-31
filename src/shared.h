@@ -6,17 +6,21 @@
 // library headers
 #include <QString>
 
-// makes an existing file executable
-bool makeExecutable(const QString& path);
-
-// removes executable bits from file's permissions
-bool makeNonExecutable(const QString& path);
-
 enum IntegrationState {
     INTEGRATION_FAILED = 0,
     INTEGRATION_SUCCESSFUL,
     INTEGRATION_ABORTED
 };
+
+// standard location for integrated AppImages
+// currently hardcoded, can not be changed by users
+static const auto DEFAULT_INTEGRATION_DESTINATION = QString(getenv("HOME")) + "/Applications/";
+
+// makes an existing file executable
+bool makeExecutable(const QString& path);
+
+// removes executable bits from file's permissions
+bool makeNonExecutable(const QString& path);
 
 // installs desktop file for given AppImage, including AppImageLauncher specific modifications
 // set resolveCollisions to false in order to leave the Name entries as-is
@@ -35,9 +39,8 @@ bool updateDesktopDatabaseAndIconCaches();
 // integrates an AppImage using a standard workflow used across all AppImageLauncher applications
 IntegrationState integrateAppImage(const QString& pathToAppImage, const QString& pathToIntegratedAppImage);
 
-// standard location for integrated AppImages
-// currently hardcoded, can not be changed by users
-static const auto integratedAppImagesDestination = QString(getenv("HOME")) + "/Applications/";
+// return directory into which the integrated AppImages will be moved
+QDir integratedAppImagesDestination();
 
 // build path to standard location for integrated AppImages
 QString buildPathToIntegratedAppImage(const QString& pathToAppImage);

@@ -77,6 +77,11 @@ bool makeNonExecutable(const QString& path) {
 }
 
 
+QDir integratedAppImagesDestination() {
+    return DEFAULT_INTEGRATION_DESTINATION;
+}
+
+
 QString buildPathToIntegratedAppImage(const QString& pathToAppImage) {
     // if type 2 AppImage, we can build a "content-aware" filename
     // see #7 for details
@@ -103,7 +108,7 @@ QString buildPathToIntegratedAppImage(const QString& pathToAppImage) {
         fileName += "." + appImageInfo.suffix();
     }
 
-    return integratedAppImagesDestination + "/" + fileName;
+    return integratedAppImagesDestination().path() + "/" + fileName;
 }
 
 
