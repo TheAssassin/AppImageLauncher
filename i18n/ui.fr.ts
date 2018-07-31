@@ -425,7 +425,9 @@ Essayer plutôt de la copier ?</translation>
         <source>Failed to update AppImage:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>La mise à jour de l&apos;AppImage a échoué:
+
+%1</translation>
     </message>
     <message>
         <location line="+14"/>
