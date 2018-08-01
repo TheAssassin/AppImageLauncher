@@ -18,18 +18,16 @@ if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_definitions(-DQT_NO_WARNING_OUTPUT)
 endif()
 
-
 # utility library
-add_library(shared STATIC shared.h shared.cpp trashbin.cpp trashbin.h)
-target_link_libraries(shared PUBLIC PkgConfig::glib Qt5::Core Qt5::Widgets xdg-basedir libappimage)
-target_compile_definitions(shared
-    PRIVATE -DCMAKE_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}"
-)
-
 add_library(translationmanager translationmanager.cpp translationmanager.h)
 target_link_libraries(translationmanager PUBLIC Qt5::Core Qt5::Widgets)
 target_compile_definitions(translationmanager PRIVATE -DCMAKE_PROJECT_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
 
+add_library(shared STATIC shared.h shared.cpp trashbin.cpp trashbin.h)
+target_link_libraries(shared PUBLIC PkgConfig::glib Qt5::Core Qt5::Widgets xdg-basedir libappimage translationmanager)
+target_compile_definitions(shared
+    PRIVATE -DCMAKE_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}"
+)
 
 # main AppImageLauncher application
 add_executable(AppImageLauncher main.cpp)
