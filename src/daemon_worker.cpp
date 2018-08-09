@@ -151,9 +151,14 @@ void Worker::scheduleForUnintegration(const QString& path) {
 void Worker::startTimerIfNecessary() {
     if (!d->timerActive) {
         d->timerActive = true;
-        QTimer::singleShot(d->TIMEOUT, [this]() {
+        auto* timer = new QTimer();
+        timer->setSingleShot(true);
+        timer->setInterval(d->TIMEOUT);
+        connect(timer, &QTimer::timeout, [this, timer]() {
             d->timerActive = false;
             executeDeferredOperations();
+            delete timer;
         });
+        timer->start();
     }
 }
