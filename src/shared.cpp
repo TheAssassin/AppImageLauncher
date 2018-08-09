@@ -608,6 +608,8 @@ bool cleanUpOldDesktopFiles() {
         // we really need a parser that understands the desktop file escaping
         if (!QFile(appImagePath).exists()) {
             QFile(desktopFilePath).remove();
+
+            // TODO: clean up related resources such as icons or MIME definitions
         }
 
         cleanup();
