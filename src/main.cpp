@@ -363,7 +363,7 @@ int main(int argc, char** argv) {
         // make sure the icons in the launcher are refreshed
         if (!updateDesktopDatabaseAndIconCaches())
             return 1;
-        9
+
         if (rv == INTEGRATION_FAILED) {
             return 1;
         } else if (rv == INTEGRATION_ABORTED) {
