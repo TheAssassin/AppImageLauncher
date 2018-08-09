@@ -39,7 +39,7 @@ target_compile_definitions(shared
 )
 
 add_library(filesystemwatcher STATIC filesystemwatcher.cpp filesystemwatcher.h)
-target_link_libraries(filesystemwatcher PUBLIC inotifytools Qt5::Core)
+target_link_libraries(filesystemwatcher PUBLIC Qt5::Core)
 target_include_directories(filesystemwatcher PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # main AppImageLauncher application
@@ -48,7 +48,7 @@ target_link_libraries(AppImageLauncher shared Qt5::Core Qt5::Widgets PkgConfig::
 
 # appimagelauncherd
 add_executable(appimagelauncherd daemon_main.cpp daemon_worker.cpp daemon_worker.h)
-target_link_libraries(appimagelauncherd shared filesystemwatcher Qt5::Core PkgConfig::glib libappimage inotifytools)
+target_link_libraries(appimagelauncherd shared filesystemwatcher Qt5::Core PkgConfig::glib libappimage)
 
 # set binary runtime rpath to make sure the libappimage.so built and installed by this project is going to be used
 # by the installed binaries (be it the .deb, the AppImage, or whatever)
