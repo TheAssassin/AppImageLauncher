@@ -1,0 +1,10 @@
+[Unit]
+Description=AppImageLauncher daemon
+
+[Service]
+ExecStart=@CMAKE_INSTALL_PREFIX@/bin/appimagelauncherd
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=wm.target

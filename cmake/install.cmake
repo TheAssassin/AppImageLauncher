@@ -45,3 +45,14 @@ install(
     FILES ${PROJECT_BINARY_DIR}/resources/binfmt.d/appimage.conf
     DESTINATION lib/binfmt.d COMPONENT APPIMAGELAUNCHER
 )
+
+# install systemd service configuration for appimagelauncherd
+configure_file(
+    ${PROJECT_SOURCE_DIR}/resources/appimagelauncherd.service.in
+    ${PROJECT_BINARY_DIR}/resources/appimagelauncherd.service
+    @ONLY
+)
+install(
+    FILES ${PROJECT_BINARY_DIR}/resources/appimagelauncherd.service
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/systemd/user/ COMPONENT APPIMAGELAUNCHER
+)
