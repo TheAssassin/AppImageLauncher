@@ -2,7 +2,6 @@
 #include <deque>
 #include <set>
 #include <iostream>
-#include <inotifytools/inotifytools.h>
 
 // library includes
 #include <QCoreApplication>
