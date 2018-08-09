@@ -399,7 +399,7 @@ Intenta copiar AppImage en su lugar?</translation>
     <message>
         <location line="+2"/>
         <source>Do you want to perform the update?</source>
-        <translation>¿Desea realizar la actualización?</translation>
+        <translation>Desea realizar la actualización?</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -413,12 +413,12 @@ Intenta copiar AppImage en su lugar?</translation>
 %1</source>
         <translation>Error al actualizar AppImage:
 
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>File reported as updated does not exist: %1</source>
-        <translation>El archivo informado como actualizado no existe:% 1</translation>
+        <translation>El archivo informado como actualizado no existe:%1</translation>
     </message>
     <message>
         <location line="+8"/>
