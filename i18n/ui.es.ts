@@ -21,7 +21,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
 </source>
         <translation>AppImage %1 ya se ha integrado, pero no está en el directorio de destino de integración actual.
 
-¿Quieres moverlo al nuevo destino?
+Quieres moverlo al nuevo destino?
 
 Elegir No ejecutará AppImage una vez, y dejará la AppImage en su directorio actual.
 
@@ -104,7 +104,7 @@ Sintaxis inválida:
     <message>
         <location line="+12"/>
         <source>Failed to create temporary directory</source>
-        <translation>Error al abrir AppImage para leer: %1</translation>
+        <translation>Error al crear el directorio temporal</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -380,7 +380,7 @@ Intenta copiar AppImage en su lugar?</translation>
     <message>
         <location line="+1"/>
         <source>Could not find updates for AppImage %1</source>
-        <translation>No se pudieron encontrar las actualizaciones para AppImage% 1</translation>
+        <translation>No se pudieron encontrar las actualizaciones para AppImage %1</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -389,12 +389,12 @@ Intenta copiar AppImage en su lugar?</translation>
 %1</source>
         <translation>Error al buscar actualizaciones:
 
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>An update has been found for the AppImage %1</source>
-        <translation>Se ha encontrado una actualización para AppImage% 1</translation>
+        <translation>Se ha encontrado una actualización para AppImage %1</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -418,7 +418,7 @@ Intenta copiar AppImage en su lugar?</translation>
     <message>
         <location line="+14"/>
         <source>File reported as updated does not exist: %1</source>
-        <translation>El archivo informado como actualizado no existe:%1</translation>
+        <translation>El archivo informado como actualizado no existe: %1</translation>
     </message>
     <message>
         <location line="+8"/>
