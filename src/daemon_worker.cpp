@@ -7,12 +7,21 @@
 #include <QFile>
 #include <QMutex>
 #include <QObject>
+#include <QSysInfo>
 #include <QTimer>
+#include <QThreadPool>
 #include <appimage/appimage.h>
 
 // local includes
 #include "daemon_worker.h"
 #include "shared.h"
+
+enum OP_TYPE {
+    INTEGRATE = 0,
+    UNINTEGRATE = 1,
+};
+
+typedef std::pair<QString, OP_TYPE> Operation;
 
 class Worker::PrivateData {
 public:
@@ -22,13 +31,63 @@ public:
 
     QMutex mutex;
 
-    enum OP_TYPE {
-        INTEGRATE = 0,
-        UNINTEGRATE = 1,
-    };
-
     // std::set is unordered, therefore using std::deque to keep the order of the operations
-    std::deque<std::pair<QString, OP_TYPE>> deferredOperations;
+    std::deque<Operation> deferredOperations;
+
+    class OperationTask : public QRunnable {
+    private:
+        Operation operation;
+        std::shared_ptr<QMutex> mutex;
+
+    public:
+        OperationTask(const Operation& operation, std::shared_ptr<QMutex> mutex) : operation(operation), mutex(std::move(mutex)) {}
+
+        void run() override {
+            const auto& path = operation.first;
+            const auto& type = operation.second;
+
+            const auto exists = QFile::exists(path);
+            const auto appImageType = appimage_get_type(path.toStdString().c_str(), false);
+            const auto isAppImage = 0 < appImageType && appImageType <= 2;
+
+            if (type == INTEGRATE) {
+                mutex->lock();
+                std::cout << "Integrating: " << path.toStdString() << std::endl;
+                mutex->unlock();
+
+                if (!exists) {
+                    mutex->lock();
+                    std::cout << "ERROR: file does not exist, cannot integrate" << std::endl;
+                    mutex->unlock();
+                    return;
+                }
+
+                if (!isAppImage) {
+                    mutex->lock();
+                    std::cout << "ERROR: not an AppImage, skipping" << std::endl;
+                    mutex->unlock();
+                    return;
+                }
+
+                // check for X-AppImage-Integrate=false
+                if (appimage_shall_not_be_integrated(path.toStdString().c_str())) {
+                    mutex->lock();
+                    std::cout << "WARNING: AppImage shall not be integrated, skipping" << std::endl;
+                    mutex->unlock();
+                    return;
+                }
+
+                if (!integrateAppImage(path, path)) {
+                    mutex->lock();
+                    std::cout << "ERROR: Failed to register AppImage in system" << std::endl;
+                    mutex->unlock();
+                    return;
+                }
+            } else if (type == UNINTEGRATE) {
+                // nothing to do
+            }
+        }
+    };
 
 public:
     PrivateData() : timerActive(false) {}
@@ -38,7 +97,7 @@ public:
     // it starts with the last element, and checks for duplicates until an opposite action is found
     // for instance, when the element shall integrated, it will check for duplicates until an unintegration operation
     // is found
-    bool isDuplicate(std::pair<QString, OP_TYPE> operation) {
+    bool isDuplicate(Operation operation) {
         for (auto it = deferredOperations.rbegin(); it != deferredOperations.rend(); ++it) {
             if ((*it).first == operation.first) {
                 // if operation type is different, then the operation is new, and should be added to the list
@@ -63,52 +122,20 @@ void Worker::executeDeferredOperations() {
 
     std::cout << "Executing deferred operations" << std::endl;
 
-    bool cleanUpAfterwards = false;
+    auto outputMutex = std::make_shared<QMutex>();
 
     while (!d->deferredOperations.empty()) {
-        auto entry = d->deferredOperations.front();
+        auto operation = d->deferredOperations.front();
         d->deferredOperations.pop_front();
-
-        const auto& path = entry.first;
-        const auto& type = entry.second;
-
-        const auto exists = QFile::exists(path);
-        const auto appImageType = appimage_get_type(path.toStdString().c_str(), false);
-        const auto isAppImage = 0 < appImageType && appImageType <= 2;
-
-        if (type == d->INTEGRATE) {
-            std::cout << "Integrating: " << path.toStdString() << std::endl;
-
-            if (!exists) {
-                std::cout << "ERROR: file does not exist, cannot integrate" << std::endl;
-                continue;
-            }
-
-            if (!isAppImage) {
-                std::cout << "ERROR: not an AppImage, skipping" << std::endl;
-                continue;
-            }
-
-            // check for X-AppImage-Integrate=false
-            if (appimage_shall_not_be_integrated(path.toStdString().c_str())) {
-                std::cout << "WARNING: AppImage shall not be integrated, skipping" << std::endl;
-                continue;
-            }
-
-            if (!integrateAppImage(path, path)) {
-                std::cout << "ERROR: Failed to register AppImage in system" << std::endl;
-                continue;
-            }
-        } else if (type == d->UNINTEGRATE) {
-            cleanUpAfterwards = true;
-        }
+        QThreadPool::globalInstance()->start(new PrivateData::OperationTask(operation, outputMutex));
     }
 
-    if (cleanUpAfterwards) {
-        std::cout << "Cleaning up old desktop integration files" << std::endl;
-        if (!cleanUpOldDesktopIntegrationResources(true)) {
-            std::cout << "Failed to clean up old desktop integration files" << std::endl;
-        }
+    // wait until all AppImages have been integrated
+    QThreadPool::globalInstance()->waitForDone();
+
+    std::cout << "Cleaning up old desktop integration files" << std::endl;
+    if (!cleanUpOldDesktopIntegrationResources(true)) {
+        std::cout << "Failed to clean up old desktop integration files" << std::endl;
     }
 
     // make sure the icons in the launcher are refreshed
@@ -125,10 +152,10 @@ void Worker::executeDeferredOperations() {
 void Worker::scheduleForIntegration(const QString& path) {
     d->mutex.lock();
 
-    auto entry = std::make_pair(path, d->INTEGRATE);
-    if (!d->isDuplicate(entry)) {
+    auto operation = std::make_pair(path, INTEGRATE);
+    if (!d->isDuplicate(operation)) {
         std::cout << "Scheduling for (re-)integration: " << path.toStdString() << std::endl;
-        d->deferredOperations.push_back(entry);
+        d->deferredOperations.push_back(operation);
         emit startTimer();
     }
 
@@ -138,10 +165,10 @@ void Worker::scheduleForIntegration(const QString& path) {
 void Worker::scheduleForUnintegration(const QString& path) {
     d->mutex.lock();
 
-    auto entry = std::make_pair(path, d->UNINTEGRATE);
-    if (!d->isDuplicate(entry)) {
+    auto operation = std::make_pair(path, UNINTEGRATE);
+    if (!d->isDuplicate(operation)) {
         std::cout << "Scheduling for unintegration: " << path.toStdString() << std::endl;
-        d->deferredOperations.push_back(entry);
+        d->deferredOperations.push_back(operation);
         emit startTimer();
     }
 
