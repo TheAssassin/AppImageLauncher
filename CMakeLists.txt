@@ -4,6 +4,8 @@ project(AppImageLauncher)
 
 set(APPIMAGELAUNCHER_VERSION 1-alpha)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/modules)
+
 # support for ccache
 # call CMake with -DUSE_CCACHE=ON to make use of it
 set(USE_CCACHE OFF CACHE BOOL "")

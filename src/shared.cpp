@@ -431,10 +431,6 @@ bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
         return false;
     }
 
-    // make sure the icons in the launcher are refreshed
-    if (!updateDesktopDatabaseAndIconCaches())
-        return false;
-
     return true;
 }
 
@@ -556,7 +552,7 @@ bool isInDirectory(const QString& pathToAppImage, const QDir& directory) {
     return directory == QFileInfo(pathToAppImage).absoluteDir();
 }
 
-bool cleanUpOldDesktopFiles() {
+bool cleanUpOldDesktopIntegrationResources(bool verbose) {
     auto dirPath = QString(xdg_data_home()) + "/applications";
 
     auto directory = QDir(dirPath);
@@ -603,9 +599,27 @@ bool cleanUpOldDesktopFiles() {
         // FIXME: the split command for the Exec value might not work if there's a space in the filename
         // we really need a parser that understands the desktop file escaping
         if (!QFile(appImagePath).exists()) {
+            if (verbose)
+                std::cout << "AppImage no longer exists, cleaning up resources: " << appImagePath.toStdString() << std::endl;
+
+            if (verbose)
+                std::cout << "Removing desktop file: " << desktopFilePath.toStdString() << std::endl;
+
             QFile(desktopFilePath).remove();
 
             // TODO: clean up related resources such as icons or MIME definitions
+
+            auto* iconValue = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_ICON, nullptr);
+
+            if (iconValue != nullptr) {
+                for (QDirIterator it("~/.local/share/icons/", QDirIterator::Subdirectories); it.hasNext();) {
+                    auto path = it.next();
+
+                    if (QFileInfo(path).completeBaseName().startsWith(iconValue)) {
+                        QFile::remove(path);
+                    }
+                }
+            }
         }
     }
 

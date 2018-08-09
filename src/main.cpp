@@ -254,7 +254,7 @@ int main(int argc, char** argv) {
     }
 
     // clean up old desktop files
-    if (!cleanUpOldDesktopFiles()) {
+    if (!cleanUpOldDesktopIntegrationResources()) {
         QMessageBox::critical(
             nullptr,
             QObject::tr("Error"),
@@ -359,6 +359,11 @@ int main(int argc, char** argv) {
     auto integrateAndRunAppImage = [&pathToAppImage, &pathToIntegratedAppImage, argc, &argv]() {
         // check whether integration was successful
         auto rv = integrateAppImage(pathToAppImage, pathToIntegratedAppImage);
+
+        // make sure the icons in the launcher are refreshed
+        if (!updateDesktopDatabaseAndIconCaches())
+            return 1;
+        9
         if (rv == INTEGRATION_FAILED) {
             return 1;
         } else if (rv == INTEGRATION_ABORTED) {

@@ -58,4 +58,4 @@ bool hasAlreadyBeenIntegrated(const QString& pathToAppImage);
 bool isInDirectory(const QString& pathToAppImage, const QDir& directory);
 
 // clean up old desktop files (and related resources, such as icons)
-bool cleanUpOldDesktopFiles();
+bool cleanUpOldDesktopIntegrationResources(bool verbose = false);
