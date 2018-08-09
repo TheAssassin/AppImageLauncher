@@ -411,10 +411,6 @@ int main(int argc, char** argv) {
     if (appimage_is_terminal_app(pathToAppImage.toStdString().c_str()))
         return runAppImage(pathToAppImage, argc, argv);
 
-    // check for X-AppImage-Integrate=false
-    if (appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str()))
-        return runAppImage(pathToAppImage, argc, argv);
-
     // AppImages in AppImages are not supposed to be integrated
     if (pathToAppImage.startsWith("/tmp/.mount_"))
         return runAppImage(pathToAppImage, argc, argv);
