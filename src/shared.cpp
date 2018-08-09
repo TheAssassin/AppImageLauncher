@@ -573,14 +573,18 @@ bool cleanUpOldDesktopIntegrationResources(bool verbose) {
             continue;
         }
 
-        auto* execValue = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_EXEC, nullptr);
+        std::shared_ptr<char> execValue(g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_EXEC, nullptr), [](char* p) {
+            free(p);
+        });
 
         // if there is no Exec value in the file, the desktop file is apparently broken, therefore we skip the file
         if (execValue == nullptr) {
             continue;
         }
 
-        auto* tryExecValue = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_TRY_EXEC, nullptr);
+        std::shared_ptr<char> tryExecValue(g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_TRY_EXEC, nullptr), [](char* p) {
+            free(p);
+        });
 
         // TryExec is optional, although recently the desktop integration functions started to force add such keys
         // with a path to the desktop file
@@ -590,9 +594,9 @@ bool cleanUpOldDesktopIntegrationResources(bool verbose) {
         QString appImagePath;
 
         if (tryExecValue != nullptr) {
-            appImagePath = QString(tryExecValue);
+            appImagePath = QString(tryExecValue.get());
         } else {
-            appImagePath = QString(execValue).split(" ").first();
+            appImagePath = QString(execValue.get()).split(" ").first();
         }
 
         // now, check whether AppImage exists
