@@ -569,26 +569,22 @@ bool cleanUpOldDesktopFiles() {
     for (auto desktopFilePath : directory.entryList()) {
         desktopFilePath = dirPath + "/" + desktopFilePath;
 
-        auto* desktopFile = g_key_file_new();
+        std::shared_ptr<GKeyFile> desktopFile(g_key_file_new(), [](GKeyFile* p) {
+            g_key_file_free(p);
+        });
 
-        auto cleanup = [&desktopFile]() {
-            g_key_file_free(desktopFile);
-        };
-
-        if (!g_key_file_load_from_file(desktopFile, desktopFilePath.toStdString().c_str(), G_KEY_FILE_NONE, nullptr)) {
-            cleanup();
+        if (!g_key_file_load_from_file(desktopFile.get(), desktopFilePath.toStdString().c_str(), G_KEY_FILE_NONE, nullptr)) {
             continue;
         }
 
-        auto* execValue = g_key_file_get_string(desktopFile, G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_EXEC, nullptr);
+        auto* execValue = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_EXEC, nullptr);
 
         // if there is no Exec value in the file, the desktop file is apparently broken, therefore we skip the file
         if (execValue == nullptr) {
-            cleanup();
             continue;
         }
 
-        auto* tryExecValue = g_key_file_get_string(desktopFile, G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_TRY_EXEC, nullptr);
+        auto* tryExecValue = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_TRY_EXEC, nullptr);
 
         // TryExec is optional, although recently the desktop integration functions started to force add such keys
         // with a path to the desktop file
@@ -611,8 +607,6 @@ bool cleanUpOldDesktopFiles() {
 
             // TODO: clean up related resources such as icons or MIME definitions
         }
-
-        cleanup();
     }
 
     return true;
