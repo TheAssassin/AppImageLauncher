@@ -55,3 +55,6 @@ bool hasAlreadyBeenIntegrated(const QString& pathToAppImage);
 
 // checks whether file is in a given directory
 bool isInDirectory(const QString& pathToAppImage, const QDir& directory);
+
+// clean up old desktop files
+bool cleanUpOldDesktopFiles();

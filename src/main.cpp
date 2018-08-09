@@ -32,67 +32,6 @@ extern "C" {
 #include "trashbin.h"
 #include "translationmanager.h"
 
-bool cleanUpOldDesktopFiles() {
-    auto dirPath = QString(xdg_data_home()) + "/applications";
-
-    auto directory = QDir(dirPath);
-
-    QStringList filters;
-    filters << "appimagekit_*.desktop";
-
-    directory.setNameFilters(filters);
-
-    for (auto desktopFilePath : directory.entryList()) {
-        desktopFilePath = dirPath + "/" + desktopFilePath;
-
-        auto* desktopFile = g_key_file_new();
-
-        auto cleanup = [&desktopFile]() {
-            g_key_file_free(desktopFile);
-        };
-
-        if (!g_key_file_load_from_file(desktopFile, desktopFilePath.toStdString().c_str(), G_KEY_FILE_NONE, nullptr)) {
-            cleanup();
-            continue;
-        }
-
-        auto* execValue = g_key_file_get_string(desktopFile, G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_EXEC, nullptr);
-
-        // if there is no Exec value in the file, the desktop file is apparently broken, therefore we skip the file
-        if (execValue == nullptr) {
-            cleanup();
-            continue;
-        }
-
-        auto* tryExecValue = g_key_file_get_string(desktopFile, G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_TRY_EXEC, nullptr);
-
-        // TryExec is optional, although recently the desktop integration functions started to force add such keys
-        // with a path to the desktop file
-        // (before, if it existed, the key was replaced with the AppImage's path)
-        // If it exists, we assume its value is the full path to the AppImage, which can be used to check the existence
-        // of the AppImage
-        QString appImagePath;
-
-        if (tryExecValue != nullptr) {
-            appImagePath = QString(tryExecValue);
-        } else {
-            appImagePath = QString(execValue).split(" ").first();
-        }
-
-        // now, check whether AppImage exists
-        // FIXME: the split command for the Exec value might not work if there's a space in the filename
-        // we really need a parser that understands the desktop file escaping
-        if (!QFile(appImagePath).exists()) {
-            QFile(desktopFilePath).remove();
-        }
-
-        cleanup();
-    }
-
-    return true;
-}
-
-
 // Runs an AppImage. Returns suitable exit code for main application.
 int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     // needs to be converted to std::string to be able to use c_str()
