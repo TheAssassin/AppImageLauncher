@@ -4,6 +4,7 @@
 #include <string>
 
 // library headers
+#include <QDir>
 #include <QString>
 
 enum IntegrationState {
