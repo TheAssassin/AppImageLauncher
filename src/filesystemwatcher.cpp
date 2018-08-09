@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 // library includes
+#include <QDir>
 #include <QStringList>
 #include <QThread>
 #include <sys/inotify.h>
@@ -128,6 +129,8 @@ FileSystemWatcher::FileSystemWatcher() {
 }
 
 FileSystemWatcher::FileSystemWatcher(const QString& path) : FileSystemWatcher() {
+    if (!QDir(path).exists())
+        QDir().mkdir(path);
     d->watchedDirectories.append(path);
 }
 
