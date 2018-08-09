@@ -19,7 +19,7 @@ Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.
 
 </source>
-        <translation>AppImage% 1 ya se ha integrado, pero no está en el directorio de destino de integración actual.
+        <translation>AppImage %1 ya se ha integrado, pero no está en el directorio de destino de integración actual.
 
 ¿Quieres moverlo al nuevo destino?
 
@@ -46,7 +46,7 @@ Could not open file for reading:
         <translation>No se pudieron analizar las traducciones de archivos de escritorio:
 No se pudo abrir el archivo para leerlo:
 
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -57,7 +57,7 @@ Invalid syntax:
         <translation>No se pudieron analizar las traducciones de archivos de escritorio:
 Sintaxis inválida:
 
-% 1</translation>
+%1</translation>
     </message>
 </context>
 <context>
@@ -94,17 +94,17 @@ Sintaxis inválida:
     <message>
         <location line="+10"/>
         <source>Could not make AppImage executable: %1</source>
-        <translation>No se pudo hacer que AppImage sea ejecutable:% 1</translation>
+        <translation>No se pudo hacer que AppImage sea ejecutable: %1</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Failed to open AppImage for reading: %1</source>
-        <translation>Error al abrir AppImage para leer:% 1</translation>
+        <translation>Error al abrir AppImage para leer: %1</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Failed to create temporary directory</source>
-        <translation>Error al abrir AppImage para leer:% 1</translation>
+        <translation>Error al abrir AppImage para leer: %1</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -126,22 +126,22 @@ Sintaxis inválida:
         <location line="+33"/>
         <source>execv() failed: %1</source>
         <comment>error message</comment>
-        <translation>Execv () falló:% 1</translation>
+        <translation>Execv () falló: %1</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>runtime not found: no such file or directory: %1</source>
-        <translation>tiempo de ejecución no encontrado: no hay tal archivo o directorio:% 1</translation>
+        <translation>tiempo de ejecución no encontrado: no hay tal archivo o directorio: %1</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>execv() failed: %1</source>
-        <translation>Execv () falló:% 1</translation>
+        <translation>Execv () falló: %1</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Usage: %1 [options] &lt;path&gt;</source>
-        <translation>Uso:% 1 [opciones] &lt;ruta&gt;</translation>
+        <translation>Uso: %1 [opciones] &lt;ruta&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -181,26 +181,26 @@ Sintaxis inválida:
     <message>
         <location line="+24"/>
         <source>Unknown AppImageLauncher option: %1</source>
-        <translation>Opción de AppImageLauncher desconocida:% 1</translation>
+        <translation>Opción de AppImageLauncher desconocida: %1</translation>
     </message>
     <message>
         <location line="+10"/>
         <location filename="../src/remove_main.cpp" line="-41"/>
         <location filename="../src/update_main.cpp" line="-98"/>
         <source>Error: no such file or directory: %1</source>
-        <translation>Error: no hay tal archivo o directorio:% 1</translation>
+        <translation>Error: no hay tal archivo o directorio: %1</translation>
     </message>
     <message>
         <location line="+10"/>
         <location filename="../src/remove_main.cpp" line="+9"/>
         <location filename="../src/update_main.cpp" line="+7"/>
         <source>Not an AppImage: %1</source>
-        <translation>No es una AppImage:% 1</translation>
+        <translation>No es una AppImage: %1</translation>
     </message>
     <message>
         <location line="+81"/>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
-        <translation>El directorio en el que están almacenadas las AppImages integradas actualmente está configurado en:% 1</translation>
+        <translation>El directorio en el que están almacenadas las AppImages integradas actualmente está configurado en: %1</translation>
     </message>
     <message>
         <location line="+27"/>
@@ -220,7 +220,7 @@ Sintaxis inválida:
     <message>
         <location line="+7"/>
         <source>%1 has not been integrated into your system.</source>
-        <translation>% 1 no se ha integrado en su sistema.</translation>
+        <translation>%1 no se ha integrado en su sistema.</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -281,12 +281,12 @@ Sintaxis inválida:
     <message>
         <location line="+14"/>
         <source>Failed to unregister AppImage: %1</source>
-        <translation>Error al anular el registro de AppImage:% 1</translation>
+        <translation>Error al anular el registro de AppImage: %1</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Failed to remove AppImage: %1</source>
-        <translation>Error al eliminar AppImage:% 1</translation>
+        <translation>Error al eliminar AppImage: %1</translation>
     </message>
     <message>
         <location filename="../src/shared.cpp" line="-35"/>
