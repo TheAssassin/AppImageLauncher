@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 // library includes
+#include <QStringList>
 #include <QThread>
 #include <sys/inotify.h>
 
