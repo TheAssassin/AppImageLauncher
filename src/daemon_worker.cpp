@@ -77,7 +77,7 @@ public:
                     return;
                 }
 
-                if (!integrateAppImage(path, path)) {
+                if (!installDesktopFile(path)) {
                     mutex->lock();
                     std::cout << "ERROR: Failed to register AppImage in system" << std::endl;
                     mutex->unlock();
