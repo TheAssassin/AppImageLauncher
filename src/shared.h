@@ -2,10 +2,12 @@
 
 // system headers
 #include <string>
+#include <memory>
 
 // library headers
 #include <QDir>
 #include <QString>
+#include <QSettings>
 
 enum IntegrationState {
     INTEGRATION_FAILED = 0,
@@ -39,6 +41,9 @@ bool updateDesktopDatabaseAndIconCaches();
 
 // integrates an AppImage using a standard workflow used across all AppImageLauncher applications
 IntegrationState integrateAppImage(const QString& pathToAppImage, const QString& pathToIntegratedAppImage);
+
+// load config file and return it
+std::shared_ptr<QSettings> getConfig();
 
 // return directory into which the integrated AppImages will be moved
 QDir integratedAppImagesDestination();

@@ -79,7 +79,7 @@ bool makeNonExecutable(const QString& path) {
 }
 
 
-QDir integratedAppImagesDestination() {
+std::shared_ptr<QSettings> getConfig() {
     // calculate path to config file
     const auto configPath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
     const auto configFilePath = configPath + "/appimagelauncher.cfg";
@@ -96,12 +96,16 @@ QDir integratedAppImagesDestination() {
                    "# destination = ~/Applications");
     }
 
-    QSettings config(configFilePath, QSettings::IniFormat);
+    return std::make_shared<QSettings>(configFilePath, QSettings::IniFormat);
+}
+
+
+QDir integratedAppImagesDestination() {
+    auto config = getConfig();
 
     static const QString keyName("AppImageLauncher/destination");
-
-    if (config.contains(keyName))
-        return config.value(keyName).toString();
+    if (config->contains(keyName))
+        return config->value(keyName).toString();
 
     return DEFAULT_INTEGRATION_DESTINATION;
 }
