@@ -276,7 +276,7 @@ int main(int argc, char** argv) {
         }
     }
 
-    std::vector<char*>appImageArgv;
+    std::vector<char*> appImageArgv;
     // search for --appimagelauncher-* arguments in args list
     for (int i = 1; i < argc; i++) {
         QString arg = argv[i];
@@ -300,8 +300,9 @@ int main(int argc, char** argv) {
                 std::cerr << QObject::tr("Unknown AppImageLauncher option: %1").arg(arg).toStdString() << std::endl;
                 return 1;
             }
-        } else
+        } else {
             appImageArgv.emplace_back(argv[i]);
+        }
     }
 
     // sanitize path
