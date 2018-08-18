@@ -217,7 +217,12 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     }
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
+    int appImageArgc = argc-1;
+    auto ** appImageArgv = static_cast<char **>(malloc(sizeof(char *) * appImageArgc));
+    for (int i = 1; i < argc; i++)
+        appImageArgv[i-1] = argv[i];
+
     QApplication app(argc, argv);
     app.setApplicationDisplayName("AppImageLauncher");
 
@@ -331,7 +336,7 @@ int main(int argc, char** argv) {
                 if (arg.startsWith(prefix)) {
                     // don't annoy users who try to mount or extract AppImages
                     if (arg == prefix + "mount" || arg == prefix + "extract") {
-                        return runAppImage(pathToAppImage, argc, argv);
+                        return runAppImage(pathToAppImage, appImageArgc, appImageArgv);
                     }
                 }
             }
@@ -350,23 +355,23 @@ int main(int argc, char** argv) {
 
     // check for X-AppImage-Integrate=false
     if (appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str()))
-        return runAppImage(pathToAppImage, argc, argv);
+        return runAppImage(pathToAppImage, appImageArgc, appImageArgv);
 
     // AppImages in AppImages are not supposed to be integrated
     if (pathToAppImage.startsWith("/tmp/.mount_"))
-        return runAppImage(pathToAppImage, argc, argv);
+        return runAppImage(pathToAppImage, appImageArgc, appImageArgv);
 
     // ignore terminal apps (fixes #2)
     if (appimage_is_terminal_app(pathToAppImage.toStdString().c_str()))
-        return runAppImage(pathToAppImage, argc, argv);
+        return runAppImage(pathToAppImage, appImageArgc, appImageArgv);
 
     // AppImages in AppImages are not supposed to be integrated
     if (pathToAppImage.startsWith("/tmp/.mount_"))
-        return runAppImage(pathToAppImage, argc, argv);
+        return runAppImage(pathToAppImage, appImageArgc, appImageArgv);
 
     const auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
 
-    auto integrateAndRunAppImage = [&pathToAppImage, &pathToIntegratedAppImage, argc, &argv]() {
+    auto integrateAndRunAppImage = [&pathToAppImage, &pathToIntegratedAppImage, appImageArgc, &appImageArgv]() {
         // check whether integration was successful
         auto rv = integrateAppImage(pathToAppImage, pathToIntegratedAppImage);
 
@@ -377,20 +382,20 @@ int main(int argc, char** argv) {
         if (rv == INTEGRATION_FAILED) {
             return 1;
         } else if (rv == INTEGRATION_ABORTED) {
-            return runAppImage(pathToAppImage, argc, argv);
+            return runAppImage(pathToAppImage, appImageArgc, appImageArgv);
         } else {
-            return runAppImage(pathToIntegratedAppImage, argc, argv);
+            return runAppImage(pathToIntegratedAppImage, appImageArgc, appImageArgv);
         }
     };
 
     // after checking whether the AppImage can/must be run without integrating it, we now check whether it actually
     // has been integrated already
     if (hasAlreadyBeenIntegrated(pathToAppImage)) {
-        auto updateAndRunAppImage = [&pathToAppImage, argc, &argv]() {
+        auto updateAndRunAppImage = [&pathToAppImage, appImageArgc, &appImageArgv]() {
             if (!updateDesktopFile(pathToAppImage))
                 return 1;
 
-            return runAppImage(pathToAppImage, argc, argv);
+            return runAppImage(pathToAppImage, appImageArgc, appImageArgv);
         };
 
         if (!isInDirectory(pathToAppImage, integratedAppImagesDestination().path())) {
@@ -472,7 +477,7 @@ int main(int argc, char** argv) {
     if (clickedButton == okButton) {
         return integrateAndRunAppImage();
     } else if (clickedButton == runOnceButton) {
-        return runAppImage(pathToAppImage, argc, argv);
+        return runAppImage(pathToAppImage, appImageArgc, appImageArgv);
     } else if (clickedButton == cancelButton) {
         return 0;
     }
