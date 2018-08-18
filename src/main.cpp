@@ -218,7 +218,9 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 }
 
 int main(int argc, char** argv) {
-    QApplication app(argc, argv);
+    // Create a fake argc value to avoid QApplication from modifying the arguments.
+    int fakeArgc = 1;
+    QApplication app(fakeArgc, argv);
     app.setApplicationDisplayName("AppImageLauncher");
 
     std::ostringstream version;
