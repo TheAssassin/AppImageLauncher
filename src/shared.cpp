@@ -13,6 +13,7 @@ extern "C" {
 
 // library includes
 #include <QDebug>
+#include <QtDBus/QtDBus>
 #include <QDirIterator>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -434,6 +435,13 @@ bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
     if (!g_key_file_save_to_file(desktopFile.get(), desktopFilePath, error.get())) {
         handleError();
         return false;
+    }
+
+    // notify KDE/Plasma about icon change
+    {
+        auto message = QDBusMessage::createSignal(QStringLiteral("/KIconLoader"), QStringLiteral("org.kde.KIconLoader"), QStringLiteral("iconChanged"));
+        message.setArguments({0});
+        QDBusConnection::sessionBus().send(message);
     }
 
     return true;
