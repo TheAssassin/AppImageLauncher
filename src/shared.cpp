@@ -13,7 +13,7 @@ extern "C" {
 
 // library includes
 #include <QDebug>
-#include <QtDBus/QtDBus>
+#include <QtDBus>
 #include <QDirIterator>
 #include <QJsonDocument>
 #include <QJsonObject>
