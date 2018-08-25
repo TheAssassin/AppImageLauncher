@@ -93,8 +93,8 @@ std::shared_ptr<QSettings> getConfig() {
         QFile file(configFilePath);
         file.open(QIODevice::WriteOnly);
         file.write("[AppImageLauncher]\n"
-                   "# destination = ~/Applications"
-                   "# enable_daemon = true");
+                   "# destination = ~/Applications\n"
+                   "# enable_daemon = true\n");
     }
 
     return std::make_shared<QSettings>(configFilePath, QSettings::IniFormat);
