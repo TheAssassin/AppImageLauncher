@@ -98,7 +98,7 @@ if [ "$BIONIC" == "" ]; then
     # bundle application
     export UPDATE_INFORMATION="gh-releases-zsync|TheAssassin|AppImageLauncher|AppImageLauncher*-$ARCH.AppImage.zsync"
 
-    ./linuxdeploy-x86_64.AppImage --init-appdir --appdir AppDir --plugin qt --output appimage
+    ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin qt --output appimage
 fi
 
 # move AppImages to old cwd
