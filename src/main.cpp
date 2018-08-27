@@ -193,8 +193,8 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         }
 
         // need a char pointer instead of a const one, therefore can't use .c_str()
-        std::vector<char> argv0Buffer(pathToRuntime.size() + 1, '\0');
-        strcpy(argv0Buffer.data(), pathToRuntime.c_str());
+        std::vector<char> argv0Buffer(pathToAppImage.toStdString().size() + 1, '\0');
+        strcpy(argv0Buffer.data(), pathToAppImage.toStdString().c_str());
 
         std::vector<char*> args;
 
