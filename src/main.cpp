@@ -149,9 +149,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         args.push_back(argv0Buffer.data());
 
         // copy arguments
-        // starting at index 2, as the first argument is supposed to be the path to an AppImage
-        // all the other arguments can simply be copied
-        for (int i = 2; i < argc; i++) {
+        for (int i = 1; i < argc; i++) {
             args.push_back(argv[i]);
         }
 
@@ -201,9 +199,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         args.push_back(argv0Buffer.data());
 
         // copy arguments
-        // starting at index 2, as the first argument is supposed to be the path to an AppImage
-        // all the other arguments can simply be copied
-        for (int i = 2; i < argc; i++) {
+        for (int i = 1; i < argc; i++) {
             args.push_back(argv[i]);
         }
 
