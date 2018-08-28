@@ -276,7 +276,7 @@ Sintaxis inválida:
     <message>
         <location line="+1"/>
         <source>Are you sure you want to remove this AppImage?</source>
-        <translation>Está seguro que desea eliminar esta AppImage?</translation>
+        <translation>Seguro que desea eliminar esta AppImage?</translation>
     </message>
     <message>
         <location line="+14"/>
