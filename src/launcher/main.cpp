@@ -2,38 +2,34 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+
 extern "C" {
-    #include <sys/stat.h>
-    #include <libgen.h>
-    #include <unistd.h>
-    #include <glib.h>
+#include <glib.h>
 }
 
 // library includes
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDir>
-#include <QFile>
 #include <QFileDialog>
-#include <QFileInfo>
 #include <QMessageBox>
-#include <QProcess>
 #include <QPushButton>
 #include <QRegularExpression>
-#include <QString>
 #include <QTemporaryDir>
+#include <QDebug>
+
 extern "C" {
-    #include <appimage/appimage.h>
-    #include <xdg-basedir.h>
+#include <appimage/appimage.h>
 }
 
 // local headers
 #include "shared.h"
 #include "trashbin.h"
 #include "translationmanager.h"
+#include "Launcher.h"
 
 // Runs an AppImage. Returns suitable exit code for main application.
-int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
+int runAppImage(const QString &pathToAppImage, int argc, char **argv) {
     // needs to be converted to std::string to be able to use c_str()
     // when using QString and then .toStdString().c_str(), the std::string instance will be an rvalue, and the
     // pointer returned by c_str() will be invalid
@@ -43,9 +39,9 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     auto type = appimage_get_type(fullPathToAppImage.toStdString().c_str(), false);
     if (type < 1 || type > 3) {
         QMessageBox::critical(
-            nullptr,
-            QObject::tr("Error"),
-            QObject::tr("AppImageLauncher does not support type %1 AppImages at the moment.").arg(type)
+                nullptr,
+                QObject::tr("Error"),
+                QObject::tr("AppImageLauncher does not support type %1 AppImages at the moment.").arg(type)
         );
         return 1;
     }
@@ -53,9 +49,9 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     // first of all, chmod +x the AppImage file, otherwise execv() will complain
     if (!makeExecutable(fullPathToAppImage)) {
         QMessageBox::critical(
-            nullptr,
-            QObject::tr("Error"),
-            QObject::tr("Could not make AppImage executable: %1").arg(fullPathToAppImage)
+                nullptr,
+                QObject::tr("Error"),
+                QObject::tr("Could not make AppImage executable: %1").arg(fullPathToAppImage)
         );
         return 1;
     }
@@ -71,9 +67,9 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 
         if (!appImage.open(QIODevice::ReadOnly)) {
             QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to open AppImage for reading: %1").arg(pathToAppImage)
+                    nullptr,
+                    QObject::tr("Error"),
+                    QObject::tr("Failed to open AppImage for reading: %1").arg(pathToAppImage)
             );
             return 1;
         }
@@ -83,9 +79,9 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 
         if (!tempDir.isValid()) {
             QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to create temporary directory")
+                    nullptr,
+                    QObject::tr("Error"),
+                    QObject::tr("Failed to create temporary directory")
             );
             return 1;
         }
@@ -97,9 +93,9 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 
         if (!appImage.copy(tempAppImagePath)) {
             QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to create temporary copy of type 1 AppImage")
+                    nullptr,
+                    QObject::tr("Error"),
+                    QObject::tr("Failed to create temporary copy of type 1 AppImage")
             );
             return 1;
         }
@@ -108,9 +104,9 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 
         if (!tempAppImage.open(QFile::ReadWrite)) {
             QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to open temporary AppImage copy for writing")
+                    nullptr,
+                    QObject::tr("Error"),
+                    QObject::tr("Failed to open temporary AppImage copy for writing")
             );
             return 1;
         }
@@ -118,17 +114,17 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         // nuke magic bytes
         if (!tempAppImage.seek(8)) {
             QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to remove magic bytes from temporary AppImage copy")
+                    nullptr,
+                    QObject::tr("Error"),
+                    QObject::tr("Failed to remove magic bytes from temporary AppImage copy")
             );
             return 1;
         }
         if (tempAppImage.write(QByteArray(3, '\0')) != 3) {
             QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to remove magic bytes from temporary AppImage copy")
+                    nullptr,
+                    QObject::tr("Error"),
+                    QObject::tr("Failed to remove magic bytes from temporary AppImage copy")
             );
             return 1;
         }
@@ -144,7 +140,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         std::vector<char> argv0Buffer(tempAppImageFileName.size() + 1, '\0');
         strcpy(argv0Buffer.data(), tempAppImageFileName.toStdString().c_str());
 
-        std::vector<char*> args;
+        std::vector<char *> args;
 
         args.push_back(argv0Buffer.data());
 
@@ -158,7 +154,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 
         execv(tempAppImageFileName.toStdString().c_str(), args.data());
 
-        const auto& error = errno;
+        const auto &error = errno;
         std::cout << QObject::tr("execv() failed: %1", "error message").arg(strerror(error)).toStdString() << std::endl;
     } else if (type == 2) {
         // use external runtime _without_ magic bytes to run the AppImage
@@ -183,9 +179,10 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         // if it can't be found in either location, display error and exit
         if (!QFile(QString::fromStdString(pathToRuntime)).exists()) {
             QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("runtime not found: no such file or directory: %1").arg(QString::fromStdString(pathToRuntime))
+                    nullptr,
+                    QObject::tr("Error"),
+                    QObject::tr("runtime not found: no such file or directory: %1").arg(
+                            QString::fromStdString(pathToRuntime))
             );
             return 1;
         }
@@ -194,7 +191,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         std::vector<char> argv0Buffer(pathToAppImage.toStdString().size() + 1, '\0');
         strcpy(argv0Buffer.data(), pathToAppImage.toStdString().c_str());
 
-        std::vector<char*> args;
+        std::vector<char *> args;
 
         args.push_back(argv0Buffer.data());
 
@@ -208,12 +205,12 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 
         execv(pathToRuntime.c_str(), args.data());
 
-        const auto& error = errno;
+        const auto &error = errno;
         std::cout << QObject::tr("execv() failed: %1").arg(strerror(error)).toStdString() << std::endl;
     }
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
     // Create a fake argc value to avoid QApplication from modifying the arguments.
     int fakeArgc = 1;
     QApplication app(fakeArgc, argv);
@@ -230,7 +227,8 @@ int main(int argc, char** argv) {
 
     std::ostringstream usage;
     usage << QObject::tr("Usage: %1 [options] <path>").arg(argv[0]).toStdString() << std::endl
-          << QObject::tr("Desktop integration helper for AppImages, for use by Linux distributions.").toStdString() << std::endl
+          << QObject::tr("Desktop integration helper for AppImages, for use by Linux distributions.").toStdString()
+          << std::endl
           << std::endl
           << QObject::tr("Options:").toStdString() << std::endl
           << "  --appimagelauncher-help     " << QObject::tr("Display this help and exit").toStdString() << std::endl
@@ -254,9 +252,9 @@ int main(int argc, char** argv) {
     // clean up old desktop files
     if (!cleanUpOldDesktopIntegrationResources()) {
         QMessageBox::critical(
-            nullptr,
-            QObject::tr("Error"),
-            QObject::tr("Failed to clean up old desktop files")
+                nullptr,
+                QObject::tr("Error"),
+                QObject::tr("Failed to clean up old desktop files")
         );
     }
 
@@ -265,14 +263,14 @@ int main(int argc, char** argv) {
         TrashBin bin;
         if (!bin.cleanUp()) {
             QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to clean up AppImage trash bin: %1").arg(bin.path())
+                    nullptr,
+                    QObject::tr("Error"),
+                    QObject::tr("Failed to clean up AppImage trash bin: %1").arg(bin.path())
             );
         }
     }
 
-    std::vector<char*> appImageArgv;
+    std::vector<char *> appImageArgv;
     // search for --appimagelauncher-* arguments in args list
     for (int i = 1; i < argc; i++) {
         QString arg = argv[i];
@@ -304,38 +302,38 @@ int main(int argc, char** argv) {
     // sanitize path
     auto pathToAppImage = QDir(QString(argv[1])).absolutePath();
 
-    if (!QFile(pathToAppImage).exists()) {
+    Launcher launcher;
+    launcher.setAppImagePath(pathToAppImage);
+    launcher.setArgs(appImageArgv);
+
+    try {
+        launcher.inspectAppImageFile();
+    } catch (const AppImageFilePathNotSet &ex) {
+        qCritical() << "Missing AppImagePath in Launcher class. I wasn't initialized properly.";
+        return 1;
+    } catch (const InvalidAppImageFile &ex) {
+        QMessageBox::critical(
+                nullptr,
+                QObject::tr("Error"),
+                QObject::tr("Not an AppImage: %1").arg(pathToAppImage));
+        return 1;
+    } catch (const AppImageFileNotExists &ex) {
         std::cout << QObject::tr("Error: no such file or directory: %1").arg(pathToAppImage).toStdString() << std::endl;
         return 1;
-    }
-
-    const auto type = appimage_get_type(pathToAppImage.toStdString().c_str(), false);
-
-    if (type <= 0 || type > 2) {
+    } catch (const UnsuportedAppImageType &ex) {
         QMessageBox::critical(
-            nullptr,
-            QObject::tr("Error"),
-            QObject::tr("Not an AppImage: %1").arg(pathToAppImage));
+                nullptr,
+                QObject::tr("Error"),
+                QObject::tr("Not an AppImage: %1").arg(pathToAppImage));
         return 1;
     }
 
-    // type 2 specific checks
-    if (type == 2) {
-        // check parameters
-        {
-            for (int i = 0; i < argc; i++) {
-                QString arg = argv[i];
-
-                // reserved argument space
-                const QString prefix = "--appimage-";
-
-                if (arg.startsWith(prefix)) {
-                    // don't annoy users who try to mount or extract AppImages
-                    if (arg == prefix + "mount" || arg == prefix + "extract") {
-                        return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
-                    }
-                }
-            }
+    if (launcher.shouldBeIgnored()) {
+        try {
+            return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
+        } catch (const std::runtime_error &ex) {
+            qCritical() << QObject::tr("Unable to execute the AppImage: %1").arg(ex.what());
+            return 2;
         }
     }
 
@@ -348,22 +346,6 @@ int main(int argc, char** argv) {
         system("systemctl --user disable appimagelauncherd.service");
         system("systemctl --user stop    appimagelauncherd.service");
     }
-
-    // check for X-AppImage-Integrate=false
-    if (appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str()))
-        return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
-
-    // AppImages in AppImages are not supposed to be integrated
-    if (pathToAppImage.startsWith("/tmp/.mount_"))
-        return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
-
-    // ignore terminal apps (fixes #2)
-    if (appimage_is_terminal_app(pathToAppImage.toStdString().c_str()))
-        return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
-
-    // AppImages in AppImages are not supposed to be integrated
-    if (pathToAppImage.startsWith("/tmp/.mount_"))
-        return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
 
     const auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
 
@@ -396,20 +378,20 @@ int main(int argc, char** argv) {
 
         if (!isInDirectory(pathToAppImage, integratedAppImagesDestination().path())) {
             auto rv = QMessageBox::warning(
-                nullptr,
-                QMessageBox::tr("Warning"),
-                QMessageBox::tr("AppImage %1 has already been integrated, but it is not in the current integration "
-                                "destination directory."
-                                "\n\n"
-                                "Do you want to move it into the new destination?"
-                                "\n\n"
-                                "Choosing No will run the AppImage once, and leave the AppImage in its current "
-                                "directory."
-                                "\n\n").arg(pathToAppImage) +
-                                // translate separately to share string with the other dialog
-                                QObject::tr("The directory the integrated AppImages are stored in is currently set to:\n"
-                                            "%1").arg(integratedAppImagesDestination().path()) + "\n",
-                QMessageBox::Yes | QMessageBox::No
+                    nullptr,
+                    QMessageBox::tr("Warning"),
+                    QMessageBox::tr("AppImage %1 has already been integrated, but it is not in the current integration "
+                                    "destination directory."
+                                    "\n\n"
+                                    "Do you want to move it into the new destination?"
+                                    "\n\n"
+                                    "Choosing No will run the AppImage once, and leave the AppImage in its current "
+                                    "directory."
+                                    "\n\n").arg(pathToAppImage) +
+                    // translate separately to share string with the other dialog
+                    QObject::tr("The directory the integrated AppImages are stored in is currently set to:\n"
+                                "%1").arg(integratedAppImagesDestination().path()) + "\n",
+                    QMessageBox::Yes | QMessageBox::No
             );
 
             // if the user selects No, then continue as if the AppImage would not be in this directory
@@ -417,9 +399,9 @@ int main(int argc, char** argv) {
                 // unregister AppImage, move, and re-integrate
                 if (appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false) != 0) {
                     QMessageBox::critical(
-                        nullptr,
-                        QMessageBox::tr("Error"),
-                        QMessageBox::tr("Failed to unregister AppImage before re-integrating it")
+                            nullptr,
+                            QMessageBox::tr("Error"),
+                            QMessageBox::tr("Failed to unregister AppImage before re-integrating it")
                     );
                     return 1;
                 }
@@ -435,32 +417,33 @@ int main(int argc, char** argv) {
 
     std::ostringstream explanationStrm;
     explanationStrm << QObject::tr("Integrating it will move the AppImage into a predefined location, "
-                       "and include it in your application launcher.").toStdString() << std::endl
+                                   "and include it in your application launcher.").toStdString() << std::endl
                     << std::endl
                     << QObject::tr("To remove or update the AppImage, please use the context menu of the "
-                       "application icon in your task bar or launcher.").toStdString() << std::endl
+                                   "application icon in your task bar or launcher.").toStdString() << std::endl
                     << std::endl
                     << QObject::tr("The directory the integrated AppImages are stored in is currently "
-                                        "set to:").toStdString() << std::endl
+                                   "set to:").toStdString() << std::endl
                     << integratedAppImagesDestination().path().toStdString() << std::endl;
 
     auto explanation = explanationStrm.str();
 
     std::ostringstream messageStrm;
-    messageStrm << QObject::tr("%1 has not been integrated into your system.").arg(pathToAppImage).toStdString() << "\n\n"
+    messageStrm << QObject::tr("%1 has not been integrated into your system.").arg(pathToAppImage).toStdString()
+                << "\n\n"
                 << QObject::tr(explanation.c_str()).toStdString();
 
     QMessageBox messageBox(
-        QMessageBox::Question,
-        QObject::tr("Desktop Integration"),
-        QString::fromStdString(messageStrm.str())
+            QMessageBox::Question,
+            QObject::tr("Desktop Integration"),
+            QString::fromStdString(messageStrm.str())
     );
 
-    auto* okButton = messageBox.addButton(QObject::tr("Integrate and run"), QMessageBox::AcceptRole);
-    auto* runOnceButton = messageBox.addButton(QObject::tr("Run once"), QMessageBox::ApplyRole);
+    auto *okButton = messageBox.addButton(QObject::tr("Integrate and run"), QMessageBox::AcceptRole);
+    auto *runOnceButton = messageBox.addButton(QObject::tr("Run once"), QMessageBox::ApplyRole);
 
     // *whyever* Qt somehow needs a button with "RejectRole" or the X button won't close the current window...
-    auto* cancelButton = messageBox.addButton(QObject::tr("Cancel"), QMessageBox::RejectRole);
+    auto *cancelButton = messageBox.addButton(QObject::tr("Cancel"), QMessageBox::RejectRole);
     // ... but it is fine to hide that button after creating it, so it's not displayed
     cancelButton->hide();
 
@@ -468,7 +451,7 @@ int main(int argc, char** argv) {
 
     messageBox.exec();
 
-    const auto* clickedButton = messageBox.clickedButton();
+    const auto *clickedButton = messageBox.clickedButton();
 
     if (clickedButton == okButton) {
         return integrateAndRunAppImage();
