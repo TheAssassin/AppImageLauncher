@@ -183,8 +183,9 @@ QMap<QString, QString> findCollisions(const QString& currentNameEntry) {
 bool updateDesktopDatabaseAndIconCaches() {
     auto commands = {
         "update-desktop-database ~/.local/share/applications",
-        "gtk-update-icon-cache-3.0  ~/.local/share/icons/hicolor/ -t",
-        "gtk-update-icon-cache  ~/.local/share/icons/hicolor/ -t"
+        "gtk-update-icon-cache-3.0 ~/.local/share/icons/hicolor/ -t",
+        "gtk-update-icon-cache ~/.local/share/icons/hicolor/ -t",
+        "xdg-desktop-menu forceupdate",
     };
 
     for (const auto& command : commands) {
