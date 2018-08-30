@@ -13,6 +13,7 @@ extern "C" {
 
 // library includes
 #include <QDebug>
+#include <QtDBus>
 #include <QDirIterator>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -201,7 +202,7 @@ bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
             QObject::tr("Error"),
             QObject::tr("Failed to register AppImage in system via libappimage")
         );
-        return INTEGRATION_FAILED;
+        return false;
     }
 
     const auto* desktopFilePath = appimage_registered_desktop_file_path(pathToAppImage.toStdString().c_str(), nullptr, false);
@@ -213,7 +214,7 @@ bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
             QObject::tr("Error"),
             QObject::tr("Failed to find integrated desktop file")
         );
-        return INTEGRATION_FAILED;
+        return false;
     }
 
     // check that file exists
@@ -223,7 +224,7 @@ bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
             QObject::tr("Error"),
             QObject::tr("Couldn't find integrated AppImage's desktop file")
         );
-        return INTEGRATION_FAILED;
+        return false;
     }
 
     /* write AppImageLauncher specific entries to desktop file
@@ -252,7 +253,7 @@ bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
 
     if (!g_key_file_load_from_file(desktopFile.get(), desktopFilePath, flags, error.get())) {
         handleError();
-        return INTEGRATION_FAILED;
+        return false;
     }
 
     const auto* nameEntry = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_NAME, error.get());
@@ -434,6 +435,13 @@ bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
     if (!g_key_file_save_to_file(desktopFile.get(), desktopFilePath, error.get())) {
         handleError();
         return false;
+    }
+
+    // notify KDE/Plasma about icon change
+    {
+        auto message = QDBusMessage::createSignal(QStringLiteral("/KIconLoader"), QStringLiteral("org.kde.KIconLoader"), QStringLiteral("iconChanged"));
+        message.setArguments({0});
+        QDBusConnection::sessionBus().send(message);
     }
 
     return true;

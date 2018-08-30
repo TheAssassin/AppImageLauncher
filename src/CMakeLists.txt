@@ -11,7 +11,7 @@ set(CMAKE_AUTOMOC ON)
 # Create code from a list of Qt designer ui files
 set(CMAKE_AUTOUIC ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
+find_package(Qt5 REQUIRED COMPONENTS Core Widgets DBus)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(glib REQUIRED glib-2.0>=2.40 IMPORTED_TARGET)
@@ -33,7 +33,7 @@ target_link_libraries(translationmanager PUBLIC Qt5::Core Qt5::Widgets)
 target_compile_definitions(translationmanager PRIVATE -DCMAKE_PROJECT_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
 
 add_library(shared STATIC shared.h shared.cpp trashbin.cpp trashbin.h)
-target_link_libraries(shared PUBLIC PkgConfig::glib Qt5::Core Qt5::Widgets xdg-basedir libappimage translationmanager)
+target_link_libraries(shared PUBLIC PkgConfig::glib Qt5::Core Qt5::Widgets Qt5::DBus xdg-basedir libappimage translationmanager)
 target_compile_definitions(shared
     PRIVATE -DCMAKE_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}"
 )
@@ -44,11 +44,11 @@ target_include_directories(filesystemwatcher PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # main AppImageLauncher application
 add_executable(AppImageLauncher main.cpp)
-target_link_libraries(AppImageLauncher shared Qt5::Core Qt5::Widgets PkgConfig::glib libappimage)
+target_link_libraries(AppImageLauncher shared PkgConfig::glib libappimage)
 
 # appimagelauncherd
 add_executable(appimagelauncherd daemon_main.cpp daemon_worker.cpp daemon_worker.h)
-target_link_libraries(appimagelauncherd shared filesystemwatcher Qt5::Core PkgConfig::glib libappimage)
+target_link_libraries(appimagelauncherd shared filesystemwatcher PkgConfig::glib libappimage)
 
 # set binary runtime rpath to make sure the libappimage.so built and installed by this project is going to be used
 # by the installed binaries (be it the .deb, the AppImage, or whatever)
@@ -70,7 +70,7 @@ install(
 
 # AppImage removal helper
 add_executable(remove remove_main.cpp)
-target_link_libraries(remove shared translationmanager Qt5::Core Qt5::Widgets libappimage)
+target_link_libraries(remove shared translationmanager libappimage)
 # see AppImageLauncher for a description
 set_target_properties(remove PROPERTIES INSTALL_RPATH "\$ORIGIN")
 
@@ -82,7 +82,7 @@ install(
 
 # AppImage update helper
 add_executable(update update_main.cpp)
-target_link_libraries(update shared translationmanager Qt5::Core Qt5::Widgets libappimage libappimageupdate-qt)
+target_link_libraries(update shared translationmanager libappimage libappimageupdate-qt)
 # see AppImageLauncher for a description
 set_target_properties(update PROPERTIES INSTALL_RPATH "\$ORIGIN")
 
