@@ -2,7 +2,22 @@
 cmake_minimum_required(VERSION 3.6)
 
 # Fix for https://github.com/TheAssassin/AppImageLauncher/issues/28
-set(CPACK_DEBIAN_COMPATIBILITY_LEVEL "" CACHE STRING "Available values: bionic (Ubuntu 18.04)")
+execute_process(
+    COMMAND lsb_release -c
+    OUTPUT_VARIABLE _lsb_release_output
+)
+
+if(_lsb_release_output MATCHES bionic)
+    message(WARNING "platform is bionic, enabling compatibility mode for CPack Debian packaging")
+    set(_compatibility_level bionic)
+else()
+    set(_compatibility_level "")
+endif()
+
+set(CPACK_DEBIAN_COMPATIBILITY_LEVEL ${_compatibility_level} CACHE STRING "Available values: bionic (Ubuntu 18.04)")
+
+unset(_lsb_release_output)
+unset(_compatibility_level)
 
 # allow building Debian packages on non-Debian systems
 if(DEFINED ENV{ARCH})
