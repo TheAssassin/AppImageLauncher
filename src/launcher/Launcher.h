@@ -7,11 +7,14 @@
 
 #include <QString>
 #include <vector>
+#include "AppImageDesktopIntegrationManager.h"
 
 class Launcher {
     QString appImagePath;
     std::vector<char *> args{};
     int appImageType{-1};
+
+    AppImageDesktopIntegrationManager *integrationManager{nullptr};
 
 public:
     const QString &getAppImagePath() const;
@@ -24,13 +27,11 @@ public:
 
     int getAppImageType() const;
 
+    void setIntegrationManager(AppImageDesktopIntegrationManager *integrationManager);
+
     void inspectAppImageFile();
 
     bool shouldBeIgnored();
-
-    bool isIntegrationRequired();
-
-    void integrateAppImage();
 
     void executeAppImage();
 
@@ -47,34 +48,9 @@ public:
     explicit AppImageFilePathNotSet(const std::string &what) : runtime_error(what) {}
 };
 
-class AppImageFileNotExists : public std::runtime_error {
-public:
-    explicit AppImageFileNotExists(const std::string &what) : runtime_error(what) {}
-};
-
-class InvalidAppImageFile : public std::runtime_error {
-public:
-    explicit InvalidAppImageFile(const std::string &what) : runtime_error(what) {}
-};
-
-class IntegrationFailed : public std::runtime_error {
-public:
-    explicit IntegrationFailed(const std::string &what) : runtime_error(what) {}
-};
-
-class UnsuportedAppImageType : public std::runtime_error {
-public:
-    explicit UnsuportedAppImageType(const std::string &what) : runtime_error(what) {}
-};
-
 class ExecutionFailed : public std::runtime_error {
 public:
     explicit ExecutionFailed(const std::string &what) : runtime_error(what) {}
-};
-
-class DeploymentFailed : public std::runtime_error {
-public:
-    explicit DeploymentFailed(const std::string &what) : runtime_error(what) {}
 };
 
 

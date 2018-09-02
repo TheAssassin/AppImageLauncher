@@ -43,7 +43,7 @@ target_link_libraries(filesystemwatcher PUBLIC Qt5::Core)
 target_include_directories(filesystemwatcher PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # main AppImageLauncher application
-add_executable(AppImageLauncher launcher/main.cpp launcher/Launcher.cpp launcher/Launcher.h)
+add_executable(AppImageLauncher launcher/main.cpp launcher/Launcher.cpp launcher/Launcher.h launcher/AppImageDesktopIntegrationManager.cpp launcher/AppImageDesktopIntegrationManager.h launcher/ui.h launcher/ui.cpp)
 target_link_libraries(AppImageLauncher shared PkgConfig::glib libappimage)
 
 # appimagelauncherd
