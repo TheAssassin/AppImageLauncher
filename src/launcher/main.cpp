@@ -31,189 +31,9 @@ extern "C" {
 #include "shared.h"
 #include "trashbin.h"
 #include "translationmanager.h"
+#include "Launcher.h"
 
-// Runs an AppImage. Returns suitable exit code for main application.
-int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
-    // needs to be converted to std::string to be able to use c_str()
-    // when using QString and then .toStdString().c_str(), the std::string instance will be an rvalue, and the
-    // pointer returned by c_str() will be invalid
-    auto x = pathToAppImage.toStdString();
-    auto fullPathToAppImage = QFileInfo(pathToAppImage).absoluteFilePath();
-
-    auto type = appimage_get_type(fullPathToAppImage.toStdString().c_str(), false);
-    if (type < 1 || type > 3) {
-        QMessageBox::critical(
-            nullptr,
-            QObject::tr("Error"),
-            QObject::tr("AppImageLauncher does not support type %1 AppImages at the moment.").arg(type)
-        );
-        return 1;
-    }
-
-    // first of all, chmod +x the AppImage file, otherwise execv() will complain
-    if (!makeExecutable(fullPathToAppImage)) {
-        QMessageBox::critical(
-            nullptr,
-            QObject::tr("Error"),
-            QObject::tr("Could not make AppImage executable: %1").arg(fullPathToAppImage)
-        );
-        return 1;
-    }
-
-    // build path to AppImage runtime
-    // as it might error, check before fork()ing to be able to display an error message beforehand
-    auto exeDir = QFileInfo(QFile("/proc/self/exe").symLinkTarget()).absoluteDir().absolutePath();
-
-    if (type == 1) {
-        auto size = appimage_get_elf_size(fullPathToAppImage.toStdString().c_str());
-
-        QFile appImage(QString::fromStdString(fullPathToAppImage.toStdString()));
-
-        if (!appImage.open(QIODevice::ReadOnly)) {
-            QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to open AppImage for reading: %1").arg(pathToAppImage)
-            );
-            return 1;
-        }
-
-        // copy AppImage to temp dir
-        QTemporaryDir tempDir("/tmp/AppImageLauncher-type1-XXXXXX");
-
-        if (!tempDir.isValid()) {
-            QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to create temporary directory")
-            );
-            return 1;
-        }
-
-        tempDir.setAutoRemove(true);
-
-        // copy AppImage to temporary directory
-        auto tempAppImagePath = QDir(tempDir.path()).absoluteFilePath(QFileInfo(appImage).fileName());
-
-        if (!appImage.copy(tempAppImagePath)) {
-            QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to create temporary copy of type 1 AppImage")
-            );
-            return 1;
-        }
-
-        QFile tempAppImage(tempAppImagePath);
-
-        if (!tempAppImage.open(QFile::ReadWrite)) {
-            QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to open temporary AppImage copy for writing")
-            );
-            return 1;
-        }
-
-        // nuke magic bytes
-        if (!tempAppImage.seek(8)) {
-            QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to remove magic bytes from temporary AppImage copy")
-            );
-            return 1;
-        }
-        if (tempAppImage.write(QByteArray(3, '\0')) != 3) {
-            QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to remove magic bytes from temporary AppImage copy")
-            );
-            return 1;
-        }
-
-        auto tempAppImageFileName = tempAppImage.fileName();
-
-        // actually _write_ changes
-        tempAppImage.close();
-
-        makeExecutable(tempAppImageFileName);
-
-        // need a char pointer instead of a const one, therefore can't use .c_str()
-        std::vector<char> argv0Buffer(tempAppImageFileName.size() + 1, '\0');
-        strcpy(argv0Buffer.data(), tempAppImageFileName.toStdString().c_str());
-
-        std::vector<char*> args;
-
-        args.push_back(argv0Buffer.data());
-
-        // copy arguments
-        for (int i = 1; i < argc; i++) {
-            args.push_back(argv[i]);
-        }
-
-        // args need to be null terminated
-        args.push_back(nullptr);
-
-        execv(tempAppImageFileName.toStdString().c_str(), args.data());
-
-        const auto& error = errno;
-        std::cout << QObject::tr("execv() failed: %1", "error message").arg(strerror(error)).toStdString() << std::endl;
-    } else if (type == 2) {
-        // use external runtime _without_ magic bytes to run the AppImage
-        // the original idea was to use /lib64/ld-linux-x86_64.so to run AppImages, but it did complain about some
-        // violated ELF data, and refused to run the AppImage
-        // alternatively, the AppImage would have to be mounted by this application, and AppRun would need to be called
-        // however, this requires some process management (e.g., killing all processes inside the AppImage and also
-        // the FUSE "mount" process, when this application is killed...)
-        setenv("TARGET_APPIMAGE", fullPathToAppImage.toStdString().c_str(), true);
-
-        // suppress desktop integration script
-        setenv("DESKTOPINTEGRATION", "AppImageLauncher", true);
-
-        // first attempt: find runtime in expected installation directory
-        auto pathToRuntime = exeDir.toStdString() + "/../lib/appimagelauncher/runtime";
-
-        // next method: find runtime in expected build location
-        if (!QFile(QString::fromStdString(pathToRuntime)).exists()) {
-            pathToRuntime = exeDir.toStdString() + "/../lib/AppImageKit/src/runtime";
-        }
-
-        // if it can't be found in either location, display error and exit
-        if (!QFile(QString::fromStdString(pathToRuntime)).exists()) {
-            QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("runtime not found: no such file or directory: %1").arg(QString::fromStdString(pathToRuntime))
-            );
-            return 1;
-        }
-
-        // need a char pointer instead of a const one, therefore can't use .c_str()
-        std::vector<char> argv0Buffer(pathToAppImage.toStdString().size() + 1, '\0');
-        strcpy(argv0Buffer.data(), pathToAppImage.toStdString().c_str());
-
-        std::vector<char*> args;
-
-        args.push_back(argv0Buffer.data());
-
-        // copy arguments
-        for (int i = 1; i < argc; i++) {
-            args.push_back(argv[i]);
-        }
-
-        // args need to be null terminated
-        args.push_back(nullptr);
-
-        execv(pathToRuntime.c_str(), args.data());
-
-        const auto& error = errno;
-        std::cout << QObject::tr("execv() failed: %1").arg(strerror(error)).toStdString() << std::endl;
-    }
-}
-
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
     // Create a fake argc value to avoid QApplication from modifying the arguments.
     int fakeArgc = 1;
     QApplication app(fakeArgc, argv);
@@ -304,7 +124,24 @@ int main(int argc, char** argv) {
     // sanitize path
     auto pathToAppImage = QDir(QString(argv[1])).absolutePath();
 
-    if (!QFile(pathToAppImage).exists()) {
+    AppImageDesktopIntegrationManager integrationManager;
+    Launcher launcher;
+    launcher.setAppImagePath(pathToAppImage);
+    launcher.setArgs(appImageArgv);
+    launcher.setIntegrationManager(&integrationManager);
+
+    try {
+        launcher.inspectAppImageFile();
+    } catch (const AppImageFilePathNotSet &ex) {
+        qCritical() << "Missing AppImagePath in Launcher class. I wasn't initialized properly.";
+        return 1;
+    } catch (const InvalidAppImageFile &ex) {
+        QMessageBox::critical(
+                nullptr,
+                QObject::tr("Error"),
+                QObject::tr("Not an AppImage: %1").arg(pathToAppImage));
+        return 1;
+    } catch (const AppImageFileNotExists &ex) {
         std::cout << QObject::tr("Error: no such file or directory: %1").arg(pathToAppImage).toStdString() << std::endl;
         return 1;
     }
@@ -319,23 +156,13 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    // type 2 specific checks
-    if (type == 2) {
-        // check parameters
-        {
-            for (int i = 0; i < argc; i++) {
-                QString arg = argv[i];
-
-                // reserved argument space
-                const QString prefix = "--appimage-";
-
-                if (arg.startsWith(prefix)) {
-                    // don't annoy users who try to mount or extract AppImages
-                    if (arg == prefix + "mount" || arg == prefix + "extract" || arg == prefix + "updateinformation") {
-                        return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
-                    }
-                }
-            }
+    if (launcher.shouldBeIgnored()) {
+        try {
+            launcher.executeAppImage();
+            return 0;
+        } catch (const std::runtime_error &ex) {
+            qCritical() << QObject::tr("Unable to execute the AppImage: %1").arg(ex.what());
+            return 2;
         }
     }
 
@@ -351,49 +178,26 @@ int main(int argc, char** argv) {
 
     // check for X-AppImage-Integrate=false
     if (appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str()))
-        return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
+        launcher.executeAppImage();
 
     // AppImages in AppImages are not supposed to be integrated
     if (pathToAppImage.startsWith("/tmp/.mount_"))
-        return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
+        launcher.executeAppImage();
 
     // ignore terminal apps (fixes #2)
     if (appimage_is_terminal_app(pathToAppImage.toStdString().c_str()))
-        return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
+        launcher.executeAppImage();
 
     // AppImages in AppImages are not supposed to be integrated
     if (pathToAppImage.startsWith("/tmp/.mount_"))
-        return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
+        launcher.executeAppImage();
 
     const auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
 
-    auto integrateAndRunAppImage = [&pathToAppImage, &pathToIntegratedAppImage, &appImageArgv]() {
-        // check whether integration was successful
-        auto rv = integrateAppImage(pathToAppImage, pathToIntegratedAppImage);
-
-        // make sure the icons in the launcher are refreshed
-        if (!updateDesktopDatabaseAndIconCaches())
-            return 1;
-
-        if (rv == INTEGRATION_FAILED) {
-            return 1;
-        } else if (rv == INTEGRATION_ABORTED) {
-            return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
-        } else {
-            return runAppImage(pathToIntegratedAppImage, appImageArgv.size(), appImageArgv.data());
-        }
-    };
-
     // after checking whether the AppImage can/must be run without integrating it, we now check whether it actually
     // has been integrated already
-    if (hasAlreadyBeenIntegrated(pathToAppImage)) {
-        auto updateAndRunAppImage = [&pathToAppImage, &appImageArgv]() {
-            if (!updateDesktopFile(pathToAppImage))
-                return 1;
 
-            return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
-        };
-
+    if (integrationManager.hasAlreadyBeenIntegrated(pathToAppImage)) {
         if (!isInDirectory(pathToAppImage, integratedAppImagesDestination().path())) {
             auto rv = QMessageBox::warning(
                 nullptr,
@@ -423,13 +227,18 @@ int main(int argc, char** argv) {
                     );
                     return 1;
                 }
-
-                return integrateAndRunAppImage();
+                integrationManager.integrateAppImage(pathToAppImage);
+                launcher.setAppImagePath(pathToIntegratedAppImage);
+                launcher.executeAppImage();
+                return 0;
             } else {
-                return updateAndRunAppImage();
+                integrationManager.updateAppImage(pathToAppImage);
+                launcher.setAppImagePath(pathToAppImage);
+                launcher.executeAppImage();
             }
         } else {
-            return updateAndRunAppImage();
+            integrationManager.updateAppImage(pathToAppImage);
+            launcher.executeAppImage();
         }
     }
 
@@ -471,9 +280,14 @@ int main(int argc, char** argv) {
     const auto* clickedButton = messageBox.clickedButton();
 
     if (clickedButton == okButton) {
-        return integrateAndRunAppImage();
+        integrationManager.integrateAppImage(pathToAppImage);
+        launcher.setAppImagePath(pathToIntegratedAppImage);
+        launcher.executeAppImage();
+        return 0;
     } else if (clickedButton == runOnceButton) {
-        return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
+        launcher.setAppImagePath(pathToAppImage);
+        launcher.executeAppImage();
+        return 0;
     } else if (clickedButton == cancelButton) {
         return 0;
     }
