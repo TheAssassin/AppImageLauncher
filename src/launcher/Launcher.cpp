@@ -180,7 +180,7 @@ void Launcher::executeAppImage() {
         execv(pathToRuntime.c_str(), args.data());
 
         const auto &error = errno;
-        qInfo() << QObject::tr("execv() failed: %1").arg(strerror(error));
+        qWarning() << QObject::tr("execv() failed: %1").arg(strerror(error));
     }
 }
 
