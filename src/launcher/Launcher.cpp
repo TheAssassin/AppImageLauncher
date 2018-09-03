@@ -1,16 +1,17 @@
 //
 // Created by alexis on 8/30/18.
 //
-extern  "C" {
-    #include "unistd.h"
+extern "C" {
+#include "unistd.h"
+#include <appimage/appimage.h>
+#include <appimage/info.h>
 }
 
 #include <QFile>
 #include <QDebug>
 #include <QMessageBox>
 #include <QTemporaryDir>
-
-#include <appimage/appimage.h>
+#include <QTemporaryFile>
 
 #include <shared.h>
 #include "Launcher.h"
@@ -104,10 +105,12 @@ void Launcher::executeAppImage() {
 
         // nuke magic bytes
         if (!tempAppImage.seek(8))
-            throw ExecutionFailed(QObject::tr("Failed to remove magic bytes from temporary AppImage copy").toStdString());
+            throw ExecutionFailed(
+                    QObject::tr("Failed to remove magic bytes from temporary AppImage copy").toStdString());
 
         if (tempAppImage.write(QByteArray(3, '\0')) != 3)
-            throw ExecutionFailed(QObject::tr("Failed to remove magic bytes from temporary AppImage copy").toStdString());
+            throw ExecutionFailed(
+                    QObject::tr("Failed to remove magic bytes from temporary AppImage copy").toStdString());
 
         auto tempAppImageFileName = tempAppImage.fileName();
 
@@ -238,4 +241,21 @@ void Launcher::overrideAppImageIntegration() {
 
 void Launcher::setTrashBin(TrashBin *trashBin) {
     Launcher::trashBin = trashBin;
+}
+
+nlohmann::json Launcher::getAppImageInfo() {
+    auto rawJson = extract_appinamge_info(appImagePath.toStdString().c_str());
+    nlohmann::json info = nlohmann::json::parse(rawJson);
+    return info;
+}
+
+QIcon Launcher::getAppImageIcon() {
+    QTemporaryFile temporaryFile;
+    if (temporaryFile.open()) {
+
+        extract_appinamge_icon_file(appImagePath.toStdString().c_str(), temporaryFile.fileName().toStdString().c_str());
+        QIcon icon(temporaryFile.fileName());
+        return icon;
+    }
+    return QIcon();
 }

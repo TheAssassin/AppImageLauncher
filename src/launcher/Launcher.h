@@ -5,8 +5,10 @@
 #ifndef APPIMAGELAUNCHER_LAUNCHER_H
 #define APPIMAGELAUNCHER_LAUNCHER_H
 
-#include <QString>
 #include <vector>
+#include <QString>
+#include <QIcon>
+#include <nlohmann/json.hpp>
 #include "AppImageDesktopIntegrationManager.h"
 #include "../trashbin.h"
 
@@ -40,6 +42,10 @@ public:
     void executeAppImage();
 
     void overrideAppImageIntegration();
+
+    nlohmann::json getAppImageInfo();
+
+    QIcon getAppImageIcon();
 
 public slots:
     void integrateAppImage();
