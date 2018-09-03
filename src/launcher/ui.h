@@ -1,24 +1,43 @@
 #ifndef UI_H
 #define UI_H
 
-#include <QObject>
+#include <QDialog>
 #include "AppImageDesktopIntegrationManager.h"
+#include "Launcher.h"
 
-class UI : public QObject {
+namespace Ui {
+    class UI;
+}
+
+class UI : public QDialog {
 Q_OBJECT
+
+    Launcher *launcher{nullptr};
+
 public:
-    UI();
+
+    explicit UI(QWidget *parent = 0);
+
+    ~UI();
+
+    void setLauncher(Launcher *launcher);
 
     void askIfAppImageFileShouldBeOverridden();
 
-    void alertIntegrationFailed(const IntegrationFailed &ex);
-signals:
+    void notifyError(const std::runtime_error &ex);
 
-    void overrideAppImageFile();
+    void showIntegrationPage();
 
-    void dontOverrideAppImageFile();
+    void showCompletionPage();
 
-    void alertIntegrationFailedCompleted();
+protected slots:
+
+    void handleIntegrationRequested();
+
+    void handleExecutionRequested();
+
+private:
+    Ui::UI *ui;
 };
 
 #endif // UI_H

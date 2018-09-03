@@ -20,8 +20,8 @@ extern "C" {
 #include <QProcess>
 #include <QPushButton>
 #include <QRegularExpression>
-#include <QString>
-#include <QTemporaryDir>
+#include <QDebug>
+
 extern "C" {
     #include <appimage/appimage.h>
     #include <xdg-basedir.h>
@@ -32,6 +32,7 @@ extern "C" {
 #include "trashbin.h"
 #include "translationmanager.h"
 #include "Launcher.h"
+#include "ui.h"
 
 int main(int argc, char **argv) {
     // Create a fake argc value to avoid QApplication from modifying the arguments.
@@ -81,15 +82,13 @@ int main(int argc, char **argv) {
     }
 
     // clean up trash directory
-    {
-        TrashBin bin;
-        if (!bin.cleanUp()) {
-            QMessageBox::critical(
+    TrashBin trashBin;
+    if (!trashBin.cleanUp()) {
+        QMessageBox::critical(
                 nullptr,
                 QObject::tr("Error"),
-                QObject::tr("Failed to clean up AppImage trash bin: %1").arg(bin.path())
-            );
-        }
+                QObject::tr("Failed to clean up AppImage trash bin: %1").arg(trashBin.path())
+        );
     }
 
     std::vector<char*> appImageArgv;
@@ -125,11 +124,12 @@ int main(int argc, char **argv) {
     auto pathToAppImage = QDir(QString(argv[1])).absolutePath();
 
     AppImageDesktopIntegrationManager integrationManager;
+    UI ui;
     Launcher launcher;
     launcher.setAppImagePath(pathToAppImage);
     launcher.setArgs(appImageArgv);
     launcher.setIntegrationManager(&integrationManager);
-
+    launcher.setTrashBin(&trashBin);
     try {
         launcher.inspectAppImageFile();
     } catch (const AppImageFilePathNotSet &ex) {
@@ -242,57 +242,9 @@ int main(int argc, char **argv) {
         }
     }
 
-    std::ostringstream explanationStrm;
-    explanationStrm << QObject::tr("Integrating it will move the AppImage into a predefined location, "
-                       "and include it in your application launcher.").toStdString() << std::endl
-                    << std::endl
-                    << QObject::tr("To remove or update the AppImage, please use the context menu of the "
-                       "application icon in your task bar or launcher.").toStdString() << std::endl
-                    << std::endl
-                    << QObject::tr("The directory the integrated AppImages are stored in is currently "
-                                        "set to:").toStdString() << std::endl
-                    << integratedAppImagesDestination().path().toStdString() << std::endl;
+    ui.setLauncher(&launcher);
+    ui.showIntegrationPage();
 
-    auto explanation = explanationStrm.str();
-
-    std::ostringstream messageStrm;
-    messageStrm << QObject::tr("%1 has not been integrated into your system.").arg(pathToAppImage).toStdString() << "\n\n"
-                << QObject::tr(explanation.c_str()).toStdString();
-
-    QMessageBox messageBox(
-        QMessageBox::Question,
-        QObject::tr("Desktop Integration"),
-        QString::fromStdString(messageStrm.str())
-    );
-
-    auto* okButton = messageBox.addButton(QObject::tr("Integrate and run"), QMessageBox::AcceptRole);
-    auto* runOnceButton = messageBox.addButton(QObject::tr("Run once"), QMessageBox::ApplyRole);
-
-    // *whyever* Qt somehow needs a button with "RejectRole" or the X button won't close the current window...
-    auto* cancelButton = messageBox.addButton(QObject::tr("Cancel"), QMessageBox::RejectRole);
-    // ... but it is fine to hide that button after creating it, so it's not displayed
-    cancelButton->hide();
-
-    messageBox.setDefaultButton(QMessageBox::Ok);
-
-    messageBox.exec();
-
-    const auto* clickedButton = messageBox.clickedButton();
-
-    if (clickedButton == okButton) {
-        integrationManager.integrateAppImage(pathToAppImage);
-        launcher.setAppImagePath(pathToIntegratedAppImage);
-        launcher.executeAppImage();
-        return 0;
-    } else if (clickedButton == runOnceButton) {
-        launcher.setAppImagePath(pathToAppImage);
-        launcher.executeAppImage();
-        return 0;
-    } else if (clickedButton == cancelButton) {
-        return 0;
-    }
-
-    // _should_ be unreachable
-    return 1;
+    return app.exec();
 }
 

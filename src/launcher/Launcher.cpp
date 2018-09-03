@@ -224,4 +224,18 @@ void Launcher::setIntegrationManager(AppImageDesktopIntegrationManager *integrat
     Launcher::integrationManager = integrationManager;
 }
 
+void Launcher::integrateAppImage() {
+    integrationManager->integrateAppImage(appImagePath);
+    appImagePath = integrationManager->buildDeploymentPath(appImagePath);
+}
 
+void Launcher::overrideAppImageIntegration() {
+    auto targetPath = integrationManager->buildDeploymentPath(appImagePath);
+    trashBin->disposeAppImage(targetPath);
+
+    integrateAppImage();
+}
+
+void Launcher::setTrashBin(TrashBin *trashBin) {
+    Launcher::trashBin = trashBin;
+}
