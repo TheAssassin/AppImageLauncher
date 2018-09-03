@@ -2,7 +2,9 @@
 #include <sstream>
 
 // library includes
-#include <QtWidgets/QMessageBox>
+#include <QMessageBox>
+#include <QIcon>
+#include <QDebug>
 
 // local includes
 #include "ui.h"
@@ -14,6 +16,15 @@ UI::UI(QWidget *parent) :
         QDialog(parent),
         ui(new Ui::UI) {
     ui->setupUi(this);
+
+    ui->iconLabel->setText("");
+}
+
+void UI::setDefaultIcon() const {
+    auto appimageIcon = QIcon::fromTheme("appimage");
+    if (appimageIcon.isNull())
+        appimageIcon = QIcon::fromTheme("application-x-executable");
+    ui->iconLabel->setPixmap(appimageIcon.pixmap(64, 64));
 }
 
 UI::~UI() {
@@ -57,10 +68,39 @@ void UI::setLauncher(Launcher *launcher) {
 }
 
 void UI::showIntegrationPage() {
+    try {
+        auto info = launcher->getAppImageInfo();
+        QString name = getLocalizedString(info, "name");
+        QString abstract = getLocalizedString(info, "abstract");
+
+        ui->labelName->setText(name);
+        ui->labelAbstract->setText(abstract);
+
+        auto icon = launcher->getAppImageIcon();
+        if (icon.isNull())
+            setDefaultIcon();
+        else
+            ui->iconLabel->setPixmap(icon.pixmap(64, 64));
+    } catch (const FileNotFoundError &ex) {
+        notifyError(ex);
+    }
+
     ui->stackedWidget->setCurrentWidget(ui->integrationPage);
     connect(ui->integrateButton, &QPushButton::released, this, &UI::handleIntegrationRequested);
     connect(ui->runButton, &QPushButton::released, this, &UI::handleExecutionRequested);
     show();
+}
+
+QString UI::getLocalizedString(const nlohmann::json &info, const std::string &field) const {
+    QString value;
+    auto locale = QLocale::system().name().toStdString();
+    if (info.find(field) != info.end()) {
+        if (info[field].find(locale) != info[field].end())
+            value = QString::fromStdString(info[field][locale].get<std::__cxx11::string>());
+        else if (info[field].find("default") != info[field].end())
+            value = QString::fromStdString(info[field]["default"].get<std::__cxx11::string>());
+    }
+    return value;
 }
 
 void UI::showCompletionPage() {

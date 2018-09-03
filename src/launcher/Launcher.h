@@ -10,8 +10,8 @@
 
 // library includes
 #include <QString>
-
-// local includes
+#include <QIcon>
+#include <nlohmann/json.hpp>
 #include "AppImageDesktopIntegrationManager.h"
 #include "../trashbin.h"
 
@@ -45,6 +45,10 @@ public:
     void overrideAppImageIntegration();
 
     void validateAppImage() const;
+
+    nlohmann::json getAppImageInfo();
+
+    QIcon getAppImageIcon();
 
 public slots:
     void integrateAppImage();

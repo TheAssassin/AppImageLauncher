@@ -41,6 +41,10 @@ protected slots:
 
 private:
     Ui::UI *ui;
+
+    QString getLocalizedString(const nlohmann::json &info, const std::string &field) const;
+
+    void setDefaultIcon() const;
 };
 
 #endif // UI_H

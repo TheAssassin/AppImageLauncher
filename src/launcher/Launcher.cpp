@@ -5,6 +5,8 @@
 // system includes
 extern "C" {
     #include "unistd.h"
+    #include <appimage/appimage.h>
+    #include <appimage/info.h>
 }
 
 // library includes
@@ -12,7 +14,7 @@ extern "C" {
 #include <QDebug>
 #include <QMessageBox>
 #include <QTemporaryDir>
-#include <appimage/appimage.h>
+#include <QTemporaryFile>
 
 // local includes
 #include "../shared.h"
@@ -232,4 +234,21 @@ void Launcher::overrideAppImageIntegration() {
 
 void Launcher::setTrashBin(TrashBin* trashBin) {
     Launcher::trashBin = trashBin;
+}
+
+nlohmann::json Launcher::getAppImageInfo() {
+    auto rawJson = extract_appinamge_info(appImagePath.toStdString().c_str());
+    nlohmann::json info = nlohmann::json::parse(rawJson);
+    return info;
+}
+
+QIcon Launcher::getAppImageIcon() {
+    QTemporaryFile temporaryFile;
+    if (temporaryFile.open()) {
+
+        extract_appinamge_icon_file(appImagePath.toStdString().c_str(), temporaryFile.fileName().toStdString().c_str());
+        QIcon icon(temporaryFile.fileName());
+        return icon;
+    }
+    return QIcon();
 }
