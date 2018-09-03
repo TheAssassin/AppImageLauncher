@@ -8,12 +8,14 @@
 #include <QString>
 #include <vector>
 #include "AppImageDesktopIntegrationManager.h"
+#include "../trashbin.h"
 
 class Launcher {
     QString appImagePath;
     std::vector<char *> args{};
     int appImageType{-1};
 
+    TrashBin *trashBin{nullptr};
     AppImageDesktopIntegrationManager *integrationManager{nullptr};
 
 public:
@@ -29,11 +31,18 @@ public:
 
     void setIntegrationManager(AppImageDesktopIntegrationManager *integrationManager);
 
+    void setTrashBin(TrashBin *trashBin);
+
     void inspectAppImageFile();
 
     bool shouldBeIgnored();
 
     void executeAppImage();
+
+    void overrideAppImageIntegration();
+
+public slots:
+    void integrateAppImage();
 
 private:
     void validateAppImageType();
