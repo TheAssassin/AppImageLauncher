@@ -3,7 +3,7 @@
 # for some reason, using TARGETS ... doesn't work here, therefore using the absolute file path
 install(
     FILES
-    ${PROJECT_BINARY_DIR}/lib/AppImageKit/src/libappimage.so
+    ${PROJECT_BINARY_DIR}/lib/AppImageKit/lib/libappimage/src/libappimage/libappimage.so
     ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/src/libappimageupdate.so
     ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/src/qt-ui/libappimageupdate-qt.so
     DESTINATION lib/appimagelauncher COMPONENT APPIMAGELAUNCHER
