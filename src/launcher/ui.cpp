@@ -72,6 +72,8 @@ void UI::showIntegrationPage() {
         auto info = launcher->getAppImageInfo();
         QString name = getLocalizedString(info, "name");
         QString abstract = getLocalizedString(info, "abstract");
+        setWebsiteLink(info);
+
 
         ui->labelName->setText(name);
         ui->labelAbstract->setText(abstract);
@@ -89,6 +91,16 @@ void UI::showIntegrationPage() {
     connect(ui->integrateButton, &QPushButton::released, this, &UI::handleIntegrationRequested);
     connect(ui->runButton, &QPushButton::released, this, &UI::handleExecutionRequested);
     show();
+}
+
+void UI::setWebsiteLink(const nlohmann::json &info) const {
+    if (info.find("links") != info.end() && info["links"].find("homepage") != info["links"].end()) {
+            auto value = info["links"]["homepage"].get<std::__cxx11::string>();
+            QString homepageLink = QString::fromStdString(value);
+            ui->labelWebsite->setText(QString("<a href=\"%1\">Website</a>").arg(homepageLink));
+            ui->labelWebsite->setVisible(true);
+        } else
+            ui->labelWebsite->setVisible(false);
 }
 
 QString UI::getLocalizedString(const nlohmann::json &info, const std::string &field) const {
