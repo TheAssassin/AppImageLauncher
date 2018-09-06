@@ -42,6 +42,8 @@ private:
     QString getLocalizedString(const nlohmann::json &info, const std::string &field) const;
 
     void setDefaultIcon() const;
+
+    void setWebsiteLink(const nlohmann::json &info) const;
 };
 
 #endif // UI_H
