@@ -39,6 +39,9 @@ protected slots:
 
     void handleExecutionRequested();
 
+    void toggleDetailsWidgetVisibility();
+
+    void handleCopyCheckSumRequested();
 private:
     Ui::UI *ui;
 
@@ -47,6 +50,10 @@ private:
     void setDefaultIcon() const;
 
     void setWebsiteLink(const nlohmann::json &info) const;
+
+    void hideDetails() const;
+
+    void showDetails() const;
 };
 
 #endif // UI_H
