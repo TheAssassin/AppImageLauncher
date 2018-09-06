@@ -1,4 +1,6 @@
 #include <QMessageBox>
+#include <QClipboard>
+#include <QToolTip>
 #include <QIcon>
 #include <QDebug>
 #include <sstream>
@@ -65,9 +67,19 @@ void UI::showIntegrationPage() {
         auto info = launcher->getAppImageInfo();
         QString name = getLocalizedString(info, "name");
         QString abstract = getLocalizedString(info, "abstract");
+        QString description = getLocalizedString(info, "description");
+
+        auto type = info["file"]["type"].get<int>();
+        auto sha512checksum = info["file"]["sha512checksum"];
+        auto arch = info["file"]["architecture"];
+
+        ui->labelType->setNum(type);
+        ui->labelCheckSum->setText(QString::fromStdString(sha512checksum));
+        ui->labelArchitecture->setText(QString::fromStdString(arch));
+
         setWebsiteLink(info);
 
-
+        ui->labelDescription->setText(description);
         ui->labelName->setText(name);
         ui->labelAbstract->setText(abstract);
 
@@ -76,6 +88,8 @@ void UI::showIntegrationPage() {
             setDefaultIcon();
         else
             ui->iconLabel->setPixmap(icon.pixmap(64, 64));
+
+        hideDetails();
     } catch (const AppImageFileNotExists &ex) {
         notifyError(ex);
     } catch (const AppImageFilePathNotSet &) {
@@ -85,17 +99,19 @@ void UI::showIntegrationPage() {
     ui->stackedWidget->setCurrentWidget(ui->integrationPage);
     connect(ui->integrateButton, &QPushButton::released, this, &UI::handleIntegrationRequested);
     connect(ui->runButton, &QPushButton::released, this, &UI::handleExecutionRequested);
+    connect(ui->detailsButton, &QPushButton::released, this, &UI::toggleDetailsWidgetVisibility);
+    connect(ui->copyCheckSumButton, &QPushButton::released, this, &UI::handleCopyCheckSumRequested);
     show();
 }
 
 void UI::setWebsiteLink(const nlohmann::json &info) const {
     if (info.find("links") != info.end() && info["links"].find("homepage") != info["links"].end()) {
-            auto value = info["links"]["homepage"].get<std::__cxx11::string>();
-            QString homepageLink = QString::fromStdString(value);
-            ui->labelWebsite->setText(QString("<a href=\"%1\">Website</a>").arg(homepageLink));
-            ui->labelWebsite->setVisible(true);
-        } else
-            ui->labelWebsite->setVisible(false);
+        auto value = info["links"]["homepage"].get<std::__cxx11::string>();
+        QString homepageLink = QString::fromStdString(value);
+        ui->labelWebsite->setText(QString("<a href=\"%1\">Website</a>").arg(homepageLink));
+        ui->labelWebsite->setVisible(true);
+    } else
+        ui->labelWebsite->setVisible(false);
 }
 
 QString UI::getLocalizedString(const nlohmann::json &info, const std::string &field) const {
@@ -129,4 +145,29 @@ void UI::handleIntegrationRequested() {
 
 void UI::handleExecutionRequested() {
     launcher->executeAppImage();
+}
+
+void UI::toggleDetailsWidgetVisibility() {
+    if (ui->widgetDetails->isVisible())
+        hideDetails();
+    else
+        showDetails();
+}
+
+void UI::showDetails() const {
+    ui->labelAbstract->setVisible(false);
+    ui->widgetDetails->setVisible(true);
+    window()->resize(600, 400);
+}
+
+void UI::hideDetails() const {
+    ui->labelAbstract->setVisible(true);
+    ui->widgetDetails->setVisible(false);
+    window()->resize(340, 280);
+}
+
+void UI::handleCopyCheckSumRequested() {
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    clipboard->setText(ui->labelCheckSum->text());
+    QToolTip::showText( ui->copyCheckSumButton->mapToGlobal( QPoint( 20, 0 ) ), tr("Copied to clipboard"));
 }
