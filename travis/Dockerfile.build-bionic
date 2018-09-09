@@ -32,4 +32,9 @@ RUN apt-get update && \
         pkg-config \
         libarchive-dev \
         binutils-multiarch-dev \
-        libxml2-dev
+        libxml2-dev \
+        libboost-program-options-dev \
+        libboost-filesystem-dev \
+        libboost-system-dev \
+        libboost-dev
+
