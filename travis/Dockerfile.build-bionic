@@ -31,4 +31,5 @@ RUN apt-get update && \
         desktop-file-utils \
         pkg-config \
         libarchive-dev \
-        binutils-multiarch-dev
+        binutils-multiarch-dev \
+        libxml2-dev
