@@ -9,11 +9,11 @@
  */
 class TranslationManager {
 private:
-    const QApplication& app;
+    const QCoreApplication& app;
     QList<QTranslator*> installedTranslators;
 
 public:
-    explicit TranslationManager(QApplication& app);
+    explicit TranslationManager(QCoreApplication &app);
     ~TranslationManager();
 
 public:

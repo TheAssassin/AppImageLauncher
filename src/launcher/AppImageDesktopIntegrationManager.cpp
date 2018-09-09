@@ -76,7 +76,7 @@ QString AppImageDesktopIntegrationManager::buildDeploymentPath(const QString &pa
         fileName += "." + appImageInfo.suffix();
     }
 
-    return integratedAppImagesDestination().path() + "/" + fileName;
+    return integratedAppImagesDir.path() + "/" + fileName;
 }
 
 bool AppImageDesktopIntegrationManager::hasAlreadyBeenIntegrated(const QString &pathToAppImage) {
@@ -92,4 +92,37 @@ void AppImageDesktopIntegrationManager::updateAppImage(const QString &pathToAppI
     bool result = ::updateDesktopFile(pathToAppImage);
     if (!result)
         throw IntegrationFailed(QObject::tr("Unable to update AppImage Desktop file.").toStdString());
+}
+
+void AppImageDesktopIntegrationManager::removeAppImageIntegration(const QString &appImagePath) {
+    if (appimage_unregister_in_system(appImagePath.toStdString().c_str(), false) != 0) {
+        throw AppImageIntegrationRemovalFailed(
+                QObject::tr("Unable to remove AppImage Desktop integration files.").toStdString());
+    }
+}
+
+bool AppImageDesktopIntegrationManager::isPlacedInTheDefaultAppsDir(const QString &pathToAppImage) {
+    return integratedAppImagesDir == QFileInfo(pathToAppImage).absoluteDir();
+}
+
+void AppImageDesktopIntegrationManager::loadIntegratedAppImagesDestination() {
+    auto config = getConfig();
+
+    static const QString keyName("AppImageLauncher/destination");
+    if (config->contains(keyName))
+        integratedAppImagesDir = config->value(keyName).toString();
+
+    integratedAppImagesDir = DEFAULT_INTEGRATION_DESTINATION;
+}
+
+AppImageDesktopIntegrationManager::AppImageDesktopIntegrationManager() {
+    loadIntegratedAppImagesDestination();
+}
+
+const QDir &AppImageDesktopIntegrationManager::getIntegratedAppImagesDir() const {
+    return integratedAppImagesDir;
+}
+
+const QString AppImageDesktopIntegrationManager::getIntegratedAppImagesDirPath() const {
+    return integratedAppImagesDir.path();
 }

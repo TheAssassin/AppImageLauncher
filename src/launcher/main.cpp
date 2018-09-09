@@ -1,6 +1,5 @@
 // system includes
 #include <fstream>
-#include <iostream>
 #include <sstream>
 
 extern "C" {
@@ -17,10 +16,6 @@ extern "C" {
 #include <QRegularExpression>
 #include <QDebug>
 
-extern "C" {
-#include <appimage/appimage.h>
-}
-
 // local headers
 #include "shared.h"
 #include "trashbin.h"
@@ -28,44 +23,131 @@ extern "C" {
 #include "Launcher.h"
 #include "ui.h"
 
-int main(int argc, char **argv) {
-    // Create a fake argc value to avoid QApplication from modifying the arguments.
-    int fakeArgc = 1;
-    QApplication app(fakeArgc, argv);
-    app.setApplicationDisplayName("AppImageLauncher");
+bool isDisplayAvailable() {
+    bool isDisplayAvailable;
+    auto display = getenv("DISPLAY");
+    isDisplayAvailable = display != nullptr && !std::__cxx11::string(display).empty();
+    return isDisplayAvailable;
+}
 
+std::string getVersionString() {
     std::ostringstream version;
     version << "version " << APPIMAGELAUNCHER_VERSION << " "
             << "(git commit " << APPIMAGELAUNCHER_GIT_COMMIT << "), built on "
             << APPIMAGELAUNCHER_BUILD_DATE;
-    app.setApplicationVersion(QString::fromStdString(version.str()));
+    return version.str();
+}
 
-    // install translations
-    TranslationManager translationManager(app);
+void setApplicationVersion(const QApplication *app) {
+    auto version = getVersionString();
+    app->setApplicationVersion(QString::fromStdString(version));
+}
 
+void printUsage(char **argv) {
     std::ostringstream usage;
     usage << QObject::tr("Usage: %1 [options] <path>").arg(argv[0]).toStdString() << std::endl
           << QObject::tr("Desktop integration helper for AppImages, for use by Linux distributions.").toStdString()
           << std::endl
           << std::endl
           << QObject::tr("Options:").toStdString() << std::endl
-          << "  --appimagelauncher-help     " << QObject::tr("Display this help and exit").toStdString() << std::endl
+          << "  --appimagelauncher-help     " << QObject::tr("Display this help and exit").toStdString()
+          << std::endl
           << "  --appimagelauncher-version  " << QObject::tr("Display version and exit").toStdString() << std::endl
           << std::endl
           << QObject::tr("Arguments:").toStdString() << std::endl
-          << "  path                        " << QObject::tr("Path to AppImage (mandatory)").toStdString() << std::endl;
+          << "  path                        " << QObject::tr("Path to AppImage (mandatory)").toStdString()
+          << std::endl;
 
-    auto displayVersion = [&app]() {
-        std::cerr << "AppImageLauncher " << app.applicationVersion().toStdString() << std::endl;
-    };
+    std::cout << usage.str();
+}
 
-    // display usage and exit if path to AppImage is missing
+void printVersion() {
+    std::cerr << "AppImageLauncher " << getVersionString() << std::endl;
+}
+
+void earlyArgumentsCheck(int argc, char **argv) {
     if (argc <= 1) {
-        displayVersion();
-        std::cerr << std::endl;
-        std::cerr << usage.str();
-        return 1;
+        std::cerr << getVersionString() << std::endl;
+        printUsage(argv);
+        exit(1);
     }
+}
+
+std::vector<char *> parseArguments(int argc, char **argv) {
+    std::vector<char *> appImageArgv;
+    // search for --appimagelauncher-* arguments in args list
+    for (int i = 1; i < argc; i++) {
+        QString arg = argv[i];
+
+        // reserved argument space
+        const QString prefix = "--appimagelauncher-";
+
+        if (arg.startsWith(prefix)) {
+            if (arg == prefix + "help") {
+                printVersion();
+                printUsage(argv);
+                exit(0);
+            } else if (arg == prefix + "version") {
+                printVersion();
+                exit(0);
+            } else if (arg == prefix + "cleanup") {
+                // exit immediately after cleanup
+                exit(0);
+            } else {
+                std::cerr << QObject::tr("Unknown AppImageLauncher option: %1").arg(arg).toStdString() << std::endl;
+                exit(1);
+            }
+        } else {
+            appImageArgv.emplace_back(argv[i]);
+        }
+    }
+    return appImageArgv;
+}
+
+/**
+ * Enable and start or disable and stop appimagelauncherd service
+ */
+void applyDaemonConfig() {
+    auto config = getConfig();
+    if (config->contains("enable_daemon") && config->value("enable_daemon").toBool()) {
+        system("systemctl --user enable appimagelauncherd.service");
+        system("systemctl --user start  appimagelauncherd.service");
+    } else {
+        system("systemctl --user disable appimagelauncherd.service");
+        system("systemctl --user stop    appimagelauncherd.service");
+    }
+}
+
+QMessageBox::StandardButton askToMoveFileIntoApplications(const QString &pathToAppImage,
+                                                          const QString &integratedAppImagesDirPath) {
+    auto rv = QMessageBox::warning(
+            nullptr,
+            QMessageBox::tr("Warning"),
+            QMessageBox::tr(
+                    "AppImage %1 has already been integrated, but it is not in the current integration "
+                    "destination directory."
+                    "\n\n"
+                    "Do you want to move it into the new destination?"
+                    "\n\n"
+                    "Choosing No will run the AppImage once, and leave the AppImage in its current "
+                    "directory."
+                    "\n\n").arg(pathToAppImage) +
+            // translate separately to share string with the other dialog
+            QObject::tr("The directory the integrated AppImages are stored in is currently set to:\n"
+                        "%1").arg(integratedAppImagesDirPath) + "\n",
+            QMessageBox::Yes | QMessageBox::No
+    );
+    return rv;
+}
+
+int executeGuiApplicaion(int argc, char **argv) {
+    // Create a fake argc value to avoid QApplication from modifying the arguments.
+    int fakeArgc = 1;
+    QApplication application(fakeArgc, argv);
+    QApplication::setApplicationDisplayName("AppImageLauncher");
+    setApplicationVersion(&application);
+
+    TranslationManager translationManager(*QCoreApplication::instance());
 
     // clean up old desktop files
     if (!cleanUpOldDesktopIntegrationResources()) {
@@ -86,34 +168,8 @@ int main(int argc, char **argv) {
         );
     }
 
-    std::vector<char *> appImageArgv;
-    // search for --appimagelauncher-* arguments in args list
-    for (int i = 1; i < argc; i++) {
-        QString arg = argv[i];
 
-        // reserved argument space
-        const QString prefix = "--appimagelauncher-";
-
-        if (arg.startsWith(prefix)) {
-            if (arg == prefix + "help") {
-                displayVersion();
-                std::cerr << std::endl;
-                std::cerr << usage.str();
-                return 0;
-            } else if (arg == prefix + "version") {
-                displayVersion();
-                return 0;
-            } else if (arg == prefix + "cleanup") {
-                // exit immediately after cleanup
-                return 0;
-            } else {
-                std::cerr << QObject::tr("Unknown AppImageLauncher option: %1").arg(arg).toStdString() << std::endl;
-                return 1;
-            }
-        } else {
-            appImageArgv.emplace_back(argv[i]);
-        }
-    }
+    std::vector<char *> appImageArgv = parseArguments(argc, argv);
 
     // sanitize path
     auto pathToAppImage = QDir(QString(argv[1])).absolutePath();
@@ -137,7 +193,10 @@ int main(int argc, char **argv) {
                 QObject::tr("Not an AppImage: %1").arg(pathToAppImage));
         return 1;
     } catch (const AppImageFileNotExists &ex) {
-        std::cout << QObject::tr("Error: no such file or directory: %1").arg(pathToAppImage).toStdString() << std::endl;
+        QMessageBox::critical(
+                nullptr,
+                QObject::tr("Error"),
+                QObject::tr("No such file or directory: %1").arg(pathToAppImage));
         return 1;
     } catch (const UnsuportedAppImageType &ex) {
         QMessageBox::critical(
@@ -152,60 +211,29 @@ int main(int argc, char **argv) {
             launcher.executeAppImage();
             return 0;
         } catch (const std::runtime_error &ex) {
-            qCritical() << QObject::tr("Unable to execute the AppImage: %1").arg(ex.what());
+            QMessageBox::critical(
+                    nullptr,
+                    QObject::tr("Error"),
+                    QObject::tr("Unable to execute the AppImage: %1").arg(pathToAppImage));
             return 2;
         }
     }
-
-    // enable and start/disable and stop appimagelauncherd service
-    auto config = getConfig();
-    if (config->contains("enable_daemon") && config->value("enable_daemon").toBool()) {
-        system("systemctl --user enable appimagelauncherd.service");
-        system("systemctl --user start  appimagelauncherd.service");
-    } else {
-        system("systemctl --user disable appimagelauncherd.service");
-        system("systemctl --user stop    appimagelauncherd.service");
-    }
-
     const auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
 
     // after checking whether the AppImage can/must be run without integrating it, we now check whether it actually
     // has been integrated already
 
     if (integrationManager.hasAlreadyBeenIntegrated(pathToAppImage)) {
-        if (!isInDirectory(pathToAppImage, integratedAppImagesDestination().path())) {
-            auto rv = QMessageBox::warning(
-                    nullptr,
-                    QMessageBox::tr("Warning"),
-                    QMessageBox::tr("AppImage %1 has already been integrated, but it is not in the current integration "
-                                    "destination directory."
-                                    "\n\n"
-                                    "Do you want to move it into the new destination?"
-                                    "\n\n"
-                                    "Choosing No will run the AppImage once, and leave the AppImage in its current "
-                                    "directory."
-                                    "\n\n").arg(pathToAppImage) +
-                    // translate separately to share string with the other dialog
-                    QObject::tr("The directory the integrated AppImages are stored in is currently set to:\n"
-                                "%1").arg(integratedAppImagesDestination().path()) + "\n",
-                    QMessageBox::Yes | QMessageBox::No
-            );
+        if (!integrationManager.isPlacedInTheDefaultAppsDir(pathToAppImage)) {
+            auto response = askToMoveFileIntoApplications(pathToAppImage,
+                                                          integrationManager.getIntegratedAppImagesDirPath());
 
             // if the user selects No, then continue as if the AppImage would not be in this directory
-            if (rv == QMessageBox::Yes) {
-                // unregister AppImage, move, and re-integrate
-                if (appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false) != 0) {
-                    QMessageBox::critical(
-                            nullptr,
-                            QMessageBox::tr("Error"),
-                            QMessageBox::tr("Failed to unregister AppImage before re-integrating it")
-                    );
-                    return 1;
-                }
+            if (response == QMessageBox::Yes) {
+                integrationManager.removeAppImageIntegration(pathToAppImage);
                 integrationManager.integrateAppImage(pathToAppImage);
                 launcher.setAppImagePath(pathToIntegratedAppImage);
                 launcher.executeAppImage();
-                return 0;
             } else {
                 integrationManager.updateAppImage(pathToAppImage);
                 launcher.setAppImagePath(pathToAppImage);
@@ -217,9 +245,20 @@ int main(int argc, char **argv) {
         }
     }
 
+
     ui.setLauncher(&launcher);
     ui.showIntegrationPage();
 
-    return app.exec();
+    return application.exec();
+}
+
+int main(int argc, char **argv) {
+    earlyArgumentsCheck(argc, argv);
+    applyDaemonConfig();
+
+    if (isDisplayAvailable())
+        return executeGuiApplicaion(argc, argv);
+    //    TODO: implement executeCliApplication(argc, argv);
+    return 0;
 }
 
