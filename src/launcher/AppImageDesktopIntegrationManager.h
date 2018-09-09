@@ -36,8 +36,11 @@ public:
 
     const QString getIntegratedAppImagesDirPath() const;
 
+    static bool updateDesktopDatabaseAndIconCaches();
 private:
     void loadIntegratedAppImagesDestination();
+
+    void tryMoveAppImage(const QString &pathToAppImage, const QString &pathToIntegratedAppImage) const;
 };
 
 

@@ -2,10 +2,10 @@
 // Created by alexis on 9/1/18.
 //
 
-#include <shared.h>
+#include <glib.h>
 #include <QDebug>
 #include <appimage/appimage.h>
-#include <glib.h>
+#include <shared.h>
 #include <translationmanager.h>
 #include "AppImageDesktopIntegrationManager.h"
 
@@ -15,7 +15,18 @@ bool AppImageDesktopIntegrationManager::isIntegrationRequired(const QString &app
 
 void AppImageDesktopIntegrationManager::integrateAppImage(const QString &pathToAppImage) {
     auto pathToIntegratedAppImage = buildDeploymentPath(pathToAppImage);
+    tryMoveAppImage(pathToAppImage, pathToIntegratedAppImage);
 
+    if (!installDesktopFile(pathToIntegratedAppImage, true))
+        throw IntegrationFailed(QObject::tr("Unable to install the AppImage Desktop File.").toStdString());
+
+    // make sure the icons in the launcher are refreshed
+    if (!AppImageDesktopIntegrationManager::updateDesktopDatabaseAndIconCaches())
+        throw IntegrationFailed(QObject::tr("Unable to update Desktop Database and/or Icons").toStdString());
+}
+
+void AppImageDesktopIntegrationManager::tryMoveAppImage(const QString &pathToAppImage,
+                                                        const QString &pathToIntegratedAppImage) const {
     // check whether integration was successful
     // need std::strings to get working pointers with .c_str()
     const auto oldPath = pathToAppImage.toStdString();
@@ -41,13 +52,6 @@ void AppImageDesktopIntegrationManager::integrateAppImage(const QString &pathToA
             throw IntegrationFailed(QObject::tr("Unable to move or copy AppImage to %1.")
                                             .arg("$HOME/Applications").toStdString());
     }
-
-    if (!installDesktopFile(pathToIntegratedAppImage, true))
-        throw IntegrationFailed(QObject::tr("Unable to install the AppImage Desktop File.").toStdString());
-
-    // make sure the icons in the launcher are refreshed
-    if (!updateDesktopDatabaseAndIconCaches())
-        throw IntegrationFailed(QObject::tr("Unable to update Desktop Database and/or Icons").toStdString());
 }
 
 QString AppImageDesktopIntegrationManager::buildDeploymentPath(const QString &pathToAppImage) {
@@ -125,4 +129,20 @@ const QDir &AppImageDesktopIntegrationManager::getIntegratedAppImagesDir() const
 
 const QString AppImageDesktopIntegrationManager::getIntegratedAppImagesDirPath() const {
     return integratedAppImagesDir.path();
+}
+
+bool AppImageDesktopIntegrationManager::updateDesktopDatabaseAndIconCaches() {
+    auto commands = {
+            "update-desktop-database ~/.local/share/applications",
+            "gtk-update-icon-cache-3.0 ~/.local/share/icons/hicolor/ -t",
+            "gtk-update-icon-cache ~/.local/share/icons/hicolor/ -t",
+            "xdg-desktop-menu forceupdate",
+    };
+
+    for (const auto &command : commands) {
+        // exit codes are not evaluated intentionally
+        system(command);
+    }
+
+    return true;
 }
