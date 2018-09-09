@@ -40,6 +40,8 @@ public:
 
     bool shouldBeIgnored();
 
+    bool isAppImageExecutable();
+
     void executeAppImage();
 
     void overrideAppImageIntegration();

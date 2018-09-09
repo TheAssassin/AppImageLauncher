@@ -252,3 +252,8 @@ QIcon Launcher::getAppImageIcon() {
     }
     return QIcon();
 }
+
+bool Launcher::isAppImageExecutable() {
+    QFileInfo fileInfo(appImagePath);
+    return fileInfo.isExecutable();
+}
