@@ -39,6 +39,8 @@ matrix:
             - libcurl3
             - libbsd-dev
             - libxml2-dev
+            - libboost-program-options-dev
+            - libboost-filesystem-dev 
     - env: BIONIC= ARCH=i386
       addons:
         apt:
@@ -73,6 +75,8 @@ matrix:
             - libfreetype6-dev:i386
             - libarchive-dev:i386
             - libxml2-dev:i386
+            - libboost-program-options-dev:i386
+            - libboost-filesystem-dev:i386
 
 install:
   - ccache -M 5G
