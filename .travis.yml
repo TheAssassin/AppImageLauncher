@@ -38,6 +38,7 @@ matrix:
             - rpm
             - libcurl3
             - libbsd-dev
+            - libxml2-dev
     - env: BIONIC= ARCH=i386
       addons:
         apt:
@@ -71,6 +72,7 @@ matrix:
             - libfontconfig1-dev:i386
             - libfreetype6-dev:i386
             - libarchive-dev:i386
+            - libxml2-dev:i386
 
 install:
   - ccache -M 5G

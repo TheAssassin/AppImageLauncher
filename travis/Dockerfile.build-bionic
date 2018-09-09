@@ -30,4 +30,6 @@ RUN apt-get update && \
         vim-common \
         desktop-file-utils \
         pkg-config \
-        libarchive-dev
+        libarchive-dev \
+        binutils-multiarch-dev \
+        libxml2-dev
