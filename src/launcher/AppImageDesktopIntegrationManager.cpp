@@ -2,16 +2,18 @@
 // Created by alexis on 9/1/18.
 //
 
-#include <glib.h>
 #include <QDebug>
 #include <appimage/appimage.h>
 #include <shared.h>
 #include <translationmanager.h>
+#include <QtDBus/QDBusMessage>
+#include <QtDBus/QDBusConnection>
+#include <sstream>
+#include <QtCore/QRegularExpression>
+#include <QtCore/QDirIterator>
+#include <QtCore/QJsonParseError>
+#include <QtCore/QJsonObject>
 #include "AppImageDesktopIntegrationManager.h"
-
-bool AppImageDesktopIntegrationManager::isIntegrationRequired(const QString &appImagePath) {
-    return false;
-}
 
 void AppImageDesktopIntegrationManager::integrateAppImage(const QString &pathToAppImage) {
     auto pathToIntegratedAppImage = buildDeploymentPath(pathToAppImage);
@@ -88,8 +90,210 @@ bool AppImageDesktopIntegrationManager::hasAlreadyBeenIntegrated(const QString &
 }
 
 bool AppImageDesktopIntegrationManager::installDesktopFile(const QString &pathToAppImage, bool resolveCollisions) {
-    return ::installDesktopFile(pathToAppImage, resolveCollisions);
+    if (appimage_register_in_system(pathToAppImage.toStdString().c_str(), false) != 0)
+        throw IntegrationFailed(QObject::tr("Unable to create desktop file.").toStdString());
 
+    const auto *desktopFilePath = appimage_registered_desktop_file_path(pathToAppImage.toStdString().c_str(), nullptr,
+                                                                        false);
+
+    // sanity check -- if the file doesn't exist, the function returns NULL
+    if (desktopFilePath == nullptr)
+        throw IntegrationFailed(QObject::tr("Desktop file was not created.").toStdString());
+
+    // check that file exists
+    if (!QFile(desktopFilePath).exists())
+        throw IntegrationFailed(QObject::tr("Desktop file was not created.").toStdString());
+
+    /* write AppImageLauncher specific entries to desktop file
+     *
+     * unfortunately, QSettings doesn't work as a desktop file reader/writer, and libqtxdg isn't really meant to be
+     * used by projects via add_subdirectory/ExternalProject
+     * a system dependency is not an option for this project, and we link to glib already anyway, so let's just use
+     * glib, which is known to work
+     */
+
+    std::shared_ptr<GKeyFile> desktopFile(g_key_file_new(), g_key_file_free);
+
+    std::shared_ptr<GError *> error(nullptr, g_error_free);
+
+    const auto flags = GKeyFileFlags(G_KEY_FILE_KEEP_COMMENTS | G_KEY_FILE_KEEP_TRANSLATIONS);
+
+    if (!g_key_file_load_from_file(desktopFile.get(), desktopFilePath, flags, error.get()))
+        throw IntegrationFailed(QObject::tr("Failed to load desktop file: %1")
+                                        .arg(QString::fromLocal8Bit((*error)->message)).toStdString());
+
+
+    const auto *nameEntry = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP,
+                                                  G_KEY_FILE_DESKTOP_KEY_NAME, error.get());
+
+    if (nameEntry == nullptr)
+        throw IntegrationFailed(QObject::tr("AppImage has invalid desktop file.").toStdString());
+
+    if (resolveCollisions)
+        resolveDesktopFileCollisions(desktopFilePath, desktopFile, nameEntry);
+
+    char const *desktopActions[] = {"Remove", "Update"};
+
+    g_key_file_set_string_list(
+            desktopFile.get(),
+            G_KEY_FILE_DESKTOP_GROUP,
+            G_KEY_FILE_DESKTOP_KEY_ACTIONS,
+            desktopActions, 2
+    );
+
+    // load translations from JSON file(s)
+    QMap<QString, QString> removeActionNameTranslations;
+    QMap<QString, QString> updateActionNameTranslations;
+
+    {
+        QDirIterator i18nDirIterator(TranslationManager::getTranslationDir());
+
+        while (i18nDirIterator.hasNext()) {
+            const auto &filePath = i18nDirIterator.next();
+            const auto &fileName = QFileInfo(filePath).fileName();
+            QJsonObject jsonObj = readTranslationsFile(filePath, fileName);
+
+            // parse locale from filename
+            auto locale = filePath.section('.', 1);
+
+            for (const auto &key : jsonObj.keys()) {
+                auto value = jsonObj[key].toString();
+                auto splitKey = key.split("/");
+
+                if (key.startsWith("Desktop Action update")) {
+                    qDebug() << "update: adding" << value << "for locale" << locale;
+                    updateActionNameTranslations[locale] = value;
+                } else if (key.startsWith("Desktop Action remove")) {
+                    qDebug() << "remove: adding" << value << "for locale" << locale;
+                    removeActionNameTranslations[locale] = value;
+                }
+            }
+        }
+    }
+
+    // add Remove action
+    {
+        const auto removeSectionName = "Desktop Action Remove";
+
+        g_key_file_set_string(desktopFile.get(), removeSectionName, "Name", "Remove AppImage from system");
+
+        std::ostringstream removeExecPath;
+        removeExecPath << CMAKE_INSTALL_PREFIX << "/lib/appimagelauncher/remove " << pathToAppImage.toStdString();
+        g_key_file_set_string(desktopFile.get(), removeSectionName, "Exec", removeExecPath.str().c_str());
+
+        // install translations
+        auto it = QMapIterator<QString, QString>(removeActionNameTranslations);
+        while (it.hasNext()) {
+            auto entry = it.next();
+            g_key_file_set_locale_string(desktopFile.get(), removeSectionName, "Name",
+                                         entry.key().toStdString().c_str(), entry.value().toStdString().c_str());
+        }
+    }
+
+    // add Update action
+    {
+        const auto updateSectionName = "Desktop Action Update";
+
+        g_key_file_set_string(desktopFile.get(), updateSectionName, "Name", "Update AppImage");
+
+        std::ostringstream updateExecPath;
+        updateExecPath << CMAKE_INSTALL_PREFIX << "/lib/appimagelauncher/update " << pathToAppImage.toStdString();
+        g_key_file_set_string(desktopFile.get(), updateSectionName, "Exec", updateExecPath.str().c_str());
+
+        // install translations
+        auto it = QMapIterator<QString, QString>(updateActionNameTranslations);
+        while (it.hasNext()) {
+            auto entry = it.next();
+            g_key_file_set_locale_string(desktopFile.get(), updateSectionName, "Name",
+                                         entry.key().toStdString().c_str(), entry.value().toStdString().c_str());
+        }
+    }
+
+    // add version key
+    const auto version = QApplication::applicationVersion().replace("version ", "").toStdString();
+    g_key_file_set_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, "X-AppImageLauncher-Version", version.c_str());
+
+    if (!g_key_file_save_to_file(desktopFile.get(), desktopFilePath, error.get()))
+        throw IntegrationFailed(QObject::tr("Failed to save desktop file: %1")
+                                        .arg(QString::fromLocal8Bit((*error)->message)).toStdString());
+
+    // notify KDE/Plasma about icon change
+    {
+        auto message = QDBusMessage::createSignal(QStringLiteral("/KIconLoader"), QStringLiteral("org.kde.KIconLoader"),
+                                                  QStringLiteral("iconChanged"));
+        message.setArguments({0});
+        QDBusConnection::sessionBus().send(message);
+    }
+
+    return true;
+}
+
+QJsonObject
+AppImageDesktopIntegrationManager::readTranslationsFile(const QString &filePath, const QString &fileName) const {
+    if (!QFileInfo(filePath).isFile() || !(fileName.startsWith("desktopfiles.") && fileName.endsWith(".json")))
+        return QJsonObject();
+
+    // check whether filename's format is alright, otherwise parsing the locale might try to access a
+    // non-existing (or the wrong) member
+    auto splitFilename = fileName.split(".");
+
+    if (splitFilename.size() != 3)
+        return QJsonObject();
+
+    QFile jsonFile(filePath);
+
+    if (!jsonFile.open(QIODevice::ReadOnly))
+        qWarning() << QObject::tr("Could not parse desktop file translations: Could not open file for reading %1")
+                .arg(fileName);
+
+    // TODO: need to make sure that this doesn't try to read huge files at once
+    auto data = jsonFile.readAll();
+
+    QJsonParseError parseError{};
+    auto jsonDoc = QJsonDocument::fromJson(data, &parseError);
+
+    // show warning on syntax errors and continue
+    if (parseError.error != QJsonParseError::NoError || jsonDoc.isNull() || !jsonDoc.isObject())
+        qWarning() << QObject::tr("Could not parse desktop file translations: Invalid syntax %1")
+                .arg(parseError.errorString());
+
+    return jsonDoc.object();
+}
+
+void AppImageDesktopIntegrationManager::resolveDesktopFileCollisions(const char *desktopFilePath,
+                                                                     const std::shared_ptr<GKeyFile> &desktopFile,
+                                                                     const gchar *nameEntry) {// TODO: support multilingual collisions
+    auto collisions = findCollisions(nameEntry);
+
+    // make sure to remove own entry
+    collisions.remove(QString(desktopFilePath));
+
+    if (!collisions.empty()) {
+        // collisions are resolved like in the filesystem: a monotonically increasing number in brackets is
+        // appended to the Name in order to keep the number monotonically increasing, we look for the highest
+        // number in brackets in the existing entries, add 1 to it, and append it in brackets to the current
+        // desktop file's Name entry
+
+        unsigned int currentNumber = 1;
+
+        QRegularExpression regex("^.*([0-9]+)$");
+
+        for (const auto &fileName : collisions) {
+            const auto &currentNameEntry = collisions[fileName];
+
+            auto match = regex.match(currentNameEntry);
+
+            if (match.hasMatch()) {
+                const unsigned int num = match.captured(0).toUInt();
+                if (num >= currentNumber)
+                    currentNumber = num + 1;
+            }
+        }
+
+        auto newName = QString(nameEntry) + " (" + QString::number(currentNumber) + ")";
+        g_key_file_set_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_NAME,
+                              newName.toStdString().c_str());
+    }
 }
 
 void AppImageDesktopIntegrationManager::updateAppImage(const QString &pathToAppImage) {
@@ -145,4 +349,43 @@ bool AppImageDesktopIntegrationManager::updateDesktopDatabaseAndIconCaches() {
     }
 
     return true;
+}
+
+QMap<QString, QString> AppImageDesktopIntegrationManager::findCollisions(const QString &currentNameEntry) {
+    QMap<QString, QString> collisions;
+
+    // default locations of desktop files on systems
+    const auto directories = {QString("/usr/share/applications/"), QString(xdg_data_home()) + "/applications/"};
+
+    for (const auto &directory : directories) {
+        QDirIterator iterator(directory, QDirIterator::FollowSymlinks);
+
+        while (iterator.hasNext()) {
+            const auto &filename = iterator.next();
+
+            if (!QFileInfo(filename).isFile() || !filename.endsWith(".desktop"))
+                continue;
+
+            std::shared_ptr<GKeyFile> desktopFile(g_key_file_new(), g_key_file_free);
+            std::shared_ptr<GError *> error(nullptr, g_error_free);
+
+            // if the key file parser can't load the file, it's most likely not a valid desktop file, so we just skip this file
+            if (!g_key_file_load_from_file(desktopFile.get(), filename.toStdString().c_str(),
+                                           G_KEY_FILE_KEEP_TRANSLATIONS, error.get()))
+                continue;
+
+            auto *nameEntry = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP,
+                                                    G_KEY_FILE_DESKTOP_KEY_NAME, error.get());
+
+            // invalid desktop file, needs to be skipped
+            if (nameEntry == nullptr)
+                continue;
+
+            if (QString(nameEntry).trimmed().startsWith(currentNameEntry.trimmed())) {
+                collisions[filename] = QString(nameEntry);
+            }
+        }
+    }
+
+    return collisions;
 }

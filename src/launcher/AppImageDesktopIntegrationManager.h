@@ -5,18 +5,17 @@
 #ifndef APPIMAGELAUNCHER_APPIMAGEDESKTOPINTEGRATIONMANAGER_H
 #define APPIMAGELAUNCHER_APPIMAGEDESKTOPINTEGRATIONMANAGER_H
 
-
+#include <glib.h>
+#include <memory>
 #include <stdexcept>
 #include <QString>
 #include <QDir>
-
+#include <xdg-basedir.h>
 
 class AppImageDesktopIntegrationManager {
     QDir integratedAppImagesDir;
 public:
     AppImageDesktopIntegrationManager();
-
-    bool isIntegrationRequired(const QString &appImagePath);
 
     void integrateAppImage(const QString &appImagePath);
 
@@ -41,6 +40,14 @@ private:
     void loadIntegratedAppImagesDestination();
 
     void tryMoveAppImage(const QString &pathToAppImage, const QString &pathToIntegratedAppImage) const;
+
+
+    QMap<QString, QString> findCollisions(const QString& currentNameEntry);
+
+    void resolveDesktopFileCollisions(const char *desktopFilePath, const std::shared_ptr<GKeyFile> &desktopFile,
+                                      const gchar *nameEntry);
+
+    QJsonObject readTranslationsFile(const QString &filePath, const QString &string) const;
 };
 
 

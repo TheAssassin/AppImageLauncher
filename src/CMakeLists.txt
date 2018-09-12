@@ -32,7 +32,15 @@ add_library(translationmanager translationmanager.cpp translationmanager.h)
 target_link_libraries(translationmanager PUBLIC Qt5::Core Qt5::Widgets)
 target_compile_definitions(translationmanager PRIVATE -DCMAKE_PROJECT_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
 
-add_library(shared STATIC shared.h shared.cpp trashbin.cpp trashbin.h)
+add_library(shared STATIC
+        shared.h
+        shared.cpp
+        trashbin.cpp
+        trashbin.h
+        launcher/AppImageDesktopIntegrationManager.cpp
+        launcher/AppImageDesktopIntegrationManager.h
+)
+
 target_link_libraries(shared PUBLIC PkgConfig::glib Qt5::Core Qt5::Widgets Qt5::DBus xdg-basedir libappimage translationmanager)
 target_compile_definitions(shared
     PRIVATE -DCMAKE_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}"
@@ -47,8 +55,6 @@ add_executable(AppImageLauncher
         launcher/main.cpp
         launcher/Launcher.cpp
         launcher/Launcher.h
-        launcher/AppImageDesktopIntegrationManager.cpp
-        launcher/AppImageDesktopIntegrationManager.h
         launcher/ui.ui
         launcher/ui.h
         launcher/ui.cpp)

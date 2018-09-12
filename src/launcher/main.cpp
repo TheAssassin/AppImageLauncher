@@ -24,11 +24,6 @@ extern "C" {
 #include "Launcher.h"
 #include "ui.h"
 
-bool isDisplayAvailable() {
-    auto screens = QGuiApplication::screens();
-    return !screens.empty();
-}
-
 std::string getVersionString() {
     std::ostringstream version;
     version << "version " << APPIMAGELAUNCHER_VERSION << " "
@@ -141,10 +136,8 @@ QMessageBox::StandardButton askToMoveFileIntoApplications(const QString &pathToA
 
 int executeGuiApplication(int argc, char **argv) {
     // Create a fake argc value to avoid QApplication from modifying the arguments.
-    int fakeArgc = 1;
-    QApplication application(fakeArgc, argv);
     QApplication::setApplicationDisplayName("AppImageLauncher");
-    setApplicationVersion(&application);
+    setApplicationVersion(QApplication::instance());
 
     TranslationManager translationManager(*QCoreApplication::instance());
 
@@ -248,15 +241,13 @@ int executeGuiApplication(int argc, char **argv) {
     ui.setLauncher(&launcher);
     ui.showIntegrationPage();
 
-    return application.exec();
+    return QApplication::exec();
 }
 
 int executeCliApplication(int argc, char **argv) {
-// Create a fake argc value to avoid QApplication from modifying the arguments.
-    int fakeArgc = 1;
-    QCoreApplication application(fakeArgc, argv);
+    qWarning() << "Running on CLI mode";
     QCoreApplication::setApplicationName("AppImageLauncher");
-    setApplicationVersion(&application);
+    setApplicationVersion(QCoreApplication::instance());
 
     TranslationManager translationManager(*QCoreApplication::instance());
 
@@ -310,14 +301,26 @@ int executeCliApplication(int argc, char **argv) {
     }
 }
 
+bool isGuiAvailable() {
+    auto x11DisplayVar = qgetenv("DISPLAY");
+    auto waylandDisplayVar = qgetenv("WAYLAND_DISPLAY");
+    return !x11DisplayVar.isEmpty() || !waylandDisplayVar.isEmpty();
+}
+
+
 int main(int argc, char **argv) {
     earlyArgumentsCheck(argc, argv);
     applyDaemonConfig();
 
-    if (isDisplayAvailable())
+    // Use a fake argc to prevent Qt from removing arguments from the list.
+    int _fakeArgc = 1;
+
+    QCoreApplication *application = nullptr;
+    if (isGuiAvailable()) {
+        application = new QApplication(_fakeArgc, argv);
         return executeGuiApplication(argc, argv);
-    else
+    } else {
+        application = new QCoreApplication(_fakeArgc, argv);
         return executeCliApplication(argc, argv);
-
+    }
 }
-
