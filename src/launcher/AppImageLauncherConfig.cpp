@@ -1,7 +1,7 @@
 #include <QStandardPaths>
 #include <QSettings>
 #include <QFileInfo>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include "AppImageLauncherConfig.h"
 
 
