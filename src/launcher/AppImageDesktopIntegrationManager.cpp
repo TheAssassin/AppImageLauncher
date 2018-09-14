@@ -1,19 +1,20 @@
-//
-// Created by alexis on 9/1/18.
-//
 
-#include <QDebug>
-#include <appimage/appimage.h>
-#include <shared.h>
-#include <translationmanager.h>
-#include <QtDBus/QDBusMessage>
-#include <QtDBus/QDBusConnection>
 #include <sstream>
-#include <QtCore/QRegularExpression>
-#include <QtCore/QDirIterator>
-#include <QtCore/QJsonParseError>
-#include <QtCore/QJsonObject>
+#include <QDebug>
+#include <QDBusMessage>
+#include <QDBusConnection>
+#include <QRegularExpression>
+#include <QDirIterator>
+#include <QJsonParseError>
+#include <QJsonObject>
+#include <QCryptographicHash>
+#include <QDataStream>
+
+#include <appimage/appimage.h>
+
+#include <translationmanager.h>
 #include "AppImageDesktopIntegrationManager.h"
+#include "AppImageLauncherConfig.h"
 
 void AppImageDesktopIntegrationManager::integrateAppImage(const QString &pathToAppImage) {
     auto pathToIntegratedAppImage = buildDeploymentPath(pathToAppImage);
@@ -52,13 +53,11 @@ void AppImageDesktopIntegrationManager::tryMoveAppImage(const QString &pathToApp
 
         if (!succeed)
             throw IntegrationFailed(QObject::tr("Unable to move or copy AppImage to %1.")
-                                            .arg("$HOME/Applications").toStdString());
+                                            .arg(integratedAppImagesDir.path()).toStdString());
     }
 }
 
 QString AppImageDesktopIntegrationManager::buildDeploymentPath(const QString &pathToAppImage) {
-    // if type 2 AppImage, we can build a "content-aware" filename
-    // see #7 for details
     auto digest = getAppImageDigestMd5(pathToAppImage);
 
     const QFileInfo appImageInfo(pathToAppImage);
@@ -297,7 +296,7 @@ void AppImageDesktopIntegrationManager::resolveDesktopFileCollisions(const char 
 }
 
 void AppImageDesktopIntegrationManager::updateAppImage(const QString &pathToAppImage) {
-    bool result = ::updateDesktopFile(pathToAppImage);
+    bool result = installDesktopFile(pathToAppImage, true);
     if (!result)
         throw IntegrationFailed(QObject::tr("Unable to update AppImage Desktop file.").toStdString());
 }
@@ -313,18 +312,8 @@ bool AppImageDesktopIntegrationManager::isPlacedInTheDefaultAppsDir(const QStrin
     return integratedAppImagesDir == QFileInfo(pathToAppImage).absoluteDir();
 }
 
-void AppImageDesktopIntegrationManager::loadIntegratedAppImagesDestination() {
-    auto config = getConfig();
-
-    static const QString keyName("AppImageLauncher/destination");
-    if (config->contains(keyName))
-        integratedAppImagesDir = config->value(keyName).toString();
-
-    integratedAppImagesDir = DEFAULT_INTEGRATION_DESTINATION;
-}
-
 AppImageDesktopIntegrationManager::AppImageDesktopIntegrationManager() {
-    loadIntegratedAppImagesDestination();
+    integratedAppImagesDir = AppImageLauncherConfig::getIntegratedAppImagesDir();
 }
 
 const QDir &AppImageDesktopIntegrationManager::getIntegratedAppImagesDir() const {
@@ -388,4 +377,20 @@ QMap<QString, QString> AppImageDesktopIntegrationManager::findCollisions(const Q
     }
 
     return collisions;
+}
+
+QString AppImageDesktopIntegrationManager::getAppImageDigestMd5(const QString &pathToAppImage) {
+    QCryptographicHash hash(QCryptographicHash::Md5);
+    QFile f(pathToAppImage);
+    if (f.open(QIODevice::ReadOnly)) {
+        QDataStream in(&f);
+        char buff[1024];
+        while (!in.atEnd()) {
+            int bytesRead = in.readRawData(buff, 1024);
+            hash.addData(buff, bytesRead);
+        }
+
+        return hash.result().toHex().toUpper();
+    }
+    return QString();
 }

@@ -39,9 +39,17 @@ add_library(shared STATIC
         trashbin.h
         launcher/AppImageDesktopIntegrationManager.cpp
         launcher/AppImageDesktopIntegrationManager.h
-)
+        launcher/AppImageLauncherConfig.cpp launcher/AppImageLauncherConfig.h)
 
-target_link_libraries(shared PUBLIC PkgConfig::glib Qt5::Core Qt5::Widgets Qt5::DBus xdg-basedir libappimage translationmanager)
+target_link_libraries(shared PUBLIC
+        PkgConfig::glib
+        Qt5::Core
+        Qt5::Widgets
+        Qt5::DBus
+        xdg-basedir
+        libappimage
+        libappimageinfo
+        translationmanager)
 target_compile_definitions(shared
     PRIVATE -DCMAKE_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}"
 )

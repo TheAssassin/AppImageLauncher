@@ -19,15 +19,15 @@ public:
 
     void integrateAppImage(const QString &appImagePath);
 
-    QString buildDeploymentPath(const QString& pathToAppImage);
+    QString buildDeploymentPath(const QString &pathToAppImage);
 
-    bool hasAlreadyBeenIntegrated(const QString& pathToAppImage);
+    bool hasAlreadyBeenIntegrated(const QString &pathToAppImage);
 
     bool isPlacedInTheDefaultAppsDir(const QString &pathToAppImage);
 
-    bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions);
+    bool installDesktopFile(const QString &pathToAppImage, bool resolveCollisions);
 
-    void updateAppImage(const QString& pathToAppImage);
+    void updateAppImage(const QString &pathToAppImage);
 
     void removeAppImageIntegration(const QString &appImagePath);
 
@@ -36,13 +36,15 @@ public:
     const QString getIntegratedAppImagesDirPath() const;
 
     static bool updateDesktopDatabaseAndIconCaches();
+
+    static QString getAppImageDigestMd5(const QString &pathToAppImage);
+
 private:
-    void loadIntegratedAppImagesDestination();
 
     void tryMoveAppImage(const QString &pathToAppImage, const QString &pathToIntegratedAppImage) const;
 
 
-    QMap<QString, QString> findCollisions(const QString& currentNameEntry);
+    QMap<QString, QString> findCollisions(const QString &currentNameEntry);
 
     void resolveDesktopFileCollisions(const char *desktopFilePath, const std::shared_ptr<GKeyFile> &desktopFile,
                                       const gchar *nameEntry);
