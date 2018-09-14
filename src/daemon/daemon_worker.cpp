@@ -118,7 +118,7 @@ Worker::Worker() {
 }
 
 void Worker::executeDeferredOperations() {
-    d->mutex.lock();
+    QMutexLocker locker(&d->mutex);
 
     std::cout << "Executing deferred operations" << std::endl;
 
@@ -144,13 +144,10 @@ void Worker::executeDeferredOperations() {
         std::cout << "Failed to update desktop database and icon caches" << std::endl;
 
     std::cout << "Done" << std::endl;
-
-    // while unlocking would be possible before the cleanup, this allows for a more consistent console output
-    d->mutex.unlock();
 };
 
 void Worker::scheduleForIntegration(const QString& path) {
-    d->mutex.lock();
+    QMutexLocker locker(&d->mutex);
 
     auto operation = std::make_pair(path, INTEGRATE);
     if (!d->isDuplicate(operation)) {
@@ -158,12 +155,10 @@ void Worker::scheduleForIntegration(const QString& path) {
         d->deferredOperations.push_back(operation);
         emit startTimer();
     }
-
-    d->mutex.unlock();
 }
 
 void Worker::scheduleForUnintegration(const QString& path) {
-    d->mutex.lock();
+    QMutexLocker locker(&d->mutex);
 
     auto operation = std::make_pair(path, UNINTEGRATE);
     if (!d->isDuplicate(operation)) {
@@ -171,8 +166,6 @@ void Worker::scheduleForUnintegration(const QString& path) {
         d->deferredOperations.push_back(operation);
         emit startTimer();
     }
-
-    d->mutex.unlock();
 }
 
 void Worker::startTimerIfNecessary() {

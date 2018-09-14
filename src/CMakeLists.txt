@@ -54,7 +54,7 @@ target_compile_definitions(shared
     PRIVATE -DCMAKE_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}"
 )
 
-add_library(filesystemwatcher STATIC filesystemwatcher.cpp filesystemwatcher.h)
+add_library(filesystemwatcher STATIC daemon/filesystemwatcher.cpp daemon/filesystemwatcher.h)
 target_link_libraries(filesystemwatcher PUBLIC Qt5::Core)
 target_include_directories(filesystemwatcher PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -70,7 +70,11 @@ target_link_libraries(AppImageLauncher shared PkgConfig::glib libappimage libapp
 target_include_directories(AppImageLauncher PRIVATE ${NLOHMANN_JSON_INCLUDE_DIRS})
 
 # appimagelauncherd
-add_executable(appimagelauncherd daemon_main.cpp daemon_worker.cpp daemon_worker.h)
+add_executable(appimagelauncherd
+        daemon/daemon_main.cpp
+        daemon/daemon_worker.cpp
+        daemon/daemon_worker.h)
+
 target_link_libraries(appimagelauncherd shared filesystemwatcher PkgConfig::glib libappimage)
 
 # set binary runtime rpath to make sure the libappimage.so built and installed by this project is going to be used
