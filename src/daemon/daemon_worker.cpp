@@ -6,15 +6,12 @@
 // library includes
 #include <QFile>
 #include <QMutex>
-#include <QObject>
-#include <QSysInfo>
 #include <QTimer>
 #include <QThreadPool>
 #include <appimage/appimage.h>
 
 // local includes
 #include "daemon_worker.h"
-#include "shared.h"
 
 enum OP_TYPE {
     INTEGRATE = 0,
@@ -27,8 +24,6 @@ class Worker::PrivateData {
 public:
     std::atomic<bool> timerActive;
 
-    static constexpr int TIMEOUT = 15 * 1000;
-
     QMutex mutex;
 
     // std::set is unordered, therefore using std::deque to keep the order of the operations
@@ -39,12 +34,19 @@ public:
         Operation operation;
         std::shared_ptr<QMutex> mutex;
 
+        AppImageDesktopIntegrationManager *integrationManager{nullptr};
+
     public:
-        OperationTask(const Operation& operation, std::shared_ptr<QMutex> mutex) : operation(operation), mutex(std::move(mutex)) {}
+        OperationTask(const Operation &operation, std::shared_ptr<QMutex> mutex) : operation(operation),
+                                                                                   mutex(std::move(mutex)) {}
+
+        void setIntegrationManager(AppImageDesktopIntegrationManager *integrationManager) {
+            OperationTask::integrationManager = integrationManager;
+        }
 
         void run() override {
-            const auto& path = operation.first;
-            const auto& type = operation.second;
+            const auto &path = operation.first;
+            const auto &type = operation.second;
 
             const auto exists = QFile::exists(path);
             const auto appImageType = appimage_get_type(path.toStdString().c_str(), false);
@@ -77,7 +79,7 @@ public:
                     return;
                 }
 
-                if (!installDesktopFile(path)) {
+                if (!integrationManager->installDesktopFile(path, false)) {
                     mutex->lock();
                     std::cout << "ERROR: Failed to register AppImage in system" << std::endl;
                     mutex->unlock();
@@ -114,7 +116,7 @@ public:
 Worker::Worker() {
     d = std::make_shared<PrivateData>();
 
-    connect(this, &Worker::startTimer, this, &Worker::startTimerIfNecessary);
+    connect(this, &Worker::startTimer, this, &Worker::startTimerIfNecessary, Qt::QueuedConnection);
 }
 
 void Worker::executeDeferredOperations() {
@@ -127,26 +129,28 @@ void Worker::executeDeferredOperations() {
     while (!d->deferredOperations.empty()) {
         auto operation = d->deferredOperations.front();
         d->deferredOperations.pop_front();
-        QThreadPool::globalInstance()->start(new PrivateData::OperationTask(operation, outputMutex));
+        auto task = new PrivateData::OperationTask(operation, outputMutex);
+        task->setIntegrationManager(integrationManager);
+        QThreadPool::globalInstance()->start(task);
     }
 
     // wait until all AppImages have been integrated
     QThreadPool::globalInstance()->waitForDone();
 
     std::cout << "Cleaning up old desktop integration files" << std::endl;
-    if (!cleanUpOldDesktopIntegrationResources(true)) {
+    if (!integrationManager->cleanUpOldDesktopIntegrationResources(true)) {
         std::cout << "Failed to clean up old desktop integration files" << std::endl;
     }
 
     // make sure the icons in the launcher are refreshed
     std::cout << "Updating desktop database and icon caches" << std::endl;
-    if (!updateDesktopDatabaseAndIconCaches())
+    if (!integrationManager->updateDesktopDatabaseAndIconCaches())
         std::cout << "Failed to update desktop database and icon caches" << std::endl;
 
     std::cout << "Done" << std::endl;
 };
 
-void Worker::scheduleForIntegration(const QString& path) {
+void Worker::scheduleForIntegration(const QString &path) {
     QMutexLocker locker(&d->mutex);
 
     auto operation = std::make_pair(path, INTEGRATE);
@@ -157,7 +161,7 @@ void Worker::scheduleForIntegration(const QString& path) {
     }
 }
 
-void Worker::scheduleForUnintegration(const QString& path) {
+void Worker::scheduleForUnintegration(const QString &path) {
     QMutexLocker locker(&d->mutex);
 
     auto operation = std::make_pair(path, UNINTEGRATE);
@@ -169,16 +173,17 @@ void Worker::scheduleForUnintegration(const QString& path) {
 }
 
 void Worker::startTimerIfNecessary() {
-    if (!d->timerActive) {
-        d->timerActive = true;
-        auto* timer = new QTimer();
-        timer->setSingleShot(true);
-        timer->setInterval(d->TIMEOUT);
-        connect(timer, &QTimer::timeout, [this, timer]() {
-            d->timerActive = false;
-            executeDeferredOperations();
-            delete timer;
-        });
-        timer->start();
+    if (!isTimerActive) {
+        isTimerActive = true;
+        QTimer::singleShot(TIMEOUT, this, &Worker::handleTimerTimeout);
     }
+}
+
+void Worker::setIntegrationManager(AppImageDesktopIntegrationManager *integrationManager) {
+    Worker::integrationManager = integrationManager;
+}
+
+void Worker::handleTimerTimeout() {
+    isTimerActive = false;
+    executeDeferredOperations();
 }

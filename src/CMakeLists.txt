@@ -37,9 +37,10 @@ add_library(shared STATIC
         shared.cpp
         trashbin.cpp
         trashbin.h
-        launcher/AppImageDesktopIntegrationManager.cpp
-        launcher/AppImageDesktopIntegrationManager.h
-        launcher/AppImageLauncherConfig.cpp launcher/AppImageLauncherConfig.h)
+        AppImageDesktopIntegrationManager.cpp
+        AppImageDesktopIntegrationManager.h
+        AppImageLauncherConfig.cpp
+        AppImageLauncherConfig.h)
 
 target_link_libraries(shared PUBLIC
         PkgConfig::glib
@@ -71,7 +72,7 @@ target_include_directories(AppImageLauncher PRIVATE ${NLOHMANN_JSON_INCLUDE_DIRS
 
 # appimagelauncherd
 add_executable(appimagelauncherd
-        daemon/daemon_main.cpp
+        daemon/main.cpp
         daemon/daemon_worker.cpp
         daemon/daemon_worker.h)
 

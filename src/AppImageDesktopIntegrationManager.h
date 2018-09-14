@@ -39,6 +39,8 @@ public:
 
     static QString getAppImageDigestMd5(const QString &pathToAppImage);
 
+    bool cleanUpOldDesktopIntegrationResources(bool verbose);
+
 private:
 
     void tryMoveAppImage(const QString &pathToAppImage, const QString &pathToIntegratedAppImage) const;
