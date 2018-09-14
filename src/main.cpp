@@ -331,7 +331,7 @@ int main(int argc, char** argv) {
 
                 if (arg.startsWith(prefix)) {
                     // don't annoy users who try to mount or extract AppImages
-                    if (arg == prefix + "mount" || arg == prefix + "extract") {
+                    if (arg == prefix + "mount" || arg == prefix + "extract" || arg == prefix + "updateinformation") {
                         return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
                     }
                 }
