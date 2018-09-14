@@ -1,9 +1,12 @@
 [submodule "lib/AppImageKit"]
 	path = lib/AppImageKit
 	url = https://github.com/AppImage/AppImageKit.git
+	branch = appimagetool/master
 [submodule "lib/AppImageUpdate"]
 	path = lib/AppImageUpdate
 	url = https://github.com/AppImage/AppImageUpdate.git
+	branch = master
 [submodule "lib/AppImageInfo"]
 	path = lib/AppImageInfo
 	url = https://github.com/azubieta/AppImageInfo.git
+	branch = master
