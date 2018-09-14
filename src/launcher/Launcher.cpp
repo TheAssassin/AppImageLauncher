@@ -3,8 +3,6 @@
 //
 extern "C" {
 #include "unistd.h"
-#include <appimage/appimage.h>
-#include <appimage/info.h>
 }
 
 #include <QFile>
@@ -12,8 +10,9 @@ extern "C" {
 #include <QMessageBox>
 #include <QTemporaryDir>
 #include <QTemporaryFile>
+#include <appimage/appimage.h>
+#include <appimage/info.h>
 
-#include <shared.h>
 #include "Launcher.h"
 
 
@@ -65,7 +64,8 @@ void Launcher::executeAppImage() {
     auto fullPathToAppImage = QFileInfo(appImagePath).absoluteFilePath();
 
     // first of all, chmod +x the AppImage file, otherwise execv() will complain
-    if (!makeExecutable(fullPathToAppImage))
+    QFile appImageFile(fullPathToAppImage);
+    if (!appImageFile.setPermissions(QFileDevice::ReadOwner | QFileDevice::ExeOwner))
         throw ExecutionFailed(QObject::tr("Unable to make the AppImage file executable: %1")
                                       .arg(appImagePath).toStdString());
 
@@ -117,7 +117,7 @@ void Launcher::executeAppImage() {
         // actually _write_ changes
         tempAppImage.close();
 
-        makeExecutable(tempAppImageFileName);
+        tryToMakeAppImageFileExecutable(tempAppImageFileName);
 
         // need a char pointer instead of a const one, therefore can't use .c_str()
         std::vector<char> argv0Buffer(tempAppImageFileName.size() + 1, '\0');
@@ -187,6 +187,13 @@ void Launcher::executeAppImage() {
     }
 }
 
+void Launcher::tryToMakeAppImageFileExecutable(const QString &path) const {
+    QFile appImageFile(path);
+    if (!appImageFile.setPermissions(QFileDevice::ReadOwner | QFileDevice::ExeOwner))
+        throw ExecutionFailed(QObject::tr("Unable to make the AppImage file executable: %1")
+                                      .arg(path).toStdString());
+}
+
 bool Launcher::shouldBeIgnored() {
     bool result =
             isAMountOrExtractOperation() &&
@@ -253,7 +260,8 @@ QIcon Launcher::getAppImageIcon() {
     QTemporaryFile temporaryFile;
     if (temporaryFile.open()) {
 
-        appimage_extract_appinamge_icon_file(appImagePath.toStdString().c_str(), temporaryFile.fileName().toStdString().c_str());
+        appimage_extract_appinamge_icon_file(appImagePath.toStdString().c_str(),
+                                             temporaryFile.fileName().toStdString().c_str());
         QIcon icon(temporaryFile.fileName());
         return icon;
     }

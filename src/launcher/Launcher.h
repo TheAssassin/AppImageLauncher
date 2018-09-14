@@ -56,6 +56,8 @@ private:
     void validateAppImageType();
 
     bool isAMountOrExtractOperation() const;
+
+    void tryToMakeAppImageFileExecutable(const QString &path) const;
 };
 
 /* Exceptions that can be thrown from the Launcher methods. */
