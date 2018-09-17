@@ -210,7 +210,7 @@ int executeGuiApplication(int argc, char **argv) {
             return 2;
         }
     }
-    const auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
+    const auto pathToIntegratedAppImage = AppImageDesktopIntegrationManager::buildDeploymentPath(pathToAppImage);
 
     // after checking whether the AppImage can/must be run without integrating it, we now check whether it actually
     // has been integrated already

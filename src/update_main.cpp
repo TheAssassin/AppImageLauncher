@@ -196,8 +196,6 @@ int main(int argc, char** argv) {
     AppImageDesktopIntegrationManager integrationManager;
 
     if (!appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str())) {
-        const auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
-
         try {
             integrationManager.updateAppImage(pathToUpdatedAppImage);
         } catch (const IntegrationFailed &ex) {

@@ -64,47 +64,6 @@ std::shared_ptr<QSettings> getConfig() {
 }
 
 
-QDir integratedAppImagesDestination() {
-    auto config = getConfig();
-
-    static const QString keyName("AppImageLauncher/destination");
-    if (config->contains(keyName))
-        return config->value(keyName).toString();
-
-    return DEFAULT_INTEGRATION_DESTINATION;
-}
-
-
-QString buildPathToIntegratedAppImage(const QString& pathToAppImage) {
-    // if type 2 AppImage, we can build a "content-aware" filename
-    // see #7 for details
-    auto digest = getAppImageDigestMd5(pathToAppImage);
-
-    const QFileInfo appImageInfo(pathToAppImage);
-
-    QString baseName = appImageInfo.completeBaseName();
-
-    // if digest is available, append a separator
-    if (!digest.isEmpty()) {
-        const auto digestSuffix = "_" + digest;
-
-        // check whether digest is already contained in filename
-        if (!pathToAppImage.contains(digestSuffix))
-            baseName += "_" + digest;
-    }
-
-    auto fileName = baseName;
-
-    // must not use completeSuffix() in combination with completeBasename(), otherwise the final filename is composed
-    // incorrectly
-    if (!appImageInfo.suffix().isEmpty()) {
-        fileName += "." + appImageInfo.suffix();
-    }
-
-    return integratedAppImagesDestination().path() + "/" + fileName;
-}
-
-
 QMap<QString, QString> findCollisions(const QString& currentNameEntry) {
     QMap<QString, QString> collisions;
 
@@ -142,48 +101,6 @@ QMap<QString, QString> findCollisions(const QString& currentNameEntry) {
     return collisions;
 }
 
-
-QString getAppImageDigestMd5(const QString& path) {
-    // try to read embedded MD5 digest
-    unsigned long offset = 0, length = 0;
-
-    // first of all, digest calculation is supported only for type 2
-    if (appimage_get_type(path.toStdString().c_str(), false) != 2)
-        return "";
-
-    auto rv = appimage_get_elf_section_offset_and_length(path.toStdString().c_str(), ".digest_md5", &offset, &length);
-
-    QByteArray buffer(16, '\0');
-
-    if (rv && offset != 0 && length != 0) {
-        // open file and read digest from ELF header section
-        QFile file(path);
-
-        if (!file.open(QFile::ReadOnly))
-            return "";
-
-        if (!file.seek(static_cast<qint64>(offset)))
-            return "";
-
-        if (!file.read(buffer.data(), buffer.size()))
-            return "";
-
-        file.close();
-    } else {
-        // calculate digest
-        if (!appimage_type2_digest_md5(path.toStdString().c_str(), buffer.data()))
-            return "";
-    }
-
-    // create hexadecimal representation
-    auto hexDigest = appimage_hexlify(buffer, static_cast<size_t>(buffer.size()));
-
-    QString hexDigestStr(hexDigest);
-
-    free(hexDigest);
-
-    return hexDigestStr;
-}
 
 bool hasAlreadyBeenIntegrated(const QString& pathToAppImage) {
     return appimage_is_registered_in_system(pathToAppImage.toStdString().c_str());

@@ -17,6 +17,8 @@
 #include "AppImageDesktopIntegrationManager.h"
 #include "AppImageLauncherConfig.h"
 
+QDir AppImageDesktopIntegrationManager::integratedAppImagesDir;
+
 void AppImageDesktopIntegrationManager::integrateAppImage(const QString &pathToAppImage) {
     auto pathToIntegratedAppImage = buildDeploymentPath(pathToAppImage);
     tryMoveAppImage(pathToAppImage, pathToIntegratedAppImage);
@@ -82,7 +84,7 @@ QString AppImageDesktopIntegrationManager::buildDeploymentPath(const QString &pa
         fileName += "." + appImageInfo.suffix();
     }
 
-    return integratedAppImagesDir.path() + "/" + fileName;
+    return AppImageLauncherConfig::getIntegratedAppImagesDir() + "/" + fileName;
 }
 
 bool AppImageDesktopIntegrationManager::hasAlreadyBeenIntegrated(const QString &pathToAppImage) {
@@ -93,8 +95,8 @@ bool AppImageDesktopIntegrationManager::installDesktopFile(const QString &pathTo
     if (appimage_register_in_system(pathToAppImage.toStdString().c_str(), false) != 0)
         throw IntegrationFailed(QObject::tr("Unable to create desktop file.").toStdString());
 
-    const auto *desktopFilePath = appimage_registered_desktop_file_path(pathToAppImage.toStdString().c_str(), nullptr,
-                                                                        false);
+    const auto *desktopFilePath = appimage_registered_desktop_file_path(pathToAppImage.toStdString().c_str(),
+            nullptr, false);
 
     // sanity check -- if the file doesn't exist, the function returns NULL
     if (desktopFilePath == nullptr)

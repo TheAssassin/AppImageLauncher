@@ -13,13 +13,13 @@
 #include <xdg-basedir.h>
 
 class AppImageDesktopIntegrationManager {
-    QDir integratedAppImagesDir;
+    static QDir integratedAppImagesDir;
 public:
     AppImageDesktopIntegrationManager();
 
     void integrateAppImage(const QString &appImagePath);
 
-    QString buildDeploymentPath(const QString &pathToAppImage);
+    static QString buildDeploymentPath(const QString &pathToAppImage);
 
     bool hasAlreadyBeenIntegrated(const QString &pathToAppImage);
 

@@ -22,17 +22,6 @@ static const auto DEFAULT_INTEGRATION_DESTINATION = QString(getenv("HOME")) + "/
 // load config file and return it
 std::shared_ptr<QSettings> getConfig();
 
-// return directory into which the integrated AppImages will be moved
-QDir integratedAppImagesDestination();
-
-// build path to standard location for integrated AppImages
-QString buildPathToIntegratedAppImage(const QString& pathToAppImage);
-
-// get AppImage MD5 digest
-// extracts the digest embedded in the file
-// if no such digest has been embedded, it calculates it using libappimage
-QString getAppImageDigestMd5(const QString& path);
-
 // checks whether AppImage has been integrated already
 bool hasAlreadyBeenIntegrated(const QString& pathToAppImage);
 
