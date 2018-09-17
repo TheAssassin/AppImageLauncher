@@ -21,7 +21,7 @@ public:
 
     static QString buildDeploymentPath(const QString &pathToAppImage);
 
-    bool hasAlreadyBeenIntegrated(const QString &pathToAppImage);
+    static bool hasAlreadyBeenIntegrated(const QString &pathToAppImage);
 
     bool isPlacedInTheDefaultAppsDir(const QString &pathToAppImage);
 

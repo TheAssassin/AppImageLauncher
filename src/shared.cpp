@@ -102,10 +102,6 @@ QMap<QString, QString> findCollisions(const QString& currentNameEntry) {
 }
 
 
-bool hasAlreadyBeenIntegrated(const QString& pathToAppImage) {
-    return appimage_is_registered_in_system(pathToAppImage.toStdString().c_str());
-}
-
 bool cleanUpOldDesktopIntegrationResources(bool verbose) {
     auto dirPath = QString(xdg_data_home()) + "/applications";
 
