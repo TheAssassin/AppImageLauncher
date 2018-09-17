@@ -41,44 +41,6 @@ static void gErrorDeleter(GError* ptr) {
         g_error_free(ptr);
 }
 
-bool makeExecutable(const QString& path) {
-    struct stat fileStat{};
-
-    if (stat(path.toStdString().c_str(), &fileStat) != 0) {
-        std::cerr << "Failed to call stat() on " << path.toStdString() << std::endl;
-        return false;
-    }
-
-    // no action required when file is executable already
-    // this could happen in scenarios when an AppImage is in a read-only location
-    if ((fileStat.st_uid == getuid() && fileStat.st_mode & 0100) ||
-        (fileStat.st_gid == getgid() && fileStat.st_mode & 0010) ||
-        (fileStat.st_mode & 0001)) {
-        return true;
-    }
-
-    return chmod(path.toStdString().c_str(), fileStat.st_mode | 0111) == 0;
-}
-
-bool makeNonExecutable(const QString& path) {
-    struct stat fileStat{};
-
-    if (stat(path.toStdString().c_str(), &fileStat) != 0) {
-        std::cerr << "Failed to call stat() on " << path.toStdString() << std::endl;
-        return false;
-    }
-
-    auto permissions = fileStat.st_mode;
-
-    // remove executable permissions
-    for (const auto permPart : {0100, 0010, 0001}) {
-        if (permissions & permPart)
-            permissions -= permPart;
-    }
-
-    return chmod(path.toStdString().c_str(), permissions) == 0;
-}
-
 
 std::shared_ptr<QSettings> getConfig() {
     // calculate path to config file
@@ -448,10 +410,6 @@ bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
     return true;
 }
 
-bool updateDesktopFile(const QString& pathToAppImage) {
-    return installDesktopFile(pathToAppImage, true);
-}
-
 IntegrationState integrateAppImage(const QString& pathToAppImage, const QString& pathToIntegratedAppImage) {
     // need std::strings to get working pointers with .c_str()
     const auto oldPath = pathToAppImage.toStdString();
@@ -560,10 +518,6 @@ QString getAppImageDigestMd5(const QString& path) {
 
 bool hasAlreadyBeenIntegrated(const QString& pathToAppImage) {
     return appimage_is_registered_in_system(pathToAppImage.toStdString().c_str());
-}
-
-bool isInDirectory(const QString& pathToAppImage, const QDir& directory) {
-    return directory == QFileInfo(pathToAppImage).absoluteDir();
 }
 
 bool cleanUpOldDesktopIntegrationResources(bool verbose) {

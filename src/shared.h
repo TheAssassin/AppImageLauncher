@@ -19,19 +19,9 @@ enum IntegrationState {
 // currently hardcoded, can not be changed by users
 static const auto DEFAULT_INTEGRATION_DESTINATION = QString(getenv("HOME")) + "/Applications/";
 
-// makes an existing file executable
-bool makeExecutable(const QString& path);
-
-// removes executable bits from file's permissions
-bool makeNonExecutable(const QString& path);
-
 // installs desktop file for given AppImage, including AppImageLauncher specific modifications
 // set resolveCollisions to false in order to leave the Name entries as-is
 bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions = true);
-
-// update AppImage's existing desktop file with AppImageLauncher specific entries
-// this alias for installDesktopFile does not perform any collision detection and resolving
-bool updateDesktopFile(const QString& pathToAppImage);
 
 // update desktop database and icon caches of desktop environments
 // this makes sure that:
@@ -58,9 +48,6 @@ QString getAppImageDigestMd5(const QString& path);
 
 // checks whether AppImage has been integrated already
 bool hasAlreadyBeenIntegrated(const QString& pathToAppImage);
-
-// checks whether file is in a given directory
-bool isInDirectory(const QString& pathToAppImage, const QDir& directory);
 
 // clean up old desktop files (and related resources, such as icons)
 bool cleanUpOldDesktopIntegrationResources(bool verbose = false);
