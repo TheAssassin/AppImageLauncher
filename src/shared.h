@@ -15,5 +15,3 @@ enum IntegrationState {
     INTEGRATION_ABORTED
 };
 
-// load config file and return it
-std::shared_ptr<QSettings> getConfig();

@@ -16,6 +16,7 @@ extern "C" {
 #include <QRegularExpression>
 #include <QScreen>
 #include <QDebug>
+#include <AppImageLauncherConfig.h>
 
 // local headers
 #include "shared.h"
@@ -102,8 +103,8 @@ std::vector<char *> parseArguments(int argc, char **argv) {
  * Enable and start or disable and stop appimagelauncherd service
  */
 void applyDaemonConfig() {
-    auto config = getConfig();
-    if (config->contains("enable_daemon") && config->value("enable_daemon").toBool()) {
+    AppImageLauncherConfig config;
+    if (config.getDaemonEnabled()) {
         system("systemctl --user enable appimagelauncherd.service");
         system("systemctl --user start  appimagelauncherd.service");
     } else {

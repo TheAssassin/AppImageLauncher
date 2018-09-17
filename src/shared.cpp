@@ -42,28 +42,6 @@ static void gErrorDeleter(GError* ptr) {
 }
 
 
-std::shared_ptr<QSettings> getConfig() {
-    // calculate path to config file
-    const auto configPath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
-    const auto configFilePath = configPath + "/appimagelauncher.cfg";
-
-    // if the file does not exist, we'll just use the standard location
-    // while in theory it would have been possible to just write the default location to the file, if we'd ever change
-    // it again, we'd leave a lot of systems in the old state, and would have to write some complex code to resolve
-    // the situation
-    // therefore, the file is simply created, but left empty intentionally
-    if (!QFileInfo::exists(configFilePath)) {
-        QFile file(configFilePath);
-        file.open(QIODevice::WriteOnly);
-        file.write("[AppImageLauncher]\n"
-                   "# destination = ~/Applications\n"
-                   "# enable_daemon = true\n");
-    }
-
-    return std::make_shared<QSettings>(configFilePath, QSettings::IniFormat);
-}
-
-
 QMap<QString, QString> findCollisions(const QString& currentNameEntry) {
     QMap<QString, QString> collisions;
 

@@ -39,3 +39,11 @@ QString AppImageLauncherConfig::getDefaultIntegrationDestination() {
     // currently hardcoded, can not be changed by users
     return QString(getenv("HOME")) + "/Applications/";
 }
+
+bool AppImageLauncherConfig::getDaemonEnabled() {
+    auto settings = getSettings();
+    auto result = settings->contains("enable_daemon") && settings->value("enable_daemon").toBool();
+
+    delete settings;
+    return result;
+}
