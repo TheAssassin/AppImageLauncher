@@ -20,7 +20,6 @@ extern "C" {
 #include <appimage/update/qt-ui.h>
 
 // local includes
-#include "shared.h"
 #include "translationmanager.h"
 #include "AppImageDesktopIntegrationManager.h"
 

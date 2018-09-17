@@ -33,8 +33,6 @@ target_link_libraries(translationmanager PUBLIC Qt5::Core Qt5::Widgets)
 target_compile_definitions(translationmanager PRIVATE -DCMAKE_PROJECT_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
 
 add_library(shared STATIC
-        shared.h
-        shared.cpp
         trashbin.cpp
         trashbin.h
         AppImageDesktopIntegrationManager.cpp

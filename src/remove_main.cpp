@@ -19,7 +19,6 @@ extern "C" {
 }
 
 // local includes
-#include "shared.h"
 #include "translationmanager.h"
 #include "trashbin.h"
 #include "AppImageDesktopIntegrationManager.h"

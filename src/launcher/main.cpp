@@ -19,7 +19,6 @@ extern "C" {
 #include <AppImageLauncherConfig.h>
 
 // local headers
-#include "shared.h"
 #include "trashbin.h"
 #include "translationmanager.h"
 #include "Launcher.h"

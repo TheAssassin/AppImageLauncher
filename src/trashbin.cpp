@@ -10,7 +10,6 @@
 
 // local includes
 #include "trashbin.h"
-#include "shared.h"
 
 class TrashBin::PrivateData {
     public:
