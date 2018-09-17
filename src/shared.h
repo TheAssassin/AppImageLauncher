@@ -19,18 +19,11 @@ enum IntegrationState {
 // currently hardcoded, can not be changed by users
 static const auto DEFAULT_INTEGRATION_DESTINATION = QString(getenv("HOME")) + "/Applications/";
 
-// installs desktop file for given AppImage, including AppImageLauncher specific modifications
-// set resolveCollisions to false in order to leave the Name entries as-is
-bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions = true);
-
 // update desktop database and icon caches of desktop environments
 // this makes sure that:
 //   - outdated entries are removed from the launcher
 //   - icons of freshly integrated AppImages are displayed in the launcher
 bool updateDesktopDatabaseAndIconCaches();
-
-// integrates an AppImage using a standard workflow used across all AppImageLauncher applications
-IntegrationState integrateAppImage(const QString& pathToAppImage, const QString& pathToIntegratedAppImage);
 
 // load config file and return it
 std::shared_ptr<QSettings> getConfig();

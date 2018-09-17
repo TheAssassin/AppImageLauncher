@@ -22,7 +22,7 @@ extern "C" {
 // local includes
 #include "shared.h"
 #include "translationmanager.h"
-
+#include "AppImageDesktopIntegrationManager.h"
 
 int main(int argc, char** argv) {
     QCommandLineParser parser;
@@ -193,10 +193,14 @@ int main(int argc, char** argv) {
         return 1;
     }
 
+    AppImageDesktopIntegrationManager integrationManager;
+
     if (!appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str())) {
         const auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
 
-        if (!integrateAppImage(pathToUpdatedAppImage, pathToIntegratedAppImage)) {
+        try {
+            integrationManager.updateAppImage(pathToUpdatedAppImage);
+        } catch (const IntegrationFailed &ex) {
             criticalUpdaterError(QObject::tr("Failed to register updated AppImage in system"));
             return 1;
         }
