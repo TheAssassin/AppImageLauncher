@@ -22,6 +22,7 @@ extern "C" {
 #include "shared.h"
 #include "translationmanager.h"
 #include "trashbin.h"
+#include "AppImageDesktopIntegrationManager.h"
 
 bool unregisterAppImage(const QString& pathToAppImage) {
     auto rv = appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false);
@@ -120,7 +121,7 @@ int main(int argc, char** argv) {
             }
             
             // update desktop database and icon caches
-            if (!updateDesktopDatabaseAndIconCaches())
+            if (!AppImageDesktopIntegrationManager::updateDesktopDatabaseAndIconCaches())
                 return 1;
         }
         default: {

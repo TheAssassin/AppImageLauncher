@@ -35,6 +35,12 @@ public:
 
     const QString getIntegratedAppImagesDirPath() const;
 
+    /**
+     * Description: Update desktop database and icon caches of desktop environments
+     * this makes sure that:
+     * - outdated entries are removed from the launcher
+     * - icons of freshly integrated AppImages are displayed in the launcher
+     **/
     static bool updateDesktopDatabaseAndIconCaches();
 
     static QString getAppImageDigestMd5(const QString &pathToAppImage);

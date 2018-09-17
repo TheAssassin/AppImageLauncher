@@ -19,12 +19,6 @@ enum IntegrationState {
 // currently hardcoded, can not be changed by users
 static const auto DEFAULT_INTEGRATION_DESTINATION = QString(getenv("HOME")) + "/Applications/";
 
-// update desktop database and icon caches of desktop environments
-// this makes sure that:
-//   - outdated entries are removed from the launcher
-//   - icons of freshly integrated AppImages are displayed in the launcher
-bool updateDesktopDatabaseAndIconCaches();
-
 // load config file and return it
 std::shared_ptr<QSettings> getConfig();
 
