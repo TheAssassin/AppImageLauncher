@@ -5,10 +5,10 @@ set(APPIMAGEKIT_EMBED_MAGIC_BYTES OFF CACHE BOOL "" FORCE)
 set(APPIMAGEKIT_RUNTIME_ENABLE_SETPROCTITLE ON CACHE BOOL "" FORCE)
 
 # needed to build libappimage and AppImage runtime
-add_subdirectory(AppImageKit EXCLUDE_FROM_ALL)
+add_subdirectory(AppImageKit)
 
 # needed to extract AppImage information
-add_subdirectory(AppImageInfo EXCLUDE_FROM_ALL)
+add_subdirectory(AppImageInfo)
 set(NLOHMANN_JSON_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/AppImageInfo/thirdparty/nlohmann_json/include" PARENT_SCOPE)
 
 # used by the update helper
