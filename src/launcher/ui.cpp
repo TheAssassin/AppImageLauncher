@@ -210,7 +210,12 @@ void UI::handleIntegrationRequested() {
 }
 
 void UI::handleExecutionRequested() {
-    launcher->executeAppImage();
+    try {
+        launcher->executeAppImage();
+    }
+    catch (const std::runtime_error &error) {
+        notifyError(error);
+    }
 }
 
 void UI::toggleDetailsWidgetVisibility() {
