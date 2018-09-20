@@ -54,6 +54,8 @@ private:
     void showDetails() const;
 
     void setCategories(const nlohmann::json &info) const;
+
+    void setLicense(const nlohmann::json &info) const;
 };
 
 #endif // UI_H

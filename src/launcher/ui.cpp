@@ -73,6 +73,7 @@ void UI::showIntegrationPage() {
         shaChecksum = QString::fromStdString(info["file"]["sha512checksum"].get<std::string>());
         auto arch = info["file"]["architecture"];
 
+        setLicense(info);
         setCategories(info);
 
         ui->labelType->setNum(type);
@@ -107,6 +108,19 @@ void UI::showIntegrationPage() {
     connect(ui->detailsButton, &QPushButton::released, this, &UI::toggleDetailsWidgetVisibility);
     connect(ui->copyCheckSumButton, &QPushButton::released, this, &UI::handleCopyCheckSumRequested);
     show();
+}
+
+void UI::setLicense(const nlohmann::json &info) const {
+    QString licenseText;
+    if (info.find("license") != info.end()) {
+            auto license = info["license"];
+            if (license.find("id") != license.end())
+                licenseText = QString::fromStdString(license["id"]);
+        }
+    if (licenseText.isEmpty())
+            ui->labelLicense->setVisible(false);
+        else
+            ui->labelLicense->setText(licenseText);
 }
 
 void UI::setCategories(const nlohmann::json &info) const {
