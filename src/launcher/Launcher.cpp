@@ -99,7 +99,7 @@ void Launcher::executeAppImage() {
             throw ExecutionFailed(QObject::tr("Failed to create temporary copy of type 1 AppImage").toStdString());
 
         QFile tempAppImage(tempAppImagePath);
-
+        tempAppImage.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ExeOwner);
         if (!tempAppImage.open(QFile::ReadWrite))
             throw ExecutionFailed(QObject::tr("Failed to open temporary AppImage copy for writing").toStdString());
 
