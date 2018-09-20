@@ -56,6 +56,10 @@ private:
     void setCategories(const nlohmann::json &info) const;
 
     void setLicense(const nlohmann::json &info) const;
+
+    void setFileCorruptedWarningMessage() const;
+
+    void setAppImageInfo();
 };
 
 #endif // UI_H

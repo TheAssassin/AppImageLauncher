@@ -253,6 +253,8 @@ void Launcher::setTrashBin(TrashBin *trashBin) {
 nlohmann::json Launcher::getAppImageInfo() {
     auto rawJson = appimage_extract_info(appImagePath.toStdString().c_str());
     nlohmann::json info = nlohmann::json::parse(rawJson);
+    if (info.find("file") == info.end())
+        throw InvalidAppImageFile("Unable to extract AppImage info.");
     return info;
 }
 

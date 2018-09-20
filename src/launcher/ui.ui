@@ -232,7 +232,7 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item row="0" column="0" rowspan="3">
-        <widget class="QLabel" name="iconLabel">
+        <widget class="QLabel" name="labelIcon">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>

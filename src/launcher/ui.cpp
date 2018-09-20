@@ -12,14 +12,14 @@ UI::UI(QWidget *parent) :
         ui(new Ui::UI) {
     ui->setupUi(this);
 
-    ui->iconLabel->setText("");
+    ui->labelIcon->setText("");
 }
 
 void UI::setDefaultIcon() const {
     auto appimageIcon = QIcon::fromTheme("appimage");
     if (appimageIcon.isNull())
         appimageIcon = QIcon::fromTheme("application-x-executable");
-    ui->iconLabel->setPixmap(appimageIcon.pixmap(64, 64));
+    ui->labelIcon->setPixmap(appimageIcon.pixmap(64, 64));
 }
 
 UI::~UI() {
@@ -64,42 +64,13 @@ void UI::setLauncher(Launcher *launcher) {
 
 void UI::showIntegrationPage() {
     try {
-        auto info = launcher->getAppImageInfo();
-        QString name = getLocalizedString(info, "name");
-        QString abstract = getLocalizedString(info, "abstract");
-        QString description = getLocalizedString(info, "description");
-
-        auto type = info["file"]["type"].get<int>();
-        shaChecksum = QString::fromStdString(info["file"]["sha512checksum"].get<std::string>());
-        auto arch = info["file"]["architecture"];
-
-        setLicense(info);
-        setCategories(info);
-
-        ui->labelType->setNum(type);
-        ui->labelArchitecture->setText(QString::fromStdString(arch));
-
-        setLinks(info);
-
-        if (description.isEmpty())
-            ui->labelDescription->setText(abstract);
-        else
-            ui->labelDescription->setText(description);
-
-        ui->labelName->setText(name);
-        ui->labelAbstract->setText(abstract);
-
-        auto icon = launcher->getAppImageIcon();
-        if (icon.isNull())
-            setDefaultIcon();
-        else
-            ui->iconLabel->setPixmap(icon.pixmap(64, 64));
-
-        hideDetails();
+        setAppImageInfo();
     } catch (const AppImageFileNotExists &ex) {
         notifyError(ex);
     } catch (const AppImageFilePathNotSet &) {
         qWarning() << "Launcher instance not initialized properly.";
+    } catch (const InvalidAppImageFile &ex) {
+        setFileCorruptedWarningMessage();
     }
 
     ui->stackedWidget->setCurrentWidget(ui->integrationPage);
@@ -110,17 +81,69 @@ void UI::showIntegrationPage() {
     show();
 }
 
+void UI::setAppImageInfo() {
+    auto info = launcher->getAppImageInfo();
+
+    QString name = getLocalizedString(info, "name");
+    QString abstract = getLocalizedString(info, "abstract");
+    QString description = getLocalizedString(info, "description");
+
+    auto type = info["file"]["type"].get<int>();
+    shaChecksum = QString::fromStdString(info["file"]["sha512checksum"].get<std::__cxx11::string>());
+    auto arch = info["file"]["architecture"];
+
+    setLicense(info);
+    setCategories(info);
+
+    ui->labelType->setNum(type);
+    ui->labelArchitecture->setText(QString::fromStdString(arch));
+
+    setLinks(info);
+
+    if (description.isEmpty())
+            ui->labelDescription->setText(abstract);
+        else
+            ui->labelDescription->setText(description);
+
+    ui->labelName->setText(name);
+    ui->labelAbstract->setText(abstract);
+
+    auto icon = launcher->getAppImageIcon();
+    if (icon.isNull())
+            setDefaultIcon();
+        else
+            ui->labelIcon->setPixmap(icon.pixmap(64, 64));
+
+    hideDetails();
+}
+
+void UI::setFileCorruptedWarningMessage() const {
+    ui->labelIcon->setVisible(false);
+    ui->labelName->setVisible(false);
+    ui->labelLicense->setVisible(false);
+    ui->labelCategories->setVisible(false);
+    ui->labelLinks->setVisible(false);
+    ui->detailsButton->setVisible(false);
+    ui->labelAbstract->setText(
+                tr("<p>Unable to read the AppImage information. The file is <b>corrupt</b> or <b>not properly "
+                   "built</b>. Notify to the application developers about this issue.</p>"
+                   "<p>This may avoid the proper execution of the <i>Integrate</i> and <i>Run</i> functionalities</p>"
+                   "<b>Use it at your own risk.</b>"));
+    ui->labelAbstract->setMargin(0);
+    hideDetails();
+}
+
 void UI::setLicense(const nlohmann::json &info) const {
     QString licenseText;
     if (info.find("license") != info.end()) {
-            auto license = info["license"];
-            if (license.find("id") != license.end())
-                licenseText = QString::fromStdString(license["id"]);
-        }
+        auto license = info["license"];
+        if (license.find("id") != license.end())
+            licenseText = QString::fromStdString(license["id"]);
+    }
     if (licenseText.isEmpty())
-            ui->labelLicense->setVisible(false);
-        else
-            ui->labelLicense->setText(licenseText);
+        ui->labelLicense->setVisible(false);
+    else
+        ui->labelLicense->setText(licenseText);
 }
 
 void UI::setCategories(const nlohmann::json &info) const {
