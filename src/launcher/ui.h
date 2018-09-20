@@ -13,6 +13,7 @@ class UI : public QDialog {
 Q_OBJECT
 
     Launcher *launcher{nullptr};
+    QString shaChecksum;
 
 public:
 
@@ -46,11 +47,13 @@ private:
 
     void setDefaultIcon() const;
 
-    void setWebsiteLink(const nlohmann::json &info) const;
+    void setLinks(const nlohmann::json &info) const;
 
     void hideDetails() const;
 
     void showDetails() const;
+
+    void setCategories(const nlohmann::json &info) const;
 };
 
 #endif // UI_H

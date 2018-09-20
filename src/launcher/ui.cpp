@@ -70,16 +70,21 @@ void UI::showIntegrationPage() {
         QString description = getLocalizedString(info, "description");
 
         auto type = info["file"]["type"].get<int>();
-        auto sha512checksum = info["file"]["sha512checksum"];
+        shaChecksum = QString::fromStdString(info["file"]["sha512checksum"].get<std::string>());
         auto arch = info["file"]["architecture"];
 
+        setCategories(info);
+
         ui->labelType->setNum(type);
-        ui->labelCheckSum->setText(QString::fromStdString(sha512checksum));
         ui->labelArchitecture->setText(QString::fromStdString(arch));
 
-        setWebsiteLink(info);
+        setLinks(info);
 
-        ui->labelDescription->setText(description);
+        if (description.isEmpty())
+            ui->labelDescription->setText(abstract);
+        else
+            ui->labelDescription->setText(description);
+
         ui->labelName->setText(name);
         ui->labelAbstract->setText(abstract);
 
@@ -104,14 +109,38 @@ void UI::showIntegrationPage() {
     show();
 }
 
-void UI::setWebsiteLink(const nlohmann::json &info) const {
-    if (info.find("links") != info.end() && info["links"].find("homepage") != info["links"].end()) {
-        auto value = info["links"]["homepage"].get<std::__cxx11::string>();
-        QString homepageLink = QString::fromStdString(value);
-        ui->labelWebsite->setText(QString("<a href=\"%1\">Website</a>").arg(homepageLink));
-        ui->labelWebsite->setVisible(true);
-    } else
-        ui->labelWebsite->setVisible(false);
+void UI::setCategories(const nlohmann::json &info) const {
+    QStringList categories;
+    if (info.find("categories") != info.end()) {
+        for (const auto &item: info["categories"]) {
+            const auto text = QString::fromStdString(item.get<std::__cxx11::string>());
+            // Ignore custom categories
+            if (!text.startsWith("X", Qt::CaseInsensitive))
+                categories << QObject::tr(text.toStdString().c_str());
+        }
+    }
+
+    if (categories.isEmpty())
+        ui->labelCategories->setVisible(false);
+    else
+        ui->labelCategories->setText(categories.join(" "));
+}
+
+void UI::setLinks(const nlohmann::json &info) const {
+    QStringList links;
+    if (info.find("links") != info.end()) {
+        for (auto it = info["links"].begin(); it != info["links"].end(); ++it) {
+            const auto linkName = QString::fromStdString(it.key());
+            const auto linkAddr = QString::fromStdString(it.value());
+            const auto trLinkName = QObject::tr(linkName.toStdString().c_str());
+            links << QString("<a href=%2>%1</a>").arg(trLinkName).arg(linkAddr);
+        }
+    }
+
+    if (links.isEmpty())
+        ui->labelLinks->setVisible(false);
+    else
+        ui->labelLinks->setText(links.join(" "));
 }
 
 QString UI::getLocalizedString(const nlohmann::json &info, const std::string &field) const {
@@ -168,6 +197,6 @@ void UI::hideDetails() const {
 
 void UI::handleCopyCheckSumRequested() {
     QClipboard *clipboard = QGuiApplication::clipboard();
-    clipboard->setText(ui->labelCheckSum->text());
-    QToolTip::showText( ui->copyCheckSumButton->mapToGlobal( QPoint( 20, 0 ) ), tr("Copied to clipboard"));
+    clipboard->setText(shaChecksum);
+    QToolTip::showText(ui->copyCheckSumButton->mapToGlobal(QPoint(20, 0)), tr("Copied to clipboard"));
 }
