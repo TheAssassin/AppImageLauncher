@@ -1,15 +1,20 @@
 # install libappimage.so into lib/appimagekit to avoid overwriting a libappimage potentially installed into /usr/lib
 # or /usr/lib/x86_64-... or wherever the OS puts its libraries
 # for some reason, using TARGETS ... doesn't work here, therefore using the absolute file path
-file(GLOB LIBAPPIMAGE_FILES ${PROJECT_BINARY_DIR}/lib/AppImageKit/src/libappimage.so*)
-file(GLOB LIBAPPIMAGEINFO_FILES ${PROJECT_BINARY_DIR}/lib/AppImageInfo/src/libappimageinfo.so*)
-
 install(
     FILES
-    ${LIBAPPIMAGE_FILES}
-    ${LIBAPPIMAGEINFO_FILES}
-    ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/src/libappimageupdate.so
-    ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/src/qt-ui/libappimageupdate-qt.so
+    $<TARGET_FILE:libappimage>
+    $<TARGET_LINKER_FILE:libappimage>
+    $<TARGET_SONAME_FILE:libappimage>
+    $<TARGET_FILE:libappimageinfo>
+    $<TARGET_LINKER_FILE:libappimageinfo>
+    $<TARGET_SONAME_FILE:libappimageinfo>
+    $<TARGET_FILE:libappimageupdate>
+    $<TARGET_LINKER_FILE:libappimageupdate>
+    $<TARGET_SONAME_FILE:libappimageupdate>
+    $<TARGET_FILE:libappimageupdate-qt>
+    $<TARGET_LINKER_FILE:libappimageupdate-qt>
+    $<TARGET_SONAME_FILE:libappimageupdate-qt>
     DESTINATION lib/appimagelauncher COMPONENT APPIMAGELAUNCHER
 )
 
