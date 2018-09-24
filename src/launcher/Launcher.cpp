@@ -182,8 +182,9 @@ void Launcher::executeAppImage() {
 
         execv(pathToRuntime.c_str(), args.data());
 
-        const auto &error = errno;
-        qWarning() << QObject::tr("execv() failed: %1").arg(strerror(error));
+        const auto& error = errno;
+        throw ExecutionFailed(
+                QObject::tr("execv() failed: %1").arg(QString::fromStdString(strerror(error))).toStdString());
     }
 }
 
