@@ -42,7 +42,7 @@ public:
 
     static QString getAppImageDigestMd5(const QString& pathToAppImage);
 
-    static bool cleanUpOldDesktopIntegrationResources(bool verbose);
+    static bool cleanUpOldDesktopIntegrationResources(bool verbose = false);
 
 private:
 

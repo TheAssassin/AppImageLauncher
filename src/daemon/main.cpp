@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
     worker.executeDeferredOperations();
 
     // after (re-)integrating all AppImages, clean up old desktop integration resources before start
-    if (!integrationManager.cleanUpOldDesktopIntegrationResources(false)) {
+    if (!integrationManager.cleanUpOldDesktopIntegrationResources()) {
         std::cout << "Failed to clean up old desktop integration resources" << std::endl;
     }
 

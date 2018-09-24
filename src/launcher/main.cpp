@@ -142,7 +142,7 @@ int executeGuiApplication(int argc, char** argv) {
     TranslationManager translationManager(*QCoreApplication::instance());
 
     // clean up old desktop files
-    if (!AppImageDesktopIntegrationManager::cleanUpOldDesktopIntegrationResources(false)) {
+    if (!AppImageDesktopIntegrationManager::cleanUpOldDesktopIntegrationResources()) {
         QMessageBox::critical(
                 nullptr,
                 QObject::tr("Error"),
@@ -252,7 +252,7 @@ int executeCliApplication(int argc, char** argv) {
     TranslationManager translationManager(*QCoreApplication::instance());
 
     // clean up old desktop files
-    if (!AppImageDesktopIntegrationManager::cleanUpOldDesktopIntegrationResources(false))
+    if (!AppImageDesktopIntegrationManager::cleanUpOldDesktopIntegrationResources())
         qWarning() << QObject::tr("Failed to clean up old desktop files");
 
     // clean up trash directory
