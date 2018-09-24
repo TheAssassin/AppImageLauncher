@@ -25,7 +25,7 @@ if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_definitions(-DQT_NO_DEBUG_OUTPUT)
     add_definitions(-DQT_NO_INFO_OUTPUT)
     add_definitions(-DQT_NO_WARNING_OUTPUT)
-endif()
+endif ()
 
 # utility library
 add_library(translationmanager translationmanager.cpp translationmanager.h)
@@ -33,25 +33,25 @@ target_link_libraries(translationmanager PUBLIC Qt5::Core Qt5::Widgets)
 target_compile_definitions(translationmanager PRIVATE -DCMAKE_PROJECT_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
 
 add_library(shared STATIC
-        trashbin.cpp
-        trashbin.h
-        AppImageDesktopIntegrationManager.cpp
-        AppImageDesktopIntegrationManager.h
-        AppImageLauncherConfig.cpp
-        AppImageLauncherConfig.h AppImageLauncherException.h)
+    trashbin.cpp
+    trashbin.h
+    AppImageDesktopIntegrationManager.cpp
+    AppImageDesktopIntegrationManager.h
+    AppImageLauncherConfig.cpp
+    AppImageLauncherConfig.h AppImageLauncherException.h)
 
 target_link_libraries(shared PUBLIC
-        PkgConfig::glib
-        Qt5::Core
-        Qt5::Widgets
-        Qt5::DBus
-        xdg-basedir
-        libappimage
-        libappimageinfo
-        translationmanager)
+    PkgConfig::glib
+    Qt5::Core
+    Qt5::Widgets
+    Qt5::DBus
+    xdg-basedir
+    libappimage
+    libappimageinfo
+    translationmanager)
+
 target_compile_definitions(shared
-    PRIVATE -DCMAKE_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}"
-)
+    PRIVATE -DCMAKE_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
 
 add_library(filesystemwatcher STATIC daemon/filesystemwatcher.cpp daemon/filesystemwatcher.h)
 target_link_libraries(filesystemwatcher PUBLIC Qt5::Core)
