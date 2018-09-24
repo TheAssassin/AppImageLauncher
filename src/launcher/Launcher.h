@@ -15,26 +15,26 @@
 
 class Launcher {
     QString appImagePath;
-    std::vector<char *> args{};
+    std::vector<char*> args{};
     int appImageType{-1};
 
-    TrashBin *trashBin{nullptr};
-    AppImageDesktopIntegrationManager *integrationManager{nullptr};
+    TrashBin* trashBin{nullptr};
+    AppImageDesktopIntegrationManager* integrationManager{nullptr};
 
 public:
-    const QString &getAppImagePath() const;
+    const QString& getAppImagePath() const;
 
-    void setAppImagePath(const QString &appImagePath);
+    void setAppImagePath(const QString& appImagePath);
 
-    const std::vector<char *> &getArgs() const;
+    const std::vector<char*>& getArgs() const;
 
-    void setArgs(const std::vector<char *> &args);
+    void setArgs(const std::vector<char*>& args);
 
     int getAppImageType() const;
 
-    void setIntegrationManager(AppImageDesktopIntegrationManager *integrationManager);
+    void setIntegrationManager(AppImageDesktopIntegrationManager* integrationManager);
 
-    void setTrashBin(TrashBin *trashBin);
+    void setTrashBin(TrashBin* trashBin);
 
     void inspectAppImageFile();
 
@@ -59,7 +59,7 @@ private:
 
     bool isAMountOrExtractOperation() const;
 
-    void tryToMakeAppImageFileExecutable(const QString &path) const;
+    void tryToMakeAppImageFileExecutable(const QString& path) const;
 };
 
 /* Exceptions that can be thrown from the Launcher methods. */
@@ -69,7 +69,7 @@ class AppImageFilePathNotSet : public AppImageLauncherException {
 
 class ExecutionFailed : public AppImageLauncherException {
 public:
-    explicit ExecutionFailed(const std::string &what) : AppImageLauncherException(what) {}
+    explicit ExecutionFailed(const std::string& what) : AppImageLauncherException(what) {}
 };
 
 

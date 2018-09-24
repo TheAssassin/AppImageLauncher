@@ -16,19 +16,19 @@ extern "C" {
 #include "Launcher.h"
 
 
-const QString &Launcher::getAppImagePath() const {
+const QString& Launcher::getAppImagePath() const {
     return appImagePath;
 }
 
-void Launcher::setAppImagePath(const QString &appImagePath) {
+void Launcher::setAppImagePath(const QString& appImagePath) {
     Launcher::appImagePath = appImagePath;
 }
 
-const std::vector<char *> &Launcher::getArgs() const {
+const std::vector<char*>& Launcher::getArgs() const {
     return args;
 }
 
-void Launcher::setArgs(const std::vector<char *> &args) {
+void Launcher::setArgs(const std::vector<char*>& args) {
     Launcher::args = args;
 }
 
@@ -126,7 +126,7 @@ void Launcher::executeAppImage() {
         std::vector<char> argv0Buffer(tempAppImageFileName.size() + 1, '\0');
         strcpy(argv0Buffer.data(), tempAppImageFileName.toStdString().c_str());
 
-        std::vector<char *> args;
+        std::vector<char*> args;
 
         args.push_back(argv0Buffer.data());
 
@@ -140,7 +140,7 @@ void Launcher::executeAppImage() {
 
         execv(tempAppImageFileName.toStdString().c_str(), args.data());
 
-        const auto &error = errno;
+        const auto& error = errno;
         qCritical() << QObject::tr("execv() failed: %1", "error message").arg(strerror(error));
     } else if (appImageType == 2) {
         // use external runtime _without_ magic bytes to run the AppImage
@@ -168,7 +168,7 @@ void Launcher::executeAppImage() {
         std::vector<char> argv0Buffer(appImagePath.toStdString().size() + 1, '\0');
         strcpy(argv0Buffer.data(), appImagePath.toStdString().c_str());
 
-        std::vector<char *> args;
+        std::vector<char*> args;
 
         args.push_back(argv0Buffer.data());
 
@@ -188,7 +188,7 @@ void Launcher::executeAppImage() {
     }
 }
 
-void Launcher::tryToMakeAppImageFileExecutable(const QString &path) const {
+void Launcher::tryToMakeAppImageFileExecutable(const QString& path) const {
     QFile appImageFile(path);
     if (!appImageFile.setPermissions(QFileDevice::ReadOwner | QFileDevice::ExeOwner))
         throw ExecutionFailed(QObject::tr("Unable to make the AppImage file executable: %1")
@@ -213,7 +213,7 @@ bool Launcher::isAMountOrExtractOperation() const {
     if (appImageType == 2) {
         // check parameters
         {
-            for (auto &i : args) {
+            for (auto& i : args) {
                 QString arg = i;
 
                 // reserved argument space
@@ -231,23 +231,23 @@ bool Launcher::isAMountOrExtractOperation() const {
     return false;
 }
 
-void Launcher::setIntegrationManager(AppImageDesktopIntegrationManager *integrationManager) {
+void Launcher::setIntegrationManager(AppImageDesktopIntegrationManager* integrationManager) {
     Launcher::integrationManager = integrationManager;
 }
 
 void Launcher::integrateAppImage() {
     integrationManager->integrateAppImage(appImagePath);
-    appImagePath = integrationManager->buildDeploymentPath(appImagePath);
+    appImagePath = AppImageDesktopIntegrationManager::buildDeploymentPath(appImagePath);
 }
 
 void Launcher::overrideAppImageIntegration() {
-    auto targetPath = integrationManager->buildDeploymentPath(appImagePath);
+    auto targetPath = AppImageDesktopIntegrationManager::buildDeploymentPath(appImagePath);
     trashBin->disposeAppImage(targetPath);
 
     integrateAppImage();
 }
 
-void Launcher::setTrashBin(TrashBin *trashBin) {
+void Launcher::setTrashBin(TrashBin* trashBin) {
     Launcher::trashBin = trashBin;
 }
 
