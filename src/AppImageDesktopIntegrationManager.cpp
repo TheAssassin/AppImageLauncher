@@ -96,7 +96,7 @@ bool AppImageDesktopIntegrationManager::installDesktopFile(const QString &pathTo
         throw IntegrationFailed(QObject::tr("Unable to create desktop file.").toStdString());
 
     const auto *desktopFilePath = appimage_registered_desktop_file_path(pathToAppImage.toStdString().c_str(),
-            nullptr, false);
+                                                                        nullptr, false);
 
     // sanity check -- if the file doesn't exist, the function returns NULL
     if (desktopFilePath == nullptr)
@@ -411,26 +411,31 @@ bool AppImageDesktopIntegrationManager::cleanUpOldDesktopIntegrationResources(bo
     for (auto desktopFilePath : directory.entryList()) {
         desktopFilePath = dirPath + "/" + desktopFilePath;
 
-        std::shared_ptr<GKeyFile> desktopFile(g_key_file_new(), [](GKeyFile* p) {
+        std::shared_ptr<GKeyFile> desktopFile(g_key_file_new(), [](GKeyFile *p) {
             g_key_file_free(p);
         });
 
-        if (!g_key_file_load_from_file(desktopFile.get(), desktopFilePath.toStdString().c_str(), G_KEY_FILE_NONE, nullptr)) {
+        if (!g_key_file_load_from_file(desktopFile.get(), desktopFilePath.toStdString().c_str(), G_KEY_FILE_NONE,
+                                       nullptr)) {
             continue;
         }
 
-        std::shared_ptr<char> execValue(g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_EXEC, nullptr), [](char* p) {
-            free(p);
-        });
+        std::shared_ptr<char> execValue(
+                g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_EXEC,
+                                      nullptr), [](char *p) {
+                    free(p);
+                });
 
         // if there is no Exec value in the file, the desktop file is apparently broken, therefore we skip the file
         if (execValue == nullptr) {
             continue;
         }
 
-        std::shared_ptr<char> tryExecValue(g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_TRY_EXEC, nullptr), [](char* p) {
-            free(p);
-        });
+        std::shared_ptr<char> tryExecValue(
+                g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_TRY_EXEC,
+                                      nullptr), [](char *p) {
+                    free(p);
+                });
 
         // TryExec is optional, although recently the desktop integration functions started to force add such keys
         // with a path to the desktop file
@@ -450,7 +455,8 @@ bool AppImageDesktopIntegrationManager::cleanUpOldDesktopIntegrationResources(bo
         // we really need a parser that understands the desktop file escaping
         if (!QFile(appImagePath).exists()) {
             if (verbose)
-                std::cout << "AppImage no longer exists, cleaning up resources: " << appImagePath.toStdString() << std::endl;
+                std::cout << "AppImage no longer exists, cleaning up resources: " << appImagePath.toStdString()
+                          << std::endl;
 
             if (verbose)
                 std::cout << "Removing desktop file: " << desktopFilePath.toStdString() << std::endl;
@@ -459,7 +465,8 @@ bool AppImageDesktopIntegrationManager::cleanUpOldDesktopIntegrationResources(bo
 
             // TODO: clean up related resources such as icons or MIME definitions
 
-            auto* iconValue = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_ICON, nullptr);
+            auto *iconValue = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP,
+                                                    G_KEY_FILE_DESKTOP_KEY_ICON, nullptr);
 
             if (iconValue != nullptr) {
                 for (QDirIterator it("~/.local/share/icons/", QDirIterator::Subdirectories); it.hasNext();) {

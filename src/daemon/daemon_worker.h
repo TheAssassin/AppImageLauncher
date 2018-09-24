@@ -9,7 +9,7 @@
 #pragma once
 
 class Worker : public QObject {
-    Q_OBJECT
+Q_OBJECT
 
     class PrivateData;
 
@@ -24,16 +24,22 @@ public:
     void setIntegrationManager(AppImageDesktopIntegrationManager *integrationManager);
 
 signals:
+
     void startTimer();
 
 public slots:
-    void scheduleForIntegration(const QString& path);
-    void scheduleForUnintegration(const QString& path);
+
+    void scheduleForIntegration(const QString &path);
+
+    void scheduleForUnintegration(const QString &path);
 
 public slots:
+
     void executeDeferredOperations();
 
 private slots:
+
     void startTimerIfNecessary();
+
     void handleTimerTimeout();
 };

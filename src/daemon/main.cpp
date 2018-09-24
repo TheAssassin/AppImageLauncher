@@ -15,7 +15,7 @@
 #include "filesystemwatcher.h"
 #include "daemon_worker.h"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
     QCoreApplication app(argc, argv);
 
     AppImageDesktopIntegrationManager integrationManager;
@@ -31,9 +31,9 @@ int main(int argc, char* argv[]) {
 
     // initial search for AppImages; if AppImages are found, they will be integrated, unless they already are
     std::cout << "Searching for existing AppImages" << std::endl;
-    for (const auto& dir : watcher.directories()) {
+    for (const auto &dir : watcher.directories()) {
         for (QDirIterator it(dir); it.hasNext();) {
-            const auto& path = it.next();
+            const auto &path = it.next();
             if (QFileInfo(path).isFile()) {
                 const auto appImageType = appimage_get_type(path.toStdString().c_str(), false);
                 const auto isAppImage = 0 < appImageType && appImageType <= 2;
@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
     }
 
     std::cout << "Watching directories: ";
-    for (const auto& dir : watcher.directories()) {
+    for (const auto &dir : watcher.directories()) {
         std::cout << dir.toStdString().c_str();
     }
     std::cout << std::endl;

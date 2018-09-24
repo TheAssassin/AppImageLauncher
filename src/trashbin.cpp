@@ -12,26 +12,26 @@
 #include "trashbin.h"
 
 class TrashBin::PrivateData {
-    public:
-        QDir dir;
+public:
+    QDir dir;
 
-    public:
-        PrivateData() {
-            QDir homeDir(getenv("HOME"));
+public:
+    PrivateData() {
+        QDir homeDir(getenv("HOME"));
 
-            // make sure Applications dir exists
-            // this shouldn't be necessary, but it doesn't hurt either
-            homeDir.mkdir("Applications");
+        // make sure Applications dir exists
+        // this shouldn't be necessary, but it doesn't hurt either
+        homeDir.mkdir("Applications");
 
-            // also make sure trash directory exists
-            QDir(homeDir.path() + "/Applications").mkdir(".trash");
+        // also make sure trash directory exists
+        QDir(homeDir.path() + "/Applications").mkdir(".trash");
 
-            dir = QDir(homeDir.path() + "/Applications/.trash");
-        }
+        dir = QDir(homeDir.path() + "/Applications/.trash");
+    }
 
-        bool canBeCleanedUp(const QString& path) {
-            return true;
-        }
+    bool canBeCleanedUp(const QString &path) {
+        return true;
+    }
 };
 
 TrashBin::TrashBin() {
@@ -42,7 +42,7 @@ QString TrashBin::path() {
     return d->dir.path();
 }
 
-bool TrashBin::disposeAppImage(const QString& pathToAppImage) {
+bool TrashBin::disposeAppImage(const QString &pathToAppImage) {
     if (!QFile(pathToAppImage).exists()) {
         std::cerr << "No such file or directory: " << pathToAppImage.toStdString() << std::endl;
         return false;

@@ -64,9 +64,9 @@ public:
         // read events into vector
         std::vector<INotifyEvent> events;
 
-        for (char* p = buffer; p < buffer + rv;) {
+        for (char *p = buffer; p < buffer + rv;) {
             // create inotify_event from current position in buffer
-            auto* currentEvent = (struct inotify_event*) p;
+            auto *currentEvent = (struct inotify_event *) p;
 
             // initialize new INotifyEvent with the data from the currentEvent
             QString relativePath(currentEvent->name);
@@ -91,7 +91,7 @@ public:
     bool startWatching() {
         static const auto mask = fileCreationEvents | fileModificationEvents | fileDeletionEvents;
 
-        for (const auto& directory : watchedDirectories) {
+        for (const auto &directory : watchedDirectories) {
             const int watchFd = inotify_add_watch(fd, directory.toStdString().c_str(), mask);
 
             if (watchFd == -1) {
@@ -128,13 +128,13 @@ FileSystemWatcher::FileSystemWatcher() {
     d = std::make_shared<PrivateData>();
 }
 
-FileSystemWatcher::FileSystemWatcher(const QString& path) : FileSystemWatcher() {
+FileSystemWatcher::FileSystemWatcher(const QString &path) : FileSystemWatcher() {
     if (!QDir(path).exists())
         QDir().mkdir(path);
     d->watchedDirectories.append(path);
 }
 
-FileSystemWatcher::FileSystemWatcher(const QStringList& paths) : FileSystemWatcher() {
+FileSystemWatcher::FileSystemWatcher(const QStringList &paths) : FileSystemWatcher() {
     d->watchedDirectories.append(paths);
 }
 
@@ -159,7 +159,7 @@ void FileSystemWatcher::readEventsForever() {
             continue;
         }
 
-        for (const auto& event : events) {
+        for (const auto &event : events) {
             const auto mask = event.mask;
             if (mask & d->fileCreationEvents) {
                 emit fileCreated(event.path);

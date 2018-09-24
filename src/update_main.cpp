@@ -14,18 +14,21 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QTranslator>
+
 extern "C" {
-    #include <appimage/appimage.h>
+#include <appimage/appimage.h>
 }
+
 #include <appimage/update/qt-ui.h>
 
 // local includes
 #include "translationmanager.h"
 #include "AppImageDesktopIntegrationManager.h"
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
     QCommandLineParser parser;
-    parser.setApplicationDescription(QObject::tr("Updates AppImages after desktop integration, for use by Linux distributions"));
+    parser.setApplicationDescription(
+            QObject::tr("Updates AppImages after desktop integration, for use by Linux distributions"));
 
     QApplication app(argc, argv);
     app.setApplicationDisplayName(QObject::tr("AppImageLauncher update", "update helper app name"));
@@ -52,12 +55,13 @@ int main(int argc, char** argv) {
 
     const auto pathToAppImage = parser.positionalArguments().first();
 
-    auto criticalUpdaterError = [](const QString& message) {
+    auto criticalUpdaterError = [](const QString &message) {
         QMessageBox::critical(nullptr, "Error", message);
     };
 
     if (!QFile(pathToAppImage).exists()) {
-        criticalUpdaterError(QString::fromStdString(QObject::tr("Error: no such file or directory: %1").arg(pathToAppImage).toStdString()));
+        criticalUpdaterError(QString::fromStdString(
+                QObject::tr("Error: no such file or directory: %1").arg(pathToAppImage).toStdString()));
         return 1;
     }
 
@@ -71,10 +75,11 @@ int main(int argc, char** argv) {
     bool hasBeenRegisteredBefore;
 
     if (!(hasBeenRegisteredBefore = AppImageDesktopIntegrationManager::hasAlreadyBeenIntegrated(pathToAppImage))) {
-        QString message = QObject::tr("The AppImage hasn't been integrated before. This tool will, however, integrate the "
-                          "updated AppImage.") +
-                          "\n\n" +
-                          QObject::tr("Do you wish to continue?");
+        QString message =
+                QObject::tr("The AppImage hasn't been integrated before. This tool will, however, integrate the "
+                            "updated AppImage.") +
+                "\n\n" +
+                QObject::tr("Do you wish to continue?");
 
         switch (QMessageBox::warning(nullptr, QObject::tr("Warning"), message, QMessageBox::Ok | QMessageBox::Cancel)) {
             case (QMessageBox::Ok):
@@ -90,15 +95,15 @@ int main(int argc, char** argv) {
     std::ostringstream updaterStatusMessages;
 
     updater.connect(
-        &updater,
-        &appimage::update::qt::QtUpdater::newStatusMessage,
-        &updater,
-        [&updater, &updaterStatusMessages](const std::string& newMessage) {
-            if (!updaterStatusMessages.tellp() <= 0)
-                updaterStatusMessages << std::endl;
+            &updater,
+            &appimage::update::qt::QtUpdater::newStatusMessage,
+            &updater,
+            [&updater, &updaterStatusMessages](const std::string &newMessage) {
+                if (!updaterStatusMessages.tellp() <= 0)
+                    updaterStatusMessages << std::endl;
 
-            updaterStatusMessages << newMessage;
-        }
+                updaterStatusMessages << newMessage;
+            }
     );
 
     auto updateCheckResult = updater.checkForUpdates();
@@ -109,29 +114,29 @@ int main(int argc, char** argv) {
             break;
         case 0: {
             QMessageBox::information(
-                nullptr,
-                QObject::tr("No updates found"),
-                QObject::tr("Could not find updates for AppImage %1").arg(pathToAppImage)
+                    nullptr,
+                    QObject::tr("No updates found"),
+                    QObject::tr("Could not find updates for AppImage %1").arg(pathToAppImage)
             );
             return 0;
         }
         case -1: {
             QMessageBox::information(
-                nullptr,
-                QObject::tr("No update information found"),
-                QObject::tr("Could not find update information in AppImage:\n%1"
-                            "\n"
-                            "\n"
-                            "The AppImage doesn't support updating. Please ask the authors to set up"
-                            "update information to allow for easy updating.").arg(pathToAppImage)
+                    nullptr,
+                    QObject::tr("No update information found"),
+                    QObject::tr("Could not find update information in AppImage:\n%1"
+                                "\n"
+                                "\n"
+                                "The AppImage doesn't support updating. Please ask the authors to set up"
+                                "update information to allow for easy updating.").arg(pathToAppImage)
             );
             return 0;
         }
         default: {
             QMessageBox::information(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to check for updates:\n\n%1").arg(updaterStatusMessages.str().c_str())
+                    nullptr,
+                    QObject::tr("Error"),
+                    QObject::tr("Failed to check for updates:\n\n%1").arg(updaterStatusMessages.str().c_str())
             );
             return 1;
         }
@@ -147,7 +152,8 @@ int main(int argc, char** argv) {
                              "\n\n" +
                              QObject::tr("Do you want to perform the update?") + "\n";
 
-        QMessageBox messageBox(QMessageBox::Icon::Question, "Update found", message, QMessageBox::Ok | QMessageBox::Cancel);
+        QMessageBox messageBox(QMessageBox::Icon::Question, "Update found", message,
+                               QMessageBox::Ok | QMessageBox::Cancel);
 
         QCheckBox removeCheckBox(QObject::tr("Remove old AppImage after successful update"));
         removeCheckBox.setChecked(false);
@@ -172,9 +178,9 @@ int main(int argc, char** argv) {
     // if the update has failed, return immediately
     if (rv != 0) {
         QMessageBox::information(
-            nullptr,
-            QObject::tr("Error"),
-            QObject::tr("Failed to update AppImage:\n\n%1").arg(updaterStatusMessages.str().c_str())
+                nullptr,
+                QObject::tr("Error"),
+                QObject::tr("Failed to update AppImage:\n\n%1").arg(updaterStatusMessages.str().c_str())
         );
 
         return rv;

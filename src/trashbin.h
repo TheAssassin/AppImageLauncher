@@ -4,22 +4,23 @@
 #pragma once
 
 class TrashBin {
-    private:
-        class PrivateData;
-        PrivateData* d;
+private:
+    class PrivateData;
 
-    public:
-        TrashBin();
+    PrivateData *d;
 
-    public:
-        QString path();
+public:
+    TrashBin();
 
-    public:
-        // move AppImage into trash bin directory
-        bool disposeAppImage(const QString& pathToAppImage);
+public:
+    QString path();
 
-        // check all AppImages in trash bin whether they can be removed
-        // this function should be called regularly to make sure the files in the trash bin are cleaned up as soon
-        // as possible
-        bool cleanUp();
+public:
+    // move AppImage into trash bin directory
+    bool disposeAppImage(const QString &pathToAppImage);
+
+    // check all AppImages in trash bin whether they can be removed
+    // this function should be called regularly to make sure the files in the trash bin are cleaned up as soon
+    // as possible
+    bool cleanUp();
 };

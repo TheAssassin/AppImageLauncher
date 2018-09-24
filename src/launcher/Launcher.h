@@ -50,6 +50,7 @@ public:
     QIcon getAppImageIcon();
 
 public slots:
+
     void integrateAppImage();
 
 private:

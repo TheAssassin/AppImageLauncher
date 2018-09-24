@@ -40,6 +40,7 @@ protected slots:
     void toggleDetailsWidgetVisibility();
 
     void handleCopyCheckSumRequested();
+
 private:
     Ui::UI *ui;
 

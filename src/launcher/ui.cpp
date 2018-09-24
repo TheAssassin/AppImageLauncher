@@ -101,18 +101,18 @@ void UI::setAppImageInfo() {
     setLinks(info);
 
     if (description.isEmpty())
-            ui->labelDescription->setText(abstract);
-        else
-            ui->labelDescription->setText(description);
+        ui->labelDescription->setText(abstract);
+    else
+        ui->labelDescription->setText(description);
 
     ui->labelName->setText(name);
     ui->labelAbstract->setText(abstract);
 
     auto icon = launcher->getAppImageIcon();
     if (icon.isNull())
-            setDefaultIcon();
-        else
-            ui->labelIcon->setPixmap(icon.pixmap(64, 64));
+        setDefaultIcon();
+    else
+        ui->labelIcon->setPixmap(icon.pixmap(64, 64));
 
     hideDetails();
 }
@@ -125,10 +125,10 @@ void UI::setFileCorruptedWarningMessage() const {
     ui->labelLinks->setVisible(false);
     ui->detailsButton->setVisible(false);
     ui->labelAbstract->setText(
-                tr("<p>Unable to read the AppImage information. The file is <b>corrupt</b> or <b>not properly "
-                   "built</b>. Notify to the application developers about this issue.</p>"
-                   "<p>This may avoid the proper execution of the <i>Integrate</i> and <i>Run</i> functionalities</p>"
-                   "<b>Use it at your own risk.</b>"));
+            tr("<p>Unable to read the AppImage information. The file is <b>corrupt</b> or <b>not properly "
+               "built</b>. Notify to the application developers about this issue.</p>"
+               "<p>This may avoid the proper execution of the <i>Integrate</i> and <i>Run</i> functionalities</p>"
+               "<b>Use it at your own risk.</b>"));
     ui->labelAbstract->setMargin(0);
     hideDetails();
 }

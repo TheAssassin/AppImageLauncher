@@ -30,7 +30,7 @@ TranslationManager::TranslationManager(QCoreApplication &app) : app(app) {
 }
 
 TranslationManager::~TranslationManager() {
-    for (auto& translator : installedTranslators) {
+    for (auto &translator : installedTranslators) {
         delete translator;
         translator = nullptr;
     }
