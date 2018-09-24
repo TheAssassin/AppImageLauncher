@@ -73,6 +73,9 @@ void Launcher::executeAppImage() {
     // as it might error, check before fork()ing to be able to display an error message beforehand
     auto exeDir = QFileInfo(QFile("/proc/self/exe").symLinkTarget()).absoluteDir().absolutePath();
 
+    // suppress desktop integration script
+    setenv("DESKTOPINTEGRATION", "AppImageLauncher", true);
+
     if (appImageType == 1) {
         QFile appImage(QString::fromStdString(fullPathToAppImage.toStdString()));
 
@@ -147,9 +150,6 @@ void Launcher::executeAppImage() {
         // however, this requires some process management (e.g., killing all processes inside the AppImage and also
         // the FUSE "mount" process, when this application is killed...)
         setenv("TARGET_APPIMAGE", fullPathToAppImage.toStdString().c_str(), true);
-
-        // suppress desktop integration script
-        setenv("DESKTOPINTEGRATION", "AppImageLauncher", true);
 
         // first attempt: find runtime in expected installation directory
         auto pathToRuntime = exeDir.toStdString() + "/../lib/appimagelauncher/runtime";
