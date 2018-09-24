@@ -24,7 +24,7 @@ extern "C" {
 #include "trashbin.h"
 #include "AppImageDesktopIntegrationManager.h"
 
-bool unregisterAppImage(const QString &pathToAppImage) {
+bool unregisterAppImage(const QString& pathToAppImage) {
     auto rv = appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false);
 
     if (rv != 0)
@@ -33,7 +33,7 @@ bool unregisterAppImage(const QString &pathToAppImage) {
     return true;
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     QCommandLineParser parser;
     parser.setApplicationDescription(
             QObject::tr("Removes AppImages after desktop integration, for use by Linux distributions"));

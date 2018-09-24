@@ -19,7 +19,7 @@
 
 QDir AppImageDesktopIntegrationManager::integratedAppImagesDir;
 
-void AppImageDesktopIntegrationManager::integrateAppImage(const QString &pathToAppImage) {
+void AppImageDesktopIntegrationManager::integrateAppImage(const QString& pathToAppImage) {
     auto pathToIntegratedAppImage = buildDeploymentPath(pathToAppImage);
     tryMoveAppImage(pathToAppImage, pathToIntegratedAppImage);
 
@@ -31,8 +31,8 @@ void AppImageDesktopIntegrationManager::integrateAppImage(const QString &pathToA
         throw IntegrationFailed(QObject::tr("Unable to update Desktop Database and/or Icons").toStdString());
 }
 
-void AppImageDesktopIntegrationManager::tryMoveAppImage(const QString &pathToAppImage,
-                                                        const QString &pathToIntegratedAppImage) const {
+void AppImageDesktopIntegrationManager::tryMoveAppImage(const QString& pathToAppImage,
+                                                        const QString& pathToIntegratedAppImage) const {
     // check whether integration was successful
     // need std::strings to get working pointers with .c_str()
     const auto oldPath = pathToAppImage.toStdString();
@@ -60,7 +60,7 @@ void AppImageDesktopIntegrationManager::tryMoveAppImage(const QString &pathToApp
     }
 }
 
-QString AppImageDesktopIntegrationManager::buildDeploymentPath(const QString &pathToAppImage) {
+QString AppImageDesktopIntegrationManager::buildDeploymentPath(const QString& pathToAppImage) {
     auto digest = getAppImageDigestMd5(pathToAppImage);
 
     const QFileInfo appImageInfo(pathToAppImage);
@@ -87,15 +87,15 @@ QString AppImageDesktopIntegrationManager::buildDeploymentPath(const QString &pa
     return AppImageLauncherConfig::getIntegratedAppImagesDir() + "/" + fileName;
 }
 
-bool AppImageDesktopIntegrationManager::hasAlreadyBeenIntegrated(const QString &pathToAppImage) {
+bool AppImageDesktopIntegrationManager::hasAlreadyBeenIntegrated(const QString& pathToAppImage) {
     return appimage_is_registered_in_system(pathToAppImage.toStdString().c_str());
 }
 
-bool AppImageDesktopIntegrationManager::installDesktopFile(const QString &pathToAppImage, bool resolveCollisions) {
+bool AppImageDesktopIntegrationManager::installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
     if (appimage_register_in_system(pathToAppImage.toStdString().c_str(), false) != 0)
         throw IntegrationFailed(QObject::tr("Unable to create desktop file.").toStdString());
 
-    const auto *desktopFilePath = appimage_registered_desktop_file_path(pathToAppImage.toStdString().c_str(),
+    const auto* desktopFilePath = appimage_registered_desktop_file_path(pathToAppImage.toStdString().c_str(),
                                                                         nullptr, false);
 
     // sanity check -- if the file doesn't exist, the function returns NULL
@@ -116,7 +116,7 @@ bool AppImageDesktopIntegrationManager::installDesktopFile(const QString &pathTo
 
     std::shared_ptr<GKeyFile> desktopFile(g_key_file_new(), g_key_file_free);
 
-    std::shared_ptr<GError *> error(nullptr, g_error_free);
+    std::shared_ptr<GError*> error(nullptr, g_error_free);
 
     const auto flags = GKeyFileFlags(G_KEY_FILE_KEEP_COMMENTS | G_KEY_FILE_KEEP_TRANSLATIONS);
 
@@ -125,7 +125,7 @@ bool AppImageDesktopIntegrationManager::installDesktopFile(const QString &pathTo
                                         .arg(QString::fromLocal8Bit((*error)->message)).toStdString());
 
 
-    const auto *nameEntry = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP,
+    const auto* nameEntry = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP,
                                                   G_KEY_FILE_DESKTOP_KEY_NAME, error.get());
 
     if (nameEntry == nullptr)
@@ -134,7 +134,7 @@ bool AppImageDesktopIntegrationManager::installDesktopFile(const QString &pathTo
     if (resolveCollisions)
         resolveDesktopFileCollisions(desktopFilePath, desktopFile, nameEntry);
 
-    char const *desktopActions[] = {"Remove", "Update"};
+    char const* desktopActions[] = {"Remove", "Update"};
 
     g_key_file_set_string_list(
             desktopFile.get(),
@@ -151,14 +151,14 @@ bool AppImageDesktopIntegrationManager::installDesktopFile(const QString &pathTo
         QDirIterator i18nDirIterator(TranslationManager::getTranslationDir());
 
         while (i18nDirIterator.hasNext()) {
-            const auto &filePath = i18nDirIterator.next();
-            const auto &fileName = QFileInfo(filePath).fileName();
+            const auto& filePath = i18nDirIterator.next();
+            const auto& fileName = QFileInfo(filePath).fileName();
             QJsonObject jsonObj = readTranslationsFile(filePath, fileName);
 
             // parse locale from filename
             auto locale = filePath.section('.', 1);
 
-            for (const auto &key : jsonObj.keys()) {
+            for (const auto& key : jsonObj.keys()) {
                 auto value = jsonObj[key].toString();
                 auto splitKey = key.split("/");
 
@@ -231,7 +231,7 @@ bool AppImageDesktopIntegrationManager::installDesktopFile(const QString &pathTo
 }
 
 QJsonObject
-AppImageDesktopIntegrationManager::readTranslationsFile(const QString &filePath, const QString &fileName) const {
+AppImageDesktopIntegrationManager::readTranslationsFile(const QString& filePath, const QString& fileName) const {
     if (!QFileInfo(filePath).isFile() || !(fileName.startsWith("desktopfiles.") && fileName.endsWith(".json")))
         return QJsonObject();
 
@@ -262,9 +262,9 @@ AppImageDesktopIntegrationManager::readTranslationsFile(const QString &filePath,
     return jsonDoc.object();
 }
 
-void AppImageDesktopIntegrationManager::resolveDesktopFileCollisions(const char *desktopFilePath,
-                                                                     const std::shared_ptr<GKeyFile> &desktopFile,
-                                                                     const gchar *nameEntry) {// TODO: support multilingual collisions
+void AppImageDesktopIntegrationManager::resolveDesktopFileCollisions(const char* desktopFilePath,
+                                                                     const std::shared_ptr<GKeyFile>& desktopFile,
+                                                                     const gchar* nameEntry) {// TODO: support multilingual collisions
     auto collisions = findCollisions(nameEntry);
 
     // make sure to remove own entry
@@ -280,8 +280,8 @@ void AppImageDesktopIntegrationManager::resolveDesktopFileCollisions(const char 
 
         QRegularExpression regex("^.*([0-9]+)$");
 
-        for (const auto &fileName : collisions) {
-            const auto &currentNameEntry = collisions[fileName];
+        for (const auto& fileName : collisions) {
+            const auto& currentNameEntry = collisions[fileName];
 
             auto match = regex.match(currentNameEntry);
 
@@ -298,20 +298,20 @@ void AppImageDesktopIntegrationManager::resolveDesktopFileCollisions(const char 
     }
 }
 
-void AppImageDesktopIntegrationManager::updateAppImage(const QString &pathToAppImage) {
+void AppImageDesktopIntegrationManager::updateAppImage(const QString& pathToAppImage) {
     bool result = installDesktopFile(pathToAppImage, true);
     if (!result)
         throw IntegrationFailed(QObject::tr("Unable to update AppImage Desktop file.").toStdString());
 }
 
-void AppImageDesktopIntegrationManager::removeAppImageIntegration(const QString &appImagePath) {
+void AppImageDesktopIntegrationManager::removeAppImageIntegration(const QString& appImagePath) {
     if (appimage_unregister_in_system(appImagePath.toStdString().c_str(), false) != 0) {
         throw AppImageIntegrationRemovalFailed(
                 QObject::tr("Unable to remove AppImage Desktop integration files.").toStdString());
     }
 }
 
-bool AppImageDesktopIntegrationManager::isPlacedInTheDefaultAppsDir(const QString &pathToAppImage) {
+bool AppImageDesktopIntegrationManager::isPlacedInTheDefaultAppsDir(const QString& pathToAppImage) {
     return integratedAppImagesDir == QFileInfo(pathToAppImage).absoluteDir();
 }
 
@@ -319,7 +319,7 @@ AppImageDesktopIntegrationManager::AppImageDesktopIntegrationManager() {
     integratedAppImagesDir = AppImageLauncherConfig::getIntegratedAppImagesDir();
 }
 
-const QDir &AppImageDesktopIntegrationManager::getIntegratedAppImagesDir() const {
+const QDir& AppImageDesktopIntegrationManager::getIntegratedAppImagesDir() const {
     return integratedAppImagesDir;
 }
 
@@ -335,7 +335,7 @@ bool AppImageDesktopIntegrationManager::updateDesktopDatabaseAndIconCaches() {
             "xdg-desktop-menu forceupdate",
     };
 
-    for (const auto &command : commands) {
+    for (const auto& command : commands) {
         // exit codes are not evaluated intentionally
         system(command);
     }
@@ -343,30 +343,30 @@ bool AppImageDesktopIntegrationManager::updateDesktopDatabaseAndIconCaches() {
     return true;
 }
 
-QMap<QString, QString> AppImageDesktopIntegrationManager::findCollisions(const QString &currentNameEntry) {
+QMap<QString, QString> AppImageDesktopIntegrationManager::findCollisions(const QString& currentNameEntry) {
     QMap<QString, QString> collisions;
 
     // default locations of desktop files on systems
     const auto directories = {QString("/usr/share/applications/"), QString(xdg_data_home()) + "/applications/"};
 
-    for (const auto &directory : directories) {
+    for (const auto& directory : directories) {
         QDirIterator iterator(directory, QDirIterator::FollowSymlinks);
 
         while (iterator.hasNext()) {
-            const auto &filename = iterator.next();
+            const auto& filename = iterator.next();
 
             if (!QFileInfo(filename).isFile() || !filename.endsWith(".desktop"))
                 continue;
 
             std::shared_ptr<GKeyFile> desktopFile(g_key_file_new(), g_key_file_free);
-            std::shared_ptr<GError *> error(nullptr, g_error_free);
+            std::shared_ptr<GError*> error(nullptr, g_error_free);
 
             // if the key file parser can't load the file, it's most likely not a valid desktop file, so we just skip this file
             if (!g_key_file_load_from_file(desktopFile.get(), filename.toStdString().c_str(),
                                            G_KEY_FILE_KEEP_TRANSLATIONS, error.get()))
                 continue;
 
-            auto *nameEntry = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP,
+            auto* nameEntry = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP,
                                                     G_KEY_FILE_DESKTOP_KEY_NAME, error.get());
 
             // invalid desktop file, needs to be skipped
@@ -382,7 +382,7 @@ QMap<QString, QString> AppImageDesktopIntegrationManager::findCollisions(const Q
     return collisions;
 }
 
-QString AppImageDesktopIntegrationManager::getAppImageDigestMd5(const QString &pathToAppImage) {
+QString AppImageDesktopIntegrationManager::getAppImageDigestMd5(const QString& pathToAppImage) {
     QCryptographicHash hash(QCryptographicHash::Md5);
     QFile f(pathToAppImage);
     if (f.open(QIODevice::ReadOnly)) {
@@ -411,7 +411,7 @@ bool AppImageDesktopIntegrationManager::cleanUpOldDesktopIntegrationResources(bo
     for (auto desktopFilePath : directory.entryList()) {
         desktopFilePath = dirPath + "/" + desktopFilePath;
 
-        std::shared_ptr<GKeyFile> desktopFile(g_key_file_new(), [](GKeyFile *p) {
+        std::shared_ptr<GKeyFile> desktopFile(g_key_file_new(), [](GKeyFile* p) {
             g_key_file_free(p);
         });
 
@@ -422,7 +422,7 @@ bool AppImageDesktopIntegrationManager::cleanUpOldDesktopIntegrationResources(bo
 
         std::shared_ptr<char> execValue(
                 g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_EXEC,
-                                      nullptr), [](char *p) {
+                                      nullptr), [](char* p) {
                     free(p);
                 });
 
@@ -433,7 +433,7 @@ bool AppImageDesktopIntegrationManager::cleanUpOldDesktopIntegrationResources(bo
 
         std::shared_ptr<char> tryExecValue(
                 g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_TRY_EXEC,
-                                      nullptr), [](char *p) {
+                                      nullptr), [](char* p) {
                     free(p);
                 });
 
@@ -465,7 +465,7 @@ bool AppImageDesktopIntegrationManager::cleanUpOldDesktopIntegrationResources(bo
 
             // TODO: clean up related resources such as icons or MIME definitions
 
-            auto *iconValue = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP,
+            auto* iconValue = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP,
                                                     G_KEY_FILE_DESKTOP_KEY_ICON, nullptr);
 
             if (iconValue != nullptr) {

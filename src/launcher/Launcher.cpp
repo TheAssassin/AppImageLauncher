@@ -39,7 +39,7 @@ int Launcher::getAppImageType() const {
 
 void Launcher::inspectAppImageFile() {
     if (appImagePath.isEmpty())
-        throw AppImageFilePathNotSet("");
+        throw AppImageFilePathNotSet();
 
     if (!QFile::exists(appImagePath))
         throw AppImageFileNotExists(appImagePath.toStdString());
@@ -274,3 +274,4 @@ bool Launcher::isAppImageExecutable() {
     QFileInfo fileInfo(appImagePath);
     return fileInfo.isExecutable();
 }
+

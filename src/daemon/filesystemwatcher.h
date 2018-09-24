@@ -10,7 +10,7 @@
 
 class FileSystemWatcherError : public std::runtime_error {
 public:
-    FileSystemWatcherError(const QString &message) : std::runtime_error(message.toStdString().c_str()) {};
+    FileSystemWatcherError(const QString& message) : std::runtime_error(message.toStdString().c_str()) {};
 };
 
 class FileSystemWatcher : public QObject {
@@ -22,9 +22,9 @@ private:
     std::shared_ptr<PrivateData> d;
 
 public:
-    explicit FileSystemWatcher(const QString &path);
+    explicit FileSystemWatcher(const QString& path);
 
-    explicit FileSystemWatcher(const QStringList &paths);
+    explicit FileSystemWatcher(const QStringList& paths);
 
     FileSystemWatcher();
 

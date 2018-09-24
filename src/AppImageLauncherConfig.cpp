@@ -12,7 +12,7 @@ QString AppImageLauncherConfig::getIntegratedAppImagesDir() {
     return config->value(keyName, getDefaultIntegrationDestination()).toString();
 }
 
-QSettings *AppImageLauncherConfig::getSettings() {
+QSettings* AppImageLauncherConfig::getSettings() {
     // calculate path to config file
     const auto configPath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
     const auto configFilePath = configPath + "/appimagelauncher.cfg";

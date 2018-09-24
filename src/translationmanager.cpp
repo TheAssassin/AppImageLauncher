@@ -6,7 +6,7 @@
 // local headers
 #include "translationmanager.h"
 
-TranslationManager::TranslationManager(QCoreApplication &app) : app(app) {
+TranslationManager::TranslationManager(QCoreApplication& app) : app(app) {
     // set up translations
     auto qtTranslator = new QTranslator();
     qtTranslator->load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
@@ -30,7 +30,7 @@ TranslationManager::TranslationManager(QCoreApplication &app) : app(app) {
 }
 
 TranslationManager::~TranslationManager() {
-    for (auto &translator : installedTranslators) {
+    for (auto& translator : installedTranslators) {
         delete translator;
         translator = nullptr;
     }

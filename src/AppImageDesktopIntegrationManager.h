@@ -11,27 +11,28 @@
 #include <QString>
 #include <QDir>
 #include <xdg-basedir.h>
+#include "AppImageLauncherException.h"
 
 class AppImageDesktopIntegrationManager {
     static QDir integratedAppImagesDir;
 public:
     AppImageDesktopIntegrationManager();
 
-    void integrateAppImage(const QString &appImagePath);
+    void integrateAppImage(const QString& appImagePath);
 
-    static QString buildDeploymentPath(const QString &pathToAppImage);
+    static QString buildDeploymentPath(const QString& pathToAppImage);
 
-    static bool hasAlreadyBeenIntegrated(const QString &pathToAppImage);
+    static bool hasAlreadyBeenIntegrated(const QString& pathToAppImage);
 
-    bool isPlacedInTheDefaultAppsDir(const QString &pathToAppImage);
+    bool isPlacedInTheDefaultAppsDir(const QString& pathToAppImage);
 
-    bool installDesktopFile(const QString &pathToAppImage, bool resolveCollisions);
+    bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions);
 
-    void updateAppImage(const QString &pathToAppImage);
+    void updateAppImage(const QString& pathToAppImage);
 
-    void removeAppImageIntegration(const QString &appImagePath);
+    void removeAppImageIntegration(const QString& appImagePath);
 
-    const QDir &getIntegratedAppImagesDir() const;
+    const QDir& getIntegratedAppImagesDir() const;
 
     const QString getIntegratedAppImagesDirPath() const;
 
@@ -43,52 +44,52 @@ public:
      **/
     static bool updateDesktopDatabaseAndIconCaches();
 
-    static QString getAppImageDigestMd5(const QString &pathToAppImage);
+    static QString getAppImageDigestMd5(const QString& pathToAppImage);
 
     static bool cleanUpOldDesktopIntegrationResources(bool verbose);
 
 private:
 
-    void tryMoveAppImage(const QString &pathToAppImage, const QString &pathToIntegratedAppImage) const;
+    void tryMoveAppImage(const QString& pathToAppImage, const QString& pathToIntegratedAppImage) const;
 
 
-    QMap<QString, QString> findCollisions(const QString &currentNameEntry);
+    QMap<QString, QString> findCollisions(const QString& currentNameEntry);
 
-    void resolveDesktopFileCollisions(const char *desktopFilePath, const std::shared_ptr<GKeyFile> &desktopFile,
-                                      const gchar *nameEntry);
+    void resolveDesktopFileCollisions(const char* desktopFilePath, const std::shared_ptr<GKeyFile>& desktopFile,
+                                      const gchar* nameEntry);
 
-    QJsonObject readTranslationsFile(const QString &filePath, const QString &string) const;
+    QJsonObject readTranslationsFile(const QString& filePath, const QString& string) const;
 };
 
 
-class AppImageFileNotExists : public std::runtime_error {
+class AppImageFileNotExists : public AppImageLauncherException {
 public:
-    explicit AppImageFileNotExists(const std::string &what) : runtime_error(what) {}
+    explicit AppImageFileNotExists(const std::string& what) : AppImageLauncherException(what) {}
 };
 
-class InvalidAppImageFile : public std::runtime_error {
+class InvalidAppImageFile : public AppImageLauncherException {
 public:
-    explicit InvalidAppImageFile(const std::string &what) : runtime_error(what) {}
+    explicit InvalidAppImageFile(const std::string& what) : AppImageLauncherException(what) {}
 };
 
-class IntegrationFailed : public std::runtime_error {
+class IntegrationFailed : public AppImageLauncherException {
 public:
-    explicit IntegrationFailed(const std::string &what) : runtime_error(what) {}
+    explicit IntegrationFailed(const std::string& what) : AppImageLauncherException(what) {}
 };
 
-class UnsuportedAppImageType : public std::runtime_error {
+class UnsuportedAppImageType : public AppImageLauncherException {
 public:
-    explicit UnsuportedAppImageType(const std::string &what) : runtime_error(what) {}
+    explicit UnsuportedAppImageType(const std::string& what) : AppImageLauncherException(what) {}
 };
 
-class OverridingExistingAppImageFile : public std::runtime_error {
+class OverridingExistingAppImageFile : public AppImageLauncherException {
 public:
-    explicit OverridingExistingAppImageFile(const std::string &what) : runtime_error(what) {}
+    explicit OverridingExistingAppImageFile(const std::string& what) : AppImageLauncherException(what) {}
 };
 
-class AppImageIntegrationRemovalFailed : public std::runtime_error {
+class AppImageIntegrationRemovalFailed : public AppImageLauncherException {
 public:
-    explicit AppImageIntegrationRemovalFailed(const std::string &what) : runtime_error(what) {}
+    explicit AppImageIntegrationRemovalFailed(const std::string& what) : AppImageLauncherException(what) {}
 };
 
 #endif //APPIMAGELAUNCHER_APPIMAGEDESKTOPINTEGRATIONMANAGER_H

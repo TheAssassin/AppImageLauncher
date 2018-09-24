@@ -7,7 +7,7 @@ class TrashBin {
 private:
     class PrivateData;
 
-    PrivateData *d;
+    PrivateData* d;
 
 public:
     TrashBin();
@@ -17,7 +17,7 @@ public:
 
 public:
     // move AppImage into trash bin directory
-    bool disposeAppImage(const QString &pathToAppImage);
+    bool disposeAppImage(const QString& pathToAppImage);
 
     // check all AppImages in trash bin whether they can be removed
     // this function should be called regularly to make sure the files in the trash bin are cleaned up as soon

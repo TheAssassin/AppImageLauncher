@@ -17,11 +17,11 @@ Q_OBJECT
     bool isTimerActive{false};
 
     std::shared_ptr<PrivateData> d = nullptr;
-    AppImageDesktopIntegrationManager *integrationManager{nullptr};
+    AppImageDesktopIntegrationManager* integrationManager{nullptr};
 public:
     Worker();
 
-    void setIntegrationManager(AppImageDesktopIntegrationManager *integrationManager);
+    void setIntegrationManager(AppImageDesktopIntegrationManager* integrationManager);
 
 signals:
 
@@ -29,9 +29,9 @@ signals:
 
 public slots:
 
-    void scheduleForIntegration(const QString &path);
+    void scheduleForIntegration(const QString& path);
 
-    void scheduleForUnintegration(const QString &path);
+    void scheduleForUnintegration(const QString& path);
 
 public slots:
 

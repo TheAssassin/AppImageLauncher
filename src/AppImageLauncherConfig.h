@@ -15,7 +15,7 @@ public:
     static QString getDefaultIntegrationDestination();
 
 private:
-    static QSettings *getSettings();
+    static QSettings* getSettings();
 };
 
 

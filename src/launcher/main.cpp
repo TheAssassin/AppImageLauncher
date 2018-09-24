@@ -32,12 +32,12 @@ std::string getVersionString() {
     return version.str();
 }
 
-void setApplicationVersion(const QCoreApplication *app) {
+void setApplicationVersion(const QCoreApplication* app) {
     auto version = getVersionString();
     app->setApplicationVersion(QString::fromStdString(version));
 }
 
-void printUsage(char **argv) {
+void printUsage(char** argv) {
     std::ostringstream usage;
     usage << QObject::tr("Usage: %1 [options] <path>").arg(argv[0]).toStdString() << std::endl
           << QObject::tr("Desktop integration helper for AppImages, for use by Linux distributions.").toStdString()
@@ -59,7 +59,7 @@ void printVersion() {
     std::cerr << "AppImageLauncher " << getVersionString() << std::endl;
 }
 
-void earlyArgumentsCheck(int argc, char **argv) {
+void earlyArgumentsCheck(int argc, char** argv) {
     if (argc <= 1) {
         std::cerr << getVersionString() << std::endl;
         printUsage(argv);
@@ -67,8 +67,8 @@ void earlyArgumentsCheck(int argc, char **argv) {
     }
 }
 
-std::vector<char *> parseArguments(int argc, char **argv) {
-    std::vector<char *> appImageArgv;
+std::vector<char*> parseArguments(int argc, char** argv) {
+    std::vector<char*> appImageArgv;
     // search for --appimagelauncher-* arguments in args list
     for (int i = 1; i < argc; i++) {
         QString arg = argv[i];
@@ -112,8 +112,8 @@ void applyDaemonConfig() {
     }
 }
 
-QMessageBox::StandardButton askToMoveFileIntoApplications(const QString &pathToAppImage,
-                                                          const QString &integratedAppImagesDirPath) {
+QMessageBox::StandardButton askToMoveFileIntoApplications(const QString& pathToAppImage,
+                                                          const QString& integratedAppImagesDirPath) {
     auto rv = QMessageBox::warning(
             nullptr,
             QMessageBox::tr("Warning"),
@@ -134,7 +134,7 @@ QMessageBox::StandardButton askToMoveFileIntoApplications(const QString &pathToA
     return rv;
 }
 
-int executeGuiApplication(int argc, char **argv) {
+int executeGuiApplication(int argc, char** argv) {
     // Create a fake argc value to avoid QApplication from modifying the arguments.
     QApplication::setApplicationDisplayName("AppImageLauncher");
     setApplicationVersion(QApplication::instance());
@@ -161,7 +161,7 @@ int executeGuiApplication(int argc, char **argv) {
     }
 
 
-    std::vector<char *> appImageArgv = parseArguments(argc, argv);
+    std::vector<char*> appImageArgv = parseArguments(argc, argv);
 
     // sanitize path
     auto pathToAppImage = QDir(QString(argv[1])).absolutePath();
@@ -175,22 +175,22 @@ int executeGuiApplication(int argc, char **argv) {
     launcher.setTrashBin(&trashBin);
     try {
         launcher.inspectAppImageFile();
-    } catch (const AppImageFilePathNotSet &ex) {
+    } catch (const AppImageFilePathNotSet& ex) {
         qCritical() << "Missing AppImagePath in Launcher class. I wasn't initialized properly.";
         return 1;
-    } catch (const InvalidAppImageFile &ex) {
+    } catch (const InvalidAppImageFile& ex) {
         QMessageBox::critical(
                 nullptr,
                 QObject::tr("Error"),
                 QObject::tr("Not an AppImage: %1").arg(pathToAppImage));
         return 1;
-    } catch (const AppImageFileNotExists &ex) {
+    } catch (const AppImageFileNotExists& ex) {
         QMessageBox::critical(
                 nullptr,
                 QObject::tr("Error"),
                 QObject::tr("No such file or directory: %1").arg(pathToAppImage));
         return 1;
-    } catch (const UnsuportedAppImageType &ex) {
+    } catch (const UnsuportedAppImageType& ex) {
         QMessageBox::critical(
                 nullptr,
                 QObject::tr("Error"),
@@ -202,7 +202,7 @@ int executeGuiApplication(int argc, char **argv) {
         try {
             launcher.executeAppImage();
             return 0;
-        } catch (const std::runtime_error &ex) {
+        } catch (const std::runtime_error& ex) {
             QMessageBox::critical(
                     nullptr,
                     QObject::tr("Error"),
@@ -244,7 +244,7 @@ int executeGuiApplication(int argc, char **argv) {
     return QApplication::exec();
 }
 
-int executeCliApplication(int argc, char **argv) {
+int executeCliApplication(int argc, char** argv) {
     qWarning() << "Running on CLI mode";
     QCoreApplication::setApplicationName("AppImageLauncher");
     setApplicationVersion(QCoreApplication::instance());
@@ -260,7 +260,7 @@ int executeCliApplication(int argc, char **argv) {
     if (!trashBin.cleanUp())
         qWarning() << QObject::tr("Failed to clean up AppImage trash bin: %1").arg(trashBin.path());
 
-    std::vector<char *> appImageArgv = parseArguments(argc, argv);
+    std::vector<char*> appImageArgv = parseArguments(argc, argv);
 
     // sanitize path
     auto pathToAppImage = QDir(QString(argv[1])).absolutePath();
@@ -273,16 +273,16 @@ int executeCliApplication(int argc, char **argv) {
     launcher.setTrashBin(&trashBin);
     try {
         launcher.inspectAppImageFile();
-    } catch (const AppImageFilePathNotSet &ex) {
+    } catch (const AppImageFilePathNotSet& ex) {
         qCritical() << "Missing AppImagePath in Launcher class. I wasn't initialized properly.";
         return 1;
-    } catch (const InvalidAppImageFile &ex) {
+    } catch (const InvalidAppImageFile& ex) {
         qCritical() << QObject::tr("Not an AppImage: %1").arg(pathToAppImage);
         return 1;
-    } catch (const AppImageFileNotExists &ex) {
+    } catch (const AppImageFileNotExists& ex) {
         qCritical() << QObject::tr("No such file or directory: %1").arg(pathToAppImage);
         return 1;
-    } catch (const UnsuportedAppImageType &ex) {
+    } catch (const UnsuportedAppImageType& ex) {
         qCritical() << QObject::tr("Not an AppImage: %1").arg(pathToAppImage);
         return 1;
     }
@@ -291,7 +291,7 @@ int executeCliApplication(int argc, char **argv) {
         try {
             launcher.executeAppImage();
             return 1;
-        } catch (const std::runtime_error &ex) {
+        } catch (const std::runtime_error& ex) {
             qCritical() << QObject::tr("Unable to execute the AppImage: %1").arg(pathToAppImage);
             return 2;
         }
@@ -308,14 +308,14 @@ bool isGuiAvailable() {
 }
 
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     earlyArgumentsCheck(argc, argv);
     applyDaemonConfig();
 
     // Use a fake argc to prevent Qt from removing arguments from the list.
     int _fakeArgc = 1;
 
-    QCoreApplication *application = nullptr;
+    QCoreApplication* application = nullptr;
     if (isGuiAvailable()) {
         application = new QApplication(_fakeArgc, argv);
         return executeGuiApplication(argc, argv);

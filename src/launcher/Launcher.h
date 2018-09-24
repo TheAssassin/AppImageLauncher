@@ -10,6 +10,7 @@
 #include <QIcon>
 #include <nlohmann/json.hpp>
 #include "AppImageDesktopIntegrationManager.h"
+#include "AppImageLauncherException.h"
 #include "../trashbin.h"
 
 class Launcher {
@@ -63,14 +64,12 @@ private:
 
 /* Exceptions that can be thrown from the Launcher methods. */
 
-class AppImageFilePathNotSet : public std::runtime_error {
-public:
-    explicit AppImageFilePathNotSet(const std::string &what) : runtime_error(what) {}
+class AppImageFilePathNotSet : public AppImageLauncherException {
 };
 
-class ExecutionFailed : public std::runtime_error {
+class ExecutionFailed : public AppImageLauncherException {
 public:
-    explicit ExecutionFailed(const std::string &what) : runtime_error(what) {}
+    explicit ExecutionFailed(const std::string &what) : AppImageLauncherException(what) {}
 };
 
 

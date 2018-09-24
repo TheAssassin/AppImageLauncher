@@ -38,7 +38,7 @@ add_library(shared STATIC
         AppImageDesktopIntegrationManager.cpp
         AppImageDesktopIntegrationManager.h
         AppImageLauncherConfig.cpp
-        AppImageLauncherConfig.h)
+        AppImageLauncherConfig.h AppImageLauncherException.h)
 
 target_link_libraries(shared PUBLIC
         PkgConfig::glib

@@ -29,7 +29,7 @@ public:
         dir = QDir(homeDir.path() + "/Applications/.trash");
     }
 
-    bool canBeCleanedUp(const QString &path) {
+    bool canBeCleanedUp(const QString& path) {
         return true;
     }
 };
@@ -42,7 +42,7 @@ QString TrashBin::path() {
     return d->dir.path();
 }
 
-bool TrashBin::disposeAppImage(const QString &pathToAppImage) {
+bool TrashBin::disposeAppImage(const QString& pathToAppImage) {
     if (!QFile(pathToAppImage).exists()) {
         std::cerr << "No such file or directory: " << pathToAppImage.toStdString() << std::endl;
         return false;

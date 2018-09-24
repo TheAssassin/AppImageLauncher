@@ -34,19 +34,19 @@ public:
         Operation operation;
         std::shared_ptr<QMutex> mutex;
 
-        AppImageDesktopIntegrationManager *integrationManager{nullptr};
+        AppImageDesktopIntegrationManager* integrationManager{nullptr};
 
     public:
-        OperationTask(const Operation &operation, std::shared_ptr<QMutex> mutex) : operation(operation),
+        OperationTask(const Operation& operation, std::shared_ptr<QMutex> mutex) : operation(operation),
                                                                                    mutex(std::move(mutex)) {}
 
-        void setIntegrationManager(AppImageDesktopIntegrationManager *integrationManager) {
+        void setIntegrationManager(AppImageDesktopIntegrationManager* integrationManager) {
             OperationTask::integrationManager = integrationManager;
         }
 
         void run() override {
-            const auto &path = operation.first;
-            const auto &type = operation.second;
+            const auto& path = operation.first;
+            const auto& type = operation.second;
 
             const auto exists = QFile::exists(path);
             const auto appImageType = appimage_get_type(path.toStdString().c_str(), false);
@@ -150,7 +150,7 @@ void Worker::executeDeferredOperations() {
     std::cout << "Done" << std::endl;
 };
 
-void Worker::scheduleForIntegration(const QString &path) {
+void Worker::scheduleForIntegration(const QString& path) {
     QMutexLocker locker(&d->mutex);
 
     auto operation = std::make_pair(path, INTEGRATE);
@@ -161,7 +161,7 @@ void Worker::scheduleForIntegration(const QString &path) {
     }
 }
 
-void Worker::scheduleForUnintegration(const QString &path) {
+void Worker::scheduleForUnintegration(const QString& path) {
     QMutexLocker locker(&d->mutex);
 
     auto operation = std::make_pair(path, UNINTEGRATE);
@@ -179,7 +179,7 @@ void Worker::startTimerIfNecessary() {
     }
 }
 
-void Worker::setIntegrationManager(AppImageDesktopIntegrationManager *integrationManager) {
+void Worker::setIntegrationManager(AppImageDesktopIntegrationManager* integrationManager) {
     Worker::integrationManager = integrationManager;
 }
 

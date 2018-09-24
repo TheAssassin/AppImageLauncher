@@ -25,7 +25,7 @@ extern "C" {
 #include "translationmanager.h"
 #include "AppImageDesktopIntegrationManager.h"
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     QCommandLineParser parser;
     parser.setApplicationDescription(
             QObject::tr("Updates AppImages after desktop integration, for use by Linux distributions"));
@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
 
     const auto pathToAppImage = parser.positionalArguments().first();
 
-    auto criticalUpdaterError = [](const QString &message) {
+    auto criticalUpdaterError = [](const QString& message) {
         QMessageBox::critical(nullptr, "Error", message);
     };
 
@@ -98,7 +98,7 @@ int main(int argc, char **argv) {
             &updater,
             &appimage::update::qt::QtUpdater::newStatusMessage,
             &updater,
-            [&updater, &updaterStatusMessages](const std::string &newMessage) {
+            [&updater, &updaterStatusMessages](const std::string& newMessage) {
                 if (!updaterStatusMessages.tellp() <= 0)
                     updaterStatusMessages << std::endl;
 
@@ -203,7 +203,7 @@ int main(int argc, char **argv) {
     if (!appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str())) {
         try {
             integrationManager.updateAppImage(pathToUpdatedAppImage);
-        } catch (const IntegrationFailed &ex) {
+        } catch (const IntegrationFailed& ex) {
             criticalUpdaterError(QObject::tr("Failed to register updated AppImage in system"));
             return 1;
         }
