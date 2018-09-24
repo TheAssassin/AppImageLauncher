@@ -2,7 +2,7 @@
 #define UI_H
 
 #include <QDialog>
-#include "AppImageDesktopIntegrationManager.h"
+#include "../AppImageDesktopIntegrationManager.h"
 #include "Launcher.h"
 
 namespace Ui {

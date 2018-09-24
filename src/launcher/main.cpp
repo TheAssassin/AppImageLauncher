@@ -16,11 +16,11 @@ extern "C" {
 #include <QRegularExpression>
 #include <QScreen>
 #include <QDebug>
-#include <AppImageLauncherConfig.h>
 
 // local headers
-#include "trashbin.h"
-#include "translationmanager.h"
+#include "../AppImageLauncherConfig.h"
+#include "../trashbin.h"
+#include "../translationmanager.h"
 #include "Launcher.h"
 #include "ui.h"
 

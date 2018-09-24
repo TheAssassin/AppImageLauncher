@@ -5,8 +5,8 @@
 #include <QString>
 #include <QIcon>
 #include <nlohmann/json.hpp>
-#include "AppImageDesktopIntegrationManager.h"
-#include "AppImageLauncherException.h"
+#include "../AppImageDesktopIntegrationManager.h"
+#include "../AppImageLauncherException.h"
 #include "../trashbin.h"
 
 class Launcher {
