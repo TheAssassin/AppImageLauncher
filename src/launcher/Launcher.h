@@ -32,12 +32,19 @@ public:
 
     void setTrashBin(TrashBin* trashBin);
 
+    /**
+     * Throws: InvalidAppImageFile, UnsuportedAppImageType, AppImageFileNotExists, AppImageFilePathNotSet
+     * */
     void inspectAppImageFile();
 
     bool shouldBeIgnored();
 
     bool isAppImageExecutable();
 
+    /**
+     * Throws: InvalidAppImageFile, UnsuportedAppImageType, AppImageFileNotExists, AppImageFilePathNotSet,
+     *      ExecutionFailed
+     * */
     void executeAppImage();
 
     void overrideAppImageIntegration();
@@ -51,6 +58,9 @@ public slots:
     void integrateAppImage();
 
 private:
+    /**
+     * Throws: InvalidAppImageFile, UnsuportedAppImageType
+     */
     void validateAppImageType();
 
     bool isAMountOrExtractOperation() const;
