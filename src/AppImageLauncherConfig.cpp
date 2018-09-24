@@ -1,7 +1,9 @@
+#include <memory>
+
 #include <QStandardPaths>
 #include <QSettings>
 #include <QFileInfo>
-#include <memory>
+
 #include "AppImageLauncherConfig.h"
 
 
