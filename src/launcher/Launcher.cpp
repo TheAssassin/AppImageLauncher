@@ -1,6 +1,3 @@
-//
-// Created by alexis on 8/30/18.
-//
 extern "C" {
 #include "unistd.h"
 }

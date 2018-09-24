@@ -1,7 +1,3 @@
-//
-// Created by alexis on 8/30/18.
-//
-
 #ifndef APPIMAGELAUNCHER_LAUNCHER_H
 #define APPIMAGELAUNCHER_LAUNCHER_H
 
