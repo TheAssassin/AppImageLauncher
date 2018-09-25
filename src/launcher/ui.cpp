@@ -89,7 +89,7 @@ void UI::setAppImageInfo() {
     QString description = getLocalizedString(info, "description");
 
     auto type = info["file"]["type"].get<int>();
-    shaChecksum = QString::fromStdString(info["file"]["sha512checksum"].get<std::__cxx11::string>());
+    shaChecksum = QString::fromStdString(info["file"]["sha512checksum"].get<std::string>());
     auto arch = info["file"]["architecture"];
 
     setLicense(info);
@@ -150,7 +150,7 @@ void UI::setCategories(const nlohmann::json &info) const {
     QStringList categories;
     if (info.find("categories") != info.end()) {
         for (const auto &item: info["categories"]) {
-            const auto text = QString::fromStdString(item.get<std::__cxx11::string>());
+            const auto text = QString::fromStdString(item.get<std::string>());
             // Ignore custom categories
             if (!text.startsWith("X", Qt::CaseInsensitive))
                 categories << QObject::tr(text.toStdString().c_str());
@@ -185,9 +185,9 @@ QString UI::getLocalizedString(const nlohmann::json &info, const std::string &fi
     auto locale = QLocale::system().name().toStdString();
     if (info.find(field) != info.end()) {
         if (info[field].find(locale) != info[field].end())
-            value = QString::fromStdString(info[field][locale].get<std::__cxx11::string>());
+            value = QString::fromStdString(info[field][locale].get<std::string>());
         else if (info[field].find("default") != info[field].end())
-            value = QString::fromStdString(info[field]["default"].get<std::__cxx11::string>());
+            value = QString::fromStdString(info[field]["default"].get<std::string>());
     }
     return value;
 }
