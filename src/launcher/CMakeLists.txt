@@ -7,8 +7,7 @@ add_executable(AppImageLauncher
     ui.h
     ui.cpp)
 
-target_link_libraries(AppImageLauncher shared PkgConfig::glib libappimage libappimageinfo)
-target_include_directories(AppImageLauncher PRIVATE ${NLOHMANN_JSON_INCLUDE_DIRS})
+target_link_libraries(AppImageLauncher shared PkgConfig::glib libappimage libappimageinfo nlohmann_json)
 
 install(
     TARGETS
