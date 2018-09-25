@@ -33,8 +33,6 @@ RUN apt-get update && \
         libarchive-dev \
         binutils-multiarch-dev \
         libxml2-dev \
-        libboost-program-options-dev \
         libboost-filesystem-dev \
-        libboost-system-dev \
+        libboost-program-options-dev \
         libboost-dev
-
