@@ -89,7 +89,7 @@ void UI::setAppImageInfo() {
     QString description = getLocalizedString(info, "description");
 
     auto type = info["file"]["type"].get<int>();
-    shaChecksum = QString::fromStdString(info["file"]["sha512checksum"].get<std::string>());
+    sha512Checksum = QString::fromStdString(info["file"]["sha512checksum"].get<std::string>());
     auto arch = info["file"]["architecture"];
 
     setLicense(info);
@@ -239,6 +239,6 @@ void UI::hideDetails() const {
 
 void UI::handleCopyCheckSumRequested() {
     QClipboard *clipboard = QGuiApplication::clipboard();
-    clipboard->setText(shaChecksum);
+    clipboard->setText(sha512Checksum);
     QToolTip::showText(ui->copyCheckSumButton->mapToGlobal(QPoint(20, 0)), tr("Copied to clipboard"));
 }

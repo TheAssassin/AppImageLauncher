@@ -13,7 +13,7 @@ class UI : public QDialog {
 Q_OBJECT
 
     Launcher* launcher{nullptr};
-    QString shaChecksum;
+    QString sha512Checksum;
 
 public:
 
