@@ -64,7 +64,7 @@ void Launcher::executeAppImage() {
     QFile appImageFile(fullPathToAppImage);
     if (!appImageFile.setPermissions(QFileDevice::ReadOwner | QFileDevice::ExeOwner))
         throw ExecutionFailed(QObject::tr("Unable to make the AppImage file executable: %1")
-                                      .arg(appImagePath).toStdString());
+                                  .arg(appImagePath).toStdString());
 
     // build path to AppImage runtime
     // as it might error, check before fork()ing to be able to display an error message beforehand
@@ -78,14 +78,14 @@ void Launcher::executeAppImage() {
 
         if (!appImage.open(QIODevice::ReadOnly))
             throw ExecutionFailed(QObject::tr("Not enough privileges to read the AppImage file: %1")
-                                          .arg(appImagePath).toStdString());
+                                      .arg(appImagePath).toStdString());
 
         // copy AppImage to temp dir
         QTemporaryDir tempDir("/tmp/AppImageLauncher-type1-XXXXXX");
 
         if (!tempDir.isValid())
             throw ExecutionFailed(QObject::tr("Unable to create temporary directory %1")
-                                          .arg(tempDir.path()).toStdString());
+                                      .arg(tempDir.path()).toStdString());
 
         tempDir.setAutoRemove(true);
 
@@ -106,11 +106,11 @@ void Launcher::executeAppImage() {
         // nuke magic bytes
         if (!tempAppImage.seek(8))
             throw ExecutionFailed(
-                    QObject::tr("Failed to remove magic bytes from temporary AppImage copy").toStdString());
+                QObject::tr("Failed to remove magic bytes from temporary AppImage copy").toStdString());
 
         if (tempAppImage.write(QByteArray(3, '\0')) != 3)
             throw ExecutionFailed(
-                    QObject::tr("Failed to remove magic bytes from temporary AppImage copy").toStdString());
+                QObject::tr("Failed to remove magic bytes from temporary AppImage copy").toStdString());
 
         auto tempAppImageFileName = tempAppImage.fileName();
 
@@ -159,7 +159,7 @@ void Launcher::executeAppImage() {
         // if it can't be found in either location, display error and exit
         if (!QFile(QString::fromStdString(pathToRuntime)).exists())
             throw ExecutionFailed(QObject::tr("runtime not found: no such file or directory: %1").arg(
-                    QString::fromStdString(pathToRuntime)).toStdString());
+                QString::fromStdString(pathToRuntime)).toStdString());
 
         // need a char pointer instead of a const one, therefore can't use .c_str()
         std::vector<char> argv0Buffer(appImagePath.toStdString().size() + 1, '\0');
@@ -181,7 +181,7 @@ void Launcher::executeAppImage() {
 
         const auto& error = errno;
         throw ExecutionFailed(
-                QObject::tr("execv() failed: %1").arg(QString::fromStdString(strerror(error))).toStdString());
+            QObject::tr("execv() failed: %1").arg(QString::fromStdString(strerror(error))).toStdString());
     }
 }
 
@@ -189,18 +189,18 @@ void Launcher::tryToMakeAppImageFileExecutable(const QString& path) const {
     QFile appImageFile(path);
     if (!appImageFile.setPermissions(QFileDevice::ReadOwner | QFileDevice::ExeOwner))
         throw ExecutionFailed(QObject::tr("Unable to make the AppImage file executable: %1")
-                                      .arg(path).toStdString());
+                                  .arg(path).toStdString());
 }
 
 bool Launcher::shouldBeIgnored() {
     bool result =
-            isAMountOrExtractOperation() &&
-            // check for X-AppImage-Integrate=false
-            appimage_shall_not_be_integrated(appImagePath.toStdString().c_str()) &&
-            // ignore terminal apps (fixes #2)
-            appimage_is_terminal_app(appImagePath.toStdString().c_str()) &&
-            // AppImages in AppImages are not supposed to be integrated
-            appImagePath.startsWith("/tmp/.mount_");
+        isAMountOrExtractOperation() &&
+        // check for X-AppImage-Integrate=false
+        appimage_shall_not_be_integrated(appImagePath.toStdString().c_str()) &&
+        // ignore terminal apps (fixes #2)
+        appimage_is_terminal_app(appImagePath.toStdString().c_str()) &&
+        // AppImages in AppImages are not supposed to be integrated
+        appImagePath.startsWith("/tmp/.mount_");
 
     return result;
 }

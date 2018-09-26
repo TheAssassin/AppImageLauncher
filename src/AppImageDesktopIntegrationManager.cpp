@@ -56,7 +56,7 @@ void AppImageDesktopIntegrationManager::tryMoveAppImage(const QString& pathToApp
 
         if (!succeed)
             throw IntegrationFailed(QObject::tr("Unable to move or copy AppImage to %1.")
-                                            .arg(integratedAppImagesDir.path()).toStdString());
+                                        .arg(integratedAppImagesDir.path()).toStdString());
     }
 }
 
@@ -122,7 +122,7 @@ bool AppImageDesktopIntegrationManager::installDesktopFile(const QString& pathTo
 
     if (!g_key_file_load_from_file(desktopFile.get(), desktopFilePath, flags, error.get()))
         throw IntegrationFailed(QObject::tr("Failed to load desktop file: %1")
-                                        .arg(QString::fromLocal8Bit((*error)->message)).toStdString());
+                                    .arg(QString::fromLocal8Bit((*error)->message)).toStdString());
 
 
     const auto* nameEntry = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP,
@@ -137,10 +137,10 @@ bool AppImageDesktopIntegrationManager::installDesktopFile(const QString& pathTo
     char const* desktopActions[] = {"Remove", "Update"};
 
     g_key_file_set_string_list(
-            desktopFile.get(),
-            G_KEY_FILE_DESKTOP_GROUP,
-            G_KEY_FILE_DESKTOP_KEY_ACTIONS,
-            desktopActions, 2
+        desktopFile.get(),
+        G_KEY_FILE_DESKTOP_GROUP,
+        G_KEY_FILE_DESKTOP_KEY_ACTIONS,
+        desktopActions, 2
     );
 
     // load translations from JSON file(s)
@@ -217,7 +217,7 @@ bool AppImageDesktopIntegrationManager::installDesktopFile(const QString& pathTo
 
     if (!g_key_file_save_to_file(desktopFile.get(), desktopFilePath, error.get()))
         throw IntegrationFailed(QObject::tr("Failed to save desktop file: %1")
-                                        .arg(QString::fromLocal8Bit((*error)->message)).toStdString());
+                                    .arg(QString::fromLocal8Bit((*error)->message)).toStdString());
 
     // notify KDE/Plasma about icon change
     {
@@ -246,7 +246,7 @@ AppImageDesktopIntegrationManager::readTranslationsFile(const QString& filePath,
 
     if (!jsonFile.open(QIODevice::ReadOnly))
         qWarning() << QObject::tr("Could not parse desktop file translations: Could not open file for reading %1")
-                .arg(fileName);
+            .arg(fileName);
 
     // TODO: need to make sure that this doesn't try to read huge files at once
     auto data = jsonFile.readAll();
@@ -257,7 +257,7 @@ AppImageDesktopIntegrationManager::readTranslationsFile(const QString& filePath,
     // show warning on syntax errors and continue
     if (parseError.error != QJsonParseError::NoError || jsonDoc.isNull() || !jsonDoc.isObject())
         qWarning() << QObject::tr("Could not parse desktop file translations: Invalid syntax %1")
-                .arg(parseError.errorString());
+            .arg(parseError.errorString());
 
     return jsonDoc.object();
 }
@@ -307,7 +307,7 @@ void AppImageDesktopIntegrationManager::updateAppImage(const QString& pathToAppI
 void AppImageDesktopIntegrationManager::removeAppImageIntegration(const QString& appImagePath) {
     if (appimage_unregister_in_system(appImagePath.toStdString().c_str(), false) != 0) {
         throw AppImageIntegrationRemovalFailed(
-                QObject::tr("Unable to remove AppImage Desktop integration files.").toStdString());
+            QObject::tr("Unable to remove AppImage Desktop integration files.").toStdString());
     }
 }
 
@@ -329,10 +329,10 @@ const QString AppImageDesktopIntegrationManager::getIntegratedAppImagesDirPath()
 
 bool AppImageDesktopIntegrationManager::updateDesktopDatabaseAndIconCaches() {
     auto commands = {
-            "update-desktop-database ~/.local/share/applications",
-            "gtk-update-icon-cache-3.0 ~/.local/share/icons/hicolor/ -t",
-            "gtk-update-icon-cache ~/.local/share/icons/hicolor/ -t",
-            "xdg-desktop-menu forceupdate",
+        "update-desktop-database ~/.local/share/applications",
+        "gtk-update-icon-cache-3.0 ~/.local/share/icons/hicolor/ -t",
+        "gtk-update-icon-cache ~/.local/share/icons/hicolor/ -t",
+        "xdg-desktop-menu forceupdate",
     };
 
     for (const auto& command : commands) {
@@ -421,10 +421,10 @@ bool AppImageDesktopIntegrationManager::cleanUpOldDesktopIntegrationResources(bo
         }
 
         std::shared_ptr<char> execValue(
-                g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_EXEC,
-                                      nullptr), [](char* p) {
-                    free(p);
-                });
+            g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_EXEC,
+                                  nullptr), [](char* p) {
+                free(p);
+            });
 
         // if there is no Exec value in the file, the desktop file is apparently broken, therefore we skip the file
         if (execValue == nullptr) {
@@ -432,10 +432,10 @@ bool AppImageDesktopIntegrationManager::cleanUpOldDesktopIntegrationResources(bo
         }
 
         std::shared_ptr<char> tryExecValue(
-                g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_TRY_EXEC,
-                                      nullptr), [](char* p) {
-                    free(p);
-                });
+            g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_TRY_EXEC,
+                                  nullptr), [](char* p) {
+                free(p);
+            });
 
         // TryExec is optional, although recently the desktop integration functions started to force add such keys
         // with a path to the desktop file

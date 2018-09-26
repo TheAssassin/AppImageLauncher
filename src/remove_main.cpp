@@ -36,7 +36,7 @@ bool unregisterAppImage(const QString& pathToAppImage) {
 int main(int argc, char** argv) {
     QCommandLineParser parser;
     parser.setApplicationDescription(
-            QObject::tr("Removes AppImages after desktop integration, for use by Linux distributions"));
+        QObject::tr("Removes AppImages after desktop integration, for use by Linux distributions"));
     QApplication app(argc, argv);
     app.setApplicationDisplayName(QObject::tr("AppImageLauncher remove", "remove helper app name"));
 
@@ -72,18 +72,18 @@ int main(int argc, char** argv) {
 
     if (type <= 0 || type > 2) {
         QMessageBox::critical(
-                nullptr,
-                QObject::tr("AppImage remove helper error"), QObject::tr("Not an AppImage: %1").arg(pathToAppImage)
+            nullptr,
+            QObject::tr("AppImage remove helper error"), QObject::tr("Not an AppImage: %1").arg(pathToAppImage)
         );
         return 1;
     }
 
     auto clickedButton = QMessageBox::question(
-            nullptr,
-            QObject::tr("Please confirm"),
-            QObject::tr("Are you sure you want to remove this AppImage?") + "\n\n" + pathToAppImage,
-            QMessageBox::No | QMessageBox::Yes,
-            QMessageBox::No
+        nullptr,
+        QObject::tr("Please confirm"),
+        QObject::tr("Are you sure you want to remove this AppImage?") + "\n\n" + pathToAppImage,
+        QMessageBox::No | QMessageBox::Yes,
+        QMessageBox::No
     );
 
     switch (clickedButton) {
@@ -91,9 +91,9 @@ int main(int argc, char** argv) {
             // first, unregister AppImage
             if (!unregisterAppImage(pathToAppImage)) {
                 QMessageBox::critical(
-                        nullptr,
-                        QObject::tr("Error"),
-                        QObject::tr("Failed to unregister AppImage: %1").arg(pathToAppImage)
+                    nullptr,
+                    QObject::tr("Error"),
+                    QObject::tr("Failed to unregister AppImage: %1").arg(pathToAppImage)
                 );
                 return 1;
             }
@@ -103,9 +103,9 @@ int main(int argc, char** argv) {
             // now, move AppImage into trash bin
             if (!bin.disposeAppImage(pathToAppImage)) {
                 QMessageBox::critical(
-                        nullptr,
-                        QObject::tr("Error"),
-                        QObject::tr("Failed to move AppImage into trash bin directory")
+                    nullptr,
+                    QObject::tr("Error"),
+                    QObject::tr("Failed to move AppImage into trash bin directory")
                 );
                 return 1;
             }
@@ -115,9 +115,9 @@ int main(int argc, char** argv) {
             // otherwise, it'll be cleaned up at some subsequent run of AppImageLauncher or the removal tool
             if (!bin.cleanUp()) {
                 QMessageBox::critical(
-                        nullptr,
-                        QObject::tr("Error"),
-                        QObject::tr("Failed to clean up AppImage trash bin: %1").arg(bin.path())
+                    nullptr,
+                    QObject::tr("Error"),
+                    QObject::tr("Failed to clean up AppImage trash bin: %1").arg(bin.path())
                 );
                 return 1;
             }

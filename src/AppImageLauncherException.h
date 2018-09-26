@@ -5,8 +5,9 @@
 
 class AppImageLauncherException : public std::runtime_error {
 public:
-    AppImageLauncherException() :  runtime_error("") {}
-    explicit AppImageLauncherException(const std::string &what) : runtime_error(what) {}
+    AppImageLauncherException() : runtime_error("") {}
+
+    explicit AppImageLauncherException(const std::string& what) : runtime_error(what) {}
 };
 
 

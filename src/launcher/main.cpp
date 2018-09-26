@@ -115,21 +115,21 @@ void applyDaemonConfig() {
 QMessageBox::StandardButton askToMoveFileIntoApplications(const QString& pathToAppImage,
                                                           const QString& integratedAppImagesDirPath) {
     auto rv = QMessageBox::warning(
-            nullptr,
-            QMessageBox::tr("Warning"),
-            QMessageBox::tr(
-                    "AppImage %1 has already been integrated, but it is not in the current integration "
-                    "destination directory."
-                    "\n\n"
-                    "Do you want to move it into the new destination?"
-                    "\n\n"
-                    "Choosing No will run the AppImage once, and leave the AppImage in its current "
-                    "directory."
-                    "\n\n").arg(pathToAppImage) +
-            // translate separately to share string with the other dialog
-            QObject::tr("The directory the integrated AppImages are stored in is currently set to:\n"
-                        "%1").arg(integratedAppImagesDirPath) + "\n",
-            QMessageBox::Yes | QMessageBox::No
+        nullptr,
+        QMessageBox::tr("Warning"),
+        QMessageBox::tr(
+            "AppImage %1 has already been integrated, but it is not in the current integration "
+            "destination directory."
+            "\n\n"
+            "Do you want to move it into the new destination?"
+            "\n\n"
+            "Choosing No will run the AppImage once, and leave the AppImage in its current "
+            "directory."
+            "\n\n").arg(pathToAppImage) +
+        // translate separately to share string with the other dialog
+        QObject::tr("The directory the integrated AppImages are stored in is currently set to:\n"
+                    "%1").arg(integratedAppImagesDirPath) + "\n",
+        QMessageBox::Yes | QMessageBox::No
     );
     return rv;
 }
@@ -144,9 +144,9 @@ int executeGuiApplication(int argc, char** argv) {
     // clean up old desktop files
     if (!AppImageDesktopIntegrationManager::cleanUpOldDesktopIntegrationResources()) {
         QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to clean up old desktop files")
+            nullptr,
+            QObject::tr("Error"),
+            QObject::tr("Failed to clean up old desktop files")
         );
     }
 
@@ -154,9 +154,9 @@ int executeGuiApplication(int argc, char** argv) {
     TrashBin trashBin;
     if (!trashBin.cleanUp()) {
         QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to clean up AppImage trash bin: %1").arg(trashBin.path())
+            nullptr,
+            QObject::tr("Error"),
+            QObject::tr("Failed to clean up AppImage trash bin: %1").arg(trashBin.path())
         );
     }
 
@@ -180,21 +180,21 @@ int executeGuiApplication(int argc, char** argv) {
         return 1;
     } catch (const InvalidAppImageFile& ex) {
         QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Not an AppImage: %1").arg(pathToAppImage));
+            nullptr,
+            QObject::tr("Error"),
+            QObject::tr("Not an AppImage: %1").arg(pathToAppImage));
         return 1;
     } catch (const AppImageFileNotExists& ex) {
         QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("No such file or directory: %1").arg(pathToAppImage));
+            nullptr,
+            QObject::tr("Error"),
+            QObject::tr("No such file or directory: %1").arg(pathToAppImage));
         return 1;
     } catch (const UnsuportedAppImageType& ex) {
         QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Not an AppImage: %1").arg(pathToAppImage));
+            nullptr,
+            QObject::tr("Error"),
+            QObject::tr("Not an AppImage: %1").arg(pathToAppImage));
         return 1;
     }
 
@@ -204,9 +204,9 @@ int executeGuiApplication(int argc, char** argv) {
             return 0;
         } catch (const std::runtime_error& ex) {
             QMessageBox::critical(
-                    nullptr,
-                    QObject::tr("Error"),
-                    QObject::tr("Unable to execute the AppImage: %1").arg(pathToAppImage));
+                nullptr,
+                QObject::tr("Error"),
+                QObject::tr("Unable to execute the AppImage: %1").arg(pathToAppImage));
             return 2;
         }
     }
