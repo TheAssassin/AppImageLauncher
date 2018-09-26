@@ -64,7 +64,7 @@ void UI::setLauncher(Launcher* launcher) {
 
 void UI::showIntegrationPage() {
     try {
-        setAppImageInfo();
+        fillFields();
     } catch (const AppImageFileNotExists& ex) {
         notifyError(ex);
     } catch (const AppImageFilePathNotSet&) {
@@ -81,7 +81,7 @@ void UI::showIntegrationPage() {
     show();
 }
 
-void UI::setAppImageInfo() {
+void UI::fillFields() {
     auto info = launcher->getAppImageInfo();
 
     QString name = getLocalizedString(info, "name");
@@ -92,29 +92,37 @@ void UI::setAppImageInfo() {
     sha512Checksum = QString::fromStdString(info["file"]["sha512checksum"].get<std::string>());
     auto arch = info["file"]["architecture"];
 
-    setLicense(info);
-    setCategories(info);
+    fillLicenseField(info);
+    fillCategoriesField(info);
 
     ui->labelType->setNum(type);
     ui->labelArchitecture->setText(QString::fromStdString(arch));
 
-    setLinks(info);
+    fillLinksField(info);
 
-    if (description.isEmpty())
-        ui->labelDescription->setText(abstract);
-    else
-        ui->labelDescription->setText(description);
+    fillDescriptionField(abstract, description);
 
     ui->labelName->setText(name);
     ui->labelAbstract->setText(abstract);
 
+    fillIconField();
+
+    hideDetails();
+}
+
+void UI::fillDescriptionField(const QString& abstract, const QString& description) const {
+    if (description.isEmpty())
+        ui->labelDescription->setText(abstract);
+    else
+        ui->labelDescription->setText(description);
+}
+
+void UI::fillIconField() const {
     auto icon = launcher->getAppImageIcon();
     if (icon.isNull())
         setDefaultIcon();
     else
         ui->labelIcon->setPixmap(icon.pixmap(64, 64));
-
-    hideDetails();
 }
 
 void UI::setFileCorruptedWarningMessage() const {
@@ -133,7 +141,7 @@ void UI::setFileCorruptedWarningMessage() const {
     hideDetails();
 }
 
-void UI::setLicense(const nlohmann::json& info) const {
+void UI::fillLicenseField(const nlohmann::json& info) const {
     QString licenseText;
     if (info.find("license") != info.end()) {
         auto license = info["license"];
@@ -146,7 +154,7 @@ void UI::setLicense(const nlohmann::json& info) const {
         ui->labelLicense->setText(licenseText);
 }
 
-void UI::setCategories(const nlohmann::json& info) const {
+void UI::fillCategoriesField(const nlohmann::json& info) const {
     QStringList categories;
     if (info.find("categories") != info.end()) {
         for (const auto& item: info["categories"]) {
@@ -163,7 +171,7 @@ void UI::setCategories(const nlohmann::json& info) const {
         ui->labelCategories->setText(categories.join(" "));
 }
 
-void UI::setLinks(const nlohmann::json& info) const {
+void UI::fillLinksField(const nlohmann::json& info) const {
     QStringList links;
     if (info.find("links") != info.end()) {
         for (auto it = info["links"].begin(); it != info["links"].end(); ++it) {

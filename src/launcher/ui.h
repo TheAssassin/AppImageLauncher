@@ -45,19 +45,23 @@ private:
 
     void setDefaultIcon() const;
 
-    void setLinks(const nlohmann::json& info) const;
-
     void hideDetails() const;
 
     void showDetails() const;
 
-    void setCategories(const nlohmann::json& info) const;
+    void fillLinksField(const nlohmann::json& info) const;
 
-    void setLicense(const nlohmann::json& info) const;
+    void fillCategoriesField(const nlohmann::json& info) const;
+
+    void fillLicenseField(const nlohmann::json& info) const;
 
     void setFileCorruptedWarningMessage() const;
 
-    void setAppImageInfo();
+    void fillFields();
+
+    void fillIconField() const;
+
+    void fillDescriptionField(const QString& abstract, const QString& description) const;
 };
 
 #endif // UI_H
