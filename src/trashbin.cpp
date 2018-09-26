@@ -60,7 +60,10 @@ bool TrashBin::disposeAppImage(const QString& pathToAppImage) {
     if (!QFile(pathToAppImage).rename(newPath))
         return false;
 
-    return QFile::setPermissions(newPath, QFile::ReadOwner);
+    if (!QFile::setPermissions(newPath, QFile::ReadOwner))
+        return false;
+
+    return true;
 }
 
 bool TrashBin::cleanUp() {
