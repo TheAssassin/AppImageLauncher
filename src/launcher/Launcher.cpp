@@ -11,24 +11,12 @@
 #include "Launcher.h"
 
 
-const QString& Launcher::getAppImagePath() const {
-    return appImagePath;
-}
-
 void Launcher::setAppImagePath(const QString& appImagePath) {
     Launcher::appImagePath = appImagePath;
 }
 
-const std::vector<char*>& Launcher::getArgs() const {
-    return args;
-}
-
 void Launcher::setArgs(const std::vector<char*>& args) {
     Launcher::args = args;
-}
-
-int Launcher::getAppImageType() const {
-    return appImageType;
 }
 
 

@@ -18,15 +18,9 @@ class Launcher {
     AppImageDesktopIntegrationManager* integrationManager{nullptr};
 
 public:
-    const QString& getAppImagePath() const;
-
     void setAppImagePath(const QString& appImagePath);
 
-    const std::vector<char*>& getArgs() const;
-
     void setArgs(const std::vector<char*>& args);
-
-    int getAppImageType() const;
 
     void setIntegrationManager(AppImageDesktopIntegrationManager* integrationManager);
 
@@ -54,7 +48,6 @@ public:
     QIcon getAppImageIcon();
 
 public slots:
-
     void integrateAppImage();
 
 private:
