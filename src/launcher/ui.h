@@ -11,15 +11,13 @@ namespace Ui {
 
 class UI : public QDialog {
 Q_OBJECT
-
     Launcher* launcher{nullptr};
     QString sha512Checksum;
 
 public:
+    explicit UI(QWidget* parent = nullptr);
 
-    explicit UI(QWidget* parent = 0);
-
-    ~UI();
+    ~UI() override;
 
     void setLauncher(Launcher* launcher);
 
@@ -32,7 +30,6 @@ public:
     void showCompletionPage();
 
 protected slots:
-
     void handleIntegrationRequested();
 
     void handleExecutionRequested();
