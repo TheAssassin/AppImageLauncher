@@ -33,8 +33,6 @@ public slots:
 
     void scheduleForUnintegration(const QString& path);
 
-public slots:
-
     void executeDeferredOperations();
 
 private slots:
