@@ -85,7 +85,6 @@ int main(int argc, char* argv[]) {
     QThread::connect(&watcherThread, &QThread::started, &watcher, &FileSystemWatcher::readEventsForever);
     watcherThread.start();
 
-    app.exec();
-
-    watcher.stopWatching();
+    QObject::connect(&app, &QCoreApplication::aboutToQuit, &watcher, &FileSystemWatcher::stopWatching);
+    return app.exec();
 }

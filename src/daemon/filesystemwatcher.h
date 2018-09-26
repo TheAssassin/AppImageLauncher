@@ -28,12 +28,11 @@ public:
 
     FileSystemWatcher();
 
-public:
+public slots:
+
     bool startWatching();
 
     bool stopWatching();
-
-public slots:
 
     void readEventsForever();
 
