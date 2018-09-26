@@ -1,6 +1,4 @@
-extern "C" {
 #include "unistd.h"
-}
 
 #include <QFile>
 #include <QDebug>
