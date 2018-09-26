@@ -261,7 +261,7 @@ QIcon Launcher::getAppImageIcon() {
     if (temporaryFile.open()) {
 
         appimage_extract_icon_file(appImagePath.toStdString().c_str(),
-                                             temporaryFile.fileName().toStdString().c_str());
+                                   temporaryFile.fileName().toStdString().c_str());
         QIcon icon(temporaryFile.fileName());
         return icon;
     }

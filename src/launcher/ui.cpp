@@ -7,7 +7,7 @@
 #include "ui.h"
 #include "ui_ui.h"
 
-UI::UI(QWidget *parent) :
+UI::UI(QWidget* parent) :
         QDialog(parent),
         ui(new Ui::UI) {
     ui->setupUi(this);
@@ -44,13 +44,13 @@ void UI::askIfAppImageFileShouldBeOverridden() {
         try {
             launcher->overrideAppImageIntegration();
             showCompletionPage();
-        } catch (const std::runtime_error &ex) {
+        } catch (const std::runtime_error& ex) {
             notifyError(ex);
         }
     }
 }
 
-void UI::notifyError(const std::runtime_error &ex) {
+void UI::notifyError(const std::runtime_error& ex) {
     QMessageBox::critical(
             this,
             QObject::tr("Error"),
@@ -58,18 +58,18 @@ void UI::notifyError(const std::runtime_error &ex) {
     );
 }
 
-void UI::setLauncher(Launcher *launcher) {
+void UI::setLauncher(Launcher* launcher) {
     UI::launcher = launcher;
 }
 
 void UI::showIntegrationPage() {
     try {
         setAppImageInfo();
-    } catch (const AppImageFileNotExists &ex) {
+    } catch (const AppImageFileNotExists& ex) {
         notifyError(ex);
-    } catch (const AppImageFilePathNotSet &) {
+    } catch (const AppImageFilePathNotSet&) {
         qWarning() << "Launcher instance not initialized properly.";
-    } catch (const InvalidAppImageFile &ex) {
+    } catch (const InvalidAppImageFile& ex) {
         setFileCorruptedWarningMessage();
     }
 
@@ -133,7 +133,7 @@ void UI::setFileCorruptedWarningMessage() const {
     hideDetails();
 }
 
-void UI::setLicense(const nlohmann::json &info) const {
+void UI::setLicense(const nlohmann::json& info) const {
     QString licenseText;
     if (info.find("license") != info.end()) {
         auto license = info["license"];
@@ -146,10 +146,10 @@ void UI::setLicense(const nlohmann::json &info) const {
         ui->labelLicense->setText(licenseText);
 }
 
-void UI::setCategories(const nlohmann::json &info) const {
+void UI::setCategories(const nlohmann::json& info) const {
     QStringList categories;
     if (info.find("categories") != info.end()) {
-        for (const auto &item: info["categories"]) {
+        for (const auto& item: info["categories"]) {
             const auto text = QString::fromStdString(item.get<std::string>());
             // Ignore custom categories
             if (!text.startsWith("X", Qt::CaseInsensitive))
@@ -163,7 +163,7 @@ void UI::setCategories(const nlohmann::json &info) const {
         ui->labelCategories->setText(categories.join(" "));
 }
 
-void UI::setLinks(const nlohmann::json &info) const {
+void UI::setLinks(const nlohmann::json& info) const {
     QStringList links;
     if (info.find("links") != info.end()) {
         for (auto it = info["links"].begin(); it != info["links"].end(); ++it) {
@@ -180,7 +180,7 @@ void UI::setLinks(const nlohmann::json &info) const {
         ui->labelLinks->setText(links.join(" "));
 }
 
-QString UI::getLocalizedString(const nlohmann::json &info, const std::string &field) const {
+QString UI::getLocalizedString(const nlohmann::json& info, const std::string& field) const {
     QString value;
     auto locale = QLocale::system().name().toStdString();
     if (info.find(field) != info.end()) {
@@ -202,9 +202,9 @@ void UI::handleIntegrationRequested() {
     try {
         launcher->integrateAppImage();
         showCompletionPage();
-    } catch (const IntegrationFailed &ex) {
+    } catch (const IntegrationFailed& ex) {
         notifyError(ex);
-    } catch (const OverridingExistingAppImageFile &) {
+    } catch (const OverridingExistingAppImageFile&) {
         askIfAppImageFileShouldBeOverridden();
     }
 }
@@ -213,7 +213,7 @@ void UI::handleExecutionRequested() {
     try {
         launcher->executeAppImage();
     }
-    catch (const std::runtime_error &error) {
+    catch (const std::runtime_error& error) {
         notifyError(error);
     }
 }
@@ -238,7 +238,7 @@ void UI::hideDetails() const {
 }
 
 void UI::handleCopyCheckSumRequested() {
-    QClipboard *clipboard = QGuiApplication::clipboard();
+    QClipboard* clipboard = QGuiApplication::clipboard();
     clipboard->setText(sha512Checksum);
     QToolTip::showText(ui->copyCheckSumButton->mapToGlobal(QPoint(20, 0)), tr("Copied to clipboard"));
 }
