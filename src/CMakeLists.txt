@@ -54,9 +54,6 @@ target_compile_definitions(shared PRIVATE -DCMAKE_INSTALL_PREFIX="${CMAKE_INSTAL
 
 target_include_directories(shared PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-add_library(filesystemwatcher STATIC daemon/filesystemwatcher.cpp daemon/filesystemwatcher.h)
-target_link_libraries(filesystemwatcher PUBLIC Qt5::Core)
-target_include_directories(filesystemwatcher PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 add_subdirectory(launcher)
 add_subdirectory(daemon)
 
