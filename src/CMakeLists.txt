@@ -50,8 +50,7 @@ target_link_libraries(shared PUBLIC
     libappimageinfo
     translationmanager)
 
-target_compile_definitions(shared
-    PRIVATE -DCMAKE_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
+target_compile_definitions(shared PRIVATE -DCMAKE_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
 
 target_include_directories(shared PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
