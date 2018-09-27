@@ -4,10 +4,12 @@
 #include <vector>
 #include <QString>
 #include <QIcon>
+
 #include <nlohmann/json.hpp>
-#include "../AppImageDesktopIntegrationManager.h"
-#include "../AppImageLauncherException.h"
-#include "../trashbin.h"
+
+#include <AppImageDesktopIntegrationManager.h>
+#include <AppImageLauncherException.h>
+#include <trashbin.h>
 
 class Launcher {
     QString appImagePath;
