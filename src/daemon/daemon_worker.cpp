@@ -175,7 +175,7 @@ void Worker::scheduleForUnintegration(const QString& path) {
 void Worker::startTimerIfNecessary() {
     if (!isTimerActive) {
         isTimerActive = true;
-        QTimer::singleShot(TIMEOUT, this, &Worker::handleTimerTimeout);
+        QTimer::singleShot(TIMEOUT, this, SLOT(handleTimerTimeout()));
     }
 }
 
