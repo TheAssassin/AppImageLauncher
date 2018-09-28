@@ -48,9 +48,6 @@ matrix:
             - libfontconfig1-dev
             - libfreetype6-dev
             - libarchive-dev
-            - binutils-dev
-            - binutils-multiarch
-            - binutils-multiarch-dev
             - libxml2-dev
             - libboost-filesystem-dev
             - libboost-program-options-dev
@@ -88,9 +85,6 @@ matrix:
             - libfontconfig1-dev:i386
             - libfreetype6-dev:i386
             - libarchive-dev:i386
-            - binutils-dev:i386
-            - binutils-multiarch:i386
-            - binutils-multiarch-dev:i386
             - libxml2-dev:i386
             - libboost-filesystem-dev:i386
             - libboost-program-options-dev:i386
