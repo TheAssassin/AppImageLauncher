@@ -20,12 +20,12 @@ find_package(INotify REQUIRED)
 
 
 # disable Qt debug messages except for debug builds
-if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     message(STATUS "CMake build type is ${CMAKE_BUILD_TYPE}, hence disabling debug messages in AppImageLauncher")
     add_definitions(-DQT_NO_DEBUG_OUTPUT)
     add_definitions(-DQT_NO_INFO_OUTPUT)
     add_definitions(-DQT_NO_WARNING_OUTPUT)
-endif ()
+endif()
 
 # utility library
 add_library(translationmanager translationmanager.cpp translationmanager.h)
