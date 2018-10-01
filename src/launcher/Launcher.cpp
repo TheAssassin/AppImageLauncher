@@ -139,7 +139,7 @@ void Launcher::executeAppImage() {
 
         // next method: find runtime in expected build location
         if (!QFile(QString::fromStdString(pathToRuntime)).exists()) {
-            pathToRuntime = exeDir.toStdString() + "/../lib/AppImageKit/src/runtime";
+            pathToRuntime = exeDir.toStdString() + "/../../lib/AppImageKit/src/runtime";
         }
 
         // if it can't be found in either location, display error and exit
