@@ -198,7 +198,7 @@ int executeGuiApplication(int argc, char** argv) {
         return 1;
     }
 
-    if (launcher.shouldBeIgnored()) {
+    if (launcher.isCandidateForDesktopIntegration()) {
         try {
             launcher.executeAppImage();
             return 0;

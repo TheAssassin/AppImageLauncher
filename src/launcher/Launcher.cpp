@@ -178,7 +178,7 @@ void Launcher::tryToMakeAppImageFileExecutable(const QString& path) const {
                                   .arg(path).toStdString());
 }
 
-bool Launcher::shouldBeIgnored() {
+bool Launcher::isCandidateForDesktopIntegration() {
     bool result =
         isAMountOrExtractOperation() &&
         // check for X-AppImage-Integrate=false
