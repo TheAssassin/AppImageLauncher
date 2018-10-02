@@ -27,7 +27,7 @@ void Launcher::inspectAppImageFile() {
     if (!QFile::exists(appImagePath))
         throw AppImageFileNotExists(appImagePath.toStdString());
 
-    validateAppImageType();
+    validateAppImageType();     // @throws InvalidAppImageFile, UnsuportedAppImageType
 }
 
 void Launcher::validateAppImageType() {
