@@ -4,6 +4,7 @@
 // library includes
 #include <QObject>
 #include <QTimer>
+#include <QSharedPointer>
 #include <AppImageDesktopIntegrationManager.h>
 
 #pragma once
@@ -17,11 +18,11 @@ Q_OBJECT
     bool isTimerActive{false};
 
     std::shared_ptr<PrivateData> d = nullptr;
-    AppImageDesktopIntegrationManager* integrationManager{nullptr};
+    QSharedPointer<AppImageDesktopIntegrationManager> integrationManager;
 public:
     Worker();
 
-    void setIntegrationManager(AppImageDesktopIntegrationManager* integrationManager);
+    void setIntegrationManager(QSharedPointer<AppImageDesktopIntegrationManager> integrationManager);
 
 signals:
 

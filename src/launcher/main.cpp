@@ -168,13 +168,14 @@ int executeGuiApplication(int argc, char** argv) {
 
     AppImageDesktopIntegrationManager integrationManager;
     UI ui;
-    Launcher launcher;
-    launcher.setAppImagePath(pathToAppImage);
-    launcher.setArgs(appImageArgv);
-    launcher.setIntegrationManager(&integrationManager);
-    launcher.setTrashBin(&trashBin);
+    QSharedPointer<Launcher> launcher(new Launcher());
+    launcher->setAppImagePath(pathToAppImage);
+    launcher->setArgs(appImageArgv);
+    launcher->setIntegrationManager(&integrationManager);
+    launcher->setTrashBin(&trashBin);
+
     try {
-        launcher.inspectAppImageFile();
+        launcher->inspectAppImageFile();
     } catch (const AppImageFilePathNotSet& ex) {
         qCritical() << "Missing AppImagePath in Launcher class. I wasn't initialized properly.";
         return 1;
@@ -198,9 +199,9 @@ int executeGuiApplication(int argc, char** argv) {
         return 1;
     }
 
-    if (launcher.isCandidateForDesktopIntegration()) {
+    if (launcher->isCandidateForDesktopIntegration()) {
         try {
-            launcher.executeAppImage();
+            launcher->executeAppImage();
             return 0;
         } catch (const std::runtime_error& ex) {
             QMessageBox::critical(
@@ -224,21 +225,21 @@ int executeGuiApplication(int argc, char** argv) {
             if (response == QMessageBox::Yes) {
                 integrationManager.removeAppImageIntegration(pathToAppImage);
                 integrationManager.integrateAppImage(pathToAppImage);
-                launcher.setAppImagePath(pathToIntegratedAppImage);
-                launcher.executeAppImage();
+                launcher->setAppImagePath(pathToIntegratedAppImage);
+                launcher->executeAppImage();
             } else {
                 integrationManager.updateAppImage(pathToAppImage);
-                launcher.setAppImagePath(pathToAppImage);
-                launcher.executeAppImage();
+                launcher->setAppImagePath(pathToAppImage);
+                launcher->executeAppImage();
             }
         } else {
             integrationManager.updateAppImage(pathToAppImage);
-            launcher.executeAppImage();
+            launcher->executeAppImage();
         }
     }
 
 
-    ui.setLauncher(&launcher);
+    ui.setLauncher(launcher);
     ui.showIntegrationPage();
 
     return QApplication::exec();

@@ -34,13 +34,13 @@ public:
         Operation operation;
         std::shared_ptr<QMutex> mutex;
 
-        AppImageDesktopIntegrationManager* integrationManager{nullptr};
+        QSharedPointer<AppImageDesktopIntegrationManager> integrationManager{nullptr};
 
     public:
         OperationTask(const Operation& operation, std::shared_ptr<QMutex> mutex) : operation(operation),
                                                                                    mutex(std::move(mutex)) {}
 
-        void setIntegrationManager(AppImageDesktopIntegrationManager* integrationManager) {
+        void setIntegrationManager(QSharedPointer<AppImageDesktopIntegrationManager> integrationManager) {
             OperationTask::integrationManager = integrationManager;
         }
 
@@ -179,7 +179,7 @@ void Worker::startTimerIfNecessary() {
     }
 }
 
-void Worker::setIntegrationManager(AppImageDesktopIntegrationManager* integrationManager) {
+void Worker::setIntegrationManager(QSharedPointer<AppImageDesktopIntegrationManager> integrationManager) {
     Worker::integrationManager = integrationManager;
 }
 

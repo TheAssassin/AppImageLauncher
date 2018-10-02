@@ -58,7 +58,7 @@ void UI::notifyError(const std::runtime_error& ex) {
     );
 }
 
-void UI::setLauncher(Launcher* launcher) {
+void UI::setLauncher(QSharedPointer<Launcher> launcher) {
     UI::launcher = launcher;
 }
 

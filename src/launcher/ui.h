@@ -14,7 +14,7 @@ namespace Ui {
  */
 class UI : public QDialog {
 Q_OBJECT
-    Launcher* launcher{nullptr};
+    QSharedPointer<Launcher> launcher;
     QString sha512Checksum;
 
 public:
@@ -22,7 +22,7 @@ public:
 
     ~UI() override;
 
-    void setLauncher(Launcher* launcher);
+    void setLauncher(QSharedPointer<Launcher> launcher);
 
     void askIfAppImageFileShouldBeOverridden();
 

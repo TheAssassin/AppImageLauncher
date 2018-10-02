@@ -18,16 +18,16 @@
 int main(int argc, char* argv[]) {
     QCoreApplication app(argc, argv);
 
-    AppImageDesktopIntegrationManager integrationManager;
+    QSharedPointer<AppImageDesktopIntegrationManager> integrationManager(new AppImageDesktopIntegrationManager());
 
     // by default, watch configured/default destination directory only
-    const auto defaultDestination = integrationManager.getIntegratedAppImagesDir();
+    const auto defaultDestination = integrationManager->getIntegratedAppImagesDir();
     FileSystemWatcher watcher(defaultDestination.absolutePath());
 
     // create a daemon worker instance
     // it is used to integrate all AppImages initially, and to integrate files found via inotify
     Worker worker;
-    worker.setIntegrationManager(&integrationManager);
+    worker.setIntegrationManager(integrationManager);
 
     // initial search for AppImages; if AppImages are found, they will be integrated, unless they already are
     std::cout << "Searching for existing AppImages" << std::endl;
@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
     worker.executeDeferredOperations();
 
     // after (re-)integrating all AppImages, clean up old desktop integration resources before start
-    if (!integrationManager.cleanUpOldDesktopIntegrationResources()) {
+    if (!integrationManager->cleanUpOldDesktopIntegrationResources()) {
         std::cout << "Failed to clean up old desktop integration resources" << std::endl;
     }
 
