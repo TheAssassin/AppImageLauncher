@@ -25,11 +25,9 @@ public:
     void setIntegrationManager(QSharedPointer<AppImageDesktopIntegrationManager> integrationManager);
 
 signals:
-
     void startTimer();
 
 public slots:
-
     void scheduleForIntegration(const QString& path);
 
     void scheduleForUnintegration(const QString& path);
@@ -37,7 +35,6 @@ public slots:
     void executeDeferredOperations();
 
 private slots:
-
     void startTimerIfNecessary();
 
     void handleTimerTimeout();

@@ -123,8 +123,6 @@ public:
      */
     QIcon getAppImageIcon();
 
-public slots:
-
     /**
      * Execute the integrateAppImage method from the AppImageDesktopIntegrationManager
      *

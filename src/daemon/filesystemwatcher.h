@@ -29,7 +29,6 @@ public:
     FileSystemWatcher();
 
 public slots:
-
     bool startWatching();
 
     bool stopWatching();
@@ -40,7 +39,6 @@ public:
     QStringList directories();
 
 signals:
-
     void fileCreated(QString path);
 
     void fileModified(QString path);
