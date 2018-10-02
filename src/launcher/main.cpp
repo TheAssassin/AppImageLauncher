@@ -2,10 +2,6 @@
 #include <fstream>
 #include <sstream>
 
-extern "C" {
-#include <glib.h>
-}
-
 // library includes
 #include <QApplication>
 #include <QCommandLineParser>
