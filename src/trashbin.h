@@ -3,6 +3,9 @@
 
 #pragma once
 
+/**
+ * Handles AppImages disposal.
+ */
 class TrashBin {
 private:
     class PrivateData;

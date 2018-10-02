@@ -9,6 +9,9 @@ namespace Ui {
     class UI;
 }
 
+/**
+ * Provides a GUI for the Launcher class.
+ */
 class UI : public QDialog {
 Q_OBJECT
     Launcher* launcher{nullptr};

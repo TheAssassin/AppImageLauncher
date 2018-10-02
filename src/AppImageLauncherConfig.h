@@ -6,6 +6,9 @@
 
 class QSettings;
 
+/**
+ * Manages the system configuration of the Launcher.
+ */
 class AppImageLauncherConfig {
 public:
     static QString getIntegratedAppImagesDir();
