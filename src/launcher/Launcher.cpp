@@ -183,11 +183,11 @@ bool Launcher::isCandidateForDesktopIntegration() {
         return false;
 
     // check for X-AppImage-Integrate=false
-    if (appimage_shall_not_be_integrated(appImagePath.toStdString().c_str()))
+    if (appimage_shall_not_be_integrated(appImagePath.toStdString().c_str()) > 0)
         return false;
 
     // ignore terminal apps (fixes #2)
-    if (appimage_is_terminal_app(appImagePath.toStdString().c_str()))
+    if (appimage_is_terminal_app(appImagePath.toStdString().c_str()) > 0)
         return false;
 
     // AppImages in AppImages are not supposed to be integrated
