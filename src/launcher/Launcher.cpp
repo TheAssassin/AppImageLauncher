@@ -179,16 +179,22 @@ void Launcher::tryToMakeAppImageFileExecutable(const QString& path) const {
 }
 
 bool Launcher::isCandidateForDesktopIntegration() {
-    bool result =
-        isAMountOrExtractOperation() &&
-        // check for X-AppImage-Integrate=false
-        appimage_shall_not_be_integrated(appImagePath.toStdString().c_str()) &&
-        // ignore terminal apps (fixes #2)
-        appimage_is_terminal_app(appImagePath.toStdString().c_str()) &&
-        // AppImages in AppImages are not supposed to be integrated
-        appImagePath.startsWith("/tmp/.mount_");
+    if (isAMountOrExtractOperation())
+        return false;
 
-    return result;
+    // check for X-AppImage-Integrate=false
+    if (appimage_shall_not_be_integrated(appImagePath.toStdString().c_str()))
+        return false;
+
+    // ignore terminal apps (fixes #2)
+    if (appimage_is_terminal_app(appImagePath.toStdString().c_str()))
+        return false;
+
+    // AppImages in AppImages are not supposed to be integrated
+    if (appImagePath.startsWith("/tmp/.mount_"))
+        return false;
+
+    return true;
 }
 
 bool Launcher::isAMountOrExtractOperation() const {

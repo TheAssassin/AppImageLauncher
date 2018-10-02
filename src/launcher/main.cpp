@@ -195,7 +195,7 @@ int executeGuiApplication(int argc, char** argv) {
         return 1;
     }
 
-    if (launcher->isCandidateForDesktopIntegration()) {
+    if (!launcher->isCandidateForDesktopIntegration()) {
         try {
             launcher->executeAppImage();
             return 0;
