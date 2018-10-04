@@ -143,8 +143,8 @@ QString buildPathToIntegratedAppImage(const QString& pathToAppImage) {
 }
 
 
-QMap<QString, QString> findCollisions(const QString& currentNameEntry) {
-    QMap<QString, QString> collisions;
+std::map<std::string, std::string> findCollisions(const QString& currentNameEntry) {
+    std::map<std::string, std::string> collisions;
 
     // default locations of desktop files on systems
     const auto directories = {QString("/usr/share/applications/"), QString(xdg_data_home()) + "/applications/"};
@@ -153,7 +153,7 @@ QMap<QString, QString> findCollisions(const QString& currentNameEntry) {
         QDirIterator iterator(directory, QDirIterator::FollowSymlinks);
 
         while (iterator.hasNext()) {
-            const auto& filename = iterator.next();
+            const auto filename = iterator.next();
 
             if (!QFileInfo(filename).isFile() || !filename.endsWith(".desktop"))
                 continue;
@@ -172,7 +172,7 @@ QMap<QString, QString> findCollisions(const QString& currentNameEntry) {
                 continue;
 
             if (QString(nameEntry).trimmed().startsWith(currentNameEntry.trimmed())) {
-                collisions[filename] = QString(nameEntry);
+                collisions[filename.toStdString()] = nameEntry;
             }
         }
     }
@@ -272,7 +272,7 @@ bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
         auto collisions = findCollisions(nameEntry);
 
         // make sure to remove own entry
-        collisions.remove(QString(desktopFilePath));
+        collisions.erase(collisions.find(desktopFilePath));
 
         if (!collisions.empty()) {
             // collisions are resolved like in the filesystem: a monotonically increasing number in brackets is
@@ -282,12 +282,12 @@ bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
 
             unsigned int currentNumber = 1;
 
-            QRegularExpression regex("^.*([0-9]+)$");
+            QRegularExpression regex(R"(^.*\(([0-9]+)\)$)");
 
-            for (const auto& fileName : collisions) {
-                const auto& currentNameEntry = collisions[fileName];
+            for (const auto& collision : collisions) {
+                const auto& currentNameEntry = collision.second;
 
-                auto match = regex.match(currentNameEntry);
+                auto match = regex.match(QString::fromStdString(currentNameEntry));
 
                 if (match.hasMatch()) {
                     const unsigned int num = match.captured(0).toUInt();
