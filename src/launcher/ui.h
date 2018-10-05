@@ -33,8 +33,6 @@ public:
 
     void showIntegrationPage();
 
-    void showCompletionPage();
-
 protected slots:
     void handleIntegrationRequested();
 

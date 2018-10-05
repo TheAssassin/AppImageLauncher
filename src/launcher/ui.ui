@@ -31,7 +31,7 @@
        <item row="6" column="4">
         <widget class="QPushButton" name="integrateButton">
          <property name="text">
-          <string>Integrate</string>
+          <string>Integrate and run</string>
          </property>
          <property name="autoDefault">
           <bool>true</bool>
@@ -371,7 +371,8 @@ p, li { white-space: pre-wrap; }
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="document-open"/>
+             <iconset theme="document-open">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="autoRaise">
              <bool>true</bool>
@@ -399,16 +400,6 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="labelSuccess">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Integration completed successfully.&lt;/p&gt;&lt;p&gt;To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="0">
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
@@ -421,6 +412,16 @@ p, li { white-space: pre-wrap; }
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="labelSuccess">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Integration completed successfully.&lt;/p&gt;&lt;p&gt;To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

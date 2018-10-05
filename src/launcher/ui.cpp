@@ -45,9 +45,9 @@ void UI::askIfAppImageFileShouldBeOverridden() {
     if (rv == QMessageBox::Yes) {
         try {
             launcher->overrideAppImageIntegration();
-            showCompletionPage();
-        } catch (const std::runtime_error& ex) {
-            notifyError(ex);
+            launcher->executeAppImage();
+        } catch (const AppImageLauncherException& error) {
+            notifyError(error);
         }
     }
 }
@@ -219,20 +219,16 @@ QString UI::getLocalizedString(const nlohmann::json& info, const std::string& fi
     return value;
 }
 
-void UI::showCompletionPage() {
-    ui->stackedWidget->setCurrentWidget(ui->completionPage);
-    connect(ui->runButton2, &QPushButton::released, this, &UI::handleExecutionRequested);
-    show();
-}
-
 void UI::handleIntegrationRequested() {
     try {
         launcher->integrateAppImage();
-        showCompletionPage();
+        launcher->executeAppImage();
     } catch (const IntegrationFailed& ex) {
         notifyError(ex);
     } catch (const OverridingExistingAppImageFile&) {
         askIfAppImageFileShouldBeOverridden();
+    } catch (const AppImageLauncherException& error) {
+        notifyError(error);
     }
 }
 
@@ -240,7 +236,7 @@ void UI::handleExecutionRequested() {
     try {
         launcher->executeAppImage();
     }
-    catch (const std::runtime_error& error) {
+    catch (const AppImageLauncherException& error) {
         notifyError(error);
     }
 }
