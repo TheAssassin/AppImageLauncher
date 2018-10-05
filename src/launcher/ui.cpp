@@ -30,7 +30,7 @@ UI::~UI() {
 
 void UI::askIfAppImageFileShouldBeOverridden() {
     std::ostringstream message;
-    message << QObject::tr("AppImage with same filename has already been integrated.").toStdString() << std::endl
+    message << QObject::tr("This AppImage seems to be integrated already.").toStdString() << std::endl
             << std::endl
             << QObject::tr("Do you wish to overwrite the existing AppImage?").toStdString() << std::endl;
 

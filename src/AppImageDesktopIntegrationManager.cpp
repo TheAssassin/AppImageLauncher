@@ -383,6 +383,10 @@ QMap<QString, QString> AppImageDesktopIntegrationManager::findCollisions(const Q
 }
 
 QString AppImageDesktopIntegrationManager::getAppImageDigestMd5(const QString& pathToAppImage) {
+    static QMap<QString, QString> cache;
+    if (cache.contains(pathToAppImage))
+        return cache[pathToAppImage];
+
     QCryptographicHash hash(QCryptographicHash::Md5);
     QFile f(pathToAppImage);
     if (f.open(QIODevice::ReadOnly)) {
@@ -393,7 +397,9 @@ QString AppImageDesktopIntegrationManager::getAppImageDigestMd5(const QString& p
             hash.addData(buff, bytesRead);
         }
 
-        return hash.result().toHex().toUpper();
+        auto result = hash.result().toHex().toUpper();
+        cache[pathToAppImage] = result;
+        return result;
     }
     return QString();
 }

@@ -225,15 +225,34 @@ void Launcher::setIntegrationManager(QSharedPointer<AppImageDesktopIntegrationMa
 }
 
 void Launcher::integrateAppImage() {
+    const auto fileMd5 = integrationManager->getAppImageDigestMd5(appImagePath);
+    auto appDir = integrationManager->getIntegratedAppImagesDir();
+    for (const auto& entry: appDir.entryList({"*.AppImage"}))
+        if (entry.contains(fileMd5))
+            throw OverridingExistingAppImageFile("There is an AppImage with a similar md5");
+
     integrationManager->integrateAppImage(appImagePath);
     appImagePath = AppImageDesktopIntegrationManager::buildDeploymentPath(appImagePath);
 }
 
 void Launcher::overrideAppImageIntegration() {
-    auto targetPath = AppImageDesktopIntegrationManager::buildDeploymentPath(appImagePath);
-    trashBin->disposeAppImage(targetPath);
+    disposeAppImageWithTheSameName();
+    disposeAppImageWithTheSameMD5();
 
     integrateAppImage();
+}
+
+void Launcher::disposeAppImageWithTheSameMD5() const {
+    const auto fileMd5 = integrationManager->getAppImageDigestMd5(appImagePath);
+    auto appDir = integrationManager->getIntegratedAppImagesDir();
+    for (const auto& entry: appDir.entryList({"*.AppImage"}))
+        if (entry.contains(fileMd5))
+            trashBin->disposeAppImage(appDir.absoluteFilePath(entry));
+}
+
+void Launcher::disposeAppImageWithTheSameName() const {
+    auto targetPath = AppImageDesktopIntegrationManager::buildDeploymentPath(appImagePath);
+    trashBin->disposeAppImage(targetPath);
 }
 
 void Launcher::setTrashBin(TrashBin* trashBin) {

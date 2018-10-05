@@ -161,6 +161,10 @@ private:
      * @throw ExecutionFailed if the user doesn't have enough permissions.
      */
     void tryToMakeAppImageFileExecutable(const QString& path) const;
+
+    void disposeAppImageWithTheSameName() const;
+
+    void disposeAppImageWithTheSameMD5() const;
 };
 
 /* Exceptions that can be thrown from the Launcher methods. */
