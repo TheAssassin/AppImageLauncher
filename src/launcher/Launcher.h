@@ -23,7 +23,7 @@ class Launcher {
     int appImageType{-1};
 
     TrashBin* trashBin{nullptr};
-    AppImageDesktopIntegrationManager* integrationManager{nullptr};
+    QSharedPointer<AppImageDesktopIntegrationManager> integrationManager;
 
 public:
     /**
@@ -48,7 +48,7 @@ public:
      *
      * @param integrationManager
      */
-    void setIntegrationManager(AppImageDesktopIntegrationManager* integrationManager);
+    void setIntegrationManager(QSharedPointer<AppImageDesktopIntegrationManager> integrationManager);
 
     /**
      * Set the Trash Bin  implementation to be used.

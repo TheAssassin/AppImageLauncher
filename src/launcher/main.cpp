@@ -162,12 +162,11 @@ int executeGuiApplication(int argc, char** argv) {
     // sanitize path
     auto pathToAppImage = QDir(QString(argv[1])).absolutePath();
 
-    AppImageDesktopIntegrationManager integrationManager;
-    UI ui;
+    QSharedPointer<AppImageDesktopIntegrationManager> integrationManager(new AppImageDesktopIntegrationManager());
     QSharedPointer<Launcher> launcher(new Launcher());
     launcher->setAppImagePath(pathToAppImage);
     launcher->setArgs(appImageArgv);
-    launcher->setIntegrationManager(&integrationManager);
+    launcher->setIntegrationManager(integrationManager);
     launcher->setTrashBin(&trashBin);
 
     try {
@@ -212,29 +211,30 @@ int executeGuiApplication(int argc, char** argv) {
     // after checking whether the AppImage can/must be run without integrating it, we now check whether it actually
     // has been integrated already
 
-    if (integrationManager.hasAlreadyBeenIntegrated(pathToAppImage)) {
-        if (!integrationManager.isPlacedInTheDefaultAppsDir(pathToAppImage)) {
+    if (integrationManager->hasAlreadyBeenIntegrated(pathToAppImage)) {
+        if (!integrationManager->isPlacedInTheDefaultAppsDir(pathToAppImage)) {
             auto response = askToMoveFileIntoApplications(pathToAppImage,
-                                                          integrationManager.getIntegratedAppImagesDirPath());
+                                                          integrationManager->getIntegratedAppImagesDirPath());
 
             // if the user selects No, then continue as if the AppImage would not be in this directory
             if (response == QMessageBox::Yes) {
-                integrationManager.removeAppImageIntegration(pathToAppImage);
-                integrationManager.integrateAppImage(pathToAppImage);
+                integrationManager->removeAppImageIntegration(pathToAppImage);
+                integrationManager->integrateAppImage(pathToAppImage);
                 launcher->setAppImagePath(pathToIntegratedAppImage);
                 launcher->executeAppImage();
             } else {
-                integrationManager.updateAppImage(pathToAppImage);
+                integrationManager->updateAppImage(pathToAppImage);
                 launcher->setAppImagePath(pathToAppImage);
                 launcher->executeAppImage();
             }
         } else {
-            integrationManager.updateAppImage(pathToAppImage);
+            integrationManager->updateAppImage(pathToAppImage);
             launcher->executeAppImage();
         }
     }
 
-
+    UI ui;
+    ui.setIntegrationManager(integrationManager);
     ui.setLauncher(launcher);
     ui.showIntegrationPage();
 
@@ -262,11 +262,11 @@ int executeCliApplication(int argc, char** argv) {
     // sanitize path
     auto pathToAppImage = QDir(QString(argv[1])).absolutePath();
 
-    AppImageDesktopIntegrationManager integrationManager;
+    QSharedPointer<AppImageDesktopIntegrationManager> integrationManager(new AppImageDesktopIntegrationManager());
     Launcher launcher;
     launcher.setAppImagePath(pathToAppImage);
     launcher.setArgs(appImageArgv);
-    launcher.setIntegrationManager(&integrationManager);
+    launcher.setIntegrationManager(integrationManager);
     launcher.setTrashBin(&trashBin);
     try {
         launcher.inspectAppImageFile();

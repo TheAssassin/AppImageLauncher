@@ -220,7 +220,7 @@ bool Launcher::isAMountOrExtractOperation() const {
     return false;
 }
 
-void Launcher::setIntegrationManager(AppImageDesktopIntegrationManager* integrationManager) {
+void Launcher::setIntegrationManager(QSharedPointer<AppImageDesktopIntegrationManager> integrationManager) {
     Launcher::integrationManager = integrationManager;
 }
 

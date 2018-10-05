@@ -15,6 +15,7 @@ namespace Ui {
 class UI : public QDialog {
 Q_OBJECT
     QSharedPointer<Launcher> launcher;
+    QSharedPointer<AppImageDesktopIntegrationManager> integrationManager;
     QString sha512Checksum;
 
 public:
@@ -23,6 +24,8 @@ public:
     ~UI() override;
 
     void setLauncher(QSharedPointer<Launcher> launcher);
+
+    void setIntegrationManager(const QSharedPointer<AppImageDesktopIntegrationManager>& integrationManager);
 
     void askIfAppImageFileShouldBeOverridden();
 
@@ -40,6 +43,8 @@ protected slots:
     void toggleDetailsWidgetVisibility();
 
     void handleCopyCheckSumRequested();
+
+    void handleOpenAppDirRequested();
 
 private:
     Ui::UI* ui;
@@ -65,6 +70,10 @@ private:
     void fillIconField() const;
 
     void fillDescriptionField(const QString& abstract, const QString& description) const;
+
+    void fillSha512Field() const;
+
+    void fillAppDirField() const;
 };
 
 #endif // UI_H

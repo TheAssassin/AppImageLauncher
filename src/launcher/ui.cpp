@@ -1,9 +1,11 @@
+#include <sstream>
 #include <QMessageBox>
 #include <QClipboard>
 #include <QToolTip>
 #include <QIcon>
 #include <QDebug>
-#include <sstream>
+#include <QDesktopServices>
+#include <QUrl>
 #include "ui.h"
 #include "ui_ui.h"
 
@@ -78,6 +80,7 @@ void UI::showIntegrationPage() {
     connect(ui->runButton, &QPushButton::released, this, &UI::handleExecutionRequested);
     connect(ui->detailsButton, &QPushButton::released, this, &UI::toggleDetailsWidgetVisibility);
     connect(ui->copyCheckSumButton, &QPushButton::released, this, &UI::handleCopyCheckSumRequested);
+    connect(ui->openAppDirButton, &QPushButton::released, this, &UI::handleOpenAppDirRequested);
     show();
 }
 
@@ -90,6 +93,8 @@ void UI::fillFields() {
 
     auto type = info["file"]["type"].get<int>();
     sha512Checksum = QString::fromStdString(info["file"]["sha512checksum"].get<std::string>());
+    fillSha512Field();
+
     auto arch = info["file"]["architecture"];
 
     fillLicenseField(info);
@@ -97,6 +102,7 @@ void UI::fillFields() {
 
     ui->labelType->setNum(type);
     ui->labelArchitecture->setText(QString::fromStdString(arch));
+    fillAppDirField();
 
     fillLinksField(info);
 
@@ -108,6 +114,19 @@ void UI::fillFields() {
     fillIconField();
 
     hideDetails();
+}
+
+void UI::fillAppDirField() const {
+    auto fontMetrics = ui->labelAppDirValue->fontMetrics();
+    const auto originalText = integrationManager->getIntegratedAppImagesDirPath();
+    auto elidedText = fontMetrics.elidedText(originalText, Qt::ElideMiddle, 300);
+    ui->labelAppDirValue->setText(elidedText);
+}
+
+void UI::fillSha512Field() const {
+    auto fontMetrics = ui->labelSha512Value->fontMetrics();
+    auto elidedSha512Checksum = fontMetrics.elidedText(sha512Checksum, Qt::ElideRight, 300);
+    ui->labelSha512Value->setText(elidedSha512Checksum);
 }
 
 void UI::fillDescriptionField(const QString& abstract, const QString& description) const {
@@ -249,4 +268,13 @@ void UI::handleCopyCheckSumRequested() {
     QClipboard* clipboard = QGuiApplication::clipboard();
     clipboard->setText(sha512Checksum);
     QToolTip::showText(ui->copyCheckSumButton->mapToGlobal(QPoint(20, 0)), tr("Copied to clipboard"));
+}
+
+void UI::setIntegrationManager(const QSharedPointer<AppImageDesktopIntegrationManager>& integrationManager) {
+    UI::integrationManager = integrationManager;
+}
+
+void UI::handleOpenAppDirRequested() {
+    auto url = QUrl::fromLocalFile(integrationManager->getIntegratedAppImagesDirPath());
+    QDesktopServices::openUrl(url);
 }
