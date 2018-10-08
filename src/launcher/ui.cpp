@@ -138,10 +138,11 @@ void UI::fillDescriptionField(const QString& abstract, const QString& descriptio
 
 void UI::fillIconField() const {
     auto icon = launcher->getAppImageIcon();
-    if (icon.isNull())
+    auto pixmap = icon.pixmap(64, 64);
+    if (pixmap.isNull())
         setDefaultIcon();
     else
-        ui->labelIcon->setPixmap(icon.pixmap(64, 64));
+        ui->labelIcon->setPixmap(pixmap);
 }
 
 void UI::setFileCorruptedWarningMessage() const {
