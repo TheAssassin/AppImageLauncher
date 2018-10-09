@@ -48,6 +48,8 @@ set(CPACK_RPM_PACKAGE_AUTOREQ OFF)
 set(CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION
     /usr/share/applications
     /usr/lib/binfmt.d
+    /usr/lib/systemd
+    /usr/lib/systemd/user
 )
 
 # add postinst and prerm hooks to RPM package
