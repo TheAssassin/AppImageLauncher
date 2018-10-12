@@ -382,26 +382,46 @@ QMap<QString, QString> AppImageDesktopIntegrationManager::findCollisions(const Q
     return collisions;
 }
 
-QString AppImageDesktopIntegrationManager::getAppImageDigestMd5(const QString& pathToAppImage) {
-    static QMap<QString, QString> cache;
-    if (cache.contains(pathToAppImage))
-        return cache[pathToAppImage];
+QString AppImageDesktopIntegrationManager::getAppImageDigestMd5(const QString& path) {
+    // try to read embedded MD5 digest
+    unsigned long offset = 0, length = 0;
 
-    QCryptographicHash hash(QCryptographicHash::Md5);
-    QFile f(pathToAppImage);
-    if (f.open(QIODevice::ReadOnly)) {
-        QDataStream in(&f);
-        char buff[1024];
-        while (!in.atEnd()) {
-            int bytesRead = in.readRawData(buff, 1024);
-            hash.addData(buff, bytesRead);
-        }
+    // first of all, digest calculation is supported only for type 2
+    if (appimage_get_type(path.toStdString().c_str(), false) != 2)
+        return "";
 
-        auto result = hash.result().toHex().toUpper();
-        cache[pathToAppImage] = result;
-        return result;
+    auto rv = appimage_get_elf_section_offset_and_length(path.toStdString().c_str(), ".digest_md5", &offset, &length);
+
+    QByteArray buffer(16, '\0');
+
+    if (rv && offset != 0 && length != 0) {
+        // open file and read digest from ELF header section
+        QFile file(path);
+
+        if (!file.open(QFile::ReadOnly))
+            return "";
+
+        if (!file.seek(static_cast<qint64>(offset)))
+            return "";
+
+        if (!file.read(buffer.data(), buffer.size()))
+            return "";
+
+        file.close();
+    } else {
+        // calculate digest
+        if (!appimage_type2_digest_md5(path.toStdString().c_str(), buffer.data()))
+            return "";
     }
-    return QString();
+
+    // create hexadecimal representation
+    auto hexDigest = appimage_hexlify(buffer, static_cast<size_t>(buffer.size()));
+
+    QString hexDigestStr(hexDigest);
+
+    free(hexDigest);
+
+    return hexDigestStr;
 }
 
 bool AppImageDesktopIntegrationManager::cleanUpOldDesktopIntegrationResources(bool verbose) {
