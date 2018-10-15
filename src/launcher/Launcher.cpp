@@ -75,7 +75,7 @@ void Launcher::executeAppImage() {
 
     // first of all, chmod +x the AppImage file, otherwise execv() will complain
     if (!makeExecutable(fullPathToAppImage))
-        throw ExecutionFailedError(QObject::tr("Unable to make the AppImage file executable: %1").arg(appImagePath).toStdString());
+        throw ExecutionFailedError(QObject::tr("Could not make AppImage executable: %1").arg(appImagePath).toStdString());
 
     // build path to AppImage runtime
     // as it might error, check before fork()ing to be able to display an error message beforehand
@@ -85,7 +85,7 @@ void Launcher::executeAppImage() {
         QFile appImage(QString::fromStdString(fullPathToAppImage.toStdString()));
 
         if (!appImage.open(QIODevice::ReadOnly))
-            throw ExecutionFailedError(QObject::tr("Not enough privileges to read the AppImage file: %1").arg(appImagePath).toStdString());
+            throw ExecutionFailedError(QObject::tr("Failed to open AppImage for reading: %1").arg(appImagePath).toStdString());
 
         // copy AppImage to temp dir
         QTemporaryDir tempDir("/tmp/AppImageLauncher-type1-XXXXXX");
@@ -127,19 +127,13 @@ void Launcher::executeAppImage() {
         std::vector<char> argv0Buffer(tempAppImageFileName.size() + 1, '\0');
         strcpy(argv0Buffer.data(), tempAppImageFileName.toStdString().c_str());
 
-        std::vector<char*> args;
+        // copy args before pushing nullptr to avoid modifications
+        auto execArgs = args;
 
-        args.push_back(argv0Buffer.data());
+        // args need to be null terminated for execv
+        execArgs.push_back(nullptr);
 
-        // copy arguments
-        for (int i = 1; i < args.size(); i++) {
-            args.push_back(args[i]);
-        }
-
-        // args need to be null terminated
-        args.push_back(nullptr);
-
-        execv(tempAppImageFileName.toStdString().c_str(), args.data());
+        execv(tempAppImageFileName.toStdString().c_str(), execArgs.data());
 
         const auto& error = errno;
         qCritical() << QObject::tr("execv() failed: %1", "error message").arg(strerror(error));
@@ -171,19 +165,13 @@ void Launcher::executeAppImage() {
         std::vector<char> argv0Buffer(appImagePath.toStdString().size() + 1, '\0');
         strcpy(argv0Buffer.data(), appImagePath.toStdString().c_str());
 
-        std::vector<char*> args;
+        // copy args before pushing nullptr to avoid modifications
+        auto execArgs = args;
 
-        args.push_back(argv0Buffer.data());
+        // args need to be null terminated for execv
+        execArgs.push_back(nullptr);
 
-        // copy arguments
-        for (int i = 1; i < args.size(); i++) {
-            args.push_back(args[i]);
-        }
-
-        // args need to be null terminated
-        args.push_back(nullptr);
-
-        execv(pathToRuntime.c_str(), args.data());
+        execv(pathToRuntime.c_str(), execArgs.data());
 
         const auto& error = errno;
         qWarning() << QObject::tr("execv() failed: %1").arg(strerror(error));
