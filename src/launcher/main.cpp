@@ -176,21 +176,26 @@ int main(int argc, char **argv) {
         system("systemctl --user stop    appimagelauncherd.service");
     }
 
-    // check for X-AppImage-Integrate=false
-    if (appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str()))
-        launcher.executeAppImage();
+    try {
+        // check for X-AppImage-Integrate=false
+        if (appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str()))
+            launcher.executeAppImage();
 
-    // AppImages in AppImages are not supposed to be integrated
-    if (pathToAppImage.startsWith("/tmp/.mount_"))
-        launcher.executeAppImage();
+        // AppImages in AppImages are not supposed to be integrated
+        if (pathToAppImage.startsWith("/tmp/.mount_"))
+            launcher.executeAppImage();
 
-    // ignore terminal apps (fixes #2)
-    if (appimage_is_terminal_app(pathToAppImage.toStdString().c_str()))
-        launcher.executeAppImage();
+        // ignore terminal apps (fixes #2)
+        if (appimage_is_terminal_app(pathToAppImage.toStdString().c_str()))
+            launcher.executeAppImage();
 
-    // AppImages in AppImages are not supposed to be integrated
-    if (pathToAppImage.startsWith("/tmp/.mount_"))
-        launcher.executeAppImage();
+        // AppImages in AppImages are not supposed to be integrated
+        if (pathToAppImage.startsWith("/tmp/.mount_"))
+            launcher.executeAppImage();
+    } catch (const ExecutionFailed&) {
+        qCritical() << QObject::tr("Failed to execute AppImage: %1").arg(pathToAppImage);
+        return 1;
+    }
 
     const auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
 
@@ -229,16 +234,34 @@ int main(int argc, char **argv) {
                 }
                 integrationManager.integrateAppImage(pathToAppImage);
                 launcher.setAppImagePath(pathToIntegratedAppImage);
-                launcher.executeAppImage();
+
+                try {
+                    launcher.executeAppImage();
+                } catch (const ExecutionFailed&) {
+                    qCritical() << QObject::tr("Failed to execute AppImage: %1").arg(pathToAppImage);
+                    return 1;
+                }
                 return 0;
             } else {
                 integrationManager.updateAppImage(pathToAppImage);
                 launcher.setAppImagePath(pathToAppImage);
-                launcher.executeAppImage();
+
+                try {
+                    launcher.executeAppImage();
+                } catch (const ExecutionFailed&) {
+                    qCritical() << QObject::tr("Failed to execute AppImage: %1").arg(pathToAppImage);
+                    return 1;
+                }
             }
         } else {
             integrationManager.updateAppImage(pathToAppImage);
-            launcher.executeAppImage();
+
+            try {
+                launcher.executeAppImage();
+            } catch (const ExecutionFailed&) {
+                qCritical() << QObject::tr("Failed to execute AppImage: %1").arg(pathToAppImage);
+                return 1;
+            }
         }
     }
 
