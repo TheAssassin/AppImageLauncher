@@ -65,8 +65,7 @@ void Launcher::executeAppImage() {
 
     // first of all, chmod +x the AppImage file, otherwise execv() will complain
     if (!makeExecutable(fullPathToAppImage))
-        throw ExecutionFailed(QObject::tr("Unable to make the AppImage file executable: %1")
-                                      .arg(appImagePath).toStdString());
+        throw ExecutionFailedError(QObject::tr("Unable to make the AppImage file executable: %1").arg(appImagePath).toStdString());
 
     // build path to AppImage runtime
     // as it might error, check before fork()ing to be able to display an error message beforehand
@@ -76,15 +75,13 @@ void Launcher::executeAppImage() {
         QFile appImage(QString::fromStdString(fullPathToAppImage.toStdString()));
 
         if (!appImage.open(QIODevice::ReadOnly))
-            throw ExecutionFailed(QObject::tr("Not enough privileges to read the AppImage file: %1")
-                                          .arg(appImagePath).toStdString());
+            throw ExecutionFailedError(QObject::tr("Not enough privileges to read the AppImage file: %1").arg(appImagePath).toStdString());
 
         // copy AppImage to temp dir
         QTemporaryDir tempDir("/tmp/AppImageLauncher-type1-XXXXXX");
 
         if (!tempDir.isValid())
-            throw ExecutionFailed(QObject::tr("Unable to create temporary directory %1")
-                                          .arg(tempDir.path()).toStdString());
+            throw ExecutionFailedError(QObject::tr("Unable to create temporary directory %1").arg(tempDir.path()).toStdString());
 
         tempDir.setAutoRemove(true);
 
@@ -95,19 +92,19 @@ void Launcher::executeAppImage() {
 
         auto tempAppImagePath = QDir(tempDir.path()).absoluteFilePath(QFileInfo(appImage).fileName());
         if (!appImage.copy(tempAppImagePath))
-            throw ExecutionFailed(QObject::tr("Failed to create temporary copy of type 1 AppImage").toStdString());
+            throw ExecutionFailedError(QObject::tr("Failed to create temporary copy of type 1 AppImage").toStdString());
 
         QFile tempAppImage(tempAppImagePath);
 
         if (!tempAppImage.open(QFile::ReadWrite))
-            throw ExecutionFailed(QObject::tr("Failed to open temporary AppImage copy for writing").toStdString());
+            throw ExecutionFailedError(QObject::tr("Failed to open temporary AppImage copy for writing").toStdString());
 
         // nuke magic bytes
         if (!tempAppImage.seek(8))
-            throw ExecutionFailed(QObject::tr("Failed to remove magic bytes from temporary AppImage copy").toStdString());
+            throw ExecutionFailedError(QObject::tr("Failed to remove magic bytes from temporary AppImage copy").toStdString());
 
         if (tempAppImage.write(QByteArray(3, '\0')) != 3)
-            throw ExecutionFailed(QObject::tr("Failed to remove magic bytes from temporary AppImage copy").toStdString());
+            throw ExecutionFailedError(QObject::tr("Failed to remove magic bytes from temporary AppImage copy").toStdString());
 
         auto tempAppImageFileName = tempAppImage.fileName();
 
@@ -158,8 +155,7 @@ void Launcher::executeAppImage() {
 
         // if it can't be found in either location, display error and exit
         if (!QFile(QString::fromStdString(pathToRuntime)).exists())
-            throw ExecutionFailed(QObject::tr("runtime not found: no such file or directory: %1").arg(
-                    QString::fromStdString(pathToRuntime)).toStdString());
+            throw ExecutionFailedError(QObject::tr("runtime not found: no such file or directory: %1").arg(QString::fromStdString(pathToRuntime)).toStdString());
 
         // need a char pointer instead of a const one, therefore can't use .c_str()
         std::vector<char> argv0Buffer(appImagePath.toStdString().size() + 1, '\0');

@@ -57,9 +57,9 @@ public:
     explicit PathNotSetError(const std::string &what) : runtime_error(what) {}
 };
 
-class ExecutionFailed : public std::runtime_error {
+class ExecutionFailedError : public std::runtime_error {
 public:
-    explicit ExecutionFailed(const std::string &what) : runtime_error(what) {}
+    explicit ExecutionFailedError(const std::string &what) : runtime_error(what) {}
 };
 
 

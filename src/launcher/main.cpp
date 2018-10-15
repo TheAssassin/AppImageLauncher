@@ -192,7 +192,7 @@ int main(int argc, char **argv) {
         // AppImages in AppImages are not supposed to be integrated
         if (pathToAppImage.startsWith("/tmp/.mount_"))
             launcher.executeAppImage();
-    } catch (const ExecutionFailed&) {
+    } catch (const ExecutionFailedError&) {
         qCritical() << QObject::tr("Failed to execute AppImage: %1").arg(pathToAppImage);
         return 1;
     }
@@ -237,7 +237,7 @@ int main(int argc, char **argv) {
 
                 try {
                     launcher.executeAppImage();
-                } catch (const ExecutionFailed&) {
+                } catch (const ExecutionFailedError&) {
                     qCritical() << QObject::tr("Failed to execute AppImage: %1").arg(pathToAppImage);
                     return 1;
                 }
@@ -248,7 +248,7 @@ int main(int argc, char **argv) {
 
                 try {
                     launcher.executeAppImage();
-                } catch (const ExecutionFailed&) {
+                } catch (const ExecutionFailedError&) {
                     qCritical() << QObject::tr("Failed to execute AppImage: %1").arg(pathToAppImage);
                     return 1;
                 }
@@ -258,7 +258,7 @@ int main(int argc, char **argv) {
 
             try {
                 launcher.executeAppImage();
-            } catch (const ExecutionFailed&) {
+            } catch (const ExecutionFailedError&) {
                 qCritical() << QObject::tr("Failed to execute AppImage: %1").arg(pathToAppImage);
                 return 1;
             }
