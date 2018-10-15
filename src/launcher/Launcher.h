@@ -5,8 +5,13 @@
 #ifndef APPIMAGELAUNCHER_LAUNCHER_H
 #define APPIMAGELAUNCHER_LAUNCHER_H
 
-#include <QString>
+// system includes
 #include <vector>
+
+// library includes
+#include <QString>
+
+// local includes
 #include "AppImageDesktopIntegrationManager.h"
 #include "../trashbin.h"
 

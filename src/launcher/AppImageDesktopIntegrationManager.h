@@ -5,10 +5,11 @@
 #ifndef APPIMAGELAUNCHER_APPIMAGEDESKTOPINTEGRATIONMANAGER_H
 #define APPIMAGELAUNCHER_APPIMAGEDESKTOPINTEGRATIONMANAGER_H
 
-
+// system includes
 #include <stdexcept>
-#include <QString>
 
+// library includes
+#include <QString>
 
 class AppImageDesktopIntegrationManager {
 

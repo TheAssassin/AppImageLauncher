@@ -1,18 +1,21 @@
 //
 // Created by alexis on 8/30/18.
 //
+
+// system includes
 extern "C" {
     #include "unistd.h"
 }
 
+// library includes
 #include <QFile>
 #include <QDebug>
 #include <QMessageBox>
 #include <QTemporaryDir>
-
 #include <appimage/appimage.h>
 
-#include <shared.h>
+// local includes
+#include "../shared.h"
 #include "Launcher.h"
 
 

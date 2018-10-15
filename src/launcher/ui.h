@@ -1,7 +1,10 @@
 #ifndef UI_H
 #define UI_H
 
+// library includes
 #include <QDialog>
+
+// local includes
 #include "AppImageDesktopIntegrationManager.h"
 #include "Launcher.h"
 

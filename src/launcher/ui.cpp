@@ -1,6 +1,13 @@
-#include <QtWidgets/QMessageBox>
+// system includes
 #include <sstream>
+
+// library includes
+#include <QtWidgets/QMessageBox>
+
+// local includes
 #include "ui.h"
+
+// Qt auto-generated includes
 #include "ui_ui.h"
 
 UI::UI(QWidget *parent) :

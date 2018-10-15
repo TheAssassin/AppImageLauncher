@@ -2,11 +2,16 @@
 // Created by alexis on 9/1/18.
 //
 
-#include <shared.h>
+// system includes
+#include <glib.h>
+
+// library includes
 #include <QDebug>
 #include <appimage/appimage.h>
-#include <glib.h>
-#include <translationmanager.h>
+
+// local includes
+#include "../shared.h"
+#include "../translationmanager.h"
 #include "AppImageDesktopIntegrationManager.h"
 
 bool AppImageDesktopIntegrationManager::isIntegrationRequired(const QString &appImagePath) {
