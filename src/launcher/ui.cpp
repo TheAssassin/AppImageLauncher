@@ -66,9 +66,9 @@ void UI::handleIntegrationRequested() {
     try {
         launcher->integrateAppImage();
         showCompletionPage();
-    } catch (const IntegrationFailed &ex) {
+    } catch (const IntegrationFailedError& ex) {
         notifyError(ex);
-    } catch (const OverridingExistingAppImageFile &) {
+    } catch (const OverridingExistingFileError&) {
         askIfAppImageFileShouldBeOverridden();
     }
 }

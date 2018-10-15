@@ -39,10 +39,10 @@ int Launcher::getAppImageType() const {
 
 void Launcher::inspectAppImageFile() {
     if (appImagePath.isEmpty())
-        throw AppImageFilePathNotSet("");
+        throw PathNotSetError("");
 
     if (!QFile::exists(appImagePath))
-        throw AppImageFileNotExists(appImagePath.toStdString());
+        throw FileNotFoundError(appImagePath.toStdString());
 
     validateAppImageType();
 }
@@ -50,10 +50,10 @@ void Launcher::inspectAppImageFile() {
 void Launcher::validateAppImageType() {
     appImageType = appimage_get_type(appImagePath.toStdString().c_str(), false);
     if (appImageType < 1)
-        throw InvalidAppImageFile("");
+        throw InvalidAppImageError("");
 
     if (appImageType > 2)
-        throw UnsuportedAppImageType("");
+        throw UnsupportedTypeError("");
 }
 
 void Launcher::executeAppImage() {

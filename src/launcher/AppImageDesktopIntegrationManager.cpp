@@ -29,7 +29,7 @@ void AppImageDesktopIntegrationManager::integrateAppImage(const QString &pathToA
         // need to check whether file exists
         // if it does, the existing AppImage needs to be removed before rename can be called
         if (QFile(pathToIntegratedAppImage).exists())
-            throw OverridingExistingAppImageFile("");
+            throw OverridingExistingFileError("");
 
         bool succeed = QFile::rename(pathToAppImage, pathToIntegratedAppImage);
         qWarning() << QObject::tr("Unable to move %1 to %2, trying coping it instead.").arg(pathToAppImage,
@@ -38,16 +38,16 @@ void AppImageDesktopIntegrationManager::integrateAppImage(const QString &pathToA
             succeed = QFile::copy(pathToAppImage, pathToIntegratedAppImage);
 
         if (!succeed)
-            throw IntegrationFailed(QObject::tr("Unable to move or copy AppImage to %1.")
+            throw IntegrationFailedError(QObject::tr("Unable to move or copy AppImage to %1.")
                                             .arg("$HOME/Applications").toStdString());
     }
 
     if (!installDesktopFile(pathToIntegratedAppImage, true))
-        throw IntegrationFailed(QObject::tr("Unable to install the AppImage Desktop File.").toStdString());
+        throw IntegrationFailedError(QObject::tr("Unable to install the AppImage Desktop File.").toStdString());
 
     // make sure the icons in the launcher are refreshed
     if (!updateDesktopDatabaseAndIconCaches())
-        throw IntegrationFailed(QObject::tr("Unable to update Desktop Database and/or Icons").toStdString());
+        throw IntegrationFailedError(QObject::tr("Unable to update Desktop Database and/or Icons").toStdString());
 }
 
 QString AppImageDesktopIntegrationManager::buildDeploymentPath(const QString &pathToAppImage) {
@@ -91,5 +91,5 @@ bool AppImageDesktopIntegrationManager::installDesktopFile(const QString &pathTo
 void AppImageDesktopIntegrationManager::updateAppImage(const QString &pathToAppImage) {
     bool result = ::updateDesktopFile(pathToAppImage);
     if (!result)
-        throw IntegrationFailed(QObject::tr("Unable to update AppImage Desktop file.").toStdString());
+        throw IntegrationFailedError(QObject::tr("Unable to update AppImage Desktop file.").toStdString());
 }

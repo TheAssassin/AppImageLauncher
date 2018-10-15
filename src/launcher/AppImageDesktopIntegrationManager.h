@@ -28,28 +28,28 @@ public:
 };
 
 
-class AppImageFileNotExists : public std::runtime_error {
+class FileNotFoundError : public std::runtime_error {
 public:
-    explicit AppImageFileNotExists(const std::string &what) : runtime_error(what) {}
+    explicit FileNotFoundError(const std::string &what) : runtime_error(what) {}
 };
 
-class InvalidAppImageFile : public std::runtime_error {
+class InvalidAppImageError : public std::runtime_error {
 public:
-    explicit InvalidAppImageFile(const std::string &what) : runtime_error(what) {}
+    explicit InvalidAppImageError(const std::string &what) : runtime_error(what) {}
 };
 
-class IntegrationFailed : public std::runtime_error {
+class IntegrationFailedError : public std::runtime_error {
 public:
-    explicit IntegrationFailed(const std::string &what) : runtime_error(what) {}
+    explicit IntegrationFailedError(const std::string &what) : runtime_error(what) {}
 };
 
-class UnsuportedAppImageType : public std::runtime_error {
+class UnsupportedTypeError : public std::runtime_error {
 public:
-    explicit UnsuportedAppImageType(const std::string &what) : runtime_error(what) {}
+    explicit UnsupportedTypeError(const std::string &what) : runtime_error(what) {}
 };
 
-class OverridingExistingAppImageFile : public std::runtime_error {
+class OverridingExistingFileError : public std::runtime_error {
 public:
-    explicit OverridingExistingAppImageFile(const std::string &what) : runtime_error(what) {}
+    explicit OverridingExistingFileError(const std::string &what) : runtime_error(what) {}
 };
 #endif //APPIMAGELAUNCHER_APPIMAGEDESKTOPINTEGRATIONMANAGER_H

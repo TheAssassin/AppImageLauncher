@@ -52,9 +52,9 @@ private:
 
 /* Exceptions that can be thrown from the Launcher methods. */
 
-class AppImageFilePathNotSet : public std::runtime_error {
+class PathNotSetError : public std::runtime_error {
 public:
-    explicit AppImageFilePathNotSet(const std::string &what) : runtime_error(what) {}
+    explicit PathNotSetError(const std::string &what) : runtime_error(what) {}
 };
 
 class ExecutionFailed : public std::runtime_error {

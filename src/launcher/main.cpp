@@ -132,16 +132,16 @@ int main(int argc, char **argv) {
     launcher.setTrashBin(&trashBin);
     try {
         launcher.inspectAppImageFile();
-    } catch (const AppImageFilePathNotSet &ex) {
+    } catch (const PathNotSetError&) {
         qCritical() << "Missing AppImagePath in Launcher class. I wasn't initialized properly.";
         return 1;
-    } catch (const InvalidAppImageFile &ex) {
+    } catch (const InvalidAppImageError&) {
         QMessageBox::critical(
                 nullptr,
                 QObject::tr("Error"),
                 QObject::tr("Not an AppImage: %1").arg(pathToAppImage));
         return 1;
-    } catch (const AppImageFileNotExists &ex) {
+    } catch (const FileNotFoundError&) {
         std::cout << QObject::tr("Error: no such file or directory: %1").arg(pathToAppImage).toStdString() << std::endl;
         return 1;
     }
