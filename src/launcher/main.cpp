@@ -131,8 +131,8 @@ int main(int argc, char **argv) {
     launcher.setIntegrationManager(&integrationManager);
     launcher.setTrashBin(&trashBin);
     try {
-        launcher.inspectAppImageFile();
-    } catch (const PathNotSetError&) {
+        launcher.validateAppImage();
+    } catch (const ValueError&) {
         qCritical() << "Missing AppImagePath in Launcher class. I wasn't initialized properly.";
         return 1;
     } catch (const InvalidAppImageError&) {

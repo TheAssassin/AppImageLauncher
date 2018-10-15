@@ -24,6 +24,10 @@ const QString& Launcher::getAppImagePath() const {
 }
 
 void Launcher::setAppImagePath(const QString& appImagePath) {
+    // error check before value is stored
+    // throws exceptions in case of errors
+    Launcher::validateAppImage(appImagePath);
+
     Launcher::appImagePath = appImagePath;
 }
 
@@ -39,24 +43,24 @@ int Launcher::getAppImageType() const {
     return appImageType;
 }
 
-
-void Launcher::inspectAppImageFile() {
+void Launcher::validateAppImage(const QString& appImagePath) {
     if (appImagePath.isEmpty())
-        throw PathNotSetError("");
+        throw ValueError("AppImage path must not be empty");
 
     if (!QFile::exists(appImagePath))
         throw FileNotFoundError(appImagePath.toStdString());
 
-    validateAppImageType();
-}
+    const auto appImageType = appimage_get_type(appImagePath.toStdString().c_str(), false);
 
-void Launcher::validateAppImageType() {
-    appImageType = appimage_get_type(appImagePath.toStdString().c_str(), false);
     if (appImageType < 1)
-        throw InvalidAppImageError("");
+        throw InvalidAppImageError("Types < 0 don't exist");
 
     if (appImageType > 2)
-        throw UnsupportedTypeError("");
+        throw UnsupportedTypeError("Types > 2 don't exist or aren't supported yet");
+}
+
+void Launcher::validateAppImage() const {
+    Launcher::validateAppImage(appImagePath);
 }
 
 void Launcher::executeAppImage() {

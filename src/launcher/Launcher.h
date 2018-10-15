@@ -24,7 +24,7 @@ class Launcher {
     AppImageDesktopIntegrationManager *integrationManager{nullptr};
 
 public:
-    const QString &getAppImagePath() const;
+    const QString& getAppImagePath() const;
 
     void setAppImagePath(const QString &appImagePath);
 
@@ -38,28 +38,28 @@ public:
 
     void setTrashBin(TrashBin *trashBin);
 
-    void inspectAppImageFile();
-
     bool shouldBeIgnored();
 
     void executeAppImage();
 
     void overrideAppImageIntegration();
 
+    void validateAppImage() const;
+
 public slots:
     void integrateAppImage();
 
 private:
-    void validateAppImageType();
+    static void validateAppImage(const QString& path);
 
     bool isAMountOrExtractOperation() const;
 };
 
 /* Exceptions that can be thrown from the Launcher methods. */
 
-class PathNotSetError : public std::runtime_error {
+class ValueError : public std::runtime_error {
 public:
-    explicit PathNotSetError(const std::string &what) : runtime_error(what) {}
+    explicit ValueError(const std::string &what) : runtime_error(what) {}
 };
 
 class ExecutionFailedError : public std::runtime_error {
