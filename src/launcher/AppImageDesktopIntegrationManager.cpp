@@ -7,6 +7,7 @@
 
 // library includes
 #include <QDebug>
+#include <QMessageBox>
 #include <appimage/appimage.h>
 
 // local includes
@@ -32,15 +33,21 @@ void AppImageDesktopIntegrationManager::integrateAppImage(const QString &pathToA
         if (QFile(pathToIntegratedAppImage).exists())
             throw OverridingExistingFileError("");
 
-        bool succeed = QFile::rename(pathToAppImage, pathToIntegratedAppImage);
-        qWarning() << QObject::tr("Unable to move %1 to %2, trying coping it instead.").arg(pathToAppImage,
-                                                                                            pathToIntegratedAppImage);
-        if (!succeed)
-            succeed = QFile::copy(pathToAppImage, pathToIntegratedAppImage);
+        if (!QFile(pathToAppImage).rename(pathToIntegratedAppImage)) {
+            auto result = QMessageBox::critical(
+                    nullptr,
+                    QObject::tr("Error"),
+                    QObject::tr("Failed to move AppImage to target location.\n"
+                                "Try to copy AppImage instead?"),
+                    QMessageBox::Ok | QMessageBox::Cancel
+            );
 
-        if (!succeed)
-            throw IntegrationFailedError(QObject::tr("Unable to move or copy AppImage to %1.")
-                                            .arg("$HOME/Applications").toStdString());
+            if (result == QMessageBox::Cancel)
+                throw IntegrationFailedError(QObject::tr("Integration aborted by user.").toStdString());
+
+            if (!QFile(pathToAppImage).copy(pathToIntegratedAppImage))
+                throw IntegrationFailedError(QObject::tr("Failed to copy AppImage to target location.").toStdString());
+        }
     }
 
     if (!installDesktopFile(pathToIntegratedAppImage, true))
