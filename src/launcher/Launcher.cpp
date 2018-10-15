@@ -29,6 +29,9 @@ void Launcher::setAppImagePath(const QString& appImagePath) {
     Launcher::validateAppImage(appImagePath);
 
     Launcher::appImagePath = appImagePath;
+
+    // also update AppImage type to not have to read the file more than once to get that data
+    Launcher::appImageType = appimage_get_type(appImagePath.toStdString().c_str(), false);
 }
 
 const std::vector<char*>& Launcher::getArgs() const {
