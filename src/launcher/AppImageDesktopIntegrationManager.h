@@ -14,8 +14,6 @@
 class AppImageDesktopIntegrationManager {
 
 public:
-    bool isIntegrationRequired(const QString &appImagePath);
-
     void integrateAppImage(const QString &appImagePath);
 
     QString buildDeploymentPath(const QString& pathToAppImage);

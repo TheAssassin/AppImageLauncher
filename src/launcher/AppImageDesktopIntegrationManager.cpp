@@ -14,10 +14,6 @@
 #include "../translationmanager.h"
 #include "AppImageDesktopIntegrationManager.h"
 
-bool AppImageDesktopIntegrationManager::isIntegrationRequired(const QString &appImagePath) {
-    return false;
-}
-
 void AppImageDesktopIntegrationManager::integrateAppImage(const QString &pathToAppImage) {
     auto pathToIntegratedAppImage = buildDeploymentPath(pathToAppImage);
 
