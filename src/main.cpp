@@ -350,7 +350,10 @@ int main(int argc, char** argv) {
     }
 
     // check for X-AppImage-Integrate=false
-    if (appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str()))
+    auto shallNotBeIntegrated = appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str());
+    if (shallNotBeIntegrated < 0)
+        std::cerr << "AppImageLauncher error: appimage_shall_not_be_integrated() failed (returned " << shallNotBeIntegrated << ")" << std::endl;
+    else if (shallNotBeIntegrated > 0)
         return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
 
     // AppImages in AppImages are not supposed to be integrated
