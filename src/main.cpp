@@ -358,7 +358,10 @@ int main(int argc, char** argv) {
         return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
 
     // ignore terminal apps (fixes #2)
-    if (appimage_is_terminal_app(pathToAppImage.toStdString().c_str()))
+    auto isTerminalApp = appimage_is_terminal_app(pathToAppImage.toStdString().c_str());
+    if (isTerminalApp < 0)
+        std::cerr << "AppImageLauncher error: appimage_is_terminal_app() failed (returned " << isTerminalApp << ")" << std::endl;
+    else if (isTerminalApp > 0)
         return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
 
     // AppImages in AppImages are not supposed to be integrated
