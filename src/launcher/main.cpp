@@ -185,11 +185,8 @@ int executeGuiApplication(int argc, char **argv) {
 
     AppImageDesktopIntegrationManager integrationManager;
     UI ui;
-    Launcher launcher;
-    launcher.setAppImagePath(pathToAppImage);
-    launcher.setArgs(appImageArgv);
-    launcher.setIntegrationManager(&integrationManager);
-    launcher.setTrashBin(&trashBin);
+    Launcher launcher(pathToAppImage, appImageArgv, &integrationManager, &trashBin);
+
     try {
         launcher.validateAppImage();
     } catch (const ValueError&) {
@@ -300,30 +297,25 @@ int executeCliApplication(int argc, char **argv) {
     auto pathToAppImage = QDir(QString(argv[1])).absolutePath();
 
     AppImageDesktopIntegrationManager integrationManager;
-    Launcher launcher;
-    launcher.setAppImagePath(pathToAppImage);
-    launcher.setArgs(appImageArgv);
-    launcher.setIntegrationManager(&integrationManager);
-    launcher.setTrashBin(&trashBin);
+
+    std::shared_ptr<Launcher> launcher = nullptr;
+
     try {
-        launcher.inspectAppImageFile();
-    } catch (const AppImageFilePathNotSet &ex) {
-        qCritical() << "Missing AppImagePath in Launcher class. I wasn't initialized properly.";
-        return 1;
-    } catch (const InvalidAppImageFile &ex) {
+        launcher = std::make_shared<Launcher>(pathToAppImage, appImageArgv, &integrationManager, &trashBin);
+    } catch (const InvalidAppImageError &ex) {
         qCritical() << QObject::tr("Not an AppImage: %1").arg(pathToAppImage);
-        return 1;
-    } catch (const AppImageFileNotExists &ex) {
+    } catch (const FileNotFoundError &ex) {
         qCritical() << QObject::tr("No such file or directory: %1").arg(pathToAppImage);
-        return 1;
-    } catch (const UnsuportedAppImageType &ex) {
+    } catch (const UnsupportedTypeError &ex) {
         qCritical() << QObject::tr("Not an AppImage: %1").arg(pathToAppImage);
-        return 1;
     }
 
-    if (launcher.isAppImageExecutable()) {
+    if (launcher == nullptr)
+        return 1;
+
+    if (launcher->isAppImageExecutable()) {
         try {
-            launcher.executeAppImage();
+            launcher->executeAppImage();
             return 1;
         } catch (const std::runtime_error &ex) {
             qCritical() << QObject::tr("Unable to execute the AppImage: %1").arg(pathToAppImage);

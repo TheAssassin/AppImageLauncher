@@ -1,13 +1,6 @@
-//
-// Created by alexis on 8/30/18.
-//
-
 // system includes
-extern "C" {
-    #include "unistd.h"
-    #include <appimage/appimage.h>
-    #include <appimage/info.h>
-}
+#include <unistd.h>
+#include <utility>
 
 // library includes
 #include <QFile>
@@ -15,6 +8,10 @@ extern "C" {
 #include <QMessageBox>
 #include <QTemporaryDir>
 #include <QTemporaryFile>
+extern "C" {
+    #include <appimage/appimage.h>
+    #include <appimage/info.h>
+}
 
 // local includes
 #include "../shared.h"
@@ -38,10 +35,6 @@ void Launcher::setAppImagePath(const QString& appImagePath) {
 
 const std::vector<char*>& Launcher::getArgs() const {
     return args;
-}
-
-void Launcher::setArgs(const std::vector<char*>& args) {
-    Launcher::args = args;
 }
 
 int Launcher::getAppImageType() const {
@@ -216,10 +209,6 @@ bool Launcher::isAMountOrExtractOperation() const {
     return false;
 }
 
-void Launcher::setIntegrationManager(AppImageDesktopIntegrationManager* integrationManager) {
-    Launcher::integrationManager = integrationManager;
-}
-
 void Launcher::integrateAppImage() {
     integrationManager->integrateAppImage(appImagePath);
     appImagePath = integrationManager->buildDeploymentPath(appImagePath);
@@ -232,10 +221,6 @@ void Launcher::overrideAppImageIntegration() {
     integrateAppImage();
 }
 
-void Launcher::setTrashBin(TrashBin* trashBin) {
-    Launcher::trashBin = trashBin;
-}
-
 nlohmann::json Launcher::getAppImageInfo() {
     auto rawJson = appimage_extract_info(appImagePath.toStdString().c_str());
     nlohmann::json info = nlohmann::json::parse(rawJson);
@@ -246,7 +231,7 @@ QIcon Launcher::getAppImageIcon() {
     QTemporaryFile temporaryFile;
     if (temporaryFile.open()) {
 
-        appimage_extract_appinamge_icon_file(appImagePath.toStdString().c_str(), temporaryFile.fileName().toStdString().c_str());
+        appimage_extract_icon_file(appImagePath.toStdString().c_str(), temporaryFile.fileName().toStdString().c_str());
         QIcon icon(temporaryFile.fileName());
         return icon;
     }
@@ -256,4 +241,11 @@ QIcon Launcher::getAppImageIcon() {
 bool Launcher::isAppImageExecutable() {
     QFileInfo fileInfo(appImagePath);
     return fileInfo.isExecutable();
+}
+
+Launcher::Launcher(QString path, std::vector<char*> argv, AppImageDesktopIntegrationManager* mgr,
+                   TrashBin* bin) : args(std::move(argv)), integrationManager(mgr), trashBin(bin),
+                                    appImageType(appimage_get_type(appImagePath.toStdString().c_str(), false)) {
+    // reuse setter to perform some validation on the path instead of using list initialization
+    setAppImagePath(path);
 }

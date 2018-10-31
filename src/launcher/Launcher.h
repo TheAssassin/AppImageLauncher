@@ -16,6 +16,7 @@
 #include "../trashbin.h"
 
 class Launcher {
+private:
     QString appImagePath;
     std::vector<char *> args{};
     int appImageType{-1};
@@ -24,19 +25,16 @@ class Launcher {
     AppImageDesktopIntegrationManager *integrationManager{nullptr};
 
 public:
+    Launcher(QString path, std::vector<char*> argv, AppImageDesktopIntegrationManager* mgr, TrashBin* bin);
+
+public:
+    void setAppImagePath(const QString& appImagePath);
+
     const QString& getAppImagePath() const;
 
-    void setAppImagePath(const QString &appImagePath);
-
-    const std::vector<char *> &getArgs() const;
-
-    void setArgs(const std::vector<char *> &args);
+    const std::vector<char*>& getArgs() const;
 
     int getAppImageType() const;
-
-    void setIntegrationManager(AppImageDesktopIntegrationManager *integrationManager);
-
-    void setTrashBin(TrashBin *trashBin);
 
     bool shouldBeIgnored();
 
