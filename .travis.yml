@@ -82,7 +82,7 @@ script:
 after_success:
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
   - if [ "$TRAVIS_BRANCH" != "master" ]; then export TRAVIS_EVENT_TYPE=pull_request; fi
-  - if [ "$BIONIC" == "" ]; then bash upload.sh AppImageLauncher*.AppImage* appimagelauncher*.{deb,rpm}* appimagelauncher*.tar*; fi
+  - if [ "$BIONIC" == "" ]; then bash upload.sh appimagelauncher*.{deb,rpm}* appimagelauncher*.tar*; fi
   - if [ "$BIONIC" != "" ]; then bash upload.sh appimagelauncher*.deb*; fi
 
 branches:
