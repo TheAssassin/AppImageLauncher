@@ -75,11 +75,6 @@ Other systems derived from the listed ones, such as for instance Linux Mint (Ubu
 **Note:** If your system is not listed above as supported, please feel free to request support in an issue on GitHub. We can then discuss adding support.   
 
 
-### AppImage
-
-For evaluation purposes, you can download an AppImage from the [release page](https://github.com/TheAssassin/AppImageLauncher/releases), which will demonstrate how AppImageLauncher works. Please beware that certain features, like the removal of AppImages, require AppImageLauncher to be installed system wide.
-
-
 ## How it works
 
 AppImageLauncher is responsible for the desktop integration. When the user launches an AppImage, the software checks whether the AppImage has been integrated already. If not, it displays a dialog prompting the user whether to run the AppImage once, or move it to a predefined location and adding it to the application menus, launchers, etc.
