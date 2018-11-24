@@ -47,6 +47,7 @@ A few articles have been written about AppImageLauncher already:
   - http://linux-os.net/appimagelauncher-ejecuta-e-integra-facilmente-aplicaciones-en-appimage/ (Spanish)
     - same article also available here: https://blog.desdelinux.net/appimagelauncher-ejecuta-e-integra-facilmente-aplicaciones-en-appimage/
   - http://www.edivaldobrito.com.br/integrador-appimagelauncher-no-linux/ (Portuguese)
+  - https://404.g-net.pl/2018/08/appimagelauncher/ (Polish)
 
 
 ## Installation
