@@ -53,7 +53,10 @@ Escolher Não, irá executar a AppImage uma vez e mantê-la na directoria em que
 Could not open file for reading:
 
 %1</source>
-        <translation></translation>
+        <translation>Não foi possível processar as traduções do ficheiro do ambiente de trabalho:
+Não foi possível abrir o ficheiro para leitura:
+
+%1</translation>
     </message>
     <message>
         <location line="+15"/>
