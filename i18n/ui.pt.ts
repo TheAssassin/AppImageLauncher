@@ -156,7 +156,7 @@ Sintaxe inválida:
     <message>
         <location line="+1"/>
         <source>Desktop integration helper for AppImages, for use by Linux distributions.</source>
-        <translation>Ajudante de integração em ambiente de trabalho de AppImages, para utilização em distribuições Linux.</translation>
+        <translation>Assistente de integração em ambiente de trabalho de AppImages, para utilização em distribuições Linux.</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -337,112 +337,117 @@ Sintaxe inválida:
     <message>
         <location line="+10"/>
         <source>Couldn&apos;t find integrated AppImage&apos;s desktop file</source>
-        <translation>Não foi possivel encontrar o ficheiro de ambiente de trabalho integrado da AppImage</translation>
+        <translation>Não foi possível encontrar o ficheiro de ambiente de trabalho integrado da AppImage</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Failed to load desktop file:</source>
-        <translation></translation>
+        <translation>Falha ao carregar o ficheiro de ambiente de trabalho:</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>AppImage has invalid desktop file</source>
-        <translation></translation>
+        <translation>AppImage tem um ficheiro de ambiente de trabalho inválido</translation>
     </message>
     <message>
         <location line="+222"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
-        <translation></translation>
+        <translation>Falha ao mover AppImage para a localização destinada.
+Tentar copiar a AppImage em vez disso?</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Failed to copy AppImage to target location</source>
-        <translation></translation>
+        <translation>Falha ao copiar a AppImage para a localização destinada</translation>
     </message>
     <message>
         <location filename="../src/update_main.cpp" line="-51"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
-        <translation></translation>
+        <translation>Atualiza AppImages após a integração em ambiente de trabalho, para uso em distribuições Linux</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>AppImageLauncher update</source>
         <comment>update helper app name</comment>
-        <translation></translation>
+        <translation>Actualizar AppImageLauncher</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>The AppImage hasn&apos;t been integrated before. This tool will, however, integrate the updated AppImage.</source>
-        <translation></translation>
+        <translation>A AppImage não foi integrada antes. Esta ferramenta irá, porém, integrar a AppImage actualizada.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Do you wish to continue?</source>
-        <translation></translation>
+        <translation>Pretende continuar?</translation>
     </message>
     <message>
         <location line="+32"/>
         <source>No updates found</source>
-        <translation></translation>
+        <translation>Não foram encontradas actualizações</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Could not find updates for AppImage %1</source>
-        <translation></translation>
+        <translation>Não existem atualizações para AppImage %1</translation>
     </message>
     <message>
         <source>Failed to check for updates. Please check the command line output for details.</source>
-        <translation></translation>
+        <translation>Falha ao pesquisar actualizações. por favor verifique o output da linha de comandos para detalhes.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Failed to check for updates:
 
 %1</source>
-        <translation></translation>
+        <translation>Falha a pesquisar por actualizações:
+
+%1</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>An update has been found for the AppImage %1</source>
-        <translation></translation>
+        <translation>Uma actualização foi encontrada para a AppImage %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Do you want to perform the update?</source>
-        <translation></translation>
+        <translation>Pretende realizar a actualização?</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Remove old AppImage after successful update</source>
-        <translation></translation>
+        <translation>Remover a AppImage antiga após uma actualização com sucesso</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Failed to update AppImage:
 
 %1</source>
-        <translation></translation>
+        <translation>Falha ao actualizar a AppImage:
+
+%1</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>File reported as updated does not exist: %1</source>
-        <translation></translation>
+        <translation>Ficheiro reportado com actualizado não existe: %1</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Failed to register updated AppImage in system</source>
-        <translation></translation>
+        <translation>Falha a registar a AppImage actualizada no sistema</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Failed to unregister old AppImage in system</source>
-        <translation></translation>
+        <translation>Falha a desregistrar a AppImage antiga do sistema</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Failed to remove old AppImage</source>
-        <translation></translation>
+        <translation>Falha ao remover a AppImage antiga</translation>
     </message>
 </context>
 </TS>
