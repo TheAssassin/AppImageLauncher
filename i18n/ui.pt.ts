@@ -8,14 +8,17 @@
         <location filename="../src/shared.cpp" line="+320"/>
         <location line="+15"/>
         <source>Warning</source>
-        <translation></translation>
+        <translation>Aviso</translation>
     </message>
     <message>
         <source>AppImage has already been integrated, but it is not in the current integration destination directory.
 
 Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.</source>
-        <translation></translation>
+        <translation>A AppImage já foi integrada, mas não se encontra na actual directoria destinada à integração.
+
+Quer move-la para a nova diretoria?
+Escolher Não, irá executar a AppImage uma vez e mantê-la na directoria em que se encontra.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -26,17 +29,23 @@ Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.
 
 </source>
-        <translation></translation>
+        <translation>A AppImage %1 já foi integrada, mas não se encontra na actual directoria destinada à integração.
+
+Quer move-la para a nova diretoria?
+
+Escolher Não, irá executar a AppImage uma vez e mantê-la na directoria em que se encontra.
+
+</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Error</source>
-        <translation></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Failed to unregister AppImage before re-integrating it</source>
-        <translation></translation>
+        <translation>Falha a desregistrar a AppImage antes de a reintegrar</translation>
     </message>
     <message>
         <location filename="../src/shared.cpp" line="-14"/>
