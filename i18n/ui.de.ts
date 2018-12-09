@@ -4,9 +4,9 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/main.cpp" line="+433"/>
-        <location filename="../src/shared.cpp" line="+320"/>
+        <location filename="../src/shared/shared.cpp" line="+359"/>
         <location line="+15"/>
+        <location filename="../src/ui/main.cpp" line="+406"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
@@ -21,7 +21,7 @@ Möchten Sie es in das neue Verzeichnis verschieben?
 Sofern Sie Nein wählen, wird das AppImage einmal ausgeführt, und verbleibt in seinem derzeitigen Verzeichnis.</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location filename="../src/ui/main.cpp" line="+1"/>
         <source>AppImage %1 has already been integrated, but it is not in the current integration destination directory.
 
 Do you want to move it into the new destination?
@@ -48,7 +48,7 @@ Sollten Sie Nein wählen, wird das AppImage einmalig ausgeführt, und es wird im
         <translation>Fehler beim Deregistrieren des AppImages vor der Reintegration</translation>
     </message>
     <message>
-        <location filename="../src/shared.cpp" line="-14"/>
+        <location filename="../src/shared/shared.cpp" line="-14"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -73,7 +73,13 @@ Kaputte Syntax:
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="-348"/>
+        <location line="-172"/>
+        <location line="+12"/>
+        <location line="+10"/>
+        <location line="+25"/>
+        <location line="+242"/>
+        <location line="+12"/>
+        <location filename="../src/ui/main.cpp" line="-381"/>
         <location line="+10"/>
         <location line="+18"/>
         <location line="+12"/>
@@ -81,23 +87,20 @@ Kaputte Syntax:
         <location line="+11"/>
         <location line="+10"/>
         <location line="+8"/>
-        <location line="+59"/>
-        <location line="+112"/>
-        <location filename="../src/remove_main.cpp" line="+93"/>
+        <location line="+57"/>
+        <location line="+71"/>
         <location line="+11"/>
-        <location filename="../src/shared.cpp" line="-182"/>
+        <location line="+48"/>
+        <location filename="../src/ui/remove_main.cpp" line="+92"/>
         <location line="+12"/>
-        <location line="+10"/>
-        <location line="+33"/>
-        <location line="+239"/>
         <location line="+12"/>
-        <location filename="../src/update_main.cpp" line="+117"/>
-        <location line="+42"/>
+        <location filename="../src/ui/update_main.cpp" line="+134"/>
+        <location line="+43"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location line="-253"/>
+        <location filename="../src/ui/main.cpp" line="-269"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher unterstützt zur Zeit keine AppImages vom Typ %1.</translation>
     </message>
@@ -133,7 +136,7 @@ Kaputte Syntax:
         <translation>Entfernen der magischen Bytes in der temporären AppImage-Kopie fehlgeschlagen</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+31"/>
         <source>execv() failed: %1</source>
         <comment>error message</comment>
         <translation>execv() fehlgeschlagen: %1</translation>
@@ -144,12 +147,12 @@ Kaputte Syntax:
         <translation>runtime nicht gefunden: Datei oder Verzeichnis nicht vorhanden: %1</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+24"/>
         <source>execv() failed: %1</source>
         <translation>execv() fehlgeschlagen: %1</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+20"/>
         <source>Usage: %1 [options] &lt;path&gt;</source>
         <translation>Benutzung: %1 [Optionen] &lt;Pfad&gt;</translation>
     </message>
@@ -184,33 +187,44 @@ Kaputte Syntax:
         <translation>Pfad zu AppImage (erforderlich)</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+19"/>
         <source>Failed to clean up old desktop files</source>
         <translation>Fehler beim Aufräumen der alten Desktop-Dateien</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+11"/>
+        <location filename="../src/ui/remove_main.cpp" line="+1"/>
+        <source>Failed to clean up AppImage trash bin: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
         <source>Unknown AppImageLauncher option: %1</source>
         <translation>Unbekannte AppImageLauncher-Option: %1</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <location filename="../src/remove_main.cpp" line="-41"/>
-        <location filename="../src/update_main.cpp" line="-98"/>
+        <location line="+12"/>
+        <location filename="../src/ui/remove_main.cpp" line="-53"/>
+        <location filename="../src/ui/update_main.cpp" line="-116"/>
         <source>Error: no such file or directory: %1</source>
         <translation>Fehler: Datei oder Verzeichnis nicht gefunden: %1</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../src/remove_main.cpp" line="+9"/>
-        <location filename="../src/update_main.cpp" line="+7"/>
+        <location filename="../src/ui/remove_main.cpp" line="+9"/>
+        <location filename="../src/ui/update_main.cpp" line="+7"/>
         <source>Not an AppImage: %1</source>
         <translation>Datei ist kein AppImage: %1</translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+98"/>
+        <source>The directory the integrated AppImages are stored in is currently set to:
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
-        <translation>Das derzeit konfigurierte Zielverzeichnis für integrierte AppImages ist: %1</translation>
+        <translation type="vanished">Das derzeit konfigurierte Zielverzeichnis für integrierte AppImages ist: %1</translation>
     </message>
     <message>
         <location line="+27"/>
@@ -253,7 +267,7 @@ Kaputte Syntax:
         <translation>Abbruch</translation>
     </message>
     <message>
-        <location filename="../src/remove_main.cpp" line="-36"/>
+        <location filename="../src/ui/remove_main.cpp" line="-36"/>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
         <translation>Entfernt AppImages nach ihrer Desktop-Integration, zur Verwendung durch Linux-Distributionen</translation>
     </message>
@@ -289,17 +303,21 @@ Kaputte Syntax:
         <translation>Sind Sie sicher, dass Sie dieses AppImage entfernen möchten?</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+12"/>
         <source>Failed to unregister AppImage: %1</source>
         <translation>Fehler beim Deregistrieren des AppImages: %1</translation>
     </message>
     <message>
-        <location line="+11"/>
-        <source>Failed to remove AppImage: %1</source>
-        <translation>Entfernen des AppImages fehlgeschlagen: %1</translation>
+        <location line="+12"/>
+        <source>Failed to move AppImage into trash bin directory</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shared.cpp" line="-35"/>
+        <source>Failed to remove AppImage: %1</source>
+        <translation type="vanished">Entfernen des AppImages fehlgeschlagen: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/shared/shared.cpp" line="-35"/>
         <source>AppImage with same filename has already been integrated.</source>
         <translation>AppImage mit gleichem Dateinamen wurde bereits integriert.</translation>
     </message>
@@ -314,9 +332,9 @@ Kaputte Syntax:
         <translation>Bei Klick auf Nein wird das AppImage einmalig ausgeführt, und das System in seinem derzeitigen Zustand belassen.</translation>
     </message>
     <message>
-        <location line="-202"/>
-        <location line="+206"/>
-        <location filename="../src/update_main.cpp" line="+12"/>
+        <location line="-207"/>
+        <location line="+211"/>
+        <location filename="../src/ui/update_main.cpp" line="+12"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
@@ -325,7 +343,7 @@ Kaputte Syntax:
         <translation type="vanished">Verschieben des AppImages in Zielverzeichnis fehlgeschlagen</translation>
     </message>
     <message>
-        <location line="-277"/>
+        <location line="-272"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Fehler beim Registrieren des AppImages im System via libappimage</translation>
     </message>
@@ -340,17 +358,17 @@ Kaputte Syntax:
         <translation>Konnte Desktop-Datei des integrierten AppImages nicht finden</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+21"/>
         <source>Failed to load desktop file:</source>
         <translation>Fehler beim Laden der Desktop-Datei:</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+19"/>
         <source>AppImage has invalid desktop file</source>
         <translation>AppImage hat ungültige Desktop-Datei</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+227"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Fehler beim Verschieben des AppImages in Zielverzeichnis.
@@ -362,7 +380,7 @@ Stattdessen versuchen, das AppImage zu kopieren?</translation>
         <translation>Fehler beim Kopieren des AppImages in Zielverzeichnis</translation>
     </message>
     <message>
-        <location filename="../src/update_main.cpp" line="-51"/>
+        <location filename="../src/ui/update_main.cpp" line="-51"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
         <translation>Aktualisiert AppImages nach Desktop-Integration, zur Verwendung durch Linux-Distributionen</translation>
     </message>
@@ -383,7 +401,7 @@ Stattdessen versuchen, das AppImage zu kopieren?</translation>
         <translation>Möchten Sie fortfahren?</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+36"/>
         <source>No updates found</source>
         <translation>Keine Aktualisierungen gefunden</translation>
     </message>
@@ -398,6 +416,19 @@ Stattdessen versuchen, das AppImage zu kopieren?</translation>
     </message>
     <message>
         <location line="+7"/>
+        <source>No update information found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Could not find update information in AppImage:
+%1
+
+The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
         <source>Failed to check for updates:
 
 %1</source>
@@ -406,7 +437,7 @@ Stattdessen versuchen, das AppImage zu kopieren?</translation>
 %1</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>An update has been found for the AppImage %1</source>
         <translation>Eine Aktualisierung wurde gefunden für das AppImage %1</translation>
     </message>
