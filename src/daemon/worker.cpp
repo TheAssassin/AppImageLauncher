@@ -13,7 +13,7 @@
 #include <appimage/appimage.h>
 
 // local includes
-#include "daemon_worker.h"
+#include "worker.h"
 #include "shared.h"
 
 enum OP_TYPE {

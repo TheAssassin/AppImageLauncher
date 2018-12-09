@@ -13,7 +13,7 @@
 // local includes
 #include "shared.h"
 #include "filesystemwatcher.h"
-#include "daemon_worker.h"
+#include "worker.h"
 
 int main(int argc, char* argv[]) {
     QCoreApplication app(argc, argv);

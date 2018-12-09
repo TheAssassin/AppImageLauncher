@@ -1,3 +1,6 @@
+#pragma once
+
+// library includes
 #include <QApplication>
 #include <QTranslator>
 #include <QList>

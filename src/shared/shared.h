@@ -1,5 +1,7 @@
 /* central file for utility functions */
 
+#pragma once
+
 // system headers
 #include <string>
 #include <memory>
