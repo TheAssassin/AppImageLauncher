@@ -32,6 +32,6 @@ target_link_libraries(update shared translationmanager libappimage libappimageup
 set_target_properties(update PROPERTIES INSTALL_RPATH "\$ORIGIN")
 
 install(
-    TARGETS update
+    TARGETS remove update
     RUNTIME DESTINATION lib/appimagelauncher COMPONENT APPIMAGELAUNCHER
 )
