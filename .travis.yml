@@ -2,6 +2,7 @@ language: cpp
 compiler: gcc
 sudo: required
 dist: trusty
+cache: ccache
 
 notifications:
   email: false
@@ -71,9 +72,6 @@ matrix:
             - libfontconfig1-dev:i386
             - libfreetype6-dev:i386
             - libarchive-dev:i386
-
-before_script:
-  - cmake --version
 
 install:
   - ccache -M 5G

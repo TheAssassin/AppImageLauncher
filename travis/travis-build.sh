@@ -26,6 +26,14 @@ OLD_CWD=$(readlink -f .)
 
 pushd "$BUILD_DIR"
 
+# install more recent CMake version which fixes some linking issue in CMake < 3.10
+# Fixes https://github.com/TheAssassin/AppImageLauncher/issues/106
+# Upstream bug: https://gitlab.kitware.com/cmake/cmake/issues/17389
+wget https://cmake.org/files/v3.13/cmake-3.13.2-Linux-x86_64.tar.gz -qO- | tar xvz --strip-components=1
+export PATH=$(readlink -f bin/):"$PATH"
+which cmake
+cmake --version
+
 EXTRA_CMAKE_FLAGS=
 
 if [ "$BIONIC" == "" ]; then
