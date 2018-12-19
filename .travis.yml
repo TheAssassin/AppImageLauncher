@@ -2,6 +2,7 @@ language: cpp
 compiler: gcc
 sudo: required
 dist: trusty
+cache: ccache
 
 notifications:
   email: false
