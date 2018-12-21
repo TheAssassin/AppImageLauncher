@@ -196,7 +196,7 @@ bool updateDesktopDatabaseAndIconCaches() {
     return true;
 }
 
-bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
+bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveCollisions) {
     if (appimage_register_in_system(pathToAppImage.toStdString().c_str(), false) != 0) {
         QMessageBox::critical(
             nullptr,
@@ -448,8 +448,8 @@ bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions) {
     return true;
 }
 
-bool updateDesktopFile(const QString& pathToAppImage) {
-    return installDesktopFile(pathToAppImage, true);
+bool updateDesktopFileAndIcons(const QString& pathToAppImage) {
+    return installDesktopFileAndIcons(pathToAppImage, true);
 }
 
 IntegrationState integrateAppImage(const QString& pathToAppImage, const QString& pathToIntegratedAppImage) {
@@ -509,7 +509,7 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
         }
     }
 
-    if (!installDesktopFile(pathToIntegratedAppImage))
+    if (!installDesktopFileAndIcons(pathToIntegratedAppImage))
         return INTEGRATION_FAILED;
 
     return INTEGRATION_SUCCESSFUL;

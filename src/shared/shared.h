@@ -29,11 +29,11 @@ bool makeNonExecutable(const QString& path);
 
 // installs desktop file for given AppImage, including AppImageLauncher specific modifications
 // set resolveCollisions to false in order to leave the Name entries as-is
-bool installDesktopFile(const QString& pathToAppImage, bool resolveCollisions = true);
+bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveCollisions = true);
 
 // update AppImage's existing desktop file with AppImageLauncher specific entries
-// this alias for installDesktopFile does not perform any collision detection and resolving
-bool updateDesktopFile(const QString& pathToAppImage);
+// this alias for installDesktopFileAndIcons does not perform any collision detection and resolving
+bool updateDesktopFileAndIcons(const QString& pathToAppImage);
 
 // update desktop database and icon caches of desktop environments
 // this makes sure that:
