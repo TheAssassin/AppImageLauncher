@@ -66,3 +66,6 @@ bool isInDirectory(const QString& pathToAppImage, const QDir& directory);
 
 // clean up old desktop files (and related resources, such as icons)
 bool cleanUpOldDesktopIntegrationResources(bool verbose = false);
+
+// returns true if AppImageLauncher was updated since the desktop file for a given AppImage has been updated last
+bool desktopFileHasBeenUpdatedSinceLastUpdate(const QString& pathToAppImage);

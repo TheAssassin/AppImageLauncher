@@ -643,3 +643,31 @@ bool cleanUpOldDesktopIntegrationResources(bool verbose) {
 
     return true;
 }
+
+bool desktopFileHasBeenUpdatedSinceLastUpdate(const QString& pathToAppImage) {
+    const std::shared_ptr<char> ownBinaryPath(realpath("/proc/self/exe", nullptr));
+    const auto desktopFilePath = appimage_registered_desktop_file_path(pathToAppImage.toStdString().c_str(), nullptr, false);
+
+    auto getMTime = [](const QString& path) -> time_t {
+        struct stat st{};
+        if (stat(path.toStdString().c_str(), &st) != 0) {
+            QMessageBox::critical(
+                nullptr,
+                QObject::tr("Error"),
+                QObject::tr("Failed to call stat() on path:\n\n%1").arg(path)
+            );
+            return -1;
+        }
+
+        return st.st_mtim.tv_sec;
+    };
+    
+    auto ownBinaryMTime = getMTime(ownBinaryPath.get());
+    auto desktopFileMTime = getMTime(desktopFilePath);
+
+    // check if something has failed horribly
+    if (desktopFileMTime < 0 || ownBinaryMTime < 0)
+        return false;
+
+    return desktopFileMTime > ownBinaryMTime;
+}
