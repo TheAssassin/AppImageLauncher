@@ -394,9 +394,16 @@ int main(int argc, char** argv) {
     // has been integrated already
     if (hasAlreadyBeenIntegrated(pathToAppImage)) {
         auto updateAndRunAppImage = [&pathToAppImage, &appImageArgv]() {
-            if (!updateDesktopFile(pathToAppImage))
-                return 1;
+            // in case there was an update of AppImageLauncher, we should should also update the desktop database
+            // and icon caches
+            if (!desktopFileHasBeenUpdatedSinceLastUpdate(pathToAppImage)) {
+                if (!updateDesktopFileAndIcons(pathToAppImage))
+                    return 1;
 
+                // make sure the icons in the launcher are refreshed after updating the desktop file
+                if (!updateDesktopDatabaseAndIconCaches())
+                    return 1;
+            }
             return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
         };
 
