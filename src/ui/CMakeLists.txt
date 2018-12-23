@@ -19,7 +19,7 @@ install(
 
 
 # AppImage removal helper
-add_executable(remove remove_main.cpp)
+add_executable(remove remove_main.cpp remove.ui)
 target_link_libraries(remove shared translationmanager libappimage)
 # see AppImageLauncher for a description
 set_target_properties(remove PROPERTIES INSTALL_RPATH "\$ORIGIN")

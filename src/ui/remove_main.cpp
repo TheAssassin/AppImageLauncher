@@ -22,6 +22,7 @@ extern "C" {
 #include "shared.h"
 #include "translationmanager.h"
 #include "trashbin.h"
+#include "ui_remove.h"
 
 bool unregisterAppImage(const QString& pathToAppImage) {
     auto rv = appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false);
@@ -70,58 +71,73 @@ int main(int argc, char** argv) {
     if (type <= 0 || type > 2) {
         QMessageBox::critical(
             nullptr,
-            QObject::tr("AppImage remove helper error"), QObject::tr("Not an AppImage: %1").arg(pathToAppImage)
+            QObject::tr("AppImage remove helper error"),
+            QObject::tr("Not an AppImage:\n\n%1").arg(pathToAppImage)
         );
         return 1;
     }
 
-    auto clickedButton = QMessageBox::question(
-        nullptr,
-        QObject::tr("Please confirm"),
-        QObject::tr("Are you sure you want to remove this AppImage?") + "\n\n" + pathToAppImage,
-        QMessageBox::No | QMessageBox::Yes,
-        QMessageBox::No
-    );
+    // this tool should not do anything if the file isn't integrated
+    // the file is only supposed to work on integrated AppImages and _nothing else_
+    if (!hasAlreadyBeenIntegrated(pathToAppImage)) {
+        QMessageBox::critical(
+                nullptr,
+                QObject::tr("AppImage remove helper error"),
+                QObject::tr("Refusing to work on non-integrated AppImage:\n\n%1").arg(pathToAppImage)
+        );
+        return 1;
+    }
 
-    switch (clickedButton) {
-        case QMessageBox::Yes: {
+    QDialog dialog;
+    Ui::RemoveDialog ui;
+    ui.setupUi(&dialog);
+    ui.pathLabel->setText(pathToAppImage);
+
+    auto rv = dialog.exec();
+
+    switch (rv) {
+        case 1: {
             // first, unregister AppImage
             if (!unregisterAppImage(pathToAppImage)) {
                 QMessageBox::critical(
-                    nullptr,
-                    QObject::tr("Error"),
-                    QObject::tr("Failed to unregister AppImage: %1").arg(pathToAppImage)
+                        nullptr,
+                        QObject::tr("Error"),
+                        QObject::tr("Failed to unregister AppImage: %1").arg(pathToAppImage)
                 );
                 return 1;
             }
 
-            TrashBin bin;
+            if (ui.checkBox->checkState() == Qt::Checked) {
+                TrashBin bin;
 
-            // now, move AppImage into trash bin
-            if (!bin.disposeAppImage(pathToAppImage)) {
-                QMessageBox::critical(
-                    nullptr,
-                    QObject::tr("Error"),
-                    QObject::tr("Failed to move AppImage into trash bin directory")
-                );
-                return 1;
+                // now, move AppImage into trash bin
+                if (!bin.disposeAppImage(pathToAppImage)) {
+                    QMessageBox::critical(
+                            nullptr,
+                            QObject::tr("Error"),
+                            QObject::tr("Failed to move AppImage into trash bin directory")
+                    );
+                    return 1;
+                }
+
+                // run clean up cycle for trash bin
+                // if the current AppImage is ready to be deleted, this call will immediately remove it from the system
+                // otherwise, it'll be cleaned up at some subsequent run of AppImageLauncher or the removal tool
+                if (!bin.cleanUp()) {
+                    QMessageBox::critical(
+                            nullptr,
+                            QObject::tr("Error"),
+                            QObject::tr("Failed to clean up AppImage trash bin: %1").arg(bin.path())
+                    );
+                    return 1;
+                }
+
+                // update desktop database and icon caches
+                if (!updateDesktopDatabaseAndIconCaches())
+                    return 1;
             }
 
-            // run clean up cycle for trash bin
-            // if the current AppImage is ready to be deleted, this call will immediately remove it from the system
-            // otherwise, it'll be cleaned up at some subsequent run of AppImageLauncher or the removal tool
-            if (!bin.cleanUp()) {
-                QMessageBox::critical(
-                    nullptr,
-                    QObject::tr("Error"),
-                    QObject::tr("Failed to clean up AppImage trash bin: %1").arg(bin.path())
-                );
-                return 1;
-            }
-            
-            // update desktop database and icon caches
-            if (!updateDesktopDatabaseAndIconCaches())
-                return 1;
+            return 0;
         }
         default: {
             // exit without any actions
@@ -129,8 +145,7 @@ int main(int argc, char** argv) {
         }
     }
 
-
-    // _should_ be unreachable
-    return 1;
+    // sanity check: this line _should_ be unreachable
+    throw std::runtime_error("This line shouldn't have been reachable...");
 }
 
