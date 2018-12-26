@@ -203,7 +203,7 @@ int main(int argc, char** argv) {
     }
 
     if (removeAfterUpdate) {
-        if (hasBeenRegisteredBefore && !appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false)) {
+        if (hasBeenRegisteredBefore && appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false) != 0) {
             criticalUpdaterError(QObject::tr("Failed to unregister old AppImage in system"));
             return 1;
         }
