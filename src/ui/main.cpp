@@ -22,6 +22,7 @@ extern "C" {
 #include <QRegularExpression>
 #include <QString>
 #include <QTemporaryDir>
+#include <QTextStream>
 extern "C" {
     #include <appimage/appimage.h>
     #include <xdg-basedir.h>
@@ -43,174 +44,122 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     auto type = appimage_get_type(fullPathToAppImage.toStdString().c_str(), false);
     if (type < 1 || type > 3) {
         QMessageBox::critical(
-            nullptr,
-            QObject::tr("Error"),
-            QObject::tr("AppImageLauncher does not support type %1 AppImages at the moment.").arg(type)
+                nullptr,
+                QObject::tr("Error"),
+                QObject::tr("AppImageLauncher does not support type %1 AppImages at the moment.").arg(type)
         );
         return 1;
     }
 
-    // first of all, chmod +x the AppImage file, otherwise execv() will complain
+    // first of all, chmod +x the AppImage registerFile
+    // not strictly necessary for AppImageLauncherFS, but if AppImageLauncher is going to be removed, the user will
+    // be happy the registerFile is executable already
     if (!makeExecutable(fullPathToAppImage)) {
+        QMessageBox::critical(
+                nullptr,
+                QObject::tr("Error"),
+                QObject::tr("Could not make AppImage executable: %1").arg(fullPathToAppImage)
+        );
+        return 1;
+    }
+
+    // make sure appimagelauncherfs service is running
+    auto rv = system("systemctl --user enable appimagelauncherfs 2>&1 1>/dev/null");
+    rv += system("systemctl --user start appimagelauncherfs 2>&1 1>/dev/null");
+
+    if (rv != 0) {
         QMessageBox::critical(
             nullptr,
             QObject::tr("Error"),
-            QObject::tr("Could not make AppImage executable: %1").arg(fullPathToAppImage)
+            QObject::tr("Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service")
         );
         return 1;
     }
 
-    // build path to AppImage runtime
-    // as it might error, check before fork()ing to be able to display an error message beforehand
-    auto exeDir = QFileInfo(QFile("/proc/self/exe").symLinkTarget()).absoluteDir().absolutePath();
+    // suppress desktop integration script etc.
+    setenv("DESKTOPINTEGRATION", "AppImageLauncher", true);
 
-    if (type == 1) {
-        auto size = appimage_get_elf_size(fullPathToAppImage.toStdString().c_str());
+    // build path to AppImageLauncherFS endpoint
+    QString pathToFSEndpoint = "/run/user/" + QString::number(getuid()) + "/appimagelauncherfs/";
 
-        QFile appImage(QString::fromStdString(fullPathToAppImage.toStdString()));
+    // register current AppImage
+    {
+        QFile registerFile(pathToFSEndpoint + "/register");
 
-        if (!appImage.open(QIODevice::ReadOnly)) {
+        if (registerFile.open(QIODevice::Append)) {
+            QTextStream stream(&registerFile);
+            stream << pathToAppImage << endl;
+        } else {
             QMessageBox::critical(
                 nullptr,
                 QObject::tr("Error"),
-                QObject::tr("Failed to open AppImage for reading: %1").arg(pathToAppImage)
+                QObject::tr("Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage")
             );
             return 1;
         }
 
-        // copy AppImage to temp dir
-        QTemporaryDir tempDir("/tmp/AppImageLauncher-type1-XXXXXX");
-
-        if (!tempDir.isValid()) {
-            QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to create temporary directory")
-            );
-            return 1;
-        }
-
-        tempDir.setAutoRemove(true);
-
-        // copy AppImage to temporary directory
-        auto tempAppImagePath = QDir(tempDir.path()).absoluteFilePath(QFileInfo(appImage).fileName());
-
-        if (!appImage.copy(tempAppImagePath)) {
-            QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to create temporary copy of type 1 AppImage")
-            );
-            return 1;
-        }
-
-        QFile tempAppImage(tempAppImagePath);
-
-        if (!tempAppImage.open(QFile::ReadWrite)) {
-            QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to open temporary AppImage copy for writing")
-            );
-            return 1;
-        }
-
-        // nuke magic bytes
-        if (!tempAppImage.seek(8)) {
-            QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to remove magic bytes from temporary AppImage copy")
-            );
-            return 1;
-        }
-        if (tempAppImage.write(QByteArray(3, '\0')) != 3) {
-            QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to remove magic bytes from temporary AppImage copy")
-            );
-            return 1;
-        }
-
-        auto tempAppImageFileName = tempAppImage.fileName();
-
-        // actually _write_ changes
-        tempAppImage.close();
-
-        makeExecutable(tempAppImageFileName);
-
-        // need a char pointer instead of a const one, therefore can't use .c_str()
-        std::vector<char> argv0Buffer(tempAppImageFileName.size() + 1, '\0');
-        strcpy(argv0Buffer.data(), tempAppImageFileName.toStdString().c_str());
-
-        std::vector<char*> args;
-
-        args.push_back(argv0Buffer.data());
-
-        // copy arguments
-        for (int i = 1; i < argc; i++) {
-            args.push_back(argv[i]);
-        }
-
-        // args need to be null terminated
-        args.push_back(nullptr);
-
-        execv(tempAppImageFileName.toStdString().c_str(), args.data());
-
-        const auto& error = errno;
-        std::cout << QObject::tr("execv() failed: %1", "error message").arg(strerror(error)).toStdString() << std::endl;
-    } else if (type == 2) {
-        // use external runtime _without_ magic bytes to run the AppImage
-        // the original idea was to use /lib64/ld-linux-x86_64.so to run AppImages, but it did complain about some
-        // violated ELF data, and refused to run the AppImage
-        // alternatively, the AppImage would have to be mounted by this application, and AppRun would need to be called
-        // however, this requires some process management (e.g., killing all processes inside the AppImage and also
-        // the FUSE "mount" process, when this application is killed...)
-        setenv("TARGET_APPIMAGE", fullPathToAppImage.toStdString().c_str(), true);
-
-        // suppress desktop integration script
-        setenv("DESKTOPINTEGRATION", "AppImageLauncher", true);
-
-        // first attempt: find runtime in expected installation directory
-        auto pathToRuntime = exeDir.toStdString() + "/../lib/appimagelauncher/runtime";
-
-        // next method: find runtime in expected build location
-        if (!QFile(QString::fromStdString(pathToRuntime)).exists()) {
-            pathToRuntime = exeDir.toStdString() + "/../../lib/AppImageKit/src/runtime";
-        }
-
-        // if it can't be found in either location, display error and exit
-        if (!QFile(QString::fromStdString(pathToRuntime)).exists()) {
-            QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("runtime not found: no such file or directory: %1").arg(QString::fromStdString(pathToRuntime))
-            );
-            return 1;
-        }
-
-        // need a char pointer instead of a const one, therefore can't use .c_str()
-        std::vector<char> argv0Buffer(pathToAppImage.toStdString().size() + 1, '\0');
-        strcpy(argv0Buffer.data(), pathToAppImage.toStdString().c_str());
-
-        std::vector<char*> args;
-
-        args.push_back(argv0Buffer.data());
-
-        // copy arguments
-        for (int i = 1; i < argc; i++) {
-            args.push_back(argv[i]);
-        }
-
-        // args need to be null terminated
-        args.push_back(nullptr);
-
-        execv(pathToRuntime.c_str(), args.data());
-
-        const auto& error = errno;
-        std::cout << QObject::tr("execv() failed: %1").arg(strerror(error)).toStdString() << std::endl;
+        registerFile.close();
     }
+
+    // resolve path to virtual file in map
+    QString pathToVirtualAppImage;
+    {
+        // reading line wise properly is [hard, impossible[ in Qt
+        // using good ol' C++
+        std::string mapFilePath = (pathToFSEndpoint + "/map").toStdString();
+
+        std::ifstream mapFile(mapFilePath);
+
+        if (!mapFile) {
+            QMessageBox::critical(
+                nullptr,
+                QObject::tr("Error"),
+                QObject::tr("Failed to register AppImage in AppImageLauncherFS: could not open map file")
+            );
+            return 1;
+        }
+
+        std::string currentLine;
+        while (std::getline(mapFile, currentLine)) {
+            if (currentLine.find(pathToAppImage.toStdString()) != std::string::npos) {
+                auto virtualFileName = currentLine.substr(0, currentLine.find(" -> "));
+                pathToVirtualAppImage = pathToFSEndpoint + "/" + QString::fromStdString(virtualFileName);
+                break;
+            }
+        }
+
+        if (pathToVirtualAppImage.isEmpty()) {
+            QMessageBox::critical(
+                nullptr,
+                QObject::tr("Error"),
+                QObject::tr("Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage")
+            );
+            return 1;
+        }
+
+        mapFile.close();
+    }
+
+    // need a char pointer instead of a const one, therefore can't use .c_str()
+    std::vector<char> argv0Buffer(pathToAppImage.toStdString().size() + 1, '\0');
+    strcpy(argv0Buffer.data(), pathToAppImage.toStdString().c_str());
+
+    std::vector<char*> args;
+
+    args.push_back(argv0Buffer.data());
+
+    // copy arguments
+    for (int i = 1; i < argc; i++) {
+        args.push_back(argv[i]);
+    }
+
+    // args need to be null terminated
+    args.push_back(nullptr);
+
+    execv(pathToVirtualAppImage.toStdString().c_str(), args.data());
+
+    const auto& error = errno;
+    std::cout << QObject::tr("execv() failed: %1").arg(strerror(error)).toStdString() << std::endl;
 }
 
 int main(int argc, char** argv) {
