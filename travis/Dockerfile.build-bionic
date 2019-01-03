@@ -30,4 +30,5 @@ RUN apt-get update && \
         vim-common \
         desktop-file-utils \
         pkg-config \
-        libarchive-dev
+        libarchive-dev \
+        libboost-filesystem-dev
