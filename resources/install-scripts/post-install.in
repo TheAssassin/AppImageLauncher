@@ -24,3 +24,7 @@ if [ "$UPDATE_BINFMTS" != "" ]; then
 else
     (set -x; systemctl restart systemd-binfmt)
 fi
+
+# restart service to make sure latest version of binary is running
+echo "Restarting appimagelauncherfs service"
+systemctl --user restart appimagelauncherfs.service
