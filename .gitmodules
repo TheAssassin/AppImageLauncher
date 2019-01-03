@@ -1,9 +1,9 @@
-[submodule "lib/AppImageKit"]
-	path = lib/AppImageKit
-	url = https://github.com/AppImage/AppImageKit.git
 [submodule "lib/AppImageUpdate"]
 	path = lib/AppImageUpdate
 	url = https://github.com/AppImage/AppImageUpdate.git
 [submodule "lib/AppImageLauncherFS"]
 	path = lib/AppImageLauncherFS
 	url = https://github.com/TheAssassin/AppImageLauncherFS
+[submodule "lib/libappimage"]
+	path = lib/libappimage
+	url = https://github.com/AppImage/libappimage.git

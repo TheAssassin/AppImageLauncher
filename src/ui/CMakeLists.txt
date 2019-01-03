@@ -7,9 +7,6 @@ target_link_libraries(AppImageLauncher shared PkgConfig::glib libappimage shared
 # in order to make the whole install tree relocatable, a relative path is used
 set_target_properties(AppImageLauncher PROPERTIES INSTALL_RPATH "\$ORIGIN/../lib/appimagelauncher")
 
-# add dependency on AppImageKit's runtime to make sure it's built before/along with appimagelauncherd
-add_dependencies(appimagelauncherd runtime)
-
 install(
     TARGETS
     AppImageLauncher
