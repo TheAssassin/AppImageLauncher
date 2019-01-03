@@ -95,7 +95,7 @@ int main(int argc, char** argv) {
         &appimage::update::qt::QtUpdater::newStatusMessage,
         &updater,
         [&updater, &updaterStatusMessages](const std::string& newMessage) {
-            if (!updaterStatusMessages.tellp() <= 0)
+            if (!(updaterStatusMessages.tellp() <= 0))
                 updaterStatusMessages << std::endl;
 
             updaterStatusMessages << newMessage;
@@ -165,10 +165,7 @@ int main(int argc, char** argv) {
         removeAfterUpdate = removeCheckBox.isChecked();
     }
 
-    // perform update
-    updater.show();
-
-    auto rv = app.exec();
+    auto rv = updater.exec();
 
     // if the update has failed, return immediately
     if (rv != 0) {
