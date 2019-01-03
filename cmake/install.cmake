@@ -3,16 +3,9 @@
 # for some reason, using TARGETS ... doesn't work here, therefore using the absolute file path
 install(
     FILES
-    ${PROJECT_BINARY_DIR}/lib/AppImageKit/lib/libappimage/src/libappimage/libappimage.so
+    ${PROJECT_BINARY_DIR}/lib/libappimage/src/libappimage/libappimage.so
     ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/src/libappimageupdate.so
     ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/src/qt-ui/libappimageupdate-qt.so
-    DESTINATION lib/appimagelauncher COMPONENT APPIMAGELAUNCHER
-)
-
-# also, install the runtime, which is needed to run AppImages
-install(
-    FILES ${PROJECT_BINARY_DIR}/lib/AppImageKit/src/runtime
-    PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
     DESTINATION lib/appimagelauncher COMPONENT APPIMAGELAUNCHER
 )
 
