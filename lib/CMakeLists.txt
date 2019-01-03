@@ -10,6 +10,8 @@ add_subdirectory(AppImageKit EXCLUDE_FROM_ALL)
 # used by the update helper
 add_subdirectory(AppImageUpdate EXCLUDE_FROM_ALL)
 
+add_subdirectory(AppImageLauncherFS)
+
 if(TRAVIS_BUILD)
     # TODO: use latest version of CMake once it contains the following change:
     # https://gitlab.kitware.com/cmake/cmake/commit/00a9d133fb2838ebb756d684659c5d51f577ede3

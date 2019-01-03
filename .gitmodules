@@ -4,3 +4,6 @@
 [submodule "lib/AppImageUpdate"]
 	path = lib/AppImageUpdate
 	url = https://github.com/AppImage/AppImageUpdate.git
+[submodule "lib/AppImageLauncherFS"]
+	path = lib/AppImageLauncherFS
+	url = https://github.com/TheAssassin/AppImageLauncherFS
