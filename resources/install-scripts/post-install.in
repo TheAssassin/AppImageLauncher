@@ -30,7 +30,7 @@ echo "Restarting appimagelauncherfs service"
 systemctl --user restart appimagelauncherfs.service
 
 # also restart appimagelauncherd, but only if it's running already
-if systemctl --user is-active appimagelauncherd; then
+if systemctl --user --quiet is-active appimagelauncherd; then
     echo "Restarting appimagelauncherd service"
     systemctl --user restart appimagelauncherd.service
 fi
