@@ -3,7 +3,9 @@
 add_subdirectory(libappimage EXCLUDE_FROM_ALL)
 
 # used by the update helper
-add_subdirectory(AppImageUpdate EXCLUDE_FROM_ALL)
+if(ENABLE_UPDATE_HELPER)
+    add_subdirectory(AppImageUpdate EXCLUDE_FROM_ALL)
+endif()
 
 add_subdirectory(AppImageLauncherFS)
 

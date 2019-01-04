@@ -26,6 +26,11 @@ if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_definitions(-DQT_NO_WARNING_OUTPUT)
 endif()
 
+# this shall propagate to all targets built in the subdirs
+if(ENABLE_UPDATE_HELPER)
+    add_definitions(-DENABLE_UPDATE_HELPER)
+endif()
+
 # utility libraries
 add_subdirectory(fswatcher)
 add_subdirectory(i18n)

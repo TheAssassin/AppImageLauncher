@@ -23,12 +23,14 @@ set_target_properties(remove PROPERTIES INSTALL_RPATH "\$ORIGIN")
 
 
 # AppImage update helper
-add_executable(update update_main.cpp)
-target_link_libraries(update shared translationmanager libappimage libappimageupdate-qt)
-# see AppImageLauncher for a description
-set_target_properties(update PROPERTIES INSTALL_RPATH "\$ORIGIN")
+if(ENABLE_UPDATE_HELPER)
+    add_executable(update update_main.cpp)
+    target_link_libraries(update shared translationmanager libappimage libappimageupdate-qt)
+    # see AppImageLauncher for a description
+    set_target_properties(update PROPERTIES INSTALL_RPATH "\$ORIGIN")
 
-install(
-    TARGETS remove update
-    RUNTIME DESTINATION lib/appimagelauncher COMPONENT APPIMAGELAUNCHER
-)
+    install(
+        TARGETS remove update
+        RUNTIME DESTINATION lib/appimagelauncher COMPONENT APPIMAGELAUNCHER
+    )
+endif()

@@ -316,7 +316,11 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
         return pointerList;
     };
 
-    std::vector<std::string> desktopActions = {"Remove", "Update"};
+    std::vector<std::string> desktopActions = {"Remove"};
+
+#ifdef ENABLE_UPDATE_HELPER
+    desktopActions.emplace_back("Update");
+#endif
 
     g_key_file_set_string_list(
         desktopFile.get(),
@@ -328,6 +332,8 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
 
     // load translations from JSON file(s)
     QMap<QString, QString> removeActionNameTranslations;
+
+#ifdef ENABLE_UPDATE_HELPER
     QMap<QString, QString> updateActionNameTranslations;
 
     {
@@ -393,6 +399,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
             }
         }
     }
+#endif
 
     // add Remove action
     {
@@ -412,6 +419,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
         }
     }
 
+#ifdef ENABLE_UPDATE_HELPER
     // add Update action
     {
         const auto updateSectionName = "Desktop Action Update";
@@ -429,6 +437,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
             g_key_file_set_locale_string(desktopFile.get(), updateSectionName, "Name", entry.key().toStdString().c_str(), entry.value().toStdString().c_str());
         }
     }
+#endif
 
     // add version key
     const auto version = QApplication::applicationVersion().replace("version ", "").toStdString();
