@@ -69,3 +69,6 @@ bool cleanUpOldDesktopIntegrationResources(bool verbose = false);
 
 // returns true if AppImageLauncher was updated since the desktop file for a given AppImage has been updated last
 bool desktopFileHasBeenUpdatedSinceLastUpdate(const QString& pathToAppImage);
+
+// returns true if the AppImageLauncherFS service was restarted since the last AppImageLauncher update
+bool fsDaemonHasBeenRestartedSinceLastUpdate();

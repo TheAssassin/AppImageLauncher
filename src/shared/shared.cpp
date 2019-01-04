@@ -7,6 +7,7 @@ extern "C" {
     #include <glib.h>
     // #include <libgen.h>
     #include <sys/stat.h>
+    #include <stdio.h>
     #include <unistd.h>
     #include <xdg-basedir.h>
 }
@@ -644,23 +645,23 @@ bool cleanUpOldDesktopIntegrationResources(bool verbose) {
     return true;
 }
 
-bool desktopFileHasBeenUpdatedSinceLastUpdate(const QString& pathToAppImage) {
-    const std::shared_ptr<char> ownBinaryPath(realpath("/proc/self/exe", nullptr));
-    const auto desktopFilePath = appimage_registered_desktop_file_path(pathToAppImage.toStdString().c_str(), nullptr, false);
-
-    auto getMTime = [](const QString& path) -> time_t {
-        struct stat st{};
-        if (stat(path.toStdString().c_str(), &st) != 0) {
-            QMessageBox::critical(
+time_t getMTime(const QString& path) {
+    struct stat st{};
+    if (stat(path.toStdString().c_str(), &st) != 0) {
+        QMessageBox::critical(
                 nullptr,
                 QObject::tr("Error"),
                 QObject::tr("Failed to call stat() on path:\n\n%1").arg(path)
-            );
-            return -1;
-        }
+        );
+        return -1;
+    }
 
-        return st.st_mtim.tv_sec;
-    };
+    return st.st_mtim.tv_sec;
+};
+
+bool desktopFileHasBeenUpdatedSinceLastUpdate(const QString& pathToAppImage) {
+    const std::shared_ptr<char> ownBinaryPath(realpath("/proc/self/exe", nullptr));
+    const auto desktopFilePath = appimage_registered_desktop_file_path(pathToAppImage.toStdString().c_str(), nullptr, false);
     
     auto ownBinaryMTime = getMTime(ownBinaryPath.get());
     auto desktopFileMTime = getMTime(desktopFilePath);
@@ -670,4 +671,52 @@ bool desktopFileHasBeenUpdatedSinceLastUpdate(const QString& pathToAppImage) {
         return false;
 
     return desktopFileMTime > ownBinaryMTime;
+}
+
+bool fsDaemonHasBeenRestartedSinceLastUpdate() {
+    const std::shared_ptr<char> ownBinaryPath(realpath("/proc/self/exe", nullptr));
+
+    auto ownBinaryMTime = getMTime(ownBinaryPath.get());
+
+    auto getServiceStartTime = []() -> long long {
+        auto fp = popen("systemctl --user show appimagelauncherfs.service --property=ActiveEnterTimestampMonotonic", "r");
+
+        if (fp == nullptr) {
+            return -1;
+        }
+
+        std::vector<char> buffer(512);
+
+        if (fread(buffer.data(), sizeof(char), buffer.size(), fp) < 0)
+            return 1;
+
+        std::string strbuf(buffer.data());
+
+        auto equalsPos = strbuf.find('=');
+        auto lfPos = strbuf.find('\n');
+        if (lfPos == std::string::npos)
+            lfPos = strbuf.size();
+
+        auto timestamp = strbuf.substr(equalsPos + 1, lfPos - equalsPos - 1);
+
+        auto monotonicRuntime = static_cast<long long>(std::stoll(timestamp) / 1e6);
+
+        timespec currentMonotonicTime{};
+        timespec currentRealTime{};
+
+        clock_gettime(CLOCK_MONOTONIC, &currentMonotonicTime);
+        clock_gettime(CLOCK_REALTIME, &currentRealTime);
+
+        auto offset = currentRealTime.tv_sec - currentMonotonicTime.tv_sec;
+
+        return monotonicRuntime + offset;
+    };
+
+    auto serviceStartTime = getServiceStartTime();
+
+    // check if something has failed horribly
+    if (serviceStartTime < 0 || ownBinaryMTime < 0)
+        return false;
+
+    return serviceStartTime > ownBinaryMTime;
 }
