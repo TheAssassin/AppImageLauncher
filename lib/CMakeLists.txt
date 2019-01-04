@@ -1,13 +1,27 @@
+# required for pkg-config module's imported target feature
+cmake_minimum_required(VERSION 3.6)
+
 # note for self: include libappimage before AppImageUpdate to use the version here, not the one shipped with AppImageUpdate
 # the AppImageUpdate submodule tends to be out of date
-add_subdirectory(libappimage EXCLUDE_FROM_ALL)
+if(USE_SYSTEM_LIBAPPIMAGE)
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(libappimage libappimage REQUIRED IMPORTED_TARGET)
+
+    # add alias library
+    add_library(libappimage INTERFACE)
+    set_property(TARGET libappimage PROPERTY INTERFACE_LINK_LIBRARIES PkgConfig::libappimage)
+else()
+    add_subdirectory(libappimage EXCLUDE_FROM_ALL)
+endif()
 
 # used by the update helper
 if(ENABLE_UPDATE_HELPER)
     add_subdirectory(AppImageUpdate EXCLUDE_FROM_ALL)
 endif()
 
-add_subdirectory(AppImageLauncherFS)
+if(NOT USE_SYSTEM_APPIMAGELAUNCHERFS)
+    add_subdirectory(AppImageLauncherFS)
+endif()
 
 if(TRAVIS_BUILD)
     # TODO: use latest version of CMake once it contains the following change:

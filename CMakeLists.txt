@@ -103,6 +103,11 @@ add_definitions(-DAPPIMAGELAUNCHER_BUILD_DATE="${APPIMAGELAUNCHER_BUILD_DATE}")
 # optional; if AppImageUpdate dependency is not viable, the update helper can be disabled
 set(ENABLE_UPDATE_HELPER ON CACHE BOOL "")
 
+# if there's a system libappimage package on the system, we can use that directly
+set(USE_SYSTEM_LIBAPPIMAGE OFF CACHE BOOL "")
+# same goes for a distro-provided AppImageLauncherFS
+set(USE_SYSTEM_APPIMAGELAUNCHERFS OFF CACHE BOOL "")
+
 add_subdirectory(lib)
 add_subdirectory(src)
 
