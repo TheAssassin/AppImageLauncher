@@ -1,3 +1,5 @@
+# note for self: include libappimage before AppImageUpdate to use the version here, not the one shipped with AppImageUpdate
+# the AppImageUpdate submodule tends to be out of date
 add_subdirectory(libappimage EXCLUDE_FROM_ALL)
 
 # used by the update helper
