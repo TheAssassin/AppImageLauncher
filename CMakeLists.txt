@@ -2,7 +2,12 @@ cmake_minimum_required(VERSION 3.2)
 
 project(AppImageLauncher)
 
-set(APPIMAGELAUNCHER_VERSION 1-alpha)
+set(V_MAJOR 1)
+set(V_MINOR 0)
+set(V_PATCH 0)
+set(V_SUFFIX -beta-1)
+
+set(APPIMAGELAUNCHER_VERSION ${V_MAJOR}.${V_MINOR}.${V_PATCH}${V_SUFFIX})
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/modules)
 
