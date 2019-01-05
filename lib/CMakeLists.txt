@@ -1,15 +1,13 @@
 # required for pkg-config module's imported target feature
 cmake_minimum_required(VERSION 3.6)
 
+# if there's a system libappimage package on the system, we can use that directly
+set(USE_SYSTEM_LIBAPPIMAGE OFF CACHE BOOL "")
+
 # note for self: include libappimage before AppImageUpdate to use the version here, not the one shipped with AppImageUpdate
 # the AppImageUpdate submodule tends to be out of date
 if(USE_SYSTEM_LIBAPPIMAGE)
-    find_package(PkgConfig REQUIRED)
-    pkg_check_modules(libappimage libappimage REQUIRED IMPORTED_TARGET)
-
-    # add alias library
-    add_library(libappimage INTERFACE)
-    set_property(TARGET libappimage PROPERTY INTERFACE_LINK_LIBRARIES PkgConfig::libappimage)
+    find_package(libappimage REQUIRED)
 else()
     add_subdirectory(libappimage EXCLUDE_FROM_ALL)
 endif()

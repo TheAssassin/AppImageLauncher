@@ -25,7 +25,6 @@ extern "C" {
 #include <QTextStream>
 extern "C" {
     #include <appimage/appimage.h>
-    #include <xdg-basedir.h>
 }
 
 // local headers

@@ -9,7 +9,6 @@ extern "C" {
     #include <sys/stat.h>
     #include <stdio.h>
     #include <unistd.h>
-    #include <xdg-basedir.h>
 }
 
 // library includes
@@ -149,7 +148,7 @@ std::map<std::string, std::string> findCollisions(const QString& currentNameEntr
     std::map<std::string, std::string> collisions;
 
     // default locations of desktop files on systems
-    const auto directories = {QString("/usr/share/applications/"), QString(xdg_data_home()) + "/applications/"};
+    const auto directories = {QString("/usr/share/applications/"), QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/applications/"};
 
     for (const auto& directory : directories) {
         QDirIterator iterator(directory, QDirIterator::FollowSymlinks);
@@ -582,7 +581,7 @@ bool isInDirectory(const QString& pathToAppImage, const QDir& directory) {
 }
 
 bool cleanUpOldDesktopIntegrationResources(bool verbose) {
-    auto dirPath = QString(xdg_data_home()) + "/applications";
+    auto dirPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/applications";
 
     auto directory = QDir(dirPath);
 
