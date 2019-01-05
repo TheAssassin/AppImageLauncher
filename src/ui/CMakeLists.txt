@@ -5,7 +5,7 @@ target_link_libraries(AppImageLauncher shared PkgConfig::glib libappimage shared
 # set binary runtime rpath to make sure the libappimage.so built and installed by this project is going to be used
 # by the installed binaries (be it the .deb, the AppImage, or whatever)
 # in order to make the whole install tree relocatable, a relative path is used
-set_target_properties(AppImageLauncher PROPERTIES INSTALL_RPATH "\$ORIGIN/../lib/appimagelauncher")
+set_target_properties(AppImageLauncher PROPERTIES INSTALL_RPATH "\$ORIGIN/../${CMAKE_INSTALL_LIBDIR}/appimagelauncher")
 
 install(
     TARGETS
