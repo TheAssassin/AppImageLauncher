@@ -64,17 +64,17 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     }
 
     // make sure to restart service in case AppImageLauncher has been updated
-    if (!fsDaemonHasBeenRestartedSinceLastUpdate()) {
-        auto rv = system("systemctl --user restart appimagelauncherfs 2>&1 1>/dev/null");
-        if (rv != 0) {
-            QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to register AppImage in AppImageLauncherFS: error while trying to restart appimagelauncherfs.service after update")
-            );
-            return 1;
-        }
-    }
+//    if (!fsDaemonHasBeenRestartedSinceLastUpdate()) {
+//        auto rv = system("systemctl --user restart appimagelauncherfs 2>&1 1>/dev/null");
+//        if (rv != 0) {
+//            QMessageBox::critical(
+//                nullptr,
+//                QObject::tr("Error"),
+//                QObject::tr("Failed to register AppImage in AppImageLauncherFS: error while trying to restart appimagelauncherfs.service after update")
+//            );
+//            return 1;
+//        }
+//    }
 
     // make sure appimagelauncherfs service is running
     auto rv = system("systemctl --user enable appimagelauncherfs 2>&1 1>/dev/null");
