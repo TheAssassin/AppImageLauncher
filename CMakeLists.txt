@@ -100,6 +100,9 @@ add_definitions(-DAPPIMAGELAUNCHER_GIT_COMMIT="${APPIMAGELAUNCHER_GIT_COMMIT}")
 add_definitions(-DAPPIMAGELAUNCHER_BUILD_NUMBER="${APPIMAGELAUNCHER_BUILD_NUMBER}")
 add_definitions(-DAPPIMAGELAUNCHER_BUILD_DATE="${APPIMAGELAUNCHER_BUILD_DATE}")
 
+# used by Debian packaging infrastructure
+include(GNUInstallDirs)
+
 # optional; if AppImageUpdate dependency is not viable, the update helper can be disabled
 set(ENABLE_UPDATE_HELPER ON CACHE BOOL "")
 

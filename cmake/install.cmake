@@ -6,7 +6,7 @@ install(
     ${PROJECT_BINARY_DIR}/lib/libappimage/src/libappimage/libappimage.so
     ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/src/libappimageupdate.so
     ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/src/qt-ui/libappimageupdate-qt.so
-    DESTINATION lib/appimagelauncher COMPONENT APPIMAGELAUNCHER
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/appimagelauncher COMPONENT APPIMAGELAUNCHER
 )
 
 # TODO: find alternative to the following "workaround" (a pretty dirty hack, actually...)
@@ -21,7 +21,7 @@ if(NOT UPDATE_BINFMTS STREQUAL UPDATE_BINFMTS-NOTFOUND AND EXISTS ${UPDATE_BINFM
     install(
         FILES /usr/sbin/update-binfmts
         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
-        DESTINATION lib/appimagelauncher COMPONENT APPIMAGELAUNCHER
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/appimagelauncher COMPONENT APPIMAGELAUNCHER
     )
 else()
     message(WARNING "update-binfmts could not be found. Please install the binfmt-support package if you intend to build RPM packages.")
@@ -33,7 +33,7 @@ configure_file(
     ${PROJECT_BINARY_DIR}/resources/binfmt.d/appimage.conf
     @ONLY
 )
-
+# caution: don't use ${CMAKE_INSTALL_LIBDIR} here, it's really just lib/binfmt.d
 install(
     FILES ${PROJECT_BINARY_DIR}/resources/binfmt.d/appimage.conf
     DESTINATION lib/binfmt.d COMPONENT APPIMAGELAUNCHER
@@ -45,7 +45,8 @@ configure_file(
     ${PROJECT_BINARY_DIR}/resources/appimagelauncherd.service
     @ONLY
 )
+# caution: don't use ${CMAKE_INSTALL_LIBDIR} here, it's really just lib/systemd/user
 install(
     FILES ${PROJECT_BINARY_DIR}/resources/appimagelauncherd.service
-    DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/systemd/user/ COMPONENT APPIMAGELAUNCHER
+    DESTINATION lib/systemd/user/ COMPONENT APPIMAGELAUNCHER
 )
