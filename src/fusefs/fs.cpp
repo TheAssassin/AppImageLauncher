@@ -41,31 +41,31 @@ public:
         int _id;
         bf::path _path;
         // open a file descriptor on the file on instantiation to keep files alive until the file is not needed any more
-        FILE* _fp;
+        int _fd;
 
     private:
         void openFile() {
-            _fp = fopen(_path.c_str(), "r");
+            _fd = ::open(_path.c_str(), O_RDONLY);
 
-            if (_fp == nullptr)
+            if (_fd < 0)
                 throw CouldNotOpenFileError("");
         }
 
     public:
-        RegisteredAppImage() : _id(-1), _fp(nullptr) {};
+        RegisteredAppImage() : _id(-1), _fd(-1) {};
 
-        RegisteredAppImage(const int id, bf::path path) : _id(id), _path(std::move(path)), _fp(nullptr) {
+        RegisteredAppImage(const int id, bf::path path) : _id(id), _path(std::move(path)), _fd(-1) {
             openFile();
         }
 
         ~RegisteredAppImage() {
-            if (_fp != nullptr)
-                fclose(_fp);
-            _fp = nullptr;
+            if (_fd >= 0)
+                ::close(_fd);
+            _fd = -1;
         }
 
 //        RegisteredAppImage(const RegisteredAppImage& r) = delete;
-        RegisteredAppImage(const RegisteredAppImage& r) : _id(r._id), _path(r._path), _fp(nullptr) {
+        RegisteredAppImage(const RegisteredAppImage& r) : _id(r._id), _path(r._path), _fd(-1) {
             openFile();
         };
 
@@ -88,8 +88,8 @@ public:
             return _id;
         }
 
-        FILE* fp() const {
-            return _fp;
+        int fd() const {
+            return _fd;
         }
     };
 
@@ -192,14 +192,11 @@ private:
     }
 
     static int handleReadRegisteredAppImage(char* buf, size_t bufsize, off_t offset, struct fuse_file_info* fi) {
-        // convert our file handle into a FILE* object once to save extra conversions in the rest of the code
-        FILE* fh = reinterpret_cast<FILE*>(fi->fh);
+        // read into buffer using pread, which was _made_ for these kinds of tasks
+        ssize_t bytesRead = ::pread(static_cast<int>(fi->fh), buf, bufsize, offset);
 
-        // seek to requested offset
-        ::fseek(fh, offset, SEEK_SET);
-
-        // read into buffer
-        size_t bytesRead = ::fread(buf, sizeof(char), bufsize, fh);
+        if (bytesRead < 0)
+            return static_cast<int>(bytesRead);
 
         // prevent int wraparound (FUSE uses 32-bit ints for everything)
         if (bytesRead > INT32_MAX) {
@@ -443,7 +440,7 @@ public:
             // TODO: check open flags
 
             // reuse stored fp for file I/O
-            fi->fh = reinterpret_cast<uint64_t>(registeredAppImage.fp());
+            fi->fh = static_cast<uint64_t>(registeredAppImage.fd());
 
             return 0;
         } catch (const CouldNotFindRegisteredAppImageError&) {
