@@ -1,5 +1,5 @@
 add_library(shared STATIC shared.h shared.cpp)
-target_link_libraries(shared PUBLIC PkgConfig::glib Qt5::Core Qt5::Widgets Qt5::DBus xdg-basedir libappimage translationmanager trashbin)
+target_link_libraries(shared PUBLIC PkgConfig::glib Qt5::Core Qt5::Widgets Qt5::DBus xdg-basedir libappimage translationmanager trashbin libappimageupdate)
 target_compile_definitions(shared
     PRIVATE -DCMAKE_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}"
     PRIVATE -DCMAKE_INSTALL_LIBDIR="${CMAKE_INSTALL_LIBDIR}"

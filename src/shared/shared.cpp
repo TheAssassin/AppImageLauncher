@@ -27,6 +27,7 @@ extern "C" {
 #include <QRegularExpression>
 #include <QSettings>
 #include <QStandardPaths>
+#include <appimage/update.h>
 
 // local headers
 #include "shared.h"
@@ -422,19 +423,23 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
 #ifdef ENABLE_UPDATE_HELPER
     // add Update action
     {
-        const auto updateSectionName = "Desktop Action Update";
+        appimage::update::Updater updater(pathToAppImage.toStdString());
+        if (!updater.updateInformation().empty()) {
+            const auto updateSectionName = "Desktop Action Update";
 
-        g_key_file_set_string(desktopFile.get(), updateSectionName, "Name", "Update AppImage");
+            g_key_file_set_string(desktopFile.get(), updateSectionName, "Name", "Update AppImage");
 
-        std::ostringstream updateExecPath;
-        updateExecPath << CMAKE_INSTALL_PREFIX << "/" << CMAKE_INSTALL_LIBDIR << "/appimagelauncher/update " << pathToAppImage.toStdString();
-        g_key_file_set_string(desktopFile.get(), updateSectionName, "Exec", updateExecPath.str().c_str());
+            std::ostringstream updateExecPath;
+            updateExecPath << CMAKE_INSTALL_PREFIX << "/" << CMAKE_INSTALL_LIBDIR << "/appimagelauncher/update "
+                           << pathToAppImage.toStdString();
+            g_key_file_set_string(desktopFile.get(), updateSectionName, "Exec", updateExecPath.str().c_str());
 
-        // install translations
-        auto it = QMapIterator<QString, QString>(updateActionNameTranslations);
-        while (it.hasNext()) {
-            auto entry = it.next();
-            g_key_file_set_locale_string(desktopFile.get(), updateSectionName, "Name", entry.key().toStdString().c_str(), entry.value().toStdString().c_str());
+            // install translations
+            auto it = QMapIterator<QString, QString>(updateActionNameTranslations);
+            while (it.hasNext()) {
+                auto entry = it.next();
+                g_key_file_set_locale_string(desktopFile.get(), updateSectionName, "Name", entry.key().toStdString().c_str(), entry.value().toStdString().c_str());
+            }
         }
     }
 #endif
