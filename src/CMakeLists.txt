@@ -42,3 +42,6 @@ add_subdirectory(daemon)
 
 # main application and helper tools
 add_subdirectory(ui)
+
+# FUSE filesystem AppImageLauncherFS
+add_subdirectory(fusefs)

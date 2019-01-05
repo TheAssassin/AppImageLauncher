@@ -19,10 +19,6 @@ if(ENABLE_UPDATE_HELPER)
     add_subdirectory(AppImageUpdate EXCLUDE_FROM_ALL)
 endif()
 
-if(NOT USE_SYSTEM_APPIMAGELAUNCHERFS)
-    add_subdirectory(AppImageLauncherFS)
-endif()
-
 if(TRAVIS_BUILD)
     # TODO: use latest version of CMake once it contains the following change:
     # https://gitlab.kitware.com/cmake/cmake/commit/00a9d133fb2838ebb756d684659c5d51f577ede3
