@@ -106,7 +106,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
             QMessageBox::critical(
                 nullptr,
                 QObject::tr("Error"),
-                QObject::tr("Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage")
+                QObject::tr("Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1").arg(pathToAppImage)
             );
             return 1;
         }
@@ -116,7 +116,11 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 
     // resolve path to virtual file in map
     QString pathToVirtualAppImage;
-    {
+
+    // try to fetch ID of registered AppImage up to 10 times, with increasing timeouts
+    for (useconds_t i = 1; i < 10; i++) {
+        usleep(i * 100000);
+
         // reading line wise properly is [hard, impossible[ in Qt
         // using good ol' C++
         std::string mapFilePath = (pathToFSEndpoint + "/map").toStdString();
@@ -141,16 +145,19 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
             }
         }
 
-        if (pathToVirtualAppImage.isEmpty()) {
-            QMessageBox::critical(
+        mapFile.close();
+
+        if (!pathToVirtualAppImage.isEmpty())
+            break;
+    }
+
+    if (pathToVirtualAppImage.isEmpty()) {
+        QMessageBox::critical(
                 nullptr,
                 QObject::tr("Error"),
                 QObject::tr("Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage")
-            );
-            return 1;
-        }
-
-        mapFile.close();
+        );
+        return 1;
     }
 
     // need a char pointer instead of a const one, therefore can't use .c_str()
