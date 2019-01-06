@@ -108,6 +108,14 @@ add_definitions(-DAPPIMAGELAUNCHER_BUILD_DATE="${APPIMAGELAUNCHER_BUILD_DATE}")
 # used by Debian packaging infrastructure
 include(GNUInstallDirs)
 
+# if there's a system libappimage package on the system, we can use that directly
+set(USE_SYSTEM_LIBAPPIMAGE OFF CACHE BOOL "")
+
+# if the system version should be used, import globally _before_ including third-party stuff and own executables/libs
+if(USE_SYSTEM_LIBAPPIMAGE)
+    find_package(libappimage REQUIRED)
+endif()
+
 # optional; if AppImageUpdate dependency is not viable, the update helper can be disabled
 set(ENABLE_UPDATE_HELPER ON CACHE BOOL "")
 
