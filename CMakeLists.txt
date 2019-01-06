@@ -5,7 +5,7 @@ project(AppImageLauncher)
 set(V_MAJOR 1)
 set(V_MINOR 0)
 set(V_PATCH 0)
-set(V_SUFFIX ~beta3)
+set(V_SUFFIX "")
 
 set(APPIMAGELAUNCHER_VERSION ${V_MAJOR}.${V_MINOR}.${V_PATCH}${V_SUFFIX})
 
