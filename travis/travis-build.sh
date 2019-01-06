@@ -56,8 +56,8 @@ cmake "$REPO_ROOT" -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RelWithDebInfo
 # now, compile
 make
 
-# check where the .so files have been generated
-find -type f -iname '*.so*'
+# re-run cmake to find built shared objects with the globs, and update the CPack files
+cmake .
 
 # build Debian package
 cpack -V -G DEB
