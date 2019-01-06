@@ -44,6 +44,7 @@ Being the launcher for AppImages, AppImageLauncher can control how the system tr
 A few articles have been written about AppImageLauncher already:
 
   - https://www.linuxuprising.com/2018/04/easily-run-and-integrate-appimage-files.html (English)
+  - https://www.freeyourdesktop.com/2018/07/install-manage-appimages-with-appimagelauncher/ (English)
   - http://linux-os.net/appimagelauncher-ejecuta-e-integra-facilmente-aplicaciones-en-appimage/ (Spanish)
     - same article also available here: https://blog.desdelinux.net/appimagelauncher-ejecuta-e-integra-facilmente-aplicaciones-en-appimage/
   - http://www.edivaldobrito.com.br/integrador-appimagelauncher-no-linux/ (Portuguese)
