@@ -94,31 +94,28 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     // build path to AppImageLauncherFS endpoint
     QString pathToFSEndpoint = "/run/user/" + QString::number(getuid()) + "/appimagelauncherfs/";
 
-    // register current AppImage
-    {
-        QFile registerFile(pathToFSEndpoint + "/register");
-
-        if (registerFile.open(QIODevice::Append)) {
-            QTextStream stream(&registerFile);
-            stream << pathToAppImage << endl;
-        } else {
-            QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1").arg(pathToAppImage)
-            );
-            return 1;
-        }
-
-        registerFile.close();
-    }
-
     // resolve path to virtual file in map
     QString pathToVirtualAppImage;
+
+    bool registrationWorked = false, pathResolvingWorked = false, openingMapFileWorked = false;
 
     // try to fetch ID of registered AppImage up to 10 times, with increasing timeouts
     for (useconds_t i = 1; i < 10; i++) {
         usleep(i * 100000);
+
+        // register current AppImage
+        if (!registrationWorked){
+            QFile registerFile(pathToFSEndpoint + "/register");
+
+            if (registerFile.open(QIODevice::Append)) {
+                QTextStream stream(&registerFile);
+                stream << pathToAppImage << endl;
+            }
+
+            registrationWorked = true;
+
+            registerFile.close();
+        }
 
         // reading line wise properly is [hard, impossible[ in Qt
         // using good ol' C++
@@ -127,13 +124,11 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
         std::ifstream mapFile(mapFilePath);
 
         if (!mapFile) {
-            QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to register AppImage in AppImageLauncherFS: could not open map file")
-            );
-            return 1;
+            openingMapFileWorked = false;
+            continue;
         }
+
+        openingMapFileWorked = true;
 
         std::string currentLine;
         while (std::getline(mapFile, currentLine)) {
@@ -146,16 +141,29 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 
         mapFile.close();
 
-        if (!pathToVirtualAppImage.isEmpty())
+        if (!pathToVirtualAppImage.isEmpty()) {
+            pathResolvingWorked = true;
             break;
+        }
     }
 
+    // error message handling
     if (pathToVirtualAppImage.isEmpty()) {
-        QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage")
-        );
+        QString errorMessage;
+
+        if (!registrationWorked) {
+            errorMessage = QObject::tr("Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1").arg(pathToAppImage);
+        } else if (!openingMapFileWorked) {
+            errorMessage = QObject::tr("Failed to register AppImage in AppImageLauncherFS: could not open map file");
+        } else if (!pathResolvingWorked) {
+            errorMessage = QObject::tr("Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage");
+        } else {
+            // this should _never_ be reachable
+            errorMessage = QObject::tr("Failed to register AppImage in AppImageLauncherFS: unknown failure");
+        }
+
+        QMessageBox::critical(nullptr, QObject::tr("Error"), errorMessage);
+
         return 1;
     }
 
