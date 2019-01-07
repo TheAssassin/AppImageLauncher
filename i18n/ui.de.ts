@@ -195,7 +195,7 @@ Kaputte Syntax:
         <location line="+11"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Aufräumen des AppImage-Papierkorbs: %1</translation>
     </message>
     <message>
         <location line="+26"/>
@@ -220,7 +220,8 @@ Kaputte Syntax:
         <location line="+98"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Verzeichnis zum Speichern der integrierten AppImages ist derzeit:
+%1</translation>
     </message>
     <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
@@ -310,7 +311,7 @@ Kaputte Syntax:
     <message>
         <location line="+12"/>
         <source>Failed to move AppImage into trash bin directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Verschieben des AppImages in das Papierkorb-Verzeichnis</translation>
     </message>
     <message>
         <source>Failed to remove AppImage: %1</source>
@@ -417,7 +418,7 @@ Stattdessen versuchen, das AppImage zu kopieren?</translation>
     <message>
         <location line="+7"/>
         <source>No update information found</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Update-Informationen gefunden</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -425,7 +426,10 @@ Stattdessen versuchen, das AppImage zu kopieren?</translation>
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation type="unfinished"></translation>
+        <translation>Konnte keine Update-Informationen finden im AppImage:
+%1
+
+Das AppImage unterstützt keine Updates. Bitte fragen Sie die Autoren, die Update-Informationen zu setzen, um einfaches Aktualisieren zu ermöglichen.</translation>
     </message>
     <message>
         <location line="+12"/>
