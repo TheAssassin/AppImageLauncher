@@ -195,7 +195,7 @@ Invalid syntax:
         <location line="+11"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to clean up AppImage trash bin: %1</translation>
     </message>
     <message>
         <location line="+26"/>
@@ -220,7 +220,8 @@ Invalid syntax:
         <location line="+98"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>The directory the integrated AppImages are stored in is currently set to:
+%1</translation>
     </message>
     <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
@@ -310,7 +311,7 @@ Invalid syntax:
     <message>
         <location line="+12"/>
         <source>Failed to move AppImage into trash bin directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to move AppImage into trash bin directory</translation>
     </message>
     <message>
         <source>Failed to remove AppImage: %1</source>
@@ -417,7 +418,7 @@ Try to copy AppImage instead?</translation>
     <message>
         <location line="+7"/>
         <source>No update information found</source>
-        <translation type="unfinished"></translation>
+        <translation>No update information found</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -425,7 +426,10 @@ Try to copy AppImage instead?</translation>
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation type="unfinished"></translation>
+        <translation>Could not find update information in AppImage:
+%1
+
+The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</translation>
     </message>
     <message>
         <location line="+12"/>
