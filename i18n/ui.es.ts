@@ -185,7 +185,7 @@ Sintaxis inválida:
         <location line="+11"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Fallo al limpiar la papelera de AppImage: %1</translation>
     </message>
     <message>
         <location line="+26"/>
@@ -210,7 +210,7 @@ Sintaxis inválida:
         <location line="+98"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Las AppImages integradas en el sistema son guardadas en: %1</translation>
     </message>
     <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
@@ -300,7 +300,7 @@ Sintaxis inválida:
     <message>
         <location line="+12"/>
         <source>Failed to move AppImage into trash bin directory</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo mover la AppImage a la papelera</translation>
     </message>
     <message>
         <source>Failed to remove AppImage: %1</source>
@@ -403,7 +403,7 @@ Intenta copiar AppImage en su lugar?</translation>
     <message>
         <location line="+7"/>
         <source>No update information found</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encontraron actualizaciones</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -411,7 +411,10 @@ Intenta copiar AppImage en su lugar?</translation>
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encontraró la información de actalización en la AppImage:
+%1
+
+Este AppImage no soporta actualizaciones. Por favor solicite al autor que incluya la información de actualizaciones.</translation>
     </message>
     <message>
         <location line="+12"/>
