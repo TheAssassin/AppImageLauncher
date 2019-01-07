@@ -195,7 +195,7 @@ Syntaxe invalide :
         <location line="+11"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de nettoyer la corbeille à AppImages : %1</translation>
     </message>
     <message>
         <location line="+26"/>
@@ -220,7 +220,8 @@ Syntaxe invalide :
         <location line="+98"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Le répertoire où sont stockées les AppImages intégrées est actuellement défini à :
+%1</translation>
     </message>
     <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
@@ -310,7 +311,7 @@ Syntaxe invalide :
     <message>
         <location line="+12"/>
         <source>Failed to move AppImage into trash bin directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de déplacer l&apos;AppImage vers le répertoire de corbeille</translation>
     </message>
     <message>
         <source>Failed to remove AppImage: %1</source>
@@ -417,7 +418,7 @@ Essayer plutôt de la copier ?</translation>
     <message>
         <location line="+7"/>
         <source>No update information found</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucune information de mise à jour trouvée</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -425,7 +426,10 @@ Essayer plutôt de la copier ?</translation>
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver des informations de mise à jour dans l&apos;AppImage :
+%1
+
+Cette AppImage ne prend pas en charge les mises à jour. Veuillez contacter les auteurs pour qu&apos;ils définissent des informations de mise à jour, ce qui permet les mises à jour automatiques.</translation>
     </message>
     <message>
         <location line="+12"/>
