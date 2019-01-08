@@ -164,7 +164,7 @@ Syntaxe invalide :
     <message>
         <location line="+2"/>
         <source>Options:</source>
-        <translation>Options :</translation>
+        <translation>Options:</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -179,7 +179,7 @@ Syntaxe invalide :
     <message>
         <location line="+2"/>
         <source>Arguments:</source>
-        <translation>Paramètres :</translation>
+        <translation>Paramètres:</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -240,7 +240,7 @@ Syntaxe invalide :
     <message>
         <location line="+3"/>
         <source>The directory the integrated AppImages are stored in is currently set to:</source>
-        <translation>Le répertoire où les AppImages intégrées sont stockées est actuellement :</translation>
+        <translation>Le répertoire où les AppImages intégrées sont stockées est actuellement:</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -361,7 +361,7 @@ Syntaxe invalide :
     <message>
         <location line="+21"/>
         <source>Failed to load desktop file:</source>
-        <translation>Impossible de charger le fichier « desktop » :</translation>
+        <translation>Impossible de charger le fichier «desktop»:</translation>
     </message>
     <message>
         <location line="+19"/>
