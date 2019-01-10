@@ -7,6 +7,3 @@ Type=Exec
 ExecStart=@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_BINDIR@/appimagelauncherfs
 Restart=always
 RestartSec=2
-
-[Install]
-WantedBy=wm.target
