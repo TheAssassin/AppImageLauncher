@@ -21,3 +21,29 @@ install(
     DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/l10n
     DESTINATION ${CMAKE_INSTALL_DATADIR}/appimagelauncher COMPONENT APPIMAGELAUNCHER
 )
+
+
+set(INSTALL_MAINTAINER_SCRIPTS OFF CACHE BOOL "")
+
+# install maintainer scripts for
+if (INSTALL_MAINTAINER_SCRIPTS)
+    message(STATUS "Installing maintainer scripts")
+
+    set(install_maintainer_scripts_dir ${PROJECT_BINARY_DIR}/cmake/install-maintainer-scripts/)
+
+    configure_file(
+        ${PROJECT_SOURCE_DIR}/resources/install-scripts/post-install.in
+        ${install_maintainer_scripts_dir}/post-install
+        @ONLY
+    )
+    configure_file(
+        ${PROJECT_SOURCE_DIR}/resources/install-scripts/post-uninstall.in
+        ${install_maintainer_scripts_dir}/post-uninstall
+        @ONLY
+    )
+
+    install(
+        FILES ${install_maintainer_scripts_dir}/post-install ${install_maintainer_scripts_dir}/post-uninstall
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/appimagelauncher/maintainer-scripts
+    )
+endif()
