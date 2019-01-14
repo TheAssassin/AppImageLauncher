@@ -7,4 +7,4 @@ Restart=on-failure
 RestartSec=10
 
 [Install]
-WantedBy=wm.target
+WantedBy=default.target
