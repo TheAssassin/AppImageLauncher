@@ -189,20 +189,96 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     std::cout << QObject::tr("execv() failed: %1").arg(strerror(error)).toStdString() << std::endl;
 }
 
-int main(int argc, char** argv) {
-    // Create a fake argc value to avoid QApplication from modifying the arguments.
-    int fakeArgc = 1;
-    QApplication app(fakeArgc, argv);
-    app.setApplicationDisplayName("AppImageLauncher");
+// reliable way to check if the current session is graphical or not
+// TODO: check if this works with Wayland
+bool isHeadless() {
+    static int isHeadless = -1;
 
-    std::ostringstream version;
-    version << "version " << APPIMAGELAUNCHER_VERSION << " "
+    if (isHeadless < 0) {
+        QProcess proc;
+        proc.setProgram("xhost");
+        proc.setStandardOutputFile(QProcess::nullDevice());
+        proc.setStandardErrorFile(QProcess::nullDevice());
+
+        proc.start();
+        proc.waitForFinished();
+
+        switch (proc.exitCode()) {
+            case 0:
+            case 1:
+                isHeadless = proc.exitCode();
+                break;
+            default:
+                throw std::runtime_error("Headless detection failed: unexpected exit code from xhost");
+        }
+    }
+
+    return isHeadless != 0;
+}
+
+// little convenience method to display errors
+// avoids code duplication, and works for both graphical and non-graphical environments
+void displayError(const QString& message) {
+    if (isHeadless())
+        std::cout << "Error: " << message.toStdString() << std::endl;
+    else
+        QMessageBox::critical(nullptr, QObject::tr("Error"), message);
+}
+
+// factory method to build and return a suitable Qt application instance
+// it remembers a previously created instance, and will return it if available
+// otherwise a new one is created and configured
+QCoreApplication* getApp(int argc, char** argv) {
+    if (QCoreApplication::instance() != nullptr)
+        return QCoreApplication::instance();
+
+    // build application version string
+    std::string version;
+    {
+        std::ostringstream oss;
+        oss << "version " << APPIMAGELAUNCHER_VERSION << " "
             << "(git commit " << APPIMAGELAUNCHER_GIT_COMMIT << "), built on "
             << APPIMAGELAUNCHER_BUILD_DATE;
-    app.setApplicationVersion(QString::fromStdString(version.str()));
+        version = std::move(oss.str());
+    }
+
+    QCoreApplication* app;
+
+    if (isHeadless()) {
+        app = new QCoreApplication(argc, argv);
+    } else {
+        auto uiApp = new QApplication(argc, argv);
+        uiApp->setApplicationDisplayName("AppImageLauncher");
+        app = uiApp;
+    }
+
+    app->setApplicationName("AppImageLauncher");
+    app->setApplicationVersion(QString::fromStdString(version));
+
+    return app;
+}
+
+int main(int argc, char** argv) {
+    // create a suitable application object (either graphical (QApplication) or headless (QCoreApplication))
+    // Use a fake argc value to avoid QApplication from modifying the arguments
+    QCoreApplication* app = getApp(1, argv);
 
     // install translations
-    TranslationManager translationManager(app);
+    TranslationManager translationManager(*app);
+
+    // clean up old desktop files
+    if (!cleanUpOldDesktopIntegrationResources()) {
+        displayError(QObject::tr("Failed to clean up old desktop files"));
+        return 1;
+    }
+
+    // clean up trash directory
+    {
+        TrashBin bin;
+        if (!bin.cleanUp()) {
+            displayError(QObject::tr("Failed to clean up AppImage trash bin: %1").arg(bin.path()));
+        }
+    }
 
     std::ostringstream usage;
     usage << QObject::tr("Usage: %1 [options] <path>").arg(argv[0]).toStdString() << std::endl
@@ -216,7 +292,7 @@ int main(int argc, char** argv) {
           << "  path                        " << QObject::tr("Path to AppImage (mandatory)").toStdString() << std::endl;
 
     auto displayVersion = [&app]() {
-        std::cerr << "AppImageLauncher " << app.applicationVersion().toStdString() << std::endl;
+        std::cerr << "AppImageLauncher " << app->applicationVersion().toStdString() << std::endl;
     };
 
     // display usage and exit if path to AppImage is missing
@@ -225,27 +301,6 @@ int main(int argc, char** argv) {
         std::cerr << std::endl;
         std::cerr << usage.str();
         return 1;
-    }
-
-    // clean up old desktop files
-    if (!cleanUpOldDesktopIntegrationResources()) {
-        QMessageBox::critical(
-            nullptr,
-            QObject::tr("Error"),
-            QObject::tr("Failed to clean up old desktop files")
-        );
-    }
-
-    // clean up trash directory
-    {
-        TrashBin bin;
-        if (!bin.cleanUp()) {
-            QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to clean up AppImage trash bin: %1").arg(bin.path())
-            );
-        }
     }
 
     std::vector<char*> appImageArgv;
@@ -288,10 +343,7 @@ int main(int argc, char** argv) {
     const auto type = appimage_get_type(pathToAppImage.toStdString().c_str(), false);
 
     if (type <= 0 || type > 2) {
-        QMessageBox::critical(
-            nullptr,
-            QObject::tr("Error"),
-            QObject::tr("Not an AppImage: %1").arg(pathToAppImage));
+        displayError(QObject::tr("Not an AppImage: %1").arg(pathToAppImage));
         return 1;
     }
 
@@ -323,6 +375,12 @@ int main(int argc, char** argv) {
     } else {
         system("systemctl --user disable appimagelauncherd.service");
         system("systemctl --user stop    appimagelauncherd.service");
+    }
+
+    // from now on, the code requires a UI
+    // as we don't want to offer integration over a headless connection, we just run the AppImage
+    if (isHeadless()) {
+        return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
     }
 
     // check for X-AppImage-Integrate=false
