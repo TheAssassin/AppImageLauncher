@@ -45,10 +45,12 @@ A few articles have been written about AppImageLauncher already:
 
   - https://www.linuxuprising.com/2018/04/easily-run-and-integrate-appimage-files.html (English)
   - https://www.freeyourdesktop.com/2018/07/install-manage-appimages-with-appimagelauncher/ (English)
+    - same article also available here: https://medium.com/@freeyourdesktopblog/install-manage-appimages-with-appimagelauncher-2a2078c55f37
   - http://linux-os.net/appimagelauncher-ejecuta-e-integra-facilmente-aplicaciones-en-appimage/ (Spanish)
     - same article also available here: https://blog.desdelinux.net/appimagelauncher-ejecuta-e-integra-facilmente-aplicaciones-en-appimage/
   - http://www.edivaldobrito.com.br/integrador-appimagelauncher-no-linux/ (Portuguese)
   - https://404.g-net.pl/2018/08/appimagelauncher/ (Polish)
+  - https://linuxmint.hu/blog/2018/12/appimage (Hungarian)
 
 
 ## Installation
