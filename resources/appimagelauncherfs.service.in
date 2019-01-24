@@ -3,7 +3,7 @@ Description=AppImageLauncherFS daemon
 Before=display-manager.service
 
 [Service]
-Type=Exec
+Type=exec
 ExecStart=@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_BINDIR@/appimagelauncherfs
 Restart=always
 RestartSec=2
