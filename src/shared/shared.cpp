@@ -80,6 +80,14 @@ bool makeNonExecutable(const QString& path) {
     return chmod(path.toStdString().c_str(), permissions) == 0;
 }
 
+QString expandTilde(QString path) {
+    if (path[0] == '~') {
+        path.remove(0, 1);
+        path.prepend(QDir::homePath());
+    }
+
+    return path;
+}
 
 std::shared_ptr<QSettings> getConfig() {
     // calculate path to config file
@@ -99,7 +107,19 @@ std::shared_ptr<QSettings> getConfig() {
                    "# enable_daemon = true\n");
     }
 
-    return std::make_shared<QSettings>(configFilePath, QSettings::IniFormat);
+    auto rv = std::make_shared<QSettings>(configFilePath, QSettings::IniFormat);
+
+    // expand ~ in paths in the config file with $HOME
+    for (const QString& keyContainingPath : {"destination"}){
+        QString fullKey = "AppImageLauncher/" + keyContainingPath;
+
+        if (rv->contains(fullKey)) {
+            auto newValue = expandTilde(rv->value(fullKey).toString());
+            rv->setValue(fullKey, newValue);
+        }
+    }
+
+    return rv;
 }
 
 
