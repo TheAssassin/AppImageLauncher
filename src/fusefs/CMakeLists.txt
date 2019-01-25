@@ -18,5 +18,5 @@ target_compile_options(appimagelauncherfs PRIVATE -Wno-write-strings)
 
 install(
     TARGETS appimagelauncherfs COMPONENT APPIMAGELAUNCHERFS
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    RUNTIME DESTINATION ${_bindir}
 )
