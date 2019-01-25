@@ -182,16 +182,19 @@ std::map<std::string, std::string> findCollisions(const QString& currentNameEntr
 }
 
 bool updateDesktopDatabaseAndIconCaches() {
-    auto commands = {
-        "update-desktop-database ~/.local/share/applications",
-        "gtk-update-icon-cache-3.0 ~/.local/share/icons/hicolor/ -t",
-        "gtk-update-icon-cache ~/.local/share/icons/hicolor/ -t",
-        "xdg-desktop-menu forceupdate",
+    const std::map<std::string, std::string> commands = {
+        {"update-desktop-database", "~/.local/share/applications"},
+        {"gtk-update-icon-cache-3.0", "~/.local/share/icons/hicolor/ -t"},
+        {"gtk-update-icon-cache", "~/.local/share/icons/hicolor/ -t"},
+        {"xdg-desktop-menu", "forceupdate"},
     };
 
     for (const auto& command : commands) {
-        // exit codes are not evaluated intentionally
-        system(command);
+        // only call if the command exists
+        if (system(("which " + command.first + " 2>&1 1>/dev/null").c_str()) == 0) {
+            // exit codes are not evaluated intentionally
+            system((command.first + " " + command.second).c_str());
+        }
     }
 
     return true;
