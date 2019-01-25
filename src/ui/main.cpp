@@ -369,7 +369,7 @@ int main(int argc, char** argv) {
 
     // enable and start/disable and stop appimagelauncherd service
     auto config = getConfig();
-    if (config->contains("enable_daemon") && config->value("enable_daemon").toBool()) {
+    if (!config->contains("AppImageLauncher/enable_daemon") || config->value("AppImageLauncher/enable_daemon").toBool()) {
         system("systemctl --user enable appimagelauncherd.service");
         system("systemctl --user start  appimagelauncherd.service");
     } else {
