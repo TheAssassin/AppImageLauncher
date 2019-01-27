@@ -1,3 +1,23 @@
+# define private libraries install destionation
+if(IS_ABSOLUTE ${CMAKE_INSTALL_LIBDIR})
+    set(_libdir ${CMAKE_INSTALL_LIBDIR})
+else()
+    set(_libdir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
+endif()
+
+set(_private_libdir ${_libdir}/appimagelauncher)
+
+# calculate relative path from binary install destination to private library install dir
+if(IS_ABSOLUTE ${CMAKE_INSTALL_BINDIR})
+    set(_bindir ${CMAKE_INSTALL_BINDIR})
+else()
+    set(_bindir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR})
+endif()
+
+file(RELATIVE_PATH _rpath ${_bindir} ${_private_libdir})
+set(_rpath "\$ORIGIN/${_rpath}")
+
+
 # install libappimage.so into lib/appimagekit to avoid overwriting a libappimage potentially installed into /usr/lib
 # or /usr/lib/x86_64-... or wherever the OS puts its libraries
 # for some reason, using TARGETS ... doesn't work here, therefore using the absolute file path
@@ -9,7 +29,7 @@ install(
     ${libappimage_files}
     ${libappimageupdate_files}
     ${libappimageupdate-qt_files}
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/appimagelauncher COMPONENT APPIMAGELAUNCHER
+    DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
 )
 
 # TODO: find alternative to the following "workaround" (a pretty dirty hack, actually...)
@@ -24,7 +44,7 @@ if(NOT UPDATE_BINFMTS STREQUAL UPDATE_BINFMTS-NOTFOUND AND EXISTS ${UPDATE_BINFM
     install(
         FILES /usr/sbin/update-binfmts
         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/appimagelauncher COMPONENT APPIMAGELAUNCHER
+        DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
     )
 else()
     message(WARNING "update-binfmts could not be found. Please install the binfmt-support package if you intend to build RPM packages.")

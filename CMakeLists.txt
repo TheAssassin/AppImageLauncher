@@ -119,11 +119,12 @@ endif()
 # optional; if AppImageUpdate dependency is not viable, the update helper can be disabled
 set(ENABLE_UPDATE_HELPER ON CACHE BOOL "")
 
+# install resources, bundle libraries privately, etc.
+# initializes important installation destination variables, therefore must be included before adding subdirectories
+include(cmake/install.cmake)
+
 add_subdirectory(lib)
 add_subdirectory(src)
-
-# contains global options
-include(cmake/install.cmake)
 
 # contains install configs for resource files
 add_subdirectory(resources)

@@ -31,25 +31,6 @@ if(ENABLE_UPDATE_HELPER)
     add_definitions(-DENABLE_UPDATE_HELPER)
 endif()
 
-# define private libraries install destionation
-if(IS_ABSOLUTE ${CMAKE_INSTALL_LIBDIR})
-    set(_libdir ${CMAKE_INSTALL_LIBDIR}/appimagelauncher)
-else()
-    set(_libdir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
-endif()
-
-set(_private_libdir ${_libdir}/appimagelauncher)
-
-# calculate relative path from binary install destination to private library install dir
-if(IS_ABSOLUTE ${CMAKE_INSTALL_BINDIR})
-    set(_bindir ${CMAKE_INSTALL_BINDIR})
-else()
-    set(_bindir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR})
-endif()
-
-file(RELATIVE_PATH _rpath ${_bindir} ${_private_libdir})
-set(_rpath "\$ORIGIN/${_rpath}")
-
 # utility libraries
 add_subdirectory(fswatcher)
 add_subdirectory(i18n)
