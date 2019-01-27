@@ -192,28 +192,31 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 // reliable way to check if the current session is graphical or not
 // TODO: check if this works with Wayland
 bool isHeadless() {
-    static int isHeadless = -1;
+    bool isHeadless = false;
 
-    if (isHeadless < 0) {
-        QProcess proc;
-        proc.setProgram("xhost");
-        proc.setStandardOutputFile(QProcess::nullDevice());
-        proc.setStandardErrorFile(QProcess::nullDevice());
+    QProcess proc;
+    proc.setProgram("xhost");
+    proc.setStandardOutputFile(QProcess::nullDevice());
+    proc.setStandardErrorFile(QProcess::nullDevice());
 
-        proc.start();
-        proc.waitForFinished();
+    proc.start();
+    proc.waitForFinished();
 
-        switch (proc.exitCode()) {
-            case 0:
-            case 1:
-                isHeadless = proc.exitCode();
-                break;
-            default:
-                throw std::runtime_error("Headless detection failed: unexpected exit code from xhost");
+    switch (proc.exitCode()) {
+        case 255: {
+            // program not found, using fallback method
+            isHeadless = (getenv("DISPLAY") == nullptr);
+            break;
         }
+        case 0:
+        case 1:
+            isHeadless = proc.exitCode() == 1;
+            break;
+        default:
+            throw std::runtime_error("Headless detection failed: unexpected exit code from xhost");
     }
 
-    return isHeadless != 0;
+    return isHeadless;
 }
 
 // little convenience method to display errors
