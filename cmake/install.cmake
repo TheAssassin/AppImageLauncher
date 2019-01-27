@@ -24,13 +24,21 @@ set(_rpath "\$ORIGIN/${_rpath}")
 file(GLOB libappimage_files ${PROJECT_BINARY_DIR}/lib/libappimage/src/libappimage/libappimage.so*)
 file(GLOB libappimageupdate_files ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/src/libappimageupdate.so*)
 file(GLOB libappimageupdate-qt_files ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/src/qt-ui/libappimageupdate-qt.so*)
-install(
-    FILES
-    ${libappimage_files}
-    ${libappimageupdate_files}
-    ${libappimageupdate-qt_files}
-    DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
-)
+message(STATUS  ${PROJECT_BINARY_DIR}/lib/libappimage/src/libappimage/libappimage.so*)
+foreach(i libappimage libappimageupdate libappimageupdate-qt)
+    # prevent unnecessary messages
+    if(NOT i STREQUAL libappimage OR NOT USE_SYSTEM_LIBAPPIMAGE)
+        if(NOT ${i}_files)
+            message(WARNING "Could not find ${i} library files, cannot bundle; if you want to bundle the files, please re-run cmake before calling make install")
+        else()
+            install(
+                FILES
+                ${${i}_files}
+                DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
+            )
+        endif()
+    endif()
+endforeach()
 
 # TODO: find alternative to the following "workaround" (a pretty dirty hack, actually...)
 # bundle update-binfmts as a fallback for distros which don't have it installed
