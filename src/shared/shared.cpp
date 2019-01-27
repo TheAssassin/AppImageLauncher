@@ -431,7 +431,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
         g_key_file_set_string(desktopFile.get(), removeSectionName, "Name", "Remove AppImage from system");
 
         std::ostringstream removeExecPath;
-        removeExecPath << CMAKE_INSTALL_PREFIX << "/" << CMAKE_INSTALL_LIBDIR << "/appimagelauncher/remove " << pathToAppImage.toStdString();
+        removeExecPath << PRIVATE_LIBDIR << "/remove" << " " << pathToAppImage.toStdString();
         g_key_file_set_string(desktopFile.get(), removeSectionName, "Exec", removeExecPath.str().c_str());
 
         // install translations
@@ -452,8 +452,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
             g_key_file_set_string(desktopFile.get(), updateSectionName, "Name", "Update AppImage");
 
             std::ostringstream updateExecPath;
-            updateExecPath << CMAKE_INSTALL_PREFIX << "/" << CMAKE_INSTALL_LIBDIR << "/appimagelauncher/update "
-                           << pathToAppImage.toStdString();
+            updateExecPath << PRIVATE_LIBDIR << "/appimagelauncher/update" << " " << pathToAppImage.toStdString();
             g_key_file_set_string(desktopFile.get(), updateSectionName, "Exec", updateExecPath.str().c_str());
 
             // install translations
