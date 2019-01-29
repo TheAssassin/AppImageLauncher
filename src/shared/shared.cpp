@@ -469,10 +469,15 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
     const auto version = QApplication::applicationVersion().replace("version ", "").toStdString();
     g_key_file_set_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, "X-AppImageLauncher-Version", version.c_str());
 
+    // save desktop file to disk
     if (!g_key_file_save_to_file(desktopFile.get(), desktopFilePath, error.get())) {
         handleError();
         return false;
     }
+
+    // make desktop file executable ("trustworthy" to some DEs)
+    // TODO: handle this in libappimage
+    makeExecutable(desktopFilePath);
 
     // notify KDE/Plasma about icon change
     {
