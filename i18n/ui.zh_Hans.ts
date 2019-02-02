@@ -205,7 +205,8 @@ Invalid syntax:
         <location line="+98"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
-        <translation>存储集成的 AppImages 的文件夹现在被设为： %1</translation>
+        <translation>存储集成的 AppImages 的文件夹现在被设为：
+%1</translation>
     </message>
     <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
