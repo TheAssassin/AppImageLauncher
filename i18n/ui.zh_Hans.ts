@@ -305,64 +305,65 @@ Invalid syntax:
     <message>
         <location filename="../src/shared/shared.cpp" line="-35"/>
         <source>AppImage with same filename has already been integrated.</source>
-        <translation></translation>
+        <translation>具有相同文件名的 AppImage 已集成。</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Do you wish to overwrite the existing AppImage?</source>
-        <translation></translation>
+        <translation>你想要覆盖已存在的 AppImage 吗？</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Choosing No will run the AppImage once, and leave the system in its current state.</source>
-        <translation></translation>
+        <translation>选择否将运行一次 AppImage ，并保留当前系统状态。</translation>
     </message>
     <message>
         <location line="-207"/>
         <location line="+211"/>
         <location filename="../src/ui/update_main.cpp" line="+12"/>
         <source>Warning</source>
-        <translation></translation>
+        <translation>警告</translation>
     </message>
     <message>
         <source>Failed to move AppImage to target location</source>
-        <translation></translation>
+        <translation>将 AppImage 移动到目标位置失败</translation>
     </message>
     <message>
         <location line="-272"/>
         <source>Failed to register AppImage in system via libappimage</source>
-        <translation></translation>
+        <translation>通过 libappimage 在系统中注册 AppImage 失败</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Failed to find integrated desktop file</source>
-        <translation></translation>
+        <translation>未找到已集成桌面文件</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Couldn&apos;t find integrated AppImage&apos;s desktop file</source>
-        <translation></translation>
+        <translation>无法找到已集成 AppImage 的桌面文件</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Failed to load desktop file:</source>
-        <translation></translation>
+        <translation>加载桌面文件失败：</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>AppImage has invalid desktop file</source>
-        <translation></translation>
+        <translation>AppImage 有无效桌面文件</translation>
     </message>
     <message>
         <location line="+227"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
-        <translation></translation>
+        <translation>未能移动 AppImage 到目标位置。
+改为尝试复制 AppImage 吗？</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Failed to copy AppImage to target location</source>
-        <translation></translation>
+        <translation>未能复制 AppImage 到目标位置</translation>
     </message>
     <message>
         <location filename="../src/ui/update_main.cpp" line="-51"/>
