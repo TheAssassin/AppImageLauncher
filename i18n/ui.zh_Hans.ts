@@ -15,7 +15,10 @@
 
 Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.</source>
-        <translation></translation>
+        <translation>AppImage 已集成，但它不在当前集成目标文件夹。
+
+你想要将它移至新位置吗？
+选择否将运行一次 AppImage ，并将 AppImage 留在当前文件夹。</translation>
     </message>
     <message>
         <location filename="../src/ui/main.cpp" line="+1"/>
@@ -26,7 +29,12 @@ Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.
 
 </source>
-        <translation></translation>
+        <translation>AppImage %1 已集成，但它不在当前集成目标文件夹。
+
+你想要将它移至新位置吗？
+选择否将运行一次 AppImage ，并将 AppImage 留在当前文件夹。
+
+</translation>
     </message>
     <message>
         <location line="+20"/>
@@ -36,7 +44,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
     <message>
         <location line="+1"/>
         <source>Failed to unregister AppImage before re-integrating it</source>
-        <translation></translation>
+        <translation>未能在重新集成 AppImage 前注销它</translation>
     </message>
     <message>
         <location filename="../src/shared/shared.cpp" line="-14"/>
@@ -44,7 +52,10 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
 Could not open file for reading:
 
 %1</source>
-        <translation></translation>
+        <translation>无法解析桌面文件翻译：
+无法打开文件以读取：
+
+%1</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -374,7 +385,7 @@ Try to copy AppImage instead?</source>
         <location line="+3"/>
         <source>AppImageLauncher update</source>
         <comment>update helper app name</comment>
-        <translation></translation>
+        <translation>AppImageLauncher 更新</translation>
     </message>
     <message>
         <location line="+43"/>
@@ -403,7 +414,7 @@ Try to copy AppImage instead?</source>
     <message>
         <location line="+7"/>
         <source>No update information found</source>
-        <translation></translation>
+        <translation>未找到更新信息</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -433,14 +444,16 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="+4"/>
         <source>Remove old AppImage after successful update</source>
-        <translation></translation>
+        <translation>更新成功后移除旧 AppImage</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Failed to update AppImage:
 
 %1</source>
-        <translation></translation>
+        <translation>更新 AppImage 失败：
+
+%1</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -460,7 +473,7 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="+5"/>
         <source>Failed to remove old AppImage</source>
-        <translation></translation>
+        <translation>移除旧 AppImage 失败</translation>
     </message>
 </context>
 </TS>
