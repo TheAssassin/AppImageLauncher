@@ -9,3 +9,4 @@ Categories=Utility;
 MimeType=application/x-iso9660-appimage;application/x-appimage;application/vnd.appimage;
 NoDisplay=true
 X-AppImage-Integrate=false
+StartupWMClass=AppImageLauncher
