@@ -210,47 +210,47 @@ Invalid syntax:
     </message>
     <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
-        <translation>存储集成的 AppImages 的文件夹现在被设为： %1</translation>
+        <translation>存储集成的 AppImage 的文件夹现在被设为： %1</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</source>
-        <translation></translation>
+        <translation>集成它将会将 AppImage 移动到预设位置，并将它包含进你的应用启动器。</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher.</source>
-        <translation></translation>
+        <translation>请使用任务栏或启动器中应用图标的上下文菜单移除或更新 AppImage 。</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The directory the integrated AppImages are stored in is currently set to:</source>
-        <translation></translation>
+        <translation>存储集成的 AppImage 的文件夹现在被设为：</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>%1 has not been integrated into your system.</source>
-        <translation></translation>
+        <translation>%1 尚未集成到你的系统。</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Desktop Integration</source>
-        <translation></translation>
+        <translation>桌面集成</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Integrate and run</source>
-        <translation></translation>
+        <translation>集成并运行</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Run once</source>
-        <translation></translation>
+        <translation>运行一次</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cancel</source>
-        <translation></translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../src/ui/remove_main.cpp" line="-36"/>
@@ -261,12 +261,12 @@ Invalid syntax:
         <location line="+2"/>
         <source>AppImageLauncher remove</source>
         <comment>remove helper app name</comment>
-        <translation></translation>
+        <translation>AppImageLauncher 移除</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Path to AppImage</source>
-        <translation></translation>
+        <translation>AppImage 路径</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -276,17 +276,17 @@ Invalid syntax:
     <message>
         <location line="+18"/>
         <source>AppImage remove helper error</source>
-        <translation></translation>
+        <translation>AppImage 移除助手错误</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Please confirm</source>
-        <translation></translation>
+        <translation>请确认</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Are you sure you want to remove this AppImage?</source>
-        <translation></translation>
+        <translation>你确定要移除此 AppImage 吗？</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -296,11 +296,11 @@ Invalid syntax:
     <message>
         <location line="+12"/>
         <source>Failed to move AppImage into trash bin directory</source>
-        <translation></translation>
+        <translation>将 AppImage 移入垃圾箱文件夹失败</translation>
     </message>
     <message>
         <source>Failed to remove AppImage: %1</source>
-        <translation></translation>
+        <translation>移除 AppImage 失败： %1</translation>
     </message>
     <message>
         <location filename="../src/shared/shared.cpp" line="-35"/>
