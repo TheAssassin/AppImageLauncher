@@ -8,7 +8,7 @@
         <location line="+15"/>
         <location filename="../src/ui/main.cpp" line="+406"/>
         <source>Warning</source>
-        <translation></translation>
+        <translation>警告</translation>
     </message>
     <message>
         <source>AppImage has already been integrated, but it is not in the current integration destination directory.
@@ -31,7 +31,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
     <message>
         <location line="+20"/>
         <source>Error</source>
-        <translation></translation>
+        <translation>错误</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -82,17 +82,17 @@ Invalid syntax:
         <location filename="../src/ui/update_main.cpp" line="+134"/>
         <location line="+43"/>
         <source>Error</source>
-        <translation></translation>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../src/ui/main.cpp" line="-269"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
-        <translation></translation>
+        <translation>AppImageLauncher 目前不支持 %1 类型的 AppImage 。</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Could not make AppImage executable: %1</source>
-        <translation></translation>
+        <translation>无法设置 AppImage 为可执行： %1</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -102,12 +102,12 @@ Invalid syntax:
     <message>
         <location line="+12"/>
         <source>Failed to create temporary directory</source>
-        <translation></translation>
+        <translation>创建临时文件夹失败</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Failed to create temporary copy of type 1 AppImage</source>
-        <translation></translation>
+        <translation>创建 1 类型 AppImage 的临时副本失败</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -124,12 +124,12 @@ Invalid syntax:
         <location line="+31"/>
         <source>execv() failed: %1</source>
         <comment>error message</comment>
-        <translation></translation>
+        <translation>execv() 失败： %1</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>runtime not found: no such file or directory: %1</source>
-        <translation></translation>
+        <translation>未找到运行时：无此文件或文件夹： %1</translation>
     </message>
     <message>
         <location line="+24"/>
@@ -154,17 +154,17 @@ Invalid syntax:
     <message>
         <location line="+1"/>
         <source>Display this help and exit</source>
-        <translation></translation>
+        <translation>显示此帮助并退出</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Display version and exit</source>
-        <translation></translation>
+        <translation>显示版本并退出</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Arguments:</source>
-        <translation></translation>
+        <translation>参数：</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -174,38 +174,38 @@ Invalid syntax:
     <message>
         <location line="+19"/>
         <source>Failed to clean up old desktop files</source>
-        <translation></translation>
+        <translation>清除旧桌面文件失败</translation>
     </message>
     <message>
         <location line="+11"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
-        <translation></translation>
+        <translation>清空 AppImage 垃圾箱失败： %1</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>Unknown AppImageLauncher option: %1</source>
-        <translation></translation>
+        <translation>未知 AppImageLauncher 选项： %1</translation>
     </message>
     <message>
         <location line="+12"/>
         <location filename="../src/ui/remove_main.cpp" line="-53"/>
         <location filename="../src/ui/update_main.cpp" line="-116"/>
         <source>Error: no such file or directory: %1</source>
-        <translation></translation>
+        <translation>错误：无此文件或文件夹： %1</translation>
     </message>
     <message>
         <location line="+10"/>
         <location filename="../src/ui/remove_main.cpp" line="+9"/>
         <location filename="../src/ui/update_main.cpp" line="+7"/>
         <source>Not an AppImage: %1</source>
-        <translation></translation>
+        <translation>不是 AppImage： %1</translation>
     </message>
     <message>
         <location line="+98"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
-        <translation></translation>
+        <translation>存储集成的 AppImages 的文件夹现在被设为： %1</translation>
     </message>
     <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
