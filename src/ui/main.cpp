@@ -230,8 +230,9 @@ void displayError(const QString& message) {
 
 // factory method to build and return a suitable Qt application instance
 // it remembers a previously created instance, and will return it if available
-// otherwise a new one is created and configured
-QCoreApplication* getApp(int argc, char** argv) {
+// otherwise a new one is created and configure
+// caution: cannot use <widget>.exec() any more, instead call <widget>.show() and use QApplication::exec()
+QCoreApplication* getApp(char** argv) {
     if (QCoreApplication::instance() != nullptr)
         return QCoreApplication::instance();
 
@@ -247,10 +248,15 @@ QCoreApplication* getApp(int argc, char** argv) {
 
     QCoreApplication* app;
 
+    // need to pass rvalue reference, hence defining a variable
+    int fakeArgc = 1;
+
+    static char** fakeArgv = new char*{strdup(argv[0])};
+
     if (isHeadless()) {
-        app = new QCoreApplication(argc, argv);
+        app = new QCoreApplication(fakeArgc, fakeArgv);
     } else {
-        auto uiApp = new QApplication(argc, argv);
+        auto uiApp = new QApplication(fakeArgc, fakeArgv);
         uiApp->setApplicationDisplayName("AppImageLauncher");
         app = uiApp;
     }
@@ -264,7 +270,7 @@ QCoreApplication* getApp(int argc, char** argv) {
 int main(int argc, char** argv) {
     // create a suitable application object (either graphical (QApplication) or headless (QCoreApplication))
     // Use a fake argc value to avoid QApplication from modifying the arguments
-    QCoreApplication* app = getApp(1, argv);
+    QCoreApplication* app = getApp(argv);
 
     // install translations
     TranslationManager translationManager(*app);
@@ -516,7 +522,11 @@ int main(int argc, char** argv) {
 
     messageBox.setDefaultButton(QMessageBox::Ok);
 
-    messageBox.exec();
+    // cannot use messageBox.exec(), will produce SEGFAULTS as QCoreApplications can't show message boxes
+    messageBox.show();
+
+    // don't need to cast around, exec() is a static method anyway, and QApplication is a singleton
+    QApplication::exec();
 
     const auto* clickedButton = messageBox.clickedButton();
 
