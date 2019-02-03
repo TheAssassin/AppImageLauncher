@@ -121,7 +121,7 @@ Invalid syntax:
     <message>
         <location line="+14"/>
         <source>Failed to create temporary copy of type 1 AppImage</source>
-        <translation>创建 %1 类型 AppImage 的临时副本失败</translation>
+        <translation>未能创建 %1 类型 AppImage 的临时副本</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -340,12 +340,12 @@ Invalid syntax:
     </message>
     <message>
         <source>Failed to move AppImage to target location</source>
-        <translation>将 AppImage 移动到目标位置失败</translation>
+        <translation>未能将 AppImage 移动到目标位置</translation>
     </message>
     <message>
         <location line="-272"/>
         <source>Failed to register AppImage in system via libappimage</source>
-        <translation>通过 libappimage 在系统中注册 AppImage 失败</translation>
+        <translation>未能通过 libappimage 在系统中注册 AppImage</translation>
     </message>
     <message>
         <location line="+12"/>
