@@ -32,6 +32,49 @@ extern "C" {
 #include "trashbin.h"
 #include "translationmanager.h"
 
+// reliable way to check if the current session is graphical or not
+// TODO: check if this works with Wayland
+bool isHeadless() {
+    bool isHeadless = false;
+
+    QProcess proc;
+    proc.setProgram("xhost");
+    proc.setStandardOutputFile(QProcess::nullDevice());
+    proc.setStandardErrorFile(QProcess::nullDevice());
+
+    proc.start();
+    proc.waitForFinished();
+
+    switch (proc.exitCode()) {
+        case 255: {
+            // program not found, using fallback method
+            isHeadless = (getenv("DISPLAY") == nullptr);
+            break;
+        }
+        case 0:
+        case 1:
+            isHeadless = proc.exitCode() == 1;
+            break;
+        default:
+            throw std::runtime_error("Headless detection failed: unexpected exit code from xhost");
+    }
+
+    return isHeadless;
+}
+
+// little convenience method to display errors
+// avoids code duplication, and works for both graphical and non-graphical environments
+void displayError(const QString& message) {
+    if (isHeadless()) {
+        std::cout << "Error: " << message.toStdString() << std::endl;
+    } else {
+        // little complex, can't use QMessageBox::critical(...) for the same reason as in main()
+        QMessageBox mb(QMessageBox::Critical, QObject::tr("Error"), message, QMessageBox::Ok);
+        mb.show();
+        QApplication::exec();
+    }
+}
+
 // Runs an AppImage. Returns suitable exit code for main application.
 int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     // needs to be converted to std::string to be able to use c_str()
@@ -42,11 +85,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 
     auto type = appimage_get_type(fullPathToAppImage.toStdString().c_str(), false);
     if (type < 1 || type > 3) {
-        QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("AppImageLauncher does not support type %1 AppImages at the moment.").arg(type)
-        );
+        displayError(QObject::tr("AppImageLauncher does not support type %1 AppImages at the moment.").arg(type));
         return 1;
     }
 
@@ -54,11 +93,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     // not strictly necessary for AppImageLauncherFS, but if AppImageLauncher is going to be removed, the user will
     // be happy the registerFile is executable already
     if (!makeExecutable(fullPathToAppImage)) {
-        QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Could not make AppImage executable: %1").arg(fullPathToAppImage)
-        );
+        displayError(QObject::tr("Could not make AppImage executable: %1").arg(fullPathToAppImage));
         return 1;
     }
 
@@ -66,11 +101,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 //    if (!fsDaemonHasBeenRestartedSinceLastUpdate()) {
 //        auto rv = system("systemctl --user restart appimagelauncherfs 2>&1 1>/dev/null");
 //        if (rv != 0) {
-//            QMessageBox::critical(
-//                nullptr,
-//                QObject::tr("Error"),
-//                QObject::tr("Failed to register AppImage in AppImageLauncherFS: error while trying to restart appimagelauncherfs.service after update")
-//            );
+//            displayError(QObject::tr("Failed to register AppImage in AppImageLauncherFS: error while trying to restart appimagelauncherfs.service after update"));
 //            return 1;
 //        }
 //    }
@@ -80,11 +111,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     rv += system("systemctl --user start appimagelauncherfs 2>&1 1>/dev/null");
 
     if (rv != 0) {
-        QMessageBox::critical(
-            nullptr,
-            QObject::tr("Error"),
-            QObject::tr("Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service")
-        );
+        displayError(QObject::tr("Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service"));
         return 1;
     }
 
@@ -162,7 +189,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
             errorMessage = QObject::tr("Failed to register AppImage in AppImageLauncherFS: unknown failure");
         }
 
-        QMessageBox::critical(nullptr, QObject::tr("Error"), errorMessage);
+        displayError(errorMessage);
 
         return 1;
     }
@@ -187,45 +214,6 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 
     const auto& error = errno;
     std::cout << QObject::tr("execv() failed: %1").arg(strerror(error)).toStdString() << std::endl;
-}
-
-// reliable way to check if the current session is graphical or not
-// TODO: check if this works with Wayland
-bool isHeadless() {
-    bool isHeadless = false;
-
-    QProcess proc;
-    proc.setProgram("xhost");
-    proc.setStandardOutputFile(QProcess::nullDevice());
-    proc.setStandardErrorFile(QProcess::nullDevice());
-
-    proc.start();
-    proc.waitForFinished();
-
-    switch (proc.exitCode()) {
-        case 255: {
-            // program not found, using fallback method
-            isHeadless = (getenv("DISPLAY") == nullptr);
-            break;
-        }
-        case 0:
-        case 1:
-            isHeadless = proc.exitCode() == 1;
-            break;
-        default:
-            throw std::runtime_error("Headless detection failed: unexpected exit code from xhost");
-    }
-
-    return isHeadless;
-}
-
-// little convenience method to display errors
-// avoids code duplication, and works for both graphical and non-graphical environments
-void displayError(const QString& message) {
-    if (isHeadless())
-        std::cout << "Error: " << message.toStdString() << std::endl;
-    else
-        QMessageBox::critical(nullptr, QObject::tr("Error"), message);
 }
 
 // factory method to build and return a suitable Qt application instance
@@ -472,11 +460,7 @@ int main(int argc, char** argv) {
             if (rv == QMessageBox::Yes) {
                 // unregister AppImage, move, and re-integrate
                 if (appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false) != 0) {
-                    QMessageBox::critical(
-                        nullptr,
-                        QMessageBox::tr("Error"),
-                        QMessageBox::tr("Failed to unregister AppImage before re-integrating it")
-                    );
+                    displayError(QMessageBox::tr("Failed to unregister AppImage before re-integrating it"));
                     return 1;
                 }
 
