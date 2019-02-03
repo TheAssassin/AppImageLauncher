@@ -257,7 +257,9 @@ public:
         // this is performed with a linear search, as we need to compare all values' paths
         // see registeredAppImage's docstring for more information
         // can use the STL default search implementation, just have to provide a custom predicate comparing the paths
-        auto it = std::find_if(registeredAppImages.begin(), registeredAppImages.end(), [&path](const registered_appimages_t::value_type r) {
+        // note: important to use a reference below; copying of registered AppImages which no longer exist would call
+        // openFile() again, which would cause an exception due to the missing file
+        auto it = std::find_if(registeredAppImages.begin(), registeredAppImages.end(), [&path](const registered_appimages_t::value_type& r) {
             return path == r.second.path();
         });
 
