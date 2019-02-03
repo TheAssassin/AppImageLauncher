@@ -309,7 +309,15 @@ public:
             throw CouldNotFindRegisteredAppImageError();
         }
 
-        return registeredAppImages[id];
+        auto& registeredAppImage = registeredAppImages[id];
+
+        // if the file is gone, we should remove it from our mapping
+        if (!registeredAppImage.checkExistsOnDisk()) {
+            registeredAppImages.erase(id);
+            throw CouldNotFindRegisteredAppImageError();
+        }
+
+        return registeredAppImage;
     }
 
     static int getattr(const char* path, struct stat* st) {
@@ -377,10 +385,6 @@ public:
         // if an entry cannot be found, we return an appropriate error code
         try {
             auto& registeredAppImage = mapPathToRegisteredAppImage(path);
-
-            if (!bf::is_regular_file(registeredAppImage.path())) {
-                return -EIO;
-            }
 
             if (stat(registeredAppImage.path().c_str(), st) != 0)
                 throw std::runtime_error("stat() failed");
