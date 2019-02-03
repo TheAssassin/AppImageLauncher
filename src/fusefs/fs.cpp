@@ -55,7 +55,7 @@ public:
     public:
         RegisteredAppImage() : _id(-1), _fd(-1) {};
 
-        RegisteredAppImage(const int id, bf::path path) : _id(id), _path(bf::absolute(path)), _fd(-1) {
+        RegisteredAppImage(const int id, const bf::path& path) : _id(id), _path(bf::absolute(path)), _fd(-1) {
             openFile();
         }
 
@@ -65,7 +65,6 @@ public:
             _fd = -1;
         }
 
-//        RegisteredAppImage(const RegisteredAppImage& r) = delete;
         RegisteredAppImage(const RegisteredAppImage& r) : _id(r._id), _path(r._path), _fd(-1) {
             openFile();
         };
