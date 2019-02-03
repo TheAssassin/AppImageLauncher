@@ -48,8 +48,11 @@ public:
         void openFile() {
             _fd = ::open(_path.c_str(), O_RDONLY);
 
-            if (_fd < 0)
-                throw CouldNotOpenFileError("");
+            if (_fd < 0) {
+                // copy errno to avoid unintended changes
+                int error = errno;
+                throw CouldNotOpenFileError("Could not open file " + _path.string() + ": " + strerror(error));
+            }
         }
 
     public:
