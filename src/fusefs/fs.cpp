@@ -257,11 +257,15 @@ public:
         // TODO: implement check whether file is an AppImage (i.e., if it is a regular file and contains the AppImage magic bytes)
 
         // check whether file is registered already
+        // this is performed with a linear search, as we need to compare all values' paths
+        // see registeredAppImage's docstring for more information
+        // can use the STL default search implementation, just have to provide a custom predicate comparing the paths
+        auto it = std::find_if(registeredAppImages.begin(), registeredAppImages.end(), [&path](const registered_appimages_t::value_type r) {
+            return path == r.second.path();
+        });
 
-        for (const auto& r : registeredAppImages) {
-            if (path == r.second.path()) {
-                throw AppImageAlreadyRegisteredError(r.first);
-            }
+        if (it != registeredAppImages.end()) {
+            throw AppImageAlreadyRegisteredError(it->first);
         }
 
         const auto id = counter++;
