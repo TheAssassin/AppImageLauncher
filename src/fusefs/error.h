@@ -16,7 +16,7 @@ class InvalidPathError : public AppImageLauncherFSError { using AppImageLauncher
 
 class AppImageAlreadyRegisteredError : public AppImageLauncherFSError {
 private:
-    int _id;
+    const int _id;
 
 public:
     explicit AppImageAlreadyRegisteredError(int id) : _id(id) {};
