@@ -239,11 +239,6 @@ private:
     }
 
 public:
-    class CouldNotFindRegisteredAppImageError : public std::runtime_error {
-    public:
-        CouldNotFindRegisteredAppImageError() : runtime_error("") {};
-    };
-
     bool otherInstanceRunning() const {
         // TODO: implement properly (as in, check for stale mountpoint)
         return bf::is_directory(mountpoint);
@@ -394,6 +389,7 @@ public:
 
             return 0;
         } catch (const CouldNotFindRegisteredAppImageError&) {
+            std::cerr << "Error: could not find registered AppImage: " << path << std::endl;
             return -ENOENT;
         }
 
@@ -475,6 +471,7 @@ public:
 
             return 0;
         } catch (const CouldNotFindRegisteredAppImageError&) {
+            std::cerr << "Error: could not find registered AppImage: " << path << std::endl;
             return -ENOENT;
         }
     }
@@ -512,8 +509,8 @@ public:
                 registerAppImage(requestedPath);
             } catch (const AppImageAlreadyRegisteredError& e) {
                 std::cout << "AppImage already registered: " << requestedPath << std::endl;
-            } catch (const AppImageLauncherFSError&) {
-                // ignore other errors
+            } catch (const AppImageLauncherFSError& e) {
+                std::cerr << "Error: unexpected error: " << e.what() << std::endl;
             }
 
             delete buf;

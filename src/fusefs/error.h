@@ -13,6 +13,7 @@ class AlreadyRunningError : public AppImageLauncherFSError { using AppImageLaunc
 class CouldNotOpenFileError : public AppImageLauncherFSError { using AppImageLauncherFSError::AppImageLauncherFSError; };
 class FileNotFoundError : public AppImageLauncherFSError { using AppImageLauncherFSError::AppImageLauncherFSError; };
 class InvalidPathError : public AppImageLauncherFSError { using AppImageLauncherFSError::AppImageLauncherFSError; };
+class CouldNotFindRegisteredAppImageError : public AppImageLauncherFSError { using AppImageLauncherFSError::AppImageLauncherFSError; };
 
 class AppImageAlreadyRegisteredError : public AppImageLauncherFSError {
 private:
