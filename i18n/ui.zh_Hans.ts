@@ -63,7 +63,10 @@ Could not open file for reading:
 Invalid syntax:
 
 %1</source>
-        <translation></translation>
+        <translation>无法解析桌面文件翻译：
+无效语法：
+
+%1</translation>
     </message>
 </context>
 <context>
@@ -108,28 +111,28 @@ Invalid syntax:
     <message>
         <location line="+18"/>
         <source>Failed to open AppImage for reading: %1</source>
-        <translation></translation>
+        <translation>未能打开 AppImage 以读取： %1</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Failed to create temporary directory</source>
-        <translation>创建临时文件夹失败</translation>
+        <translation>未能创建临时文件夹</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Failed to create temporary copy of type 1 AppImage</source>
-        <translation>创建 1 类型 AppImage 的临时副本失败</translation>
+        <translation>创建 %1 类型 AppImage 的临时副本失败</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Failed to open temporary AppImage copy for writing</source>
-        <translation></translation>
+        <translation>未能打开临时 AppImage 副本以写入</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+8"/>
         <source>Failed to remove magic bytes from temporary AppImage copy</source>
-        <translation></translation>
+        <translation>未能从临时AppImage 副本中移除 magic bytes</translation>
     </message>
     <message>
         <location line="+31"/>
@@ -145,17 +148,17 @@ Invalid syntax:
     <message>
         <location line="+24"/>
         <source>execv() failed: %1</source>
-        <translation></translation>
+        <translation>execv() 失败： %1</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Usage: %1 [options] &lt;path&gt;</source>
-        <translation></translation>
+        <translation>用法： %1 [选项] &lt;路径&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Desktop integration helper for AppImages, for use by Linux distributions.</source>
-        <translation></translation>
+        <translation>AppImage 桌面集成助手，供 Linux 发行版使用。</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -180,7 +183,7 @@ Invalid syntax:
     <message>
         <location line="+1"/>
         <source>Path to AppImage (mandatory)</source>
-        <translation></translation>
+        <translation>AppImage 路径（强制）</translation>
     </message>
     <message>
         <location line="+19"/>
@@ -266,7 +269,7 @@ Invalid syntax:
     <message>
         <location filename="../src/ui/remove_main.cpp" line="-36"/>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
-        <translation></translation>
+        <translation>桌面集成后移除 AppImage ，供 Linux 发行版使用</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -302,7 +305,7 @@ Invalid syntax:
     <message>
         <location line="+12"/>
         <source>Failed to unregister AppImage: %1</source>
-        <translation></translation>
+        <translation>未能注销 AppImage： %1</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -379,7 +382,7 @@ Try to copy AppImage instead?</source>
     <message>
         <location filename="../src/ui/update_main.cpp" line="-51"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
-        <translation></translation>
+        <translation>桌面集成后更新 AppImage ，供 Linux 发行版使用</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -390,26 +393,26 @@ Try to copy AppImage instead?</source>
     <message>
         <location line="+43"/>
         <source>The AppImage hasn&apos;t been integrated before. This tool will, however, integrate the updated AppImage.</source>
-        <translation></translation>
+        <translation>AppImage 此前未集成。然而此工具将集成更新后的 AppImage 。</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Do you wish to continue?</source>
-        <translation></translation>
+        <translation>你想继续吗？</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>No updates found</source>
-        <translation></translation>
+        <translation>未找到更新</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Could not find updates for AppImage %1</source>
-        <translation></translation>
+        <translation>无法找到 AppImage %1 的更新</translation>
     </message>
     <message>
         <source>Failed to check for updates. Please check the command line output for details.</source>
-        <translation></translation>
+        <translation>检查更新失败。请检查命令行输出获取详细信息。</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -422,24 +425,29 @@ Try to copy AppImage instead?</source>
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation></translation>
+        <translation>AppImage 中未找到更新信息：
+%1
+
+此 AppImage 不支持更新。请要求作者创建更新信息以便轻松更新。</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Failed to check for updates:
 
 %1</source>
-        <translation></translation>
+        <translation>检查更新失败：
+
+%1</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>An update has been found for the AppImage %1</source>
-        <translation></translation>
+        <translation>已发现 AppImage %1 的一个更新</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Do you want to perform the update?</source>
-        <translation></translation>
+        <translation>你想要执行更新吗？</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -458,17 +466,17 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="+14"/>
         <source>File reported as updated does not exist: %1</source>
-        <translation></translation>
+        <translation>报告为已更新的文件不存在： %1</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Failed to register updated AppImage in system</source>
-        <translation></translation>
+        <translation>未能在系统中注册已更新 AppImage</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Failed to unregister old AppImage in system</source>
-        <translation></translation>
+        <translation>未能在系统中注销旧 AppImage</translation>
     </message>
     <message>
         <location line="+5"/>
