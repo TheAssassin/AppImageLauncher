@@ -26,3 +26,21 @@ public:
         return _id;
     }
 };
+
+class DuplicateRegisteredAppImageError : public AppImageLauncherFSError {
+private:
+    const int _firstId;
+    const int _secondId;
+
+public:
+    DuplicateRegisteredAppImageError(int firstId, int secondId) : _firstId(firstId), _secondId(secondId) {};
+
+public:
+    int firstId() {
+        return _firstId;
+    }
+
+    int secondId() {
+        return _secondId;
+    }
+};

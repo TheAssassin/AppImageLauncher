@@ -76,7 +76,13 @@ public:
         }
 
         bool operator==(const RegisteredAppImage& r) const {
-            return _id == r._id && _path == r._path;
+            auto equals = _path == r._path;
+
+            // sanity check: there must not be more than one AppImage with the same ID and path
+            if (equals && _id != r._id)
+                throw DuplicateRegisteredAppImageError(_id, r._id);
+
+            return equals;
         }
 
     public:
