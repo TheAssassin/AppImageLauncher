@@ -3,8 +3,9 @@
 #include <functional>
 #include <iomanip>
 #include <iostream>
-#include <map>
+#include <set>
 #include <sstream>
+#include <unordered_map>
 #include <vector>
 #include <string.h>
 #include <unistd.h>
@@ -97,9 +98,17 @@ public:
         int fd() const {
             return _fd;
         }
+
+        bool checkExistsOnDisk() const {
+            return bf::is_regular_file(_path);
+        }
     };
 
-    typedef std::map<int, RegisteredAppImage> registered_appimages_t;
+    // an unordered map using the IDs provides O(1) access to members on lookups for operations like read()
+    // we can however only check/compare paths on insertion with O(n), as we have to perform a linear search iterating
+    // over all the values
+    // this is okay, however, insertions will be performed only rarely, and the number of items won't be too large
+    typedef std::unordered_map<int, RegisteredAppImage> registered_appimages_t;
 
     // holds registered AppImages
     // they're indexed by a monotonically increasing counter, IDs may be added or removed at any time, therefore using
@@ -149,20 +158,29 @@ private:
     }
 
     static std::string generateTextMap() {
-        std::vector<char> map(1, '\0');
+        std::stringstream map;
+
+        // remember files which no longer exist on disk
+        // we don't want to return paths of files which don't exist on disk any more
+        // this is also handled on read() etc. requests, but it's more efficient if we don't unnecessarily show
+        // these entries to users of the map file
+        std::set<int> idsToRemove;
 
         for (const auto& entry : registeredAppImages) {
-            auto filename = generateFilenameForId(entry.first);
-
-            std::ostringstream line;
-            line << filename << " -> " << entry.second.path().string() << std::endl;
-            auto lineStr = line.str();
-
-            map.resize(map.size() + lineStr.size());
-            strcat(map.data(), lineStr.c_str());
+            if (!entry.second.checkExistsOnDisk()) {
+                idsToRemove.emplace(entry.first);
+            } else {
+                auto filename = generateFilenameForId(entry.first);
+                map << filename << " -> " << entry.second.path().string() << std::endl;
+            }
         }
 
-        return map.data();
+        // actually remove entries which no longer exist on disk
+        for (auto id : idsToRemove) {
+            registeredAppImages.erase(id);
+        }
+
+        return map.str();
     }
 
     static int handleReadMap(void* buf, size_t bufsize, off_t offset) {
