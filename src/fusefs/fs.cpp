@@ -489,7 +489,6 @@ public:
 
         std::copy(fragment.begin(), fragment.end(), std::back_inserter(*dataBuf));
 
-        std::cout << fragment << std::flush;
         return static_cast<int>(bufsize);
     }
 
