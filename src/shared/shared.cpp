@@ -452,7 +452,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
             g_key_file_set_string(desktopFile.get(), updateSectionName, "Name", "Update AppImage");
 
             std::ostringstream updateExecPath;
-            updateExecPath << PRIVATE_LIBDIR << "/appimagelauncher/update" << " " << pathToAppImage.toStdString();
+            updateExecPath << PRIVATE_LIBDIR << "/update" << " " << pathToAppImage.toStdString();
             g_key_file_set_string(desktopFile.get(), updateSectionName, "Exec", updateExecPath.str().c_str());
 
             // install translations
