@@ -333,7 +333,7 @@ int main(int argc, char** argv) {
     auto pathToAppImage = QDir(QString(argv[1])).absolutePath();
 
     if (!QFile(pathToAppImage).exists()) {
-        std::cout << QObject::tr("Error: no such file or directory: %1").arg(pathToAppImage).toStdString() << std::endl;
+        displayError(QObject::tr("Error: no such file or directory: %1").arg(pathToAppImage));
         return 1;
     }
 
