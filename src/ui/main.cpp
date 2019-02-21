@@ -236,7 +236,7 @@ QCoreApplication* getApp(char** argv) {
 
     QCoreApplication* app;
 
-    // need to pass rvalue reference, hence defining a variable
+    // need to pass rvalue, hence defining a variable
     int fakeArgc = 1;
 
     static char** fakeArgv = new char*{strdup(argv[0])};
