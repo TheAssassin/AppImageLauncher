@@ -66,7 +66,7 @@ bool isHeadless() {
 // avoids code duplication, and works for both graphical and non-graphical environments
 void displayError(const QString& message) {
     if (isHeadless()) {
-        std::cout << "Error: " << message.toStdString() << std::endl;
+        std::cerr << "Error: " << message.toStdString() << std::endl;
     } else {
         // little complex, can't use QMessageBox::critical(...) for the same reason as in main()
         QMessageBox mb(QMessageBox::Critical, QObject::tr("Error"), message, QMessageBox::Ok);
@@ -213,7 +213,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     execv(pathToVirtualAppImage.toStdString().c_str(), args.data());
 
     const auto& error = errno;
-    std::cout << QObject::tr("execv() failed: %1").arg(strerror(error)).toStdString() << std::endl;
+    std::cerr << QObject::tr("execv() failed: %1").arg(strerror(error)).toStdString() << std::endl;
 }
 
 // factory method to build and return a suitable Qt application instance
