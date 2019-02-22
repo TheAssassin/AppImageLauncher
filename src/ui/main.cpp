@@ -76,7 +76,7 @@ void displayError(const QString& message) {
 }
 
 // Runs an AppImage. Returns suitable exit code for main application.
-int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
+int runAppImage(const QString& pathToAppImage, unsigned long argc, char** argv) {
     // needs to be converted to std::string to be able to use c_str()
     // when using QString and then .toStdString().c_str(), the std::string instance will be an rvalue, and the
     // pointer returned by c_str() will be invalid
