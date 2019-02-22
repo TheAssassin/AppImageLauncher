@@ -366,8 +366,6 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
             const auto& filePath = i18nDirIterator.next();
             const auto& fileName = QFileInfo(filePath).fileName();
 
-            auto x = strdup(fileName.toStdString().c_str());
-
             if (!QFileInfo(filePath).isFile() || !(fileName.startsWith("desktopfiles.") && fileName.endsWith(".json")))
                 continue;
 
@@ -697,7 +695,7 @@ time_t getMTime(const QString& path) {
     }
 
     return st.st_mtim.tv_sec;
-};
+}
 
 bool desktopFileHasBeenUpdatedSinceLastUpdate(const QString& pathToAppImage) {
     const std::shared_ptr<char> ownBinaryPath(realpath("/proc/self/exe", nullptr));

@@ -203,7 +203,7 @@ int runAppImage(const QString& pathToAppImage, unsigned long argc, char** argv) 
     args.push_back(argv0Buffer.data());
 
     // copy arguments
-    for (int i = 1; i < argc; i++) {
+    for (unsigned long i = 1; i < argc; i++) {
         args.push_back(argv[i]);
     }
 
@@ -214,6 +214,7 @@ int runAppImage(const QString& pathToAppImage, unsigned long argc, char** argv) 
 
     const auto& error = errno;
     std::cerr << QObject::tr("execv() failed: %1").arg(strerror(error)).toStdString() << std::endl;
+    return 1;
 }
 
 // factory method to build and return a suitable Qt application instance
