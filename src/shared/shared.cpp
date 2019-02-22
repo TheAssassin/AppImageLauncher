@@ -122,6 +122,54 @@ std::shared_ptr<QSettings> getConfig() {
     return rv;
 }
 
+// TODO: check if this works with Wayland
+bool isHeadless() {
+    bool isHeadless = false;
+
+    QProcess proc;
+    proc.setProgram("xhost");
+    proc.setStandardOutputFile(QProcess::nullDevice());
+    proc.setStandardErrorFile(QProcess::nullDevice());
+
+    proc.start();
+    proc.waitForFinished();
+
+    switch (proc.exitCode()) {
+        case 255: {
+            // program not found, using fallback method
+            isHeadless = (getenv("DISPLAY") == nullptr);
+            break;
+        }
+        case 0:
+        case 1:
+            isHeadless = proc.exitCode() == 1;
+            break;
+        default:
+            throw std::runtime_error("Headless detection failed: unexpected exit code from xhost");
+    }
+
+    return isHeadless;
+}
+
+// avoids code duplication, and works for both graphical and non-graphical environments
+void displayMessageBox(const QString& title, const QString& message, const QMessageBox::Icon icon) {
+    if (isHeadless()) {
+        std::cerr << title.toStdString() << ": " << message.toStdString() << std::endl;
+    } else {
+        // little complex, can't use QMessageBox::{critical,warning,...} for the same reason as in main()
+        auto* mb = new QMessageBox(icon, title, message, QMessageBox::Ok, nullptr);
+        mb->show();
+        QApplication::exec();
+    }
+}
+
+void displayError(const QString& message) {
+    displayMessageBox(QObject::tr("Error"), message, QMessageBox::Critical);
+}
+
+void displayWarning(const QString& message) {
+    displayMessageBox(QObject::tr("Warning"), message, QMessageBox::Warning);
+}
 
 QDir integratedAppImagesDestination() {
     auto config = getConfig();
@@ -132,7 +180,6 @@ QDir integratedAppImagesDestination() {
 
     return DEFAULT_INTEGRATION_DESTINATION;
 }
-
 
 QString buildPathToIntegratedAppImage(const QString& pathToAppImage) {
     // if type 2 AppImage, we can build a "content-aware" filename
@@ -162,7 +209,6 @@ QString buildPathToIntegratedAppImage(const QString& pathToAppImage) {
 
     return integratedAppImagesDestination().path() + "/" + fileName;
 }
-
 
 std::map<std::string, std::string> findCollisions(const QString& currentNameEntry) {
     std::map<std::string, std::string> collisions;
@@ -222,11 +268,7 @@ bool updateDesktopDatabaseAndIconCaches() {
 
 bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveCollisions) {
     if (appimage_register_in_system(pathToAppImage.toStdString().c_str(), false) != 0) {
-        QMessageBox::critical(
-            nullptr,
-            QObject::tr("Error"),
-            QObject::tr("Failed to register AppImage in system via libappimage")
-        );
+        displayError(QObject::tr("Failed to register AppImage in system via libappimage"));
         return false;
     }
 
@@ -234,21 +276,13 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
 
     // sanity check -- if the file doesn't exist, the function returns NULL
     if (desktopFilePath == nullptr) {
-        QMessageBox::critical(
-            nullptr,
-            QObject::tr("Error"),
-            QObject::tr("Failed to find integrated desktop file")
-        );
+        displayError(QObject::tr("Failed to find integrated desktop file"));
         return false;
     }
 
     // check that file exists
     if (!QFile(desktopFilePath).exists()) {
-        QMessageBox::critical(
-            nullptr,
-            QObject::tr("Error"),
-            QObject::tr("Couldn't find integrated AppImage's desktop file")
-        );
+        displayError(QObject::tr("Couldn't find integrated AppImage's desktop file"));
         return false;
     }
 
@@ -269,11 +303,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
     auto handleError = [error, desktopFile]() {
         std::ostringstream ss;
         ss << QObject::tr("Failed to load desktop file:").toStdString() << std::endl << (*error)->message;
-        QMessageBox::critical(
-            nullptr,
-            QObject::tr("Error"),
-            QString::fromStdString(ss.str())
-        );
+        displayError(QString::fromStdString(ss.str()));
     };
 
     if (!g_key_file_load_from_file(desktopFile.get(), desktopFilePath, flags, error.get())) {
@@ -284,11 +314,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
     const auto* nameEntry = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_NAME, error.get());
 
     if (nameEntry == nullptr) {
-        QMessageBox::warning(
-            nullptr,
-            QObject::tr("Warning"),
-            QObject::tr("AppImage has invalid desktop file")
-        );
+        displayWarning(QObject::tr("AppImage has invalid desktop file"));
     }
 
     if (resolveCollisions) {
@@ -382,11 +408,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
             QFile jsonFile(filePath);
 
             if (!jsonFile.open(QIODevice::ReadOnly)) {
-                QMessageBox::warning(
-                    nullptr,
-                    QMessageBox::tr("Warning"),
-                    QMessageBox::tr("Could not parse desktop file translations:\nCould not open file for reading:\n\n%1").arg(fileName)
-                );
+                displayWarning(QMessageBox::tr("Could not parse desktop file translations:\nCould not open file for reading:\n\n%1").arg(fileName));
             }
 
             // TODO: need to make sure that this doesn't try to read huge files at once
@@ -397,11 +419,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
 
             // show warning on syntax errors and continue
             if (parseError.error != QJsonParseError::NoError || jsonDoc.isNull() || !jsonDoc.isObject()) {
-                QMessageBox::warning(
-                    nullptr,
-                    QMessageBox::tr("Warning"),
-                    QMessageBox::tr("Could not parse desktop file translations:\nInvalid syntax:\n\n%1").arg(parseError.errorString())
-                );
+                displayWarning(QMessageBox::tr("Could not parse desktop file translations:\nInvalid syntax:\n\n%1").arg(parseError.errorString()));
             }
 
             auto jsonObj = jsonDoc.object();
@@ -510,15 +528,19 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
                     << QObject::tr("Do you wish to overwrite the existing AppImage?").toStdString() << std::endl
                     << QObject::tr("Choosing No will run the AppImage once, and leave the system in its current state.").toStdString();
 
-            auto rv = QMessageBox::warning(
-                nullptr,
+            QMessageBox messageBox(
+                QMessageBox::Warning,
                 QObject::tr("Warning"),
                 QString::fromStdString(message.str()),
-                QMessageBox::Yes | QMessageBox::No,
-                QMessageBox::Yes
+                QMessageBox::Yes | QMessageBox::No
             );
 
-            if (rv == QMessageBox::No) {
+            messageBox.setDefaultButton(QMessageBox::No);
+            messageBox.show();
+
+            QApplication::exec();
+
+            if (messageBox.clickedButton() == messageBox.button(QMessageBox::No)) {
                 return INTEGRATION_ABORTED;
             }
 
@@ -526,23 +548,24 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
         }
 
         if (!QFile(pathToAppImage).rename(pathToIntegratedAppImage)) {
-            auto result = QMessageBox::critical(
-                nullptr,
+            QMessageBox messageBox(
+                QMessageBox::Critical,
                 QObject::tr("Error"),
                 QObject::tr("Failed to move AppImage to target location.\n"
                             "Try to copy AppImage instead?"),
                 QMessageBox::Ok | QMessageBox::Cancel
             );
 
-            if (result == QMessageBox::Cancel)
+            messageBox.setDefaultButton(QMessageBox::Ok);
+            messageBox.show();
+
+            QApplication::exec();
+
+            if (messageBox.clickedButton() == messageBox.button(QMessageBox::Cancel))
                 return INTEGRATION_FAILED;
 
             if (!QFile(pathToAppImage).copy(pathToIntegratedAppImage)) {
-                QMessageBox::critical(
-                    nullptr,
-                    QObject::tr("Error"),
-                    QObject::tr("Failed to copy AppImage to target location")
-                );
+                displayError("Failed to copy AppImage to target location");
                 return INTEGRATION_FAILED;
             }
         }
@@ -686,11 +709,7 @@ bool cleanUpOldDesktopIntegrationResources(bool verbose) {
 time_t getMTime(const QString& path) {
     struct stat st{};
     if (stat(path.toStdString().c_str(), &st) != 0) {
-        QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to call stat() on path:\n\n%1").arg(path)
-        );
+        displayError(QObject::tr("Failed to call stat() on path:\n\n%1").arg(path));
         return -1;
     }
 

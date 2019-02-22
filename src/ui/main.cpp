@@ -32,49 +32,6 @@ extern "C" {
 #include "trashbin.h"
 #include "translationmanager.h"
 
-// reliable way to check if the current session is graphical or not
-// TODO: check if this works with Wayland
-bool isHeadless() {
-    bool isHeadless = false;
-
-    QProcess proc;
-    proc.setProgram("xhost");
-    proc.setStandardOutputFile(QProcess::nullDevice());
-    proc.setStandardErrorFile(QProcess::nullDevice());
-
-    proc.start();
-    proc.waitForFinished();
-
-    switch (proc.exitCode()) {
-        case 255: {
-            // program not found, using fallback method
-            isHeadless = (getenv("DISPLAY") == nullptr);
-            break;
-        }
-        case 0:
-        case 1:
-            isHeadless = proc.exitCode() == 1;
-            break;
-        default:
-            throw std::runtime_error("Headless detection failed: unexpected exit code from xhost");
-    }
-
-    return isHeadless;
-}
-
-// little convenience method to display errors
-// avoids code duplication, and works for both graphical and non-graphical environments
-void displayError(const QString& message) {
-    if (isHeadless()) {
-        std::cerr << "Error: " << message.toStdString() << std::endl;
-    } else {
-        // little complex, can't use QMessageBox::critical(...) for the same reason as in main()
-        QMessageBox mb(QMessageBox::Critical, QObject::tr("Error"), message, QMessageBox::Ok);
-        mb.show();
-        QApplication::exec();
-    }
-}
-
 // Runs an AppImage. Returns suitable exit code for main application.
 int runAppImage(const QString& pathToAppImage, unsigned long argc, char** argv) {
     // needs to be converted to std::string to be able to use c_str()
@@ -445,8 +402,8 @@ int main(int argc, char** argv) {
         };
 
         if (!isInDirectory(pathToAppImage, integratedAppImagesDestination().path())) {
-            auto rv = QMessageBox::warning(
-                nullptr,
+            QMessageBox messageBox(
+                QMessageBox::Warning,
                 QMessageBox::tr("Warning"),
                 QMessageBox::tr("AppImage %1 has already been integrated, but it is not in the current integration "
                                 "destination directory."
@@ -462,8 +419,13 @@ int main(int argc, char** argv) {
                 QMessageBox::Yes | QMessageBox::No
             );
 
+            messageBox.setDefaultButton(QMessageBox::Yes);
+            messageBox.show();
+
+             QApplication::exec();
+
             // if the user selects No, then continue as if the AppImage would not be in this directory
-            if (rv == QMessageBox::Yes) {
+            if (messageBox.clickedButton() == messageBox.button(QMessageBox::Yes)) {
                 // unregister AppImage, move, and re-integrate
                 if (appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false) != 0) {
                     displayError(QMessageBox::tr("Failed to unregister AppImage before re-integrating it"));

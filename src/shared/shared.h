@@ -21,6 +21,15 @@ enum IntegrationState {
 // currently hardcoded, can not be changed by users
 static const auto DEFAULT_INTEGRATION_DESTINATION = QString(getenv("HOME")) + "/Applications/";
 
+// little convenience method to display warnings
+void displayWarning(const QString& message);
+
+// little convenience method to display errors
+void displayError(const QString& message);
+
+// reliable way to check if the current session is graphical or not
+bool isHeadless();
+
 // makes an existing file executable
 bool makeExecutable(const QString& path);
 
