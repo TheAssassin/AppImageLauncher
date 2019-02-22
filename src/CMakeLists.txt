@@ -31,6 +31,8 @@ if(ENABLE_UPDATE_HELPER)
     add_definitions(-DENABLE_UPDATE_HELPER)
 endif()
 
+add_compile_options(-Wall -Wpedantic)
+
 # utility libraries
 add_subdirectory(fswatcher)
 add_subdirectory(i18n)
