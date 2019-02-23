@@ -528,19 +528,19 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
                     << QObject::tr("Do you wish to overwrite the existing AppImage?").toStdString() << std::endl
                     << QObject::tr("Choosing No will run the AppImage once, and leave the system in its current state.").toStdString();
 
-            QMessageBox messageBox(
+            auto* messageBox = new QMessageBox(
                 QMessageBox::Warning,
                 QObject::tr("Warning"),
                 QString::fromStdString(message.str()),
                 QMessageBox::Yes | QMessageBox::No
             );
 
-            messageBox.setDefaultButton(QMessageBox::No);
-            messageBox.show();
+            messageBox->setDefaultButton(QMessageBox::No);
+            messageBox->show();
 
             QApplication::exec();
 
-            if (messageBox.clickedButton() == messageBox.button(QMessageBox::No)) {
+            if (messageBox->clickedButton() == messageBox->button(QMessageBox::No)) {
                 return INTEGRATION_ABORTED;
             }
 
@@ -548,7 +548,7 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
         }
 
         if (!QFile(pathToAppImage).rename(pathToIntegratedAppImage)) {
-            QMessageBox messageBox(
+            auto* messageBox = new QMessageBox(
                 QMessageBox::Critical,
                 QObject::tr("Error"),
                 QObject::tr("Failed to move AppImage to target location.\n"
@@ -556,12 +556,12 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
                 QMessageBox::Ok | QMessageBox::Cancel
             );
 
-            messageBox.setDefaultButton(QMessageBox::Ok);
-            messageBox.show();
+            messageBox->setDefaultButton(QMessageBox::Ok);
+            messageBox->show();
 
             QApplication::exec();
 
-            if (messageBox.clickedButton() == messageBox.button(QMessageBox::Cancel))
+            if (messageBox->clickedButton() == messageBox->button(QMessageBox::Cancel))
                 return INTEGRATION_FAILED;
 
             if (!QFile(pathToAppImage).copy(pathToIntegratedAppImage)) {
