@@ -59,7 +59,17 @@ Sintaxis inválida:
 
 %1</translation>
     </message>
-</context>
+<message>
+        <source>AppImage has already been integrated, but it is not in the current integration destination directory.
+
+Do you want to move it into the new destination?
+Choosing No will run the AppImage once, and leave the AppImage in its current directory.</source>
+        <translation>Este AppImage ya fue integrado pero no se encuentra ubicado en el &quot;directorio de aplicaciones&quot;. 
+Desea mover el archivo a dicho directorio?
+
+Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archivo permanecerá en su ubicación actual.</translation>
+    </message>
+    </context>
 <context>
     <name>QObject</name>
     <message>
@@ -469,5 +479,9 @@ Este AppImage no soporta actualizaciones. Por favor solicite al autor que incluy
         <source>Failed to remove old AppImage</source>
         <translation>Error al eliminar la antigua AppImage</translation>
     </message>
-</context>
+<message>
+        <source>Failed to check for updates. Please check the command line output for details.</source>
+        <translation>No se pudo comprobar la existencia de actualizaciones. Para más detalles consulte los mensajes en la linea de comandos .</translation>
+    </message>
+    </context>
 </TS>
