@@ -1,0 +1,35 @@
+.\" Manpage for AppImageLauncher.
+.\" Contact theassassin@assassinate-you.net to correct errors or typos.
+.TH man 1 "28 February 2019" "@APPIMAGELAUNCHER_VERSION@" "AppImageLauncher man page"
+.SH NAME
+AppImageLauncher \- Desktop integration helper for AppImages, for use by Linux distributions.
+.SH SYNOPSIS
+AppImageLauncher [PATH]
+.SH DESCRIPTION
+Helper application for Linux distributions serving as a
+kind of "entry point" for running and integrating AppImages.
+
+AppImage provides a way for upstream developers to provide
+“native” binaries for Linux users just the same way they could
+do for other operating systems. It allows for packaging applications
+for any common Linux based operating system, e.g., Debian.
+AppImages come with all dependencies that cannot be assumed
+to be part of each target system in a recent enough version and
+will run on most Linux distributions without further modifications.
+
+AppImageLauncher makes your Linux desktop AppImage ready™.
+You can integrate AppImages with a single mouse click, and manage
+them from your application launcher. Install AppImageLauncher today
+for your distribution and enjoy using AppImages as easy as never before!
+.SH OPTIONS
+.IP --appimagelauncher-help
+Display this help and exit
+.IP --appimagelauncher-version
+Display version and exit
+.SH ARGUMENTS
+Path to AppImage (mandatory)
+.SH BUGS
+No known bugs.
+.SH AUTHOR
+TheAssassin <theassassin@assassinate-you.net>
+
