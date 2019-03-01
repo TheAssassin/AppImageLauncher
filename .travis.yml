@@ -21,6 +21,16 @@ matrix:
         - docker
       install:
       script: bash -ex travis/travis-bionic.sh
+    - env: COSMIC=1 ARCH=x86_64
+      services:
+        - docker
+      install:
+      script: bash -ex travis/travis-cosmic.sh
+    - env: COSMIC=1 ARCH=i386
+      services:
+        - docker
+      install:
+      script: bash -ex travis/travis-cosmic.sh
     - env: BIONIC= ARCH=x86_64
       addons:
         apt:

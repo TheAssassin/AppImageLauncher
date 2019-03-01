@@ -4,7 +4,7 @@ set -x
 set -e
 
 # use RAM disk if possible
-if [ "$BIONIC" == "" ] && [ -d /dev/shm ]; then
+if [ "$BIONIC" == "" ] && [ "$COSMIC" == "" ] && [ -d /dev/shm ]; then
     TEMP_BASE=/dev/shm
 else
     TEMP_BASE=/tmp
@@ -36,15 +36,17 @@ cmake --version
 
 EXTRA_CMAKE_FLAGS=
 
-if [ "$BIONIC" == "" ]; then
-    EXTRA_CMAKE_FLAGS="-DUSE_CCACHE=ON"
-else
+if [ "$BIONIC" != "" ]; then
     EXTRA_CMAKE_FLAGS="-DCPACK_DEBIAN_COMPATIBILITY_LEVEL=bionic"
+elif [ "$COSMIC" != "" ]; then
+    EXTRA_CMAKE_FLAGS="-DCPACK_DEBIAN_COMPATIBILITY_LEVEL=cosmic"
+else
+    EXTRA_CMAKE_FLAGS="-DUSE_CCACHE=ON"
 fi
 
 if [ "$ARCH" == "i386" ]; then
     EXTRA_CMAKE_FLAGS="$EXTRA_CMAKE_FLAGS -DCMAKE_TOOLCHAIN_FILE=$REPO_ROOT/cmake/toolchains/i386-linux-gnu.cmake -DUSE_SYSTEM_XZ=ON -DUSE_SYSTEM_LIBARCHIVE=ON"
-    if [ "$BIONIC" == "" ]; then
+    if [ "$BIONIC" == "" ] && [ "$COSMIC" == "" ]; then
         export QT_SELECT=qt5-i386-linux-gnu
     else
         export QT_SELECT=qt5
@@ -63,7 +65,7 @@ cmake .
 cpack -V -G DEB
 
 # skip RPM and source tarball build on bionic
-if [ "$BIONIC" == "" ]; then
+if [ "$BIONIC" == "" ] && [ "$COSMIC" == "" ]; then
     # build RPM package
     cpack -V -G RPM
 
@@ -73,7 +75,7 @@ if [ "$BIONIC" == "" ]; then
 fi
 
 # move AppImages to old cwd
-if [ "$BIONIC" == "" ]; then
+if [ "$BIONIC" == "" ] && [ "$COSMIC" == "" ]; then
     mv appimagelauncher*.{deb,rpm}* appimagelauncher*.tar* "$OLD_CWD"/
 else
     mv appimagelauncher*.deb* "$OLD_CWD"/
