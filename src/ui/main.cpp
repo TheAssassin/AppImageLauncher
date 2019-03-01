@@ -195,20 +195,20 @@ QCoreApplication* getApp(char** argv) {
     QCoreApplication* app;
 
     // need to pass rvalue, hence defining a variable
-    int fakeArgc = 1;
+    int* fakeArgc = new int{1};
 
     static char** fakeArgv = new char*{strdup(argv[0])};
 
     if (isHeadless()) {
-        app = new QCoreApplication(fakeArgc, fakeArgv);
+        app = new QCoreApplication(*fakeArgc, fakeArgv);
     } else {
-        auto uiApp = new QApplication(fakeArgc, fakeArgv);
-        uiApp->setApplicationDisplayName("AppImageLauncher");
+        auto uiApp = new QApplication(*fakeArgc, fakeArgv);
+        QApplication::setApplicationDisplayName("AppImageLauncher");
         app = uiApp;
     }
 
-    app->setApplicationName("AppImageLauncher");
-    app->setApplicationVersion(QString::fromStdString(version));
+    QCoreApplication::setApplicationName("AppImageLauncher");
+    QCoreApplication::setApplicationVersion(QString::fromStdString(version));
 
     return app;
 }
