@@ -1,6 +1,6 @@
 # lupdate must be installed and available
-find_program(LUPDATE lupdate)
-find_program(LRELEASE lrelease)
+check_program(NAME lupdate)
+check_program(NAME lrelease)
 
 # create target calling custom commands
 add_custom_target(i18n)
