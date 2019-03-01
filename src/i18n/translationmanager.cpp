@@ -38,13 +38,16 @@ TranslationManager::~TranslationManager() {
 
 QString TranslationManager::getTranslationDir() {
     // first we need to find the translation directory
-    // if this is run from the source tree, we try a path that can only work within the repository
+    // if this is run from the build tree, we try a path that can only work within the build directory
     // then, we try the expected install location relative to the main binary
-    auto translationDir = QString(CMAKE_PROJECT_SOURCE_DIR) + "/resources/l10n";
+    const auto binaryDirPath = QApplication::applicationDirPath();
+
+    // previously the path to the repo root dir was embedded to allow for finding the compiled translations
+    // this lead to irreproducible builds
+    // therefore the files are now generated within the build dir, and we guess the path based on the binary location
+    auto translationDir = binaryDirPath + "/../../i18n/generated/l10n";
 
     if (!QDir(translationDir).exists()) {
-        const auto binaryDirPath = QApplication::applicationDirPath();
-
         translationDir = binaryDirPath + "/../share/appimagelauncher/l10n";
     }
 

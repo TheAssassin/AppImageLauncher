@@ -13,16 +13,6 @@ install(
     DESTINATION ${CMAKE_INSTALL_DATADIR}/applications COMPONENT APPIMAGELAUNCHER
 )
 
-# empty directories aren't tracked by Git
-# therefore the directory needs to be created by CMake
-file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/l10n)
-
-install(
-    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/l10n
-    DESTINATION ${CMAKE_INSTALL_DATADIR}/appimagelauncher COMPONENT APPIMAGELAUNCHER
-)
-
-
 set(INSTALL_MAINTAINER_SCRIPTS OFF CACHE BOOL "")
 
 # install maintainer scripts that distro packagers might find useful
