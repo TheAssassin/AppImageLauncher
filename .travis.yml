@@ -95,8 +95,8 @@ script:
 after_success:
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
   - if [ "$TRAVIS_BRANCH" != "master" ] && [ "$TRAVIS_TAG" == "" ]; then export TRAVIS_EVENT_TYPE=pull_request; fi
-  - if [ "$BIONIC" == "" && "$COSMIC" == "" ]; then bash upload.sh appimagelauncher*.{deb,rpm}* appimagelauncher*.tar*; fi
-  - if [ "$BIONIC" != "" || "$COSMIC" != "" ]; then bash upload.sh appimagelauncher*.deb*; fi
+  - if [ "$BIONIC" == "" ] && [ "$COSMIC" == "" ]; then bash upload.sh appimagelauncher*.{deb,rpm}* appimagelauncher*.tar*; fi
+  - if [ "$BIONIC" != "" ] || [ "$COSMIC" != "" ]; then bash upload.sh appimagelauncher*.deb*; fi
 
 branches:
   except:
