@@ -62,6 +62,6 @@ if(INSTALL_MAN_PAGE)
 
     install(
         FILES ${configured_man_page_path}
-        DESTINATION share/man/man1
+        DESTINATION share/man/man1 COMPONENT APPIMAGELAUNCHER
     )
 endif()
