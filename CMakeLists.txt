@@ -11,6 +11,8 @@ set(APPIMAGELAUNCHER_VERSION ${V_MAJOR}.${V_MINOR}.${V_PATCH}${V_SUFFIX})
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/modules)
 
+include(cmake/scripts.cmake)
+
 include(cmake/reproducible_builds.cmake)
 
 # support for ccache
