@@ -2,7 +2,8 @@ language: cpp
 compiler: gcc
 sudo: required
 dist: trusty
-cache: ccache
+# temporarily disabled due to performance issues on Travis CI
+#cache: ccache
 
 notifications:
   email: false
