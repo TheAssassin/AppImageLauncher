@@ -47,8 +47,8 @@ if(NOT GIT STREQUAL "GIT-NOTFOUND")
         RESULT_VARIABLE GIT_RESULT
     )
 
-    if(GIT_RESULT AND GIT_RESULT EQUAL 0)
-        message("Storing git commit ID in cache file")
+    if(GIT_RESULT EQUAL 0)
+        message(STATUS "Storing git commit ID in cache file")
         file(WRITE "${GIT_COMMIT_CACHE_FILE}" "${APPIMAGELAUNCHER_GIT_COMMIT}")
     endif()
 endif()
