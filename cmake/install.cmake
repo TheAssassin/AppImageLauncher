@@ -1,20 +1,24 @@
 # define private libraries install destionation
-if(IS_ABSOLUTE ${CMAKE_INSTALL_LIBDIR})
+if(NOT IS_ABSOLUTE ${CMAKE_INSTALL_LIBDIR})
     set(_libdir ${CMAKE_INSTALL_LIBDIR})
 else()
-    set(_libdir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
+    file(RELATIVE_PATH _libdir ${CMAKE_INSTALL_LIBDIR} ${CMAKE_INSTALL_PREFIX})
 endif()
 
 set(_private_libdir ${_libdir}/appimagelauncher)
 
 # calculate relative path from binary install destination to private library install dir
-if(IS_ABSOLUTE ${CMAKE_INSTALL_BINDIR})
+if(NOT IS_ABSOLUTE ${CMAKE_INSTALL_BINDIR})
     set(_bindir ${CMAKE_INSTALL_BINDIR})
 else()
-    set(_bindir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR})
+    file(RELATIVE_PATH _bindir ${CMAKE_INSTALL_BINDIR} ${CMAKE_INSTALL_PREFIX})
+    #set(_bindir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR})
 endif()
 
-file(RELATIVE_PATH _rpath ${_bindir} ${_private_libdir})
+set(_abs_bindir ${CMAKE_INSTALL_PREFIX}/${_bindir})
+set(_abs_private_libdir ${CMAKE_INSTALL_PREFIX}/${_private_libdir})
+
+file(RELATIVE_PATH _rpath ${_abs_bindir} ${_abs_private_libdir})
 set(_rpath "\$ORIGIN/${_rpath}")
 
 
