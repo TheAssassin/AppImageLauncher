@@ -50,6 +50,8 @@ set(CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION
     /usr/lib/binfmt.d
     /usr/lib/systemd
     /usr/lib/systemd/user
+    /usr/share/man
+    /usr/share/man/man1
 )
 
 # add postinst and prerm hooks to RPM package
