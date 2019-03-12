@@ -76,7 +76,7 @@ if [ "$BIONIC" == "" ] && [ "$COSMIC" == "" ]; then
     # generate log for debugging
     # CPack is very verbose, therefore we generate a file and upload it
     cpack --config CPackSourceConfig.cmake -V > cpack_source.log
-    curl --upload-file cpack_source.log https://transfer.sh || true
+    curl -F'file=@cpack_source.log' https://0x0.st || true
 fi
 
 # move AppImages to old cwd
