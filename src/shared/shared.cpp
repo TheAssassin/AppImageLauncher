@@ -26,7 +26,9 @@ extern "C" {
 #include <QRegularExpression>
 #include <QSettings>
 #include <QStandardPaths>
+#ifdef ENABLE_UPDATE_HELPER
 #include <appimage/update.h>
+#endif
 
 // local headers
 #include "shared.h"
