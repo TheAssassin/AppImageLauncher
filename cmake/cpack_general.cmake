@@ -1,6 +1,6 @@
 # general CPack options
 
-set(PROJECT_VERSION 1.0)
+set(PROJECT_VERSION ${APPIMAGELAUNCHER_VERSION})
 set(CPACK_GENERATOR "DEB")
 
 # make sure to only package APPIMAGELAUNCHER and APPIMAGELAUNCHERFS components
