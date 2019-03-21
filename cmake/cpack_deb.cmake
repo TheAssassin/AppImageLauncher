@@ -8,10 +8,10 @@ execute_process(
 )
 
 if(_lsb_release_output MATCHES bionic)
-    message(WARNING "platform is bionic, enabling compatibility mode for CPack Debian packaging")
+    message(STATUS "platform is bionic, enabling compatibility mode for CPack Debian packaging")
     set(_compatibility_level bionic)
 elseif(_lsb_release_output MATCHES cosmic)
-    message(WARNING "platform is cosmic, enabling compatibility mode for CPack Debian packaging")
+    message(STATUS "platform is cosmic, enabling compatibility mode for CPack Debian packaging")
     set(_compatibility_level cosmic)
 else()
     set(_compatibility_level "")
