@@ -220,6 +220,15 @@ bool updateDesktopDatabaseAndIconCaches() {
     return true;
 }
 
+std::shared_ptr<char> getOwnBinaryPath() {
+    auto path = std::shared_ptr<char>(realpath("/proc/self/exe", nullptr));
+
+    if (path == nullptr)
+        throw std::runtime_error("Could not detect path to own binary; something must be horribly broken");
+
+    return path;
+}
+
 bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveCollisions) {
     if (appimage_register_in_system(pathToAppImage.toStdString().c_str(), false) != 0) {
         QMessageBox::critical(
@@ -695,7 +704,8 @@ time_t getMTime(const QString& path) {
 };
 
 bool desktopFileHasBeenUpdatedSinceLastUpdate(const QString& pathToAppImage) {
-    const std::shared_ptr<char> ownBinaryPath(realpath("/proc/self/exe", nullptr));
+    const auto ownBinaryPath = getOwnBinaryPath();
+
     const auto desktopFilePath = appimage_registered_desktop_file_path(pathToAppImage.toStdString().c_str(), nullptr, false);
     
     auto ownBinaryMTime = getMTime(ownBinaryPath.get());
@@ -709,7 +719,7 @@ bool desktopFileHasBeenUpdatedSinceLastUpdate(const QString& pathToAppImage) {
 }
 
 bool fsDaemonHasBeenRestartedSinceLastUpdate() {
-    const std::shared_ptr<char> ownBinaryPath(realpath("/proc/self/exe", nullptr));
+    const auto ownBinaryPath = getOwnBinaryPath();
 
     auto ownBinaryMTime = getMTime(ownBinaryPath.get());
 
