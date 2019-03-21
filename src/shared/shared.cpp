@@ -451,6 +451,21 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
     }
 #endif
 
+    // PRIVATE_LIBDIR will be a relative path most likely
+    // therefore, we need to detect the install prefix based on our own binary path, and then calculate the path to
+    // the helper tools based on that
+    const QString ownBinaryDirPath = QFileInfo(getOwnBinaryPath().get()).dir().absolutePath();
+    const QString installPrefixPath = QFileInfo(ownBinaryDirPath).dir().absolutePath();
+    QString privateLibDirPath = installPrefixPath + "/" + PRIVATE_LIBDIR;
+
+    // the following lines make things work during development: here, the build dir path is inserted instead, which
+    // allows for testing with the latest changes
+    if (!QDir(privateLibDirPath).exists()) {
+        privateLibDirPath = ownBinaryDirPath;
+    }
+
+    std::cout << privateLibDirPath.toStdString() << std::endl;
+
     // add Remove action
     {
         const auto removeSectionName = "Desktop Action Remove";
@@ -458,7 +473,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
         g_key_file_set_string(desktopFile.get(), removeSectionName, "Name", "Remove AppImage from system");
 
         std::ostringstream removeExecPath;
-        removeExecPath << PRIVATE_LIBDIR << "/remove" << " " << pathToAppImage.toStdString();
+        removeExecPath << privateLibDirPath.toStdString() << "/remove" << " " << pathToAppImage.toStdString();
         g_key_file_set_string(desktopFile.get(), removeSectionName, "Exec", removeExecPath.str().c_str());
 
         // install translations
@@ -479,7 +494,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
             g_key_file_set_string(desktopFile.get(), updateSectionName, "Name", "Update AppImage");
 
             std::ostringstream updateExecPath;
-            updateExecPath << PRIVATE_LIBDIR << "/update" << " " << pathToAppImage.toStdString();
+            updateExecPath << privateLibDirPath.toStdString() << "/appimagelauncher/update" << " " << pathToAppImage.toStdString();
             g_key_file_set_string(desktopFile.get(), updateSectionName, "Exec", updateExecPath.str().c_str());
 
             // install translations
