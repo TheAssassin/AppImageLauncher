@@ -464,8 +464,6 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
         privateLibDirPath = ownBinaryDirPath;
     }
 
-    std::cout << privateLibDirPath.toStdString() << std::endl;
-
     // add Remove action
     {
         const auto removeSectionName = "Desktop Action Remove";
