@@ -473,7 +473,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
         g_key_file_set_string(desktopFile.get(), removeSectionName, "Name", "Remove AppImage from system");
 
         std::ostringstream removeExecPath;
-        removeExecPath << privateLibDirPath.toStdString() << "/remove" << " " << pathToAppImage.toStdString();
+        removeExecPath << privateLibDirPath.toStdString() << "/remove" << " \"" << pathToAppImage.toStdString() << "\"";
         g_key_file_set_string(desktopFile.get(), removeSectionName, "Exec", removeExecPath.str().c_str());
 
         // install translations
@@ -494,7 +494,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
             g_key_file_set_string(desktopFile.get(), updateSectionName, "Name", "Update AppImage");
 
             std::ostringstream updateExecPath;
-            updateExecPath << privateLibDirPath.toStdString() << "/appimagelauncher/update" << " " << pathToAppImage.toStdString();
+            updateExecPath << privateLibDirPath.toStdString() << "/update" << " \"" << pathToAppImage.toStdString() << "\"";;
             g_key_file_set_string(desktopFile.get(), updateSectionName, "Exec", updateExecPath.str().c_str());
 
             // install translations
