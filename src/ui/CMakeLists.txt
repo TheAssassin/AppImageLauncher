@@ -1,5 +1,5 @@
 # main AppImageLauncher application
-add_executable(AppImageLauncher main.cpp ../cli/cli_main.cpp)
+add_executable(AppImageLauncher main.cpp)
 target_link_libraries(AppImageLauncher shared PkgConfig::glib libappimage shared)
 
 # set binary runtime rpath to make sure the libappimage.so built and installed by this project is going to be used
