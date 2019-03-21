@@ -13,19 +13,9 @@ install(
     DESTINATION ${CMAKE_INSTALL_DATADIR}/applications COMPONENT APPIMAGELAUNCHER
 )
 
-# empty directories aren't tracked by Git
-# therefore the directory needs to be created by CMake
-file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/l10n)
-
-install(
-    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/l10n
-    DESTINATION ${CMAKE_INSTALL_DATADIR}/appimagelauncher COMPONENT APPIMAGELAUNCHER
-)
-
-
 set(INSTALL_MAINTAINER_SCRIPTS OFF CACHE BOOL "")
 
-# install maintainer scripts for
+# install maintainer scripts that distro packagers might find useful
 if (INSTALL_MAINTAINER_SCRIPTS)
     message(STATUS "Installing maintainer scripts")
 
@@ -45,5 +35,23 @@ if (INSTALL_MAINTAINER_SCRIPTS)
     install(
         FILES ${install_maintainer_scripts_dir}/post-install ${install_maintainer_scripts_dir}/post-uninstall
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/appimagelauncher/maintainer-scripts
+    )
+endif()
+
+
+# install man page
+set(INSTALL_MAN_PAGE ON CACHE BOOL "")
+
+if(INSTALL_MAN_PAGE)
+    set(configured_man_page_path ${PROJECT_BINARY_DIR}/cmake/man/AppImageLauncher.1)
+
+    configure_file(
+        ${PROJECT_SOURCE_DIR}/resources/AppImageLauncher.1.in
+        ${configured_man_page_path}
+    )
+
+    install(
+        FILES ${configured_man_page_path}
+        DESTINATION share/man/man1 COMPONENT APPIMAGELAUNCHER
     )
 endif()

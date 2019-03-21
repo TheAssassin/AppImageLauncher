@@ -10,11 +10,14 @@ execute_process(
 if(_lsb_release_output MATCHES bionic)
     message(WARNING "platform is bionic, enabling compatibility mode for CPack Debian packaging")
     set(_compatibility_level bionic)
+elseif(_lsb_release_output MATCHES cosmic)
+    message(WARNING "platform is cosmic, enabling compatibility mode for CPack Debian packaging")
+    set(_compatibility_level cosmic)
 else()
     set(_compatibility_level "")
 endif()
 
-set(CPACK_DEBIAN_COMPATIBILITY_LEVEL ${_compatibility_level} CACHE STRING "Available values: bionic (Ubuntu 18.04)")
+set(CPACK_DEBIAN_COMPATIBILITY_LEVEL ${_compatibility_level} CACHE STRING "Available values: bionic (Ubuntu 18.04 LTS), cosmic (Ubuntu 18.10)")
 
 unset(_lsb_release_output)
 unset(_compatibility_level)
@@ -49,8 +52,8 @@ else()
     set(CPACK_DEBIAN_PACKAGE_RELEASE "local~${CPACK_DEBIAN_PACKAGE_RELEASE}")
 endif()
 
-if(CPACK_DEBIAN_COMPATIBILITY_LEVEL STREQUAL "bionic")
-    set(CPACK_DEBIAN_PACKAGE_RELEASE "${CPACK_DEBIAN_PACKAGE_RELEASE}+bionic")
+if(CPACK_DEBIAN_COMPATIBILITY_LEVEL)
+    set(CPACK_DEBIAN_PACKAGE_RELEASE "${CPACK_DEBIAN_PACKAGE_RELEASE}+${CPACK_DEBIAN_COMPATIBILITY_LEVEL}")
 endif()
 
 # bash is required to run install hooks
@@ -62,7 +65,7 @@ set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_NAME "appimagelauncher")
 # TODO: packagers watch out: you should set this to depend on a libappimage package, and avoid installing the library
 # to a custom location in install.cmake
 
-if(CPACK_DEBIAN_COMPATIBILITY_LEVEL STREQUAL "bionic")
+if(CPACK_DEBIAN_COMPATIBILITY_LEVEL STREQUAL "bionic" OR CPACK_DEBIAN_COMPATIBILITY_LEVEL STREQUAL "cosmic")
     set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_DEPENDS "libqt5widgets5 (>= 5.2.1), libqt5gui5 (>= 5.2.1), libqt5core5a (>= 5.2.1), binfmt-support (>= 2.0), libcurl4")
 else()
     set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_DEPENDS "libqt5widgets5 (>= 5.2.1), libqt5gui5 (>= 5.2.1), libqt5core5a (>= 5.2.1), binfmt-support (>= 2.0), libcurl3")

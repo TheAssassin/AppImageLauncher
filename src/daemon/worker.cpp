@@ -147,7 +147,7 @@ void Worker::executeDeferredOperations() {
 
     // while unlocking would be possible before the cleanup, this allows for a more consistent console output
     d->mutex.unlock();
-};
+}
 
 void Worker::scheduleForIntegration(const QString& path) {
     d->mutex.lock();

@@ -1,6 +1,6 @@
 # lupdate must be installed and available
-find_program(LUPDATE lupdate)
-find_program(LRELEASE lrelease)
+check_program(NAME lupdate)
+check_program(NAME lrelease)
 
 # create target calling custom commands
 add_custom_target(i18n)
@@ -49,10 +49,12 @@ endfunction()
 
 file(GLOB TS_FILES *.ts)
 
+set(target_dir ${CMAKE_CURRENT_BINARY_DIR}/generated/l10n)
+
 foreach(TS_FILE IN LISTS TS_FILES)
     get_filename_component(TS_FILENAME ${TS_FILE} NAME)
     string(REPLACE .ts .qm QM_FILENAME ${TS_FILENAME})
-    ail_generate_qm(${TS_FILENAME} ../resources/l10n/${QM_FILENAME})
+    ail_generate_qm(${TS_FILENAME} ${target_dir}/${QM_FILENAME})
 endforeach()
 
 # deploy JSON files
@@ -62,8 +64,18 @@ foreach(JSON_FILE IN LISTS JSON_FILES)
     get_filename_component(JSON_FILENAME ${JSON_FILE} NAME)
     add_custom_command(
         TARGET l10n POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy ${JSON_FILENAME} ../resources/l10n/${JSON_FILENAME}
+        COMMAND ${CMAKE_COMMAND} -E copy ${JSON_FILENAME} ${target_dir}/${JSON_FILENAME}
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         MAIN_DEPENDENCY ${JSON_FILE}
     )
 endforeach()
+
+
+# empty directories aren't tracked by Git
+# therefore the directory needs to be created by CMake
+file(MAKE_DIRECTORY ${target_dir})
+
+install(
+    DIRECTORY ${target_dir}
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/appimagelauncher COMPONENT APPIMAGELAUNCHER
+)

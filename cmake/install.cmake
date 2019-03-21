@@ -1,20 +1,24 @@
 # define private libraries install destionation
-if(IS_ABSOLUTE ${CMAKE_INSTALL_LIBDIR})
+if(NOT IS_ABSOLUTE ${CMAKE_INSTALL_LIBDIR})
     set(_libdir ${CMAKE_INSTALL_LIBDIR})
 else()
-    set(_libdir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
+    file(RELATIVE_PATH _libdir ${CMAKE_INSTALL_LIBDIR} ${CMAKE_INSTALL_PREFIX})
 endif()
 
 set(_private_libdir ${_libdir}/appimagelauncher)
 
 # calculate relative path from binary install destination to private library install dir
-if(IS_ABSOLUTE ${CMAKE_INSTALL_BINDIR})
+if(NOT IS_ABSOLUTE ${CMAKE_INSTALL_BINDIR})
     set(_bindir ${CMAKE_INSTALL_BINDIR})
 else()
-    set(_bindir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR})
+    file(RELATIVE_PATH _bindir ${CMAKE_INSTALL_BINDIR} ${CMAKE_INSTALL_PREFIX})
+    #set(_bindir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR})
 endif()
 
-file(RELATIVE_PATH _rpath ${_bindir} ${_private_libdir})
+set(_abs_bindir ${CMAKE_INSTALL_PREFIX}/${_bindir})
+set(_abs_private_libdir ${CMAKE_INSTALL_PREFIX}/${_private_libdir})
+
+file(RELATIVE_PATH _rpath ${_abs_bindir} ${_abs_private_libdir})
 set(_rpath "\$ORIGIN/${_rpath}")
 
 
@@ -24,13 +28,21 @@ set(_rpath "\$ORIGIN/${_rpath}")
 file(GLOB libappimage_files ${PROJECT_BINARY_DIR}/lib/libappimage/src/libappimage/libappimage.so*)
 file(GLOB libappimageupdate_files ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/src/libappimageupdate.so*)
 file(GLOB libappimageupdate-qt_files ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/src/qt-ui/libappimageupdate-qt.so*)
-install(
-    FILES
-    ${libappimage_files}
-    ${libappimageupdate_files}
-    ${libappimageupdate-qt_files}
-    DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
-)
+message(STATUS  ${PROJECT_BINARY_DIR}/lib/libappimage/src/libappimage/libappimage.so*)
+foreach(i libappimage libappimageupdate libappimageupdate-qt)
+    # prevent unnecessary messages
+    if(NOT i STREQUAL libappimage OR NOT USE_SYSTEM_LIBAPPIMAGE)
+        if(NOT ${i}_files)
+            message(WARNING "Could not find ${i} library files, cannot bundle; if you want to bundle the files, please re-run cmake before calling make install")
+        else()
+            install(
+                FILES
+                ${${i}_files}
+                DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
+            )
+        endif()
+    endif()
+endforeach()
 
 # TODO: find alternative to the following "workaround" (a pretty dirty hack, actually...)
 # bundle update-binfmts as a fallback for distros which don't have it installed

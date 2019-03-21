@@ -33,7 +33,7 @@ extern "C" {
 #include "translationmanager.h"
 
 // Runs an AppImage. Returns suitable exit code for main application.
-int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
+int runAppImage(const QString& pathToAppImage, unsigned long argc, char** argv) {
     // needs to be converted to std::string to be able to use c_str()
     // when using QString and then .toStdString().c_str(), the std::string instance will be an rvalue, and the
     // pointer returned by c_str() will be invalid
@@ -42,11 +42,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 
     auto type = appimage_get_type(fullPathToAppImage.toStdString().c_str(), false);
     if (type < 1 || type > 3) {
-        QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("AppImageLauncher does not support type %1 AppImages at the moment.").arg(type)
-        );
+        displayError(QObject::tr("AppImageLauncher does not support type %1 AppImages at the moment.").arg(type));
         return 1;
     }
 
@@ -54,11 +50,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     // not strictly necessary for AppImageLauncherFS, but if AppImageLauncher is going to be removed, the user will
     // be happy the registerFile is executable already
     if (!makeExecutable(fullPathToAppImage)) {
-        QMessageBox::critical(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Could not make AppImage executable: %1").arg(fullPathToAppImage)
-        );
+        displayError(QObject::tr("Could not make AppImage executable: %1").arg(fullPathToAppImage));
         return 1;
     }
 
@@ -66,11 +58,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
 //    if (!fsDaemonHasBeenRestartedSinceLastUpdate()) {
 //        auto rv = system("systemctl --user restart appimagelauncherfs 2>&1 1>/dev/null");
 //        if (rv != 0) {
-//            QMessageBox::critical(
-//                nullptr,
-//                QObject::tr("Error"),
-//                QObject::tr("Failed to register AppImage in AppImageLauncherFS: error while trying to restart appimagelauncherfs.service after update")
-//            );
+//            displayError(QObject::tr("Failed to register AppImage in AppImageLauncherFS: error while trying to restart appimagelauncherfs.service after update"));
 //            return 1;
 //        }
 //    }
@@ -80,11 +68,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     rv += system("systemctl --user start appimagelauncherfs 2>&1 1>/dev/null");
 
     if (rv != 0) {
-        QMessageBox::critical(
-            nullptr,
-            QObject::tr("Error"),
-            QObject::tr("Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service")
-        );
+        displayError(QObject::tr("Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service"));
         return 1;
     }
 
@@ -162,7 +146,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
             errorMessage = QObject::tr("Failed to register AppImage in AppImageLauncherFS: unknown failure");
         }
 
-        QMessageBox::critical(nullptr, QObject::tr("Error"), errorMessage);
+        displayError(errorMessage);
 
         return 1;
     }
@@ -176,7 +160,7 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     args.push_back(argv0Buffer.data());
 
     // copy arguments
-    for (int i = 1; i < argc; i++) {
+    for (unsigned long i = 1; i < argc; i++) {
         args.push_back(argv[i]);
     }
 
@@ -186,49 +170,15 @@ int runAppImage(const QString& pathToAppImage, int argc, char** argv) {
     execv(pathToVirtualAppImage.toStdString().c_str(), args.data());
 
     const auto& error = errno;
-    std::cout << QObject::tr("execv() failed: %1").arg(strerror(error)).toStdString() << std::endl;
-}
-
-// reliable way to check if the current session is graphical or not
-// TODO: check if this works with Wayland
-bool isHeadless() {
-    static int isHeadless = -1;
-
-    if (isHeadless < 0) {
-        QProcess proc;
-        proc.setProgram("xhost");
-        proc.setStandardOutputFile(QProcess::nullDevice());
-        proc.setStandardErrorFile(QProcess::nullDevice());
-
-        proc.start();
-        proc.waitForFinished();
-
-        switch (proc.exitCode()) {
-            case 0:
-            case 1:
-                isHeadless = proc.exitCode();
-                break;
-            default:
-                throw std::runtime_error("Headless detection failed: unexpected exit code from xhost");
-        }
-    }
-
-    return isHeadless != 0;
-}
-
-// little convenience method to display errors
-// avoids code duplication, and works for both graphical and non-graphical environments
-void displayError(const QString& message) {
-    if (isHeadless())
-        std::cout << "Error: " << message.toStdString() << std::endl;
-    else
-        QMessageBox::critical(nullptr, QObject::tr("Error"), message);
+    std::cerr << QObject::tr("execv() failed: %1").arg(strerror(error)).toStdString() << std::endl;
+    return 1;
 }
 
 // factory method to build and return a suitable Qt application instance
 // it remembers a previously created instance, and will return it if available
-// otherwise a new one is created and configured
-QCoreApplication* getApp(int argc, char** argv) {
+// otherwise a new one is created and configure
+// caution: cannot use <widget>.exec() any more, instead call <widget>.show() and use QApplication::exec()
+QCoreApplication* getApp(char** argv) {
     if (QCoreApplication::instance() != nullptr)
         return QCoreApplication::instance();
 
@@ -244,16 +194,21 @@ QCoreApplication* getApp(int argc, char** argv) {
 
     QCoreApplication* app;
 
+    // need to pass rvalue, hence defining a variable
+    int* fakeArgc = new int{1};
+
+    static char** fakeArgv = new char*{strdup(argv[0])};
+
     if (isHeadless()) {
-        app = new QCoreApplication(argc, argv);
+        app = new QCoreApplication(*fakeArgc, fakeArgv);
     } else {
-        auto uiApp = new QApplication(argc, argv);
-        uiApp->setApplicationDisplayName("AppImageLauncher");
+        auto uiApp = new QApplication(*fakeArgc, fakeArgv);
+        QApplication::setApplicationDisplayName("AppImageLauncher");
         app = uiApp;
     }
 
-    app->setApplicationName("AppImageLauncher");
-    app->setApplicationVersion(QString::fromStdString(version));
+    QCoreApplication::setApplicationName("AppImageLauncher");
+    QCoreApplication::setApplicationVersion(QString::fromStdString(version));
 
     return app;
 }
@@ -261,7 +216,7 @@ QCoreApplication* getApp(int argc, char** argv) {
 int main(int argc, char** argv) {
     // create a suitable application object (either graphical (QApplication) or headless (QCoreApplication))
     // Use a fake argc value to avoid QApplication from modifying the arguments
-    QCoreApplication* app = getApp(1, argv);
+    QCoreApplication* app = getApp(argv);
 
     // install translations
     TranslationManager translationManager(*app);
@@ -336,8 +291,13 @@ int main(int argc, char** argv) {
     auto pathToAppImage = QDir(QString(argv[1])).absolutePath();
 
     if (!QFile(pathToAppImage).exists()) {
-        std::cout << QObject::tr("Error: no such file or directory: %1").arg(pathToAppImage).toStdString() << std::endl;
+        displayError(QObject::tr("Error: no such file or directory: %1").arg(pathToAppImage));
         return 1;
+    }
+
+    // if the users wishes to disable AppImageLauncher, we just run the AppImage as-ish
+    if (getenv("APPIMAGELAUNCHER_DISABLE") != nullptr) {
+        return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
     }
 
     const auto type = appimage_get_type(pathToAppImage.toStdString().c_str(), false);
@@ -442,8 +402,8 @@ int main(int argc, char** argv) {
         };
 
         if (!isInDirectory(pathToAppImage, integratedAppImagesDestination().path())) {
-            auto rv = QMessageBox::warning(
-                nullptr,
+            auto* messageBox = new QMessageBox(
+                QMessageBox::Warning,
                 QMessageBox::tr("Warning"),
                 QMessageBox::tr("AppImage %1 has already been integrated, but it is not in the current integration "
                                 "destination directory."
@@ -459,15 +419,16 @@ int main(int argc, char** argv) {
                 QMessageBox::Yes | QMessageBox::No
             );
 
+            messageBox->setDefaultButton(QMessageBox::Yes);
+            messageBox->show();
+
+             QApplication::exec();
+
             // if the user selects No, then continue as if the AppImage would not be in this directory
-            if (rv == QMessageBox::Yes) {
+            if (messageBox->clickedButton() == messageBox->button(QMessageBox::Yes)) {
                 // unregister AppImage, move, and re-integrate
                 if (appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false) != 0) {
-                    QMessageBox::critical(
-                        nullptr,
-                        QMessageBox::tr("Error"),
-                        QMessageBox::tr("Failed to unregister AppImage before re-integrating it")
-                    );
+                    displayError(QMessageBox::tr("Failed to unregister AppImage before re-integrating it"));
                     return 1;
                 }
 
@@ -497,25 +458,29 @@ int main(int argc, char** argv) {
     messageStrm << QObject::tr("%1 has not been integrated into your system.").arg(pathToAppImage).toStdString() << "\n\n"
                 << QObject::tr(explanation.c_str()).toStdString();
 
-    QMessageBox messageBox(
+    auto* messageBox = new QMessageBox(
         QMessageBox::Question,
         QObject::tr("Desktop Integration"),
         QString::fromStdString(messageStrm.str())
     );
 
-    auto* okButton = messageBox.addButton(QObject::tr("Integrate and run"), QMessageBox::AcceptRole);
-    auto* runOnceButton = messageBox.addButton(QObject::tr("Run once"), QMessageBox::ApplyRole);
+    auto* okButton = messageBox->addButton(QObject::tr("Integrate and run"), QMessageBox::AcceptRole);
+    auto* runOnceButton = messageBox->addButton(QObject::tr("Run once"), QMessageBox::ApplyRole);
 
     // *whyever* Qt somehow needs a button with "RejectRole" or the X button won't close the current window...
-    auto* cancelButton = messageBox.addButton(QObject::tr("Cancel"), QMessageBox::RejectRole);
+    auto* cancelButton = messageBox->addButton(QObject::tr("Cancel"), QMessageBox::RejectRole);
     // ... but it is fine to hide that button after creating it, so it's not displayed
     cancelButton->hide();
 
-    messageBox.setDefaultButton(QMessageBox::Ok);
+    messageBox->setDefaultButton(QMessageBox::Ok);
 
-    messageBox.exec();
+    // cannot use messageBox.exec(), will produce SEGFAULTS as QCoreApplications can't show message boxes
+    messageBox->show();
 
-    const auto* clickedButton = messageBox.clickedButton();
+    // don't need to cast around, exec() is a static method anyway, and QApplication is a singleton
+    QApplication::exec();
+
+    const auto* clickedButton = messageBox->clickedButton();
 
     if (clickedButton == okButton) {
         return integrateAndRunAppImage();

@@ -2,7 +2,8 @@ language: cpp
 compiler: gcc
 sudo: required
 dist: trusty
-cache: ccache
+# temporarily disabled due to performance issues on Travis CI
+#cache: ccache
 
 notifications:
   email: false
@@ -21,6 +22,16 @@ matrix:
         - docker
       install:
       script: bash -ex travis/travis-bionic.sh
+    - env: COSMIC=1 ARCH=x86_64
+      services:
+        - docker
+      install:
+      script: bash -ex travis/travis-cosmic.sh
+    - env: COSMIC=1 ARCH=i386
+      services:
+        - docker
+      install:
+      script: bash -ex travis/travis-cosmic.sh
     - env: BIONIC= ARCH=x86_64
       addons:
         apt:
@@ -85,8 +96,8 @@ script:
 after_success:
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
   - if [ "$TRAVIS_BRANCH" != "master" ] && [ "$TRAVIS_TAG" == "" ]; then export TRAVIS_EVENT_TYPE=pull_request; fi
-  - if [ "$BIONIC" == "" ]; then bash upload.sh appimagelauncher*.{deb,rpm}* appimagelauncher*.tar*; fi
-  - if [ "$BIONIC" != "" ]; then bash upload.sh appimagelauncher*.deb*; fi
+  - if [ "$BIONIC" == "" ] && [ "$COSMIC" == "" ]; then bash upload.sh appimagelauncher*.{deb,rpm}* appimagelauncher*.tar*; fi
+  - if [ "$BIONIC" != "" ] || [ "$COSMIC" != "" ]; then bash upload.sh appimagelauncher*.deb*; fi
 
 branches:
   except:

@@ -14,20 +14,12 @@
 
 class TrashBin::PrivateData {
     public:
-        QDir dir;
+        const QDir dir;
 
     public:
-        PrivateData() {
-            QDir homeDir(getenv("HOME"));
-
-            // make sure Applications dir exists
-            // this shouldn't be necessary, but it doesn't hurt either
-            homeDir.mkdir("Applications");
-
-            // also make sure trash directory exists
-            QDir(homeDir.path() + "/Applications").mkdir(".trash");
-
-            dir = QDir(homeDir.path() + "/Applications/.trash");
+        PrivateData() : dir(integratedAppImagesDestination().path() + "/.trash") {
+            // make sure trash directory exists
+            QDir(integratedAppImagesDestination().path()).mkdir(".trash");
         }
 
         bool canBeCleanedUp(const QString& path) {

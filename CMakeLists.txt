@@ -3,13 +3,17 @@ cmake_minimum_required(VERSION 3.2)
 project(AppImageLauncher)
 
 set(V_MAJOR 1)
-set(V_MINOR 0)
-set(V_PATCH 3)
+set(V_MINOR 1)
+set(V_PATCH 1)
 set(V_SUFFIX "")
 
 set(APPIMAGELAUNCHER_VERSION ${V_MAJOR}.${V_MINOR}.${V_PATCH}${V_SUFFIX})
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/modules)
+
+include(cmake/scripts.cmake)
+
+include(cmake/reproducible_builds.cmake)
 
 # support for ccache
 # call CMake with -DUSE_CCACHE=ON to make use of it
@@ -43,8 +47,8 @@ if(NOT GIT STREQUAL "GIT-NOTFOUND")
         RESULT_VARIABLE GIT_RESULT
     )
 
-    if(GIT_RESULT AND GIT_RESULT EQUAL 0)
-        message("Storing git commit ID in cache file")
+    if(GIT_RESULT EQUAL 0)
+        message(STATUS "Storing git commit ID in cache file")
         file(WRITE "${GIT_COMMIT_CACHE_FILE}" "${APPIMAGELAUNCHER_GIT_COMMIT}")
     endif()
 endif()

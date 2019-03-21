@@ -4,14 +4,12 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+359"/>
-        <location line="+15"/>
-        <location filename="../src/ui/main.cpp" line="+406"/>
+        <location filename="../src/ui/main.cpp" line="+407"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="+1"/>
+        <location line="+1"/>
         <source>AppImage %1 has already been integrated, but it is not in the current integration destination directory.
 
 Do you want to move it into the new destination?
@@ -28,17 +26,16 @@ Elegir No ejecutará AppImage una vez, y dejará la AppImage en su directorio ac
 </translation>
     </message>
     <message>
-        <location line="+20"/>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation type="vanished">Error</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+23"/>
         <source>Failed to unregister AppImage before re-integrating it</source>
         <translation>Error al eliminar el registro de AppImage antes de volver a integrarlo</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="-14"/>
+        <location filename="../src/shared/shared.cpp" line="+411"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -49,7 +46,7 @@ No se pudo abrir el archivo para leerlo:
 %1</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+11"/>
         <source>Could not parse desktop file translations:
 Invalid syntax:
 
@@ -59,90 +56,76 @@ Sintaxis inválida:
 
 %1</translation>
     </message>
+    <message>
+        <source>AppImage has already been integrated, but it is not in the current integration destination directory.
+
+Do you want to move it into the new destination?
+Choosing No will run the AppImage once, and leave the AppImage in its current directory.</source>
+        <translation type="vanished">Este AppImage ya fue integrado pero no se encuentra ubicado en el &quot;directorio de aplicaciones&quot;. 
+Desea mover el archivo a dicho directorio?
+
+Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archivo permanecerá en su ubicación actual.</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location line="-172"/>
-        <location line="+12"/>
-        <location line="+10"/>
-        <location line="+25"/>
-        <location line="+242"/>
-        <location line="+12"/>
-        <location filename="../src/ui/main.cpp" line="-381"/>
-        <location line="+10"/>
-        <location line="+18"/>
-        <location line="+12"/>
-        <location line="+14"/>
-        <location line="+11"/>
-        <location line="+10"/>
-        <location line="+8"/>
-        <location line="+57"/>
-        <location line="+71"/>
-        <location line="+11"/>
-        <location line="+48"/>
-        <location filename="../src/ui/remove_main.cpp" line="+92"/>
-        <location line="+12"/>
+        <location line="-255"/>
+        <location line="+386"/>
+        <location filename="../src/ui/remove_main.cpp" line="+104"/>
+        <location line="+13"/>
         <location line="+12"/>
         <location filename="../src/ui/update_main.cpp" line="+134"/>
-        <location line="+43"/>
+        <location line="+40"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-269"/>
+        <location filename="../src/ui/main.cpp" line="-386"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher aun no soporta AppImages tipo %1.</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+8"/>
         <source>Could not make AppImage executable: %1</source>
         <translation>No se pudo hacer que AppImage sea ejecutable: %1</translation>
     </message>
     <message>
-        <location line="+18"/>
         <source>Failed to open AppImage for reading: %1</source>
-        <translation>Error al abrir AppImage para leer: %1</translation>
+        <translation type="vanished">Error al abrir AppImage para leer: %1</translation>
     </message>
     <message>
-        <location line="+12"/>
         <source>Failed to create temporary directory</source>
-        <translation>Error al crear el directorio temporal</translation>
+        <translation type="vanished">Error al crear el directorio temporal</translation>
     </message>
     <message>
-        <location line="+14"/>
         <source>Failed to create temporary copy of type 1 AppImage</source>
-        <translation>Error al crear una copia temporal del tipo 1 AppImage</translation>
+        <translation type="vanished">Error al crear una copia temporal del tipo 1 AppImage</translation>
     </message>
     <message>
-        <location line="+11"/>
         <source>Failed to open temporary AppImage copy for writing</source>
-        <translation>Error al abrir la copia temporal de AppImage para escribir</translation>
+        <translation type="vanished">Error al abrir la copia temporal de AppImage para escribir</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <location line="+8"/>
         <source>Failed to remove magic bytes from temporary AppImage copy</source>
-        <translation>Error al eliminar los bytes mágicos de la copia temporal de AppImage</translation>
+        <translation type="vanished">Error al eliminar los bytes mágicos de la copia temporal de AppImage</translation>
     </message>
     <message>
-        <location line="+31"/>
         <source>execv() failed: %1</source>
         <comment>error message</comment>
-        <translation>Execv () falló: %1</translation>
+        <translation type="vanished">Execv () falló: %1</translation>
     </message>
     <message>
-        <location line="+26"/>
         <source>runtime not found: no such file or directory: %1</source>
-        <translation>tiempo de ejecución no encontrado: no hay tal archivo o directorio: %1</translation>
+        <translation type="vanished">tiempo de ejecución no encontrado: no hay tal archivo o directorio: %1</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+120"/>
         <source>execv() failed: %1</source>
         <translation>Execv () falló: %1</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+66"/>
         <source>Usage: %1 [options] &lt;path&gt;</source>
         <translation>Uso: %1 [opciones] &lt;ruta&gt;</translation>
     </message>
@@ -177,37 +160,56 @@ Sintaxis inválida:
         <translation>Ruta hacia AppImage (Obligatorio)</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="-21"/>
         <source>Failed to clean up old desktop files</source>
         <translation>Error al limpiar los viejos archivos de escritorio</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="-87"/>
+        <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Failed to register AppImage in AppImageLauncherFS: could not open map file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Failed to register AppImage in AppImageLauncherFS: unknown failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+88"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
         <translation>Fallo al limpiar la papelera de AppImage: %1</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+48"/>
         <source>Unknown AppImageLauncher option: %1</source>
         <translation>Opción de AppImageLauncher desconocida: %1</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/ui/remove_main.cpp" line="-53"/>
-        <location filename="../src/ui/update_main.cpp" line="-116"/>
+        <location filename="../src/ui/remove_main.cpp" line="-65"/>
+        <location filename="../src/ui/update_main.cpp" line="-113"/>
         <source>Error: no such file or directory: %1</source>
         <translation>Error: no hay tal archivo o directorio: %1</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <location filename="../src/ui/remove_main.cpp" line="+9"/>
+        <location line="+12"/>
         <location filename="../src/ui/update_main.cpp" line="+7"/>
         <source>Not an AppImage: %1</source>
         <translation>No es una AppImage: %1</translation>
     </message>
     <message>
-        <location line="+98"/>
+        <location line="+111"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
         <translation>Las AppImages integradas en el sistema son guardadas en: %1</translation>
@@ -217,7 +219,7 @@ Sintaxis inválida:
         <translation type="vanished">El directorio en el que están almacenadas las AppImages integradas actualmente está configurado en: %1</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+28"/>
         <source>Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</source>
         <translation>Integrarlo moverá el AppImage a una ubicación predefinida, y lo incluirá en su iniciador de aplicaciones.</translation>
     </message>
@@ -257,7 +259,7 @@ Sintaxis inválida:
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../src/ui/remove_main.cpp" line="-36"/>
+        <location filename="../src/ui/remove_main.cpp" line="-27"/>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
         <translation>Elimina AppImages después de la integración del escritorio, para ser utilizado por las distribuciones de Linux</translation>
     </message>
@@ -279,26 +281,39 @@ Sintaxis inválida:
     </message>
     <message>
         <location line="+18"/>
+        <location line="+11"/>
         <source>AppImage remove helper error</source>
         <translation>AppImage eliminar error de ayuda</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="-10"/>
+        <source>Not an AppImage:
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Refusing to work on non-integrated AppImage:
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Please confirm</source>
-        <translation>Por favor confirmar</translation>
+        <translation type="vanished">Por favor confirmar</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Are you sure you want to remove this AppImage?</source>
-        <translation>Seguro que desea eliminar esta AppImage?</translation>
+        <translation type="vanished">Seguro que desea eliminar esta AppImage?</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+19"/>
         <source>Failed to unregister AppImage: %1</source>
         <translation>Error al anular el registro de AppImage: %1</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>Failed to move AppImage into trash bin directory</source>
         <translation>No se pudo mover la AppImage a la papelera</translation>
     </message>
@@ -307,7 +322,7 @@ Sintaxis inválida:
         <translation type="vanished">Error al eliminar AppImage: %1</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="-35"/>
+        <location filename="../src/shared/shared.cpp" line="-27"/>
         <source>AppImage with same filename has already been integrated.</source>
         <translation>AppImage con el mismo nombre de archivo ha sido actualmente integrado.</translation>
     </message>
@@ -322,8 +337,8 @@ Sintaxis inválida:
         <translation>Elegir No ejecutará AppImage una vez y dejará el sistema en su estado actual.</translation>
     </message>
     <message>
-        <location line="-207"/>
-        <location line="+211"/>
+        <location line="-358"/>
+        <location line="+362"/>
         <location filename="../src/ui/update_main.cpp" line="+12"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
@@ -333,41 +348,47 @@ Sintaxis inválida:
         <translation type="vanished">Error al mover AppImage a la ubicación de destino</translation>
     </message>
     <message>
-        <location line="-272"/>
+        <location line="-262"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Error al registrar AppImage en el sistema a través de libappimage</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+8"/>
         <source>Failed to find integrated desktop file</source>
         <translation>Error al encontrar el archivo de escritorio integrado</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+6"/>
         <source>Couldn&apos;t find integrated AppImage&apos;s desktop file</source>
         <translation>No se pudo encontrar el archivo de escritorio de AppImage integrado</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+20"/>
         <source>Failed to load desktop file:</source>
         <translation>Error al cargar el archivo de escritorio:</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+12"/>
         <source>AppImage has invalid desktop file</source>
         <translation>AppImage tiene un archivo de escritorio no válido</translation>
     </message>
     <message>
-        <location line="+227"/>
+        <location line="+237"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Error al mover AppImage a la ubicación de destino.
 Intenta copiar AppImage en su lugar?</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+158"/>
+        <source>Failed to call stat() on path:
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Failed to copy AppImage to target location</source>
-        <translation>Error al copiar AppImage en la ubicación de destino</translation>
+        <translation type="vanished">Error al copiar AppImage en la ubicación de destino</translation>
     </message>
     <message>
         <location filename="../src/ui/update_main.cpp" line="-51"/>
@@ -441,7 +462,7 @@ Este AppImage no soporta actualizaciones. Por favor solicite al autor que incluy
         <translation>Eliminar AppImage anterior después de una actualización exitosa</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+22"/>
         <source>Failed to update AppImage:
 
 %1</source>
@@ -460,7 +481,7 @@ Este AppImage no soporta actualizaciones. Por favor solicite al autor que incluy
         <translation>Error al registrar AppImage actualizado en el sistema</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+14"/>
         <source>Failed to unregister old AppImage in system</source>
         <translation>Error al anular el registro de AppImage anterior en el sistema</translation>
     </message>
@@ -468,6 +489,38 @@ Este AppImage no soporta actualizaciones. Por favor solicite al autor que incluy
         <location line="+5"/>
         <source>Failed to remove old AppImage</source>
         <translation>Error al eliminar la antigua AppImage</translation>
+    </message>
+    <message>
+        <source>Failed to check for updates. Please check the command line output for details.</source>
+        <translation type="vanished">No se pudo comprobar la existencia de actualizaciones. Para más detalles consulte los mensajes en la linea de comandos .</translation>
+    </message>
+</context>
+<context>
+    <name>RemoveDialog</name>
+    <message>
+        <location filename="../src/ui/remove.ui" line="+14"/>
+        <source>Please confirm</source>
+        <translation type="unfinished">Por favor confirmar</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove this AppImage?&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uncheck to only remove the desktop integration, but leave the file on the system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Remove AppImage file from system</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
