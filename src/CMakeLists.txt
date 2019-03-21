@@ -47,3 +47,6 @@ add_subdirectory(ui)
 
 # FUSE filesystem AppImageLauncherFS
 add_subdirectory(fusefs)
+
+# CLI helper allowing other tools to utilize AppImageLauncher's code for e.g., integrating AppImages
+add_subdirectory(cli)
