@@ -1,11 +1,11 @@
 // library headers
 #include <QFileInfo>
-#include <QLoggingCategory>
 
 // local headers
 #include "IntegrateCommand.h"
 #include "exceptions.h"
 #include "shared.h"
+#include "logging.h"
 
 namespace appimagelauncher {
     namespace cli {
@@ -23,37 +23,37 @@ namespace appimagelauncher {
                 }
 
                 for (const auto& pathToAppImage : arguments) {
-                    qInfo() << "Processing" << pathToAppImage.toStdString().c_str();
+                    qout() << "Processing " << pathToAppImage << endl;
 
                     if (hasAlreadyBeenIntegrated(pathToAppImage)) {
                         if (desktopFileHasBeenUpdatedSinceLastUpdate(pathToAppImage)) {
-                            qInfo() << "AppImage has been integrated already and doesn't need to be re-integrated, skipping";
+                            qout() << "AppImage has been integrated already and doesn't need to be re-integrated, skipping" << endl;
                             continue;
                         }
 
-                        qInfo() << "AppImage has already been integrated, but needs to be reintegrated";
+                        qout() << "AppImage has already been integrated, but needs to be reintegrated" << endl;
                     }
 
                     auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
 
                     if (QFileInfo(pathToAppImage).absoluteFilePath() != QFileInfo(pathToIntegratedAppImage).absoluteFilePath()) {
-                        qInfo() << "Moving AppImage to integration directory";
+                        qout() << "Moving AppImage to integration directory" << endl;
 
                         if (!QFile(pathToIntegratedAppImage).remove()) {
-                            qCritical() << "Could not move AppImage into integration directory (error: failed to overwrite existing file)";
+                            qerr() << "Could not move AppImage into integration directory (error: failed to overwrite existing file)" << endl;
                             continue;
                         }
 
                         if (!QFile(pathToAppImage).rename(pathToIntegratedAppImage)) {
-                            qCritical() << "Cannot move AppImage to integration directory (permission problem?), attempting to copy instead";
+                            qerr() << "Cannot move AppImage to integration directory (permission problem?), attempting to copy instead" << endl;
 
                             if (!QFile(pathToAppImage).copy(pathToIntegratedAppImage)) {
-                                qCritical() << "Failed to copy AppImage, giving up";
+                                qerr() << "Failed to copy AppImage, giving up" << endl;
                                 continue;
                             }
                         }
                     } else {
-                        qInfo() << "AppImage already in integration directory";
+                        qout() << "AppImage already in integration directory" << endl;
                     }
 
                     installDesktopFileAndIcons(pathToAppImage);

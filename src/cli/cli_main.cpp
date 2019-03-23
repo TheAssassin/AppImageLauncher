@@ -1,11 +1,11 @@
 // library headers
 #include <QCoreApplication>
 #include <QCommandLineParser>
-#include <QLoggingCategory>
 
 // local headers
 #include "CommandFactory.h"
 #include "exceptions.h"
+#include "logging.h"
 
 using namespace appimagelauncher::cli;
 using namespace appimagelauncher::cli::commands;
@@ -24,10 +24,10 @@ int main(int argc, char** argv) {
     auto posArgs = parser.positionalArguments();
 
     if (posArgs.isEmpty()) {
-        qCritical() << parser.helpText().toStdString().c_str();
+        qerr() << parser.helpText().toStdString().c_str() << endl;
 
-        qCritical() << "Available commands:";
-        qCritical() << "  integrate   Integrate AppImages passed as commandline arguments";
+        qerr() << "Available commands:" << endl;
+        qerr() << "  integrate   Integrate AppImages passed as commandline arguments" << endl;
 
         return 2;
     }
@@ -39,13 +39,13 @@ int main(int argc, char** argv) {
         auto command = CommandFactory::getCommandByName(commandName);
         command->exec(posArgs);
     } catch (const CommandNotFoundError& e) {
-        qCritical() << e.what();
+        qerr() << e.what() << endl;
         return 1;
     } catch (const InvalidArgumentsError& e) {
-        qCritical() << "Invalid arguments: " << e.what();
+        qerr() << "Invalid arguments: " << e.what() << endl;
         return 3;
     } catch (const UsageError& e) {
-        qCritical() << "Usage error: " << e.what();
+        qerr() << "Usage error: " << e.what() << endl;
         return 3;
     }
 
