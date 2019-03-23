@@ -3,14 +3,7 @@ cmake_minimum_required(VERSION 3.2)
 project(AppImageLauncher)
 
 # versioning
-set(V_MAJOR 1)
-set(V_MINOR 1)
-set(V_PATCH 1)
-set(V_SUFFIX "")
-
 include(cmake/versioning.cmake)
-
-set(APPIMAGELAUNCHER_VERSION ${V_MAJOR}.${V_MINOR}.${V_PATCH}${V_SUFFIX})
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/modules)
 

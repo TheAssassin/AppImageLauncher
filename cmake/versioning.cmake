@@ -1,3 +1,10 @@
+set(V_MAJOR 1)
+set(V_MINOR 1)
+set(V_PATCH 1)
+set(V_SUFFIX "")
+
+set(APPIMAGELAUNCHER_VERSION ${V_MAJOR}.${V_MINOR}.${V_PATCH}${V_SUFFIX})
+
 # check whether git is available
 find_program(GIT git)
 set(GIT_COMMIT_CACHE_FILE "${PROJECT_SOURCE_DIR}/cmake/GIT_COMMIT")
@@ -44,8 +51,7 @@ endif()
 message(STATUS "Git commit: ${APPIMAGELAUNCHER_GIT_COMMIT}")
 mark_as_advanced(FORCE APPIMAGELAUNCHER_GIT_COMMIT)
 
-# set version and build number
-set(VERSION 1-alpha)
+# add build number based on Travis build number if possible
 if("$ENV{TRAVIS_BUILD_NUMBER}" STREQUAL "")
     set(APPIMAGELAUNCHER_BUILD_NUMBER "<local dev build>")
 else()
