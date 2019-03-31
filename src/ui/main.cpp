@@ -189,7 +189,7 @@ QCoreApplication* getApp(char** argv) {
         oss << "version " << APPIMAGELAUNCHER_VERSION << " "
             << "(git commit " << APPIMAGELAUNCHER_GIT_COMMIT << "), built on "
             << APPIMAGELAUNCHER_BUILD_DATE;
-        version = std::move(oss.str());
+        version = oss.str();
     }
 
     QCoreApplication* app;
@@ -204,6 +204,10 @@ QCoreApplication* getApp(char** argv) {
     } else {
         auto uiApp = new QApplication(*fakeArgc, fakeArgv);
         QApplication::setApplicationDisplayName("AppImageLauncher");
+
+        // this doesn't seem to have any effect... but it doesn't hurt either
+        uiApp->setWindowIcon(QIcon(":/AppImageLauncher.svg"));
+
         app = uiApp;
     }
 
@@ -419,6 +423,8 @@ int main(int argc, char** argv) {
                 QMessageBox::Yes | QMessageBox::No
             );
 
+            setWindowStyle(messageBox);
+
             messageBox->setDefaultButton(QMessageBox::Yes);
             messageBox->show();
 
@@ -473,6 +479,8 @@ int main(int argc, char** argv) {
     cancelButton->hide();
 
     messageBox->setDefaultButton(QMessageBox::Ok);
+
+    setWindowStyle(messageBox);
 
     // cannot use messageBox.exec(), will produce SEGFAULTS as QCoreApplications can't show message boxes
     messageBox->show();

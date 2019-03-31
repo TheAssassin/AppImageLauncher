@@ -13,6 +13,7 @@ extern "C" {
 
 // library includes
 #include <QDebug>
+#include <QIcon>
 #include <QtDBus>
 #include <QDirIterator>
 #include <QJsonDocument>
@@ -153,6 +154,13 @@ bool isHeadless() {
     return isHeadless;
 }
 
+void setWindowStyle(QWidget* object) {
+    if (object == nullptr)
+        throw std::runtime_error("Must not pass NULL to setWindowStyle");
+
+    object->setWindowIcon(QIcon(":/AppImageLauncher.svg"));
+}
+
 // avoids code duplication, and works for both graphical and non-graphical environments
 void displayMessageBox(const QString& title, const QString& message, const QMessageBox::Icon icon) {
     if (isHeadless()) {
@@ -160,6 +168,7 @@ void displayMessageBox(const QString& title, const QString& message, const QMess
     } else {
         // little complex, can't use QMessageBox::{critical,warning,...} for the same reason as in main()
         auto* mb = new QMessageBox(icon, title, message, QMessageBox::Ok, nullptr);
+        setWindowStyle(mb);
         mb->show();
         QApplication::exec();
     }
@@ -559,6 +568,8 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
                 QMessageBox::Yes | QMessageBox::No
             );
 
+            setWindowStyle(messageBox);
+
             messageBox->setDefaultButton(QMessageBox::No);
             messageBox->show();
 
@@ -579,6 +590,8 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
                             "Try to copy AppImage instead?"),
                 QMessageBox::Ok | QMessageBox::Cancel
             );
+
+            setWindowStyle(messageBox);
 
             messageBox->setDefaultButton(QMessageBox::Ok);
             messageBox->show();
