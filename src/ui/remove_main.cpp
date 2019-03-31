@@ -37,13 +37,13 @@ int main(int argc, char** argv) {
     QCommandLineParser parser;
     parser.setApplicationDescription(QObject::tr("Removes AppImages after desktop integration, for use by Linux distributions"));
     QApplication app(argc, argv);
-    app.setApplicationDisplayName(QObject::tr("AppImageLauncher remove", "remove helper app name"));
+    QApplication::setApplicationDisplayName(QObject::tr("AppImageLauncher remove", "remove helper app name"));
 
     std::ostringstream version;
     version << "version " << APPIMAGELAUNCHER_VERSION << " "
             << "(git commit " << APPIMAGELAUNCHER_GIT_COMMIT << "), built on "
             << APPIMAGELAUNCHER_BUILD_DATE;
-    app.setApplicationVersion(QString::fromStdString(version.str()));
+    QApplication::setApplicationVersion(QString::fromStdString(version.str()));
 
     // install translations
     TranslationManager translationManager(app);
