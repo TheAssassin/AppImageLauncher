@@ -30,6 +30,7 @@ int main(int argc, char** argv) {
 
     QApplication app(argc, argv);
     QApplication::setApplicationDisplayName(QObject::tr("AppImageLauncher update", "update helper app name"));
+    QApplication::setWindowIcon(QIcon(":/AppImageLauncher.svg"));
 
     std::ostringstream version;
     version << "version " << APPIMAGELAUNCHER_VERSION << " "

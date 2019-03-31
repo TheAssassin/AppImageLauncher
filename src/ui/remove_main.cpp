@@ -38,6 +38,7 @@ int main(int argc, char** argv) {
     parser.setApplicationDescription(QObject::tr("Removes AppImages after desktop integration, for use by Linux distributions"));
     QApplication app(argc, argv);
     QApplication::setApplicationDisplayName(QObject::tr("AppImageLauncher remove", "remove helper app name"));
+    QApplication::setWindowIcon(QIcon(":/AppImageLauncher.svg"));
 
     std::ostringstream version;
     version << "version " << APPIMAGELAUNCHER_VERSION << " "
