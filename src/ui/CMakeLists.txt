@@ -16,7 +16,7 @@ install(
 
 
 # AppImage removal helper
-add_executable(remove remove_main.cpp remove.ui)
+add_executable(remove remove_main.cpp remove.ui resources.qrc)
 target_link_libraries(remove shared translationmanager libappimage)
 # see AppImageLauncher for a description
 set_target_properties(remove PROPERTIES INSTALL_RPATH "\$ORIGIN")
@@ -29,7 +29,7 @@ install(
 
 # AppImage update helper
 if(ENABLE_UPDATE_HELPER)
-    add_executable(update update_main.cpp)
+    add_executable(update update_main.cpp resources.qrc)
     target_link_libraries(update shared translationmanager libappimage libappimageupdate-qt)
     # see AppImageLauncher for a description
     set_target_properties(update PROPERTIES INSTALL_RPATH "\$ORIGIN")
