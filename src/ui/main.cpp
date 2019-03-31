@@ -423,8 +423,6 @@ int main(int argc, char** argv) {
                 QMessageBox::Yes | QMessageBox::No
             );
 
-            setWindowStyle(messageBox);
-
             messageBox->setDefaultButton(QMessageBox::Yes);
             messageBox->show();
 
@@ -479,8 +477,6 @@ int main(int argc, char** argv) {
     cancelButton->hide();
 
     messageBox->setDefaultButton(QMessageBox::Ok);
-
-    setWindowStyle(messageBox);
 
     // cannot use messageBox.exec(), will produce SEGFAULTS as QCoreApplications can't show message boxes
     messageBox->show();

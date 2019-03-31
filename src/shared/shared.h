@@ -17,9 +17,6 @@ enum IntegrationState {
     INTEGRATION_ABORTED
 };
 
-// sets common window style for all Qt widgets
-void setWindowStyle(QWidget* object);
-
 // standard location for integrated AppImages
 // currently hardcoded, can not be changed by users
 static const auto DEFAULT_INTEGRATION_DESTINATION = QString(getenv("HOME")) + "/Applications/";
