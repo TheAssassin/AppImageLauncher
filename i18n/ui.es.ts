@@ -421,7 +421,7 @@ Intenta copiar AppImage en su lugar?</translation>
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation>No se encontró la información de actalización en la AppImage:
+        <translation>No se encontró la información de actualización en la AppImage:
 %1
 
 Este AppImage no soporta actualizaciones. Por favor solicite al autor que incluya la información de actualizaciones.</translation>
