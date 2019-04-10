@@ -72,10 +72,7 @@ if [ "$BIONIC" == "" ] && [ "$COSMIC" == "" ]; then
     # build source tarball
     # generates a lot of output, therefore not run in verbose mode
     cpack --config CPackSourceConfig.cmake
-
-    # generate log for debugging
-    # CPack is very verbose, therefore we generate a file and upload it
-    cpack --config CPackSourceConfig.cmake -V
+    tar tf appimagelauncher*.tar.* | grep cmake
 fi
 
 # move AppImages to old cwd
