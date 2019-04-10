@@ -15,9 +15,9 @@
 
 Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.</source>
-        <translation type="vanished">A AppImage já foi integrada, mas não se encontra na actual directoria destinada à integração.
+        <translation>A AppImage já foi integrada, mas não se encontra na actual directória destinada à integração.
 
-Quer move-la para a nova diretoria?
+Quer move-la para a nova directória?
 Escolher Não, irá executar a AppImage uma vez e mantê-la na directoria em que se encontra.</translation>
     </message>
     <message>
@@ -29,11 +29,11 @@ Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.
 
 </source>
-        <translation>A AppImage %1 já foi integrada, mas não se encontra na actual directoria destinada à integração.
+        <translation>A AppImage %1 já foi integrada, mas não se encontra na actual directória destinada à integração.
 
-Quer move-la para a nova diretoria?
+Quer move-la para a nova directória?
 
-Escolher Não, irá executar a AppImage uma vez e mantê-la na directoria em que se encontra.
+Escolher Não, irá executar a AppImage uma vez e mantê-la na directória em que se encontra.
 
 </translation>
     </message>
@@ -45,7 +45,7 @@ Escolher Não, irá executar a AppImage uma vez e mantê-la na directoria em que
     <message>
         <location line="+1"/>
         <source>Failed to unregister AppImage before re-integrating it</source>
-        <translation>Falha a desregistrar a AppImage antes de a reintegrar</translation>
+        <translation>Falha ao desregistrar a AppImage antes de a reintegrar</translation>
     </message>
     <message>
         <location filename="../src/shared/shared.cpp" line="-14"/>
@@ -107,7 +107,7 @@ Sintaxe inválida:
     <message>
         <location line="+10"/>
         <source>Could not make AppImage executable: %1</source>
-        <translation>Não foi possível tornar a AppImage num executável: %1</translation>
+        <translation>Não foi possível tornar a AppImage em um executável: %1</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -117,7 +117,7 @@ Sintaxe inválida:
     <message>
         <location line="+12"/>
         <source>Failed to create temporary directory</source>
-        <translation>Falha ao criar directoria temporária</translation>
+        <translation>Falha ao criar directória temporária</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -144,7 +144,7 @@ Sintaxe inválida:
     <message>
         <location line="+26"/>
         <source>runtime not found: no such file or directory: %1</source>
-        <translation>runtime não encontrado: não existe o ficheiro ou directoria: %1</translation>
+        <translation>runtime não encontrado: o ficheiro ou directória não existem: %1</translation>
     </message>
     <message>
         <location line="+24"/>
@@ -207,7 +207,7 @@ Sintaxe inválida:
         <location filename="../src/ui/remove_main.cpp" line="-53"/>
         <location filename="../src/ui/update_main.cpp" line="-116"/>
         <source>Error: no such file or directory: %1</source>
-        <translation>Erro: ficheiro ou directoria não existe: %1</translation>
+        <translation>Erro: ficheiro ou directória não existe: %1</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -220,22 +220,22 @@ Sintaxe inválida:
         <location line="+98"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
-        <translation>A directoria das AppImages integradas está definida como:
+        <translation>A directória das AppImages integradas está definida como:
 %1</translation>
     </message>
     <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
-        <translation type="vanished">A directoria onde as AppImages integradas são armazenadas está atualmente definido para: %1</translation>
+        <translation>A directória onde as AppImages integradas são armazenadas está atualmente definida como: %1</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</source>
-        <translation>Integrar irá mover a AppImage para uma localização predefinida e inclui-la no seu menu de aplicações.</translation>
+        <translation>Ao integrar, a AppImage será movida para uma localização predefinida e incluída no seu menu de aplicações.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher.</source>
-        <translation>Para remover ou actualizar a AppImage, por favor use o menu de contexto do icon da aplicação existente na barra de tarefas ou no menu de aplicações.</translation>
+        <translation>Para remover ou actualizar a AppImage, por favor use o menu de contexto do ícone da aplicação existente na barra de tarefas ou no menu de aplicações.</translation>
     </message>
     <message>
         <location line="+3"/>
