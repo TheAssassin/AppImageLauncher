@@ -225,7 +225,7 @@ Sintaxe inválida:
     </message>
     <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
-        <translation>A directória onde as AppImages integradas são armazenadas está atualmente definida como: %1</translation>
+        <translation>A directória onde as AppImages integradas são armazenadas está actualmente definida como: %1</translation>
     </message>
     <message>
         <location line="+27"/>
@@ -240,7 +240,7 @@ Sintaxe inválida:
     <message>
         <location line="+3"/>
         <source>The directory the integrated AppImages are stored in is currently set to:</source>
-        <translation>A directoria onde as AppImages integradas são guardadas está actualmente definido para:</translation>
+        <translation>A directória onde as AppImages integradas são guardadas está actualmente definido como:</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -296,12 +296,12 @@ Sintaxe inválida:
     <message>
         <location line="+7"/>
         <source>Please confirm</source>
-        <translation>Por favor confirme</translation>
+        <translation>Por favor, confirme</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Are you sure you want to remove this AppImage?</source>
-        <translation>Tem a certeza que pretende remover esta AppImage?</translation>
+        <translation>Tem a certeza que deseja remover esta AppImage?</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -330,7 +330,7 @@ Sintaxe inválida:
     <message>
         <location line="+1"/>
         <source>Choosing No will run the AppImage once, and leave the system in its current state.</source>
-        <translation>Escolher Não irá correr a AppImage uma vez e deixar o sistema no seu estado actual.</translation>
+        <translation>Escolher Não irá executar a AppImage uma vez e deixar o sistema no seu estado actual.</translation>
     </message>
     <message>
         <location line="-207"/>
@@ -341,7 +341,7 @@ Sintaxe inválida:
     </message>
     <message>
         <source>Failed to move AppImage to target location</source>
-        <translation type="vanished">Falha ao mover a AppImage para a localização destinada</translation>
+        <translation>Falha ao mover a AppImage para a localização de destino</translation>
     </message>
     <message>
         <location line="-272"/>
@@ -372,18 +372,18 @@ Sintaxe inválida:
         <location line="+227"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
-        <translation>Falha ao mover AppImage para a localização destinada.
+        <translation>Falha ao mover AppImage para a localização de destino.
 Tentar copiar a AppImage em vez disso?</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Failed to copy AppImage to target location</source>
-        <translation>Falha ao copiar a AppImage para a localização destinada</translation>
+        <translation>Falha ao copiar a AppImage para a localização de destino</translation>
     </message>
     <message>
         <location filename="../src/ui/update_main.cpp" line="-51"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
-        <translation>Atualiza AppImages após a integração em ambiente de trabalho, para uso em distribuições Linux</translation>
+        <translation>Actualiza AppImages após a integração em ambiente de trabalho, para uso em distribuições Linux</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -409,7 +409,7 @@ Tentar copiar a AppImage em vez disso?</translation>
     <message>
         <location line="+1"/>
         <source>Could not find updates for AppImage %1</source>
-        <translation>Não existem atualizações para AppImage %1</translation>
+        <translation>Não existem actualizações para AppImage %1</translation>
     </message>
     <message>
         <source>Failed to check for updates. Please check the command line output for details.</source>
@@ -418,7 +418,7 @@ Tentar copiar a AppImage em vez disso?</translation>
     <message>
         <location line="+7"/>
         <source>No update information found</source>
-        <translation>Nenhuma informação de atualização disponível</translation>
+        <translation>Nenhuma informação de actualização disponível</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -426,10 +426,10 @@ Tentar copiar a AppImage em vez disso?</translation>
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation>Não foi possível encontrar informações de atualização em AppImage:
+        <translation>Não foi possível encontrar informações de actualização na AppImage:
 %1
 
-Esta AppImage não suporta atualização. Por favor, peça aos autores para adicionarem informações necessárias para proporcionar uma fácil atualização.</translation>
+Esta AppImage não suporta actualização. Por favor, peça aos autores para adicionarem informações necessárias para proporcionar uma actualização mais fácil.</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -472,7 +472,7 @@ Esta AppImage não suporta atualização. Por favor, peça aos autores para adic
     <message>
         <location line="+8"/>
         <source>Failed to register updated AppImage in system</source>
-        <translation>Falha a registar a AppImage actualizada no sistema</translation>
+        <translation>Falha ao registar a AppImage actualizada no sistema</translation>
     </message>
     <message>
         <location line="+7"/>
