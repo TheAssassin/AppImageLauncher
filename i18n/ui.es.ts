@@ -4,7 +4,7 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+407"/>
+        <location filename="../src/ui/main.cpp" line="+411"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
     </message>
@@ -35,7 +35,7 @@ Elegir No ejecutará AppImage una vez, y dejará la AppImage en su directorio ac
         <translation>Error al eliminar el registro de AppImage antes de volver a integrarlo</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+411"/>
+        <location filename="../src/shared/shared.cpp" line="+423"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -70,18 +70,18 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
 <context>
     <name>QObject</name>
     <message>
-        <location line="-255"/>
-        <location line="+386"/>
-        <location filename="../src/ui/remove_main.cpp" line="+104"/>
+        <location line="-264"/>
+        <location line="+408"/>
+        <location filename="../src/ui/remove_main.cpp" line="+105"/>
         <location line="+13"/>
         <location line="+12"/>
-        <location filename="../src/ui/update_main.cpp" line="+134"/>
+        <location filename="../src/ui/update_main.cpp" line="+135"/>
         <location line="+40"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-386"/>
+        <location filename="../src/ui/main.cpp" line="-390"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher aun no soporta AppImages tipo %1.</translation>
     </message>
@@ -125,7 +125,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>Execv () falló: %1</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+70"/>
         <source>Usage: %1 [options] &lt;path&gt;</source>
         <translation>Uso: %1 [opciones] &lt;ruta&gt;</translation>
     </message>
@@ -165,7 +165,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>Error al limpiar los viejos archivos de escritorio</translation>
     </message>
     <message>
-        <location line="-87"/>
+        <location line="-91"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -185,7 +185,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+92"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
         <translation>Fallo al limpiar la papelera de AppImage: %1</translation>
@@ -259,7 +259,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../src/ui/remove_main.cpp" line="-27"/>
+        <location filename="../src/ui/remove_main.cpp" line="-28"/>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
         <translation>Elimina AppImages después de la integración del escritorio, para ser utilizado por las distribuciones de Linux</translation>
     </message>
@@ -270,7 +270,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>AppImageLauncher eliminar</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+17"/>
         <source>Path to AppImage</source>
         <translation>Ruta hacia AppImage</translation>
     </message>
@@ -337,8 +337,8 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>Elegir No ejecutará AppImage una vez y dejará el sistema en su estado actual.</translation>
     </message>
     <message>
-        <location line="-358"/>
-        <location line="+362"/>
+        <location line="-380"/>
+        <location line="+384"/>
         <location filename="../src/ui/update_main.cpp" line="+12"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
@@ -348,7 +348,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation type="vanished">Error al mover AppImage a la ubicación de destino</translation>
     </message>
     <message>
-        <location line="-262"/>
+        <location line="-275"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Error al registrar AppImage en el sistema a través de libappimage</translation>
     </message>
@@ -373,7 +373,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>AppImage tiene un archivo de escritorio no válido</translation>
     </message>
     <message>
-        <location line="+237"/>
+        <location line="+250"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Error al mover AppImage a la ubicación de destino.
@@ -391,7 +391,7 @@ Intenta copiar AppImage en su lugar?</translation>
         <translation type="vanished">Error al copiar AppImage en la ubicación de destino</translation>
     </message>
     <message>
-        <location filename="../src/ui/update_main.cpp" line="-51"/>
+        <location filename="../src/ui/update_main.cpp" line="-52"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
         <translation>Actualiza AppImages después de la integración del escritorio, para ser utilizado por las distribuciones de Linux</translation>
     </message>
@@ -402,7 +402,7 @@ Intenta copiar AppImage en su lugar?</translation>
         <translation>Actualización de AppImageLauncher</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+44"/>
         <source>The AppImage hasn&apos;t been integrated before. This tool will, however, integrate the updated AppImage.</source>
         <translation>La AppImage no se ha integrado antes. Esta herramienta, sin embargo, integrará la AppImage actualizada.</translation>
     </message>
@@ -432,7 +432,7 @@ Intenta copiar AppImage en su lugar?</translation>
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation>No se encontró la información de actalización en la AppImage:
+        <translation>No se encontró la información de actualización en la AppImage:
 %1
 
 Este AppImage no soporta actualizaciones. Por favor solicite al autor que incluya la información de actualizaciones.</translation>
