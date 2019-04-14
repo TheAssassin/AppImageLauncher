@@ -4,7 +4,7 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+407"/>
+        <location filename="../src/ui/main.cpp" line="+411"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
@@ -45,7 +45,7 @@ Sollten Sie Nein wählen, wird das AppImage einmalig ausgeführt, und es wird im
         <translation>Fehler beim Deregistrieren des AppImages vor der Reintegration</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+411"/>
+        <location filename="../src/shared/shared.cpp" line="+423"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -70,18 +70,18 @@ Kaputte Syntax:
 <context>
     <name>QObject</name>
     <message>
-        <location line="-255"/>
-        <location line="+386"/>
-        <location filename="../src/ui/remove_main.cpp" line="+104"/>
+        <location line="-264"/>
+        <location line="+408"/>
+        <location filename="../src/ui/remove_main.cpp" line="+105"/>
         <location line="+13"/>
         <location line="+12"/>
-        <location filename="../src/ui/update_main.cpp" line="+134"/>
+        <location filename="../src/ui/update_main.cpp" line="+135"/>
         <location line="+40"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-386"/>
+        <location filename="../src/ui/main.cpp" line="-390"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher unterstützt zur Zeit keine AppImages vom Typ %1.</translation>
     </message>
@@ -125,7 +125,7 @@ Kaputte Syntax:
         <translation>execv() fehlgeschlagen: %1</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+70"/>
         <source>Usage: %1 [options] &lt;path&gt;</source>
         <translation>Benutzung: %1 [Optionen] &lt;Pfad&gt;</translation>
     </message>
@@ -165,7 +165,7 @@ Kaputte Syntax:
         <translation>Fehler beim Aufräumen der alten Desktop-Dateien</translation>
     </message>
     <message>
-        <location line="-87"/>
+        <location line="-91"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -185,7 +185,7 @@ Kaputte Syntax:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+92"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
         <translation>Fehler beim Aufräumen des AppImage-Papierkorbs: %1</translation>
@@ -260,7 +260,7 @@ Kaputte Syntax:
         <translation>Abbruch</translation>
     </message>
     <message>
-        <location filename="../src/ui/remove_main.cpp" line="-27"/>
+        <location filename="../src/ui/remove_main.cpp" line="-28"/>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
         <translation>Entfernt AppImages nach ihrer Desktop-Integration, zur Verwendung durch Linux-Distributionen</translation>
     </message>
@@ -271,7 +271,7 @@ Kaputte Syntax:
         <translation>AppImageLauncher Löschhelfer</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+17"/>
         <source>Path to AppImage</source>
         <translation>Pfad zu AppImage</translation>
     </message>
@@ -338,8 +338,8 @@ Kaputte Syntax:
         <translation>Bei Klick auf Nein wird das AppImage einmalig ausgeführt, und das System in seinem derzeitigen Zustand belassen.</translation>
     </message>
     <message>
-        <location line="-358"/>
-        <location line="+362"/>
+        <location line="-380"/>
+        <location line="+384"/>
         <location filename="../src/ui/update_main.cpp" line="+12"/>
         <source>Warning</source>
         <translation>Warnung</translation>
@@ -349,7 +349,7 @@ Kaputte Syntax:
         <translation type="vanished">Verschieben des AppImages in Zielverzeichnis fehlgeschlagen</translation>
     </message>
     <message>
-        <location line="-262"/>
+        <location line="-275"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Fehler beim Registrieren des AppImages im System via libappimage</translation>
     </message>
@@ -374,7 +374,7 @@ Kaputte Syntax:
         <translation>AppImage hat ungültige Desktop-Datei</translation>
     </message>
     <message>
-        <location line="+237"/>
+        <location line="+250"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Fehler beim Verschieben des AppImages in Zielverzeichnis.
@@ -392,7 +392,7 @@ Stattdessen versuchen, das AppImage zu kopieren?</translation>
         <translation type="vanished">Fehler beim Kopieren des AppImages in Zielverzeichnis</translation>
     </message>
     <message>
-        <location filename="../src/ui/update_main.cpp" line="-51"/>
+        <location filename="../src/ui/update_main.cpp" line="-52"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
         <translation>Aktualisiert AppImages nach Desktop-Integration, zur Verwendung durch Linux-Distributionen</translation>
     </message>
@@ -403,7 +403,7 @@ Stattdessen versuchen, das AppImage zu kopieren?</translation>
         <translation>AppImageLauncher Update</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+44"/>
         <source>The AppImage hasn&apos;t been integrated before. This tool will, however, integrate the updated AppImage.</source>
         <translation>Das AppImage wurde bisher noch nicht integriert. Dieses Programm wird aber das aktualisierte AppImage integrieren.</translation>
     </message>

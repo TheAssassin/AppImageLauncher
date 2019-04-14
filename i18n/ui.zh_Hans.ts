@@ -4,7 +4,7 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+407"/>
+        <location filename="../src/ui/main.cpp" line="+411"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
@@ -44,7 +44,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
         <translation>未能在重新集成 AppImage 前注销它</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+411"/>
+        <location filename="../src/shared/shared.cpp" line="+423"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -69,18 +69,18 @@ Invalid syntax:
 <context>
     <name>QObject</name>
     <message>
-        <location line="-255"/>
-        <location line="+386"/>
-        <location filename="../src/ui/remove_main.cpp" line="+104"/>
+        <location line="-264"/>
+        <location line="+408"/>
+        <location filename="../src/ui/remove_main.cpp" line="+105"/>
         <location line="+13"/>
         <location line="+12"/>
-        <location filename="../src/ui/update_main.cpp" line="+134"/>
+        <location filename="../src/ui/update_main.cpp" line="+135"/>
         <location line="+40"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-386"/>
+        <location filename="../src/ui/main.cpp" line="-390"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher 目前不支持 %1 类型的 AppImage 。</translation>
     </message>
@@ -124,7 +124,7 @@ Invalid syntax:
         <translation>execv() 失败： %1</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+70"/>
         <source>Usage: %1 [options] &lt;path&gt;</source>
         <translation>用法： %1 [选项] &lt;路径&gt;</translation>
     </message>
@@ -164,7 +164,7 @@ Invalid syntax:
         <translation>清除旧桌面文件失败</translation>
     </message>
     <message>
-        <location line="-87"/>
+        <location line="-91"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -184,7 +184,7 @@ Invalid syntax:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+92"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
         <translation>清空 AppImage 垃圾箱失败： %1</translation>
@@ -259,7 +259,7 @@ Invalid syntax:
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/ui/remove_main.cpp" line="-27"/>
+        <location filename="../src/ui/remove_main.cpp" line="-28"/>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
         <translation>桌面集成后移除 AppImage ，供 Linux 发行版使用</translation>
     </message>
@@ -270,7 +270,7 @@ Invalid syntax:
         <translation>AppImageLauncher 移除</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+17"/>
         <source>Path to AppImage</source>
         <translation>AppImage 路径</translation>
     </message>
@@ -337,8 +337,8 @@ Invalid syntax:
         <translation>选择否将运行一次 AppImage ，并保留当前系统状态。</translation>
     </message>
     <message>
-        <location line="-358"/>
-        <location line="+362"/>
+        <location line="-380"/>
+        <location line="+384"/>
         <location filename="../src/ui/update_main.cpp" line="+12"/>
         <source>Warning</source>
         <translation>警告</translation>
@@ -348,7 +348,7 @@ Invalid syntax:
         <translation type="vanished">未能将 AppImage 移动到目标位置</translation>
     </message>
     <message>
-        <location line="-262"/>
+        <location line="-275"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>未能通过 libappimage 在系统中注册 AppImage</translation>
     </message>
@@ -373,7 +373,7 @@ Invalid syntax:
         <translation>AppImage 有无效桌面文件</translation>
     </message>
     <message>
-        <location line="+237"/>
+        <location line="+250"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>未能移动 AppImage 到目标位置。
@@ -391,7 +391,7 @@ Try to copy AppImage instead?</source>
         <translation type="vanished">未能复制 AppImage 到目标位置</translation>
     </message>
     <message>
-        <location filename="../src/ui/update_main.cpp" line="-51"/>
+        <location filename="../src/ui/update_main.cpp" line="-52"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
         <translation>桌面集成后更新 AppImage ，供 Linux 发行版使用</translation>
     </message>
@@ -402,7 +402,7 @@ Try to copy AppImage instead?</source>
         <translation>AppImageLauncher 更新</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+44"/>
         <source>The AppImage hasn&apos;t been integrated before. This tool will, however, integrate the updated AppImage.</source>
         <translation>AppImage 此前未集成。然而此工具将集成更新后的 AppImage 。</translation>
     </message>

@@ -4,7 +4,7 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+407"/>
+        <location filename="../src/ui/main.cpp" line="+411"/>
         <source>Warning</source>
         <translation type="unfinished">Предупреждение</translation>
     </message>
@@ -29,7 +29,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+411"/>
+        <location filename="../src/shared/shared.cpp" line="+423"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -48,18 +48,18 @@ Invalid syntax:
 <context>
     <name>QObject</name>
     <message>
-        <location line="-255"/>
-        <location line="+386"/>
-        <location filename="../src/ui/remove_main.cpp" line="+104"/>
+        <location line="-264"/>
+        <location line="+408"/>
+        <location filename="../src/ui/remove_main.cpp" line="+105"/>
         <location line="+13"/>
         <location line="+12"/>
-        <location filename="../src/ui/update_main.cpp" line="+134"/>
+        <location filename="../src/ui/update_main.cpp" line="+135"/>
         <location line="+40"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-386"/>
+        <location filename="../src/ui/main.cpp" line="-390"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher в данный момент не поддерживает AppImage %1 типа.</translation>
     </message>
@@ -103,7 +103,7 @@ Invalid syntax:
         <translation>execv() не сработал: %1</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+70"/>
         <source>Usage: %1 [options] &lt;path&gt;</source>
         <translation>Использование: %1 [опции] &lt;путь&gt;</translation>
     </message>
@@ -143,7 +143,7 @@ Invalid syntax:
         <translation>Не удалось очистить старые desktop-файлы</translation>
     </message>
     <message>
-        <location line="-87"/>
+        <location line="-91"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -163,7 +163,7 @@ Invalid syntax:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+92"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
         <translation type="unfinished"></translation>
@@ -233,7 +233,7 @@ Invalid syntax:
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../src/ui/remove_main.cpp" line="-27"/>
+        <location filename="../src/ui/remove_main.cpp" line="-28"/>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
         <translation>Удаляет AppImage-пакеты, интегрированные с рабочим столом</translation>
     </message>
@@ -244,7 +244,7 @@ Invalid syntax:
         <translation>AppImageLauncher удаление</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+17"/>
         <source>Path to AppImage</source>
         <translation>Путь к AppImage</translation>
     </message>
@@ -311,8 +311,8 @@ Invalid syntax:
         <translation>Выбор пункта &quot;Нет&quot; запустит AppImage и оставит систему без изменений.</translation>
     </message>
     <message>
-        <location line="-358"/>
-        <location line="+362"/>
+        <location line="-380"/>
+        <location line="+384"/>
         <location filename="../src/ui/update_main.cpp" line="+12"/>
         <source>Warning</source>
         <translation>Предупреждение</translation>
@@ -322,7 +322,7 @@ Invalid syntax:
         <translation type="vanished">Не удалось переместить AppImage в указанное место</translation>
     </message>
     <message>
-        <location line="-262"/>
+        <location line="-275"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Не удалось зарегистрировать AppImage в системе с помощью libappimage</translation>
     </message>
@@ -347,7 +347,7 @@ Invalid syntax:
         <translation>У этого AppImage некорректный desktop-файл</translation>
     </message>
     <message>
-        <location line="+237"/>
+        <location line="+250"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation type="unfinished"></translation>
@@ -360,7 +360,7 @@ Try to copy AppImage instead?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/update_main.cpp" line="-51"/>
+        <location filename="../src/ui/update_main.cpp" line="-52"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
         <translation>Обновляет AppImage-пакеты, интегрированные с рабочим столом</translation>
     </message>
@@ -371,7 +371,7 @@ Try to copy AppImage instead?</source>
         <translation>AppImageLauncher обновление</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+44"/>
         <source>The AppImage hasn&apos;t been integrated before. This tool will, however, integrate the updated AppImage.</source>
         <translation>Этот AppImage ещё не был интегрирован. Это будет сделано с обновлённым AppImage.</translation>
     </message>
