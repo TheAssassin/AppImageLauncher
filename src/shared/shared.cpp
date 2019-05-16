@@ -189,6 +189,9 @@ void displayWarning(const QString& message) {
 QDir integratedAppImagesDestination() {
     auto config = getConfig();
 
+    if (config == nullptr)
+        return DEFAULT_INTEGRATION_DESTINATION;
+
     static const QString keyName("AppImageLauncher/destination");
     if (config->contains(keyName))
         return config->value(keyName).toString();
