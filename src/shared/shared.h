@@ -53,6 +53,12 @@ bool updateDesktopDatabaseAndIconCaches();
 // integrates an AppImage using a standard workflow used across all AppImageLauncher applications
 IntegrationState integrateAppImage(const QString& pathToAppImage, const QString& pathToIntegratedAppImage);
 
+// write config file to standard location with given configuration values
+// askToMove and enableDaemon both are bools but represented as int to add some sort of "unset" state
+// < 0: unset; 0 = false; > 0 = true
+// destination is a string that, when empty, will be interpreted as "use default"
+void createConfigFile(int askToMove, QString destination, int enableDaemon);
+
 // load config file and return it
 std::shared_ptr<QSettings> getConfig();
 

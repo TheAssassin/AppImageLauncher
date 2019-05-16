@@ -12,6 +12,7 @@ extern "C" {
 // library includes
 #include <QApplication>
 #include <QCommandLineParser>
+#include <QDebug>
 #include <QDir>
 #include <QFile>
 #include <QFileDialog>
@@ -31,6 +32,7 @@ extern "C" {
 #include "shared.h"
 #include "trashbin.h"
 #include "translationmanager.h"
+#include "first-run.h"
 
 // Runs an AppImage. Returns suitable exit code for main application.
 int runAppImage(const QString& pathToAppImage, unsigned long argc, char** argv) {
@@ -333,7 +335,9 @@ int main(int argc, char** argv) {
 
     // enable and start/disable and stop appimagelauncherd service
     auto config = getConfig();
-    if (!config->contains("AppImageLauncher/enable_daemon") || config->value("AppImageLauncher/enable_daemon").toBool()) {
+
+    // assumes defaults if config doesn't exist or lacks the related key(s)
+    if (config == nullptr || !config->contains("AppImageLauncher/enable_daemon") || config->value("AppImageLauncher/enable_daemon").toBool()) {
         system("systemctl --user enable appimagelauncherd.service");
         system("systemctl --user start  appimagelauncherd.service");
     } else {
@@ -341,9 +345,25 @@ int main(int argc, char** argv) {
         system("systemctl --user stop    appimagelauncherd.service");
     }
 
-    // from now on, the code requires a UI
+    // beyond the next block, the code requires a UI
     // as we don't want to offer integration over a headless connection, we just run the AppImage
     if (isHeadless()) {
+        return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
+    }
+
+    // if config doesn't exist, create a default one
+    if (config == nullptr) {
+        showFirstRunDialog();
+        config = getConfig();
+    }
+
+    if (config == nullptr) {
+        displayError("Could not read config file");
+    }
+
+    // if the user opted out of the "ask move" thing, we acn just run the AppImage
+    qDebug() << config->allKeys();
+    if (!config->contains("AppImageLauncher/ask_to_move") || !config->value("AppImageLauncher/ask_to_move").toBool()) {
         return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
     }
 

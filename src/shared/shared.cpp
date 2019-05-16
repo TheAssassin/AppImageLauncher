@@ -92,10 +92,59 @@ QString expandTilde(QString path) {
     return path;
 }
 
-std::shared_ptr<QSettings> getConfig() {
-    // calculate path to config file
+// calculate path to config file
+QString getConfigFilePath() {
     const auto configPath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
     const auto configFilePath = configPath + "/appimagelauncher.cfg";
+    return configFilePath;
+}
+
+void createConfigFile(int askToMove, QString destination, int enableDaemon) {
+    auto configFilePath = getConfigFilePath();
+
+    QFile file(configFilePath);
+    file.open(QIODevice::WriteOnly);
+
+    // cannot use QSettings because it doesn't support comments
+    // let's do it manually and hope for the best
+    file.write("[AppImageLauncher]\n");
+
+    if (askToMove < 0) {
+        file.write("# ask_to_move = true\n");
+    } else {
+        file.write("ask_to_move = ");
+        if (askToMove == 0) {
+            file.write("false");
+        } else {
+            file.write("true");
+        }
+        file.write("\n");
+    }
+
+    if (destination.isEmpty()) {
+        file.write("# destination = ~/Applications\n");
+    } else {
+        file.write("destination = ");
+        file.write(destination.toUtf8());
+        file.write("\n");
+    }
+
+    if (enableDaemon < 0) {
+        file.write("# enable_daemon = true\n");
+    } else {
+        file.write("enable_daemon = ");
+        if (enableDaemon == 0) {
+            file.write("false");
+        } else {
+            file.write("true");
+        }
+        file.write("\n");
+    }
+}
+
+
+std::shared_ptr<QSettings> getConfig() {
+    auto configFilePath = getConfigFilePath();
 
     // if the file does not exist, we'll just use the standard location
     // while in theory it would have been possible to just write the default location to the file, if we'd ever change
@@ -103,11 +152,7 @@ std::shared_ptr<QSettings> getConfig() {
     // the situation
     // therefore, the file is simply created, but left empty intentionally
     if (!QFileInfo::exists(configFilePath)) {
-        QFile file(configFilePath);
-        file.open(QIODevice::WriteOnly);
-        file.write("[AppImageLauncher]\n"
-                   "# destination = ~/Applications\n"
-                   "# enable_daemon = true\n");
+        return nullptr;
     }
 
     auto rv = std::make_shared<QSettings>(configFilePath, QSettings::IniFormat);
@@ -176,6 +221,9 @@ void displayWarning(const QString& message) {
 
 QDir integratedAppImagesDestination() {
     auto config = getConfig();
+
+    if (config == nullptr)
+        return DEFAULT_INTEGRATION_DESTINATION;
 
     static const QString keyName("AppImageLauncher/destination");
     if (config->contains(keyName))
