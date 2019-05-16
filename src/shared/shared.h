@@ -53,6 +53,10 @@ bool updateDesktopDatabaseAndIconCaches();
 // integrates an AppImage using a standard workflow used across all AppImageLauncher applications
 IntegrationState integrateAppImage(const QString& pathToAppImage, const QString& pathToIntegratedAppImage);
 
+// initialize config file with default contents
+// call only when the file doesn't exist
+void createDefaultConfigFile();
+
 // load config file and return it
 std::shared_ptr<QSettings> getConfig();
 

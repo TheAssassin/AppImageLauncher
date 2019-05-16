@@ -99,7 +99,7 @@ QString getConfigFilePath() {
     return configFilePath;
 }
 
-void createDefaultConfig() {
+void createDefaultConfigFile() {
     auto configFilePath = getConfigFilePath();
 
     QFile file(configFilePath);
@@ -119,7 +119,7 @@ std::shared_ptr<QSettings> getConfig() {
     // the situation
     // therefore, the file is simply created, but left empty intentionally
     if (!QFileInfo::exists(configFilePath)) {
-        createDefaultConfig(configFilePath);
+        return nullptr;
     }
 
     auto rv = std::make_shared<QSettings>(configFilePath, QSettings::IniFormat);

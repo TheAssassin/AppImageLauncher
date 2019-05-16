@@ -333,7 +333,9 @@ int main(int argc, char** argv) {
 
     // enable and start/disable and stop appimagelauncherd service
     auto config = getConfig();
-    if (!config->contains("AppImageLauncher/enable_daemon") || config->value("AppImageLauncher/enable_daemon").toBool()) {
+
+    // assumes defaults if config doesn't exist or lacks the related key(s)
+    if (config == nullptr || !config->contains("AppImageLauncher/enable_daemon") || config->value("AppImageLauncher/enable_daemon").toBool()) {
         system("systemctl --user enable appimagelauncherd.service");
         system("systemctl --user start  appimagelauncherd.service");
     } else {
@@ -341,10 +343,15 @@ int main(int argc, char** argv) {
         system("systemctl --user stop    appimagelauncherd.service");
     }
 
-    // from now on, the code requires a UI
+    // beyond the next block, the code requires a UI
     // as we don't want to offer integration over a headless connection, we just run the AppImage
     if (isHeadless()) {
         return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
+    }
+
+    // if config doesn't exist, create a default one
+    if (config == nullptr) {
+        createDefaultConfigFile();
     }
 
     // check for X-AppImage-Integrate=false
