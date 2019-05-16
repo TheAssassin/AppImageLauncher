@@ -92,7 +92,16 @@ QString expandTilde(QString path) {
     return path;
 }
 
-void createDefaultConfig(const QString& configFilePath) {
+// calculate path to config file
+QString getConfigFilePath() {
+    const auto configPath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
+    const auto configFilePath = configPath + "/appimagelauncher.cfg";
+    return configFilePath;
+}
+
+void createDefaultConfig() {
+    auto configFilePath = getConfigFilePath();
+
     QFile file(configFilePath);
     file.open(QIODevice::WriteOnly);
     file.write("[AppImageLauncher]\n"
@@ -102,9 +111,7 @@ void createDefaultConfig(const QString& configFilePath) {
 
 
 std::shared_ptr<QSettings> getConfig() {
-    // calculate path to config file
-    const auto configPath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
-    const auto configFilePath = configPath + "/appimagelauncher.cfg";
+    auto configFilePath = getConfigFilePath();
 
     // if the file does not exist, we'll just use the standard location
     // while in theory it would have been possible to just write the default location to the file, if we'd ever change
