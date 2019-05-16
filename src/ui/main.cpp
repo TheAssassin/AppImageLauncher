@@ -31,6 +31,7 @@ extern "C" {
 #include "shared.h"
 #include "trashbin.h"
 #include "translationmanager.h"
+#include "first-run.h"
 
 // Runs an AppImage. Returns suitable exit code for main application.
 int runAppImage(const QString& pathToAppImage, unsigned long argc, char** argv) {
@@ -351,7 +352,7 @@ int main(int argc, char** argv) {
 
     // if config doesn't exist, create a default one
     if (config == nullptr) {
-        createDefaultConfigFile();
+        showFirstRunDialog();
     }
 
     // check for X-AppImage-Integrate=false

@@ -99,14 +99,47 @@ QString getConfigFilePath() {
     return configFilePath;
 }
 
-void createDefaultConfigFile() {
+void createConfigFile(int askToMove, QString destination, int enableDaemon) {
     auto configFilePath = getConfigFilePath();
 
     QFile file(configFilePath);
     file.open(QIODevice::WriteOnly);
-    file.write("[AppImageLauncher]\n"
-               "# destination = ~/Applications\n"
-               "# enable_daemon = true\n");
+
+    // cannot use QSettings because it doesn't support comments
+    // let's do it manually and hope for the best
+    file.write("[AppImageLauncher]\n");
+
+    if (askToMove < 0) {
+        file.write("# ask_to_move = true\n");
+    } else {
+        file.write("ask_to_move = ");
+        if (askToMove == 0) {
+            file.write("false");
+        } else {
+            file.write("true");
+        }
+        file.write("\n");
+    }
+
+    if (destination.isEmpty()) {
+        file.write("# destination = ~/Applications\n");
+    } else {
+        file.write("destination = ");
+        file.write(destination.toUtf8());
+        file.write("\n");
+    }
+
+    if (enableDaemon < 0) {
+        file.write("# enable_daemon = true\n");
+    } else {
+        file.write("enable_daemon = ");
+        if (enableDaemon == 0) {
+            file.write("false");
+        } else {
+            file.write("true");
+        }
+        file.write("\n");
+    }
 }
 
 
