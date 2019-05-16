@@ -12,6 +12,7 @@ extern "C" {
 // library includes
 #include <QApplication>
 #include <QCommandLineParser>
+#include <QDebug>
 #include <QDir>
 #include <QFile>
 #include <QFileDialog>
@@ -353,6 +354,17 @@ int main(int argc, char** argv) {
     // if config doesn't exist, create a default one
     if (config == nullptr) {
         showFirstRunDialog();
+        config = getConfig();
+    }
+
+    if (config == nullptr) {
+        displayError("Could not read config file");
+    }
+
+    // if the user opted out of the "ask move" thing, we acn just run the AppImage
+    qDebug() << config->allKeys();
+    if (!config->contains("AppImageLauncher/ask_to_move") || !config->value("AppImageLauncher/ask_to_move").toBool()) {
+        return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
     }
 
     // check for X-AppImage-Integrate=false
