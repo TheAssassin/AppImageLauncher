@@ -158,6 +158,4 @@ void showFirstRunDialog() {
     }
 
     dialog->writeConfigFile();
-
-    throw std::runtime_error("bla");
 }
