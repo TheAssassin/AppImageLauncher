@@ -92,6 +92,15 @@ QString expandTilde(QString path) {
     return path;
 }
 
+void createDefaultConfig(const QString& configFilePath) {
+    QFile file(configFilePath);
+    file.open(QIODevice::WriteOnly);
+    file.write("[AppImageLauncher]\n"
+               "# destination = ~/Applications\n"
+               "# enable_daemon = true\n");
+}
+
+
 std::shared_ptr<QSettings> getConfig() {
     // calculate path to config file
     const auto configPath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
@@ -103,11 +112,7 @@ std::shared_ptr<QSettings> getConfig() {
     // the situation
     // therefore, the file is simply created, but left empty intentionally
     if (!QFileInfo::exists(configFilePath)) {
-        QFile file(configFilePath);
-        file.open(QIODevice::WriteOnly);
-        file.write("[AppImageLauncher]\n"
-                   "# destination = ~/Applications\n"
-                   "# enable_daemon = true\n");
+        createDefaultConfig(configFilePath);
     }
 
     auto rv = std::make_shared<QSettings>(configFilePath, QSettings::IniFormat);
