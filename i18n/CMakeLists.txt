@@ -29,6 +29,13 @@ foreach(TS_FILE IN LISTS TS_FILES)
     ail_generate_translations(../src/ ${TS_FILENAME})
 endforeach()
 
+add_custom_command(
+    TARGET i18n POST_BUILD
+    COMMAND ./auto-translate.py ui.en.ts
+    MAIN_DEPENDENCY "${ARGV0}"
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
 
 add_custom_target(l10n ALL)
 
