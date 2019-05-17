@@ -6,37 +6,37 @@
     <message>
         <location filename="../src/ui/first-run.ui" line="+20"/>
         <source>First run</source>
-        <translation type="unfinished"></translation>
+        <translation>首次运行</translation>
     </message>
     <message>
         <location line="+31"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;欢迎使用 AppImageLauncher！&lt;/span&gt;&lt;/p&gt;&lt;p&gt;这个小助手旨在改善您的计算机上的 AppImage 体验。&lt;/p&gt;&lt;p&gt;看来您以前从未运行过 AppImageLauncher 。请花一点时间配置您的偏好。您随后可以使用控制面板更改这些内容。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Ask me whether to move new AppImages into a central location</source>
-        <translation type="unfinished"></translation>
+        <translation>询问我是否要将新的 AppImage 移动到一个中心位置</translation>
     </message>
     <message>
         <location line="+35"/>
         <source>Integration target destination directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>集成目标文件夹：</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>Customize</source>
-        <translation type="unfinished"></translation>
+        <translation>自定义</translation>
     </message>
     <message>
         <location filename="../src/ui/first-run.cpp" line="+86"/>
         <source>Choose integration destination dir</source>
-        <translation type="unfinished"></translation>
+        <translation>选择集成目的文件夹</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>(default)</source>
-        <translation type="unfinished"></translation>
+        <translation>（默认）</translation>
     </message>
 </context>
 <context>
@@ -204,22 +204,22 @@ Invalid syntax:
     <message>
         <location line="-91"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
-        <translation type="unfinished"></translation>
+        <translation>在 AppImageLauncherFSFailed 中注册 AppImage 失败：注册 AppImage 路径 %1 失败</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not open map file</source>
-        <translation type="unfinished"></translation>
+        <translation>在 AppImageLauncherFSFailed 中注册 AppImage 失败：无法打开映射文件</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>在 AppImageLauncherFSFailed 中注册 AppImage 失败：无法找到 AppImage 虚拟文件</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Failed to register AppImage in AppImageLauncherFS: unknown failure</source>
-        <translation type="unfinished"></translation>
+        <translation>在 AppImageLauncherFSFailed 中注册 AppImage 失败：未知失败</translation>
     </message>
     <message>
         <location line="+92"/>
@@ -328,14 +328,18 @@ Invalid syntax:
         <source>Not an AppImage:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>不是 AppImage:
+
+%1</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Refusing to work on non-integrated AppImage:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>拒绝在未集成 AppImage 上工作:
+
+%1</translation>
     </message>
     <message>
         <source>Please confirm</source>
@@ -422,7 +426,9 @@ Try to copy AppImage instead?</source>
         <source>Failed to call stat() on path:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>在此路径上调用 stat() 失败:
+
+%1</translation>
     </message>
     <message>
         <source>Failed to copy AppImage to target location</source>
@@ -538,27 +544,27 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location filename="../src/ui/remove.ui" line="+14"/>
         <source>Please confirm</source>
-        <translation type="unfinished">请确认</translation>
+        <translation>请确认</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove this AppImage?&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;您确定要移除此 AppImage 吗？&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>%1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uncheck to only remove the desktop integration, but leave the file on the system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;取消勾选则仅删除桌面集成，但将文件保留在系统上。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Remove AppImage file from system</source>
-        <translation type="unfinished"></translation>
+        <translation>从系统中移除 AppImage 文件</translation>
     </message>
 </context>
 </TS>
