@@ -19,22 +19,12 @@
         <translation>Frage mich, ob neue AppImages in ein zentrales Verzeichnis verschoben werden sollen</translation>
     </message>
     <message>
-        <location line="+16"/>
-        <source>TextLabel</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+19"/>
+        <location line="+35"/>
         <source>Integration target destination directory:</source>
         <translation>Integrations-Zielverzeichnis:</translation>
     </message>
     <message>
-        <location line="+17"/>
-        <source>to be filled!</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+19"/>
+        <location line="+36"/>
         <source>Customize</source>
         <translation>Anpassen</translation>
     </message>
