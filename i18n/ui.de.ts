@@ -11,42 +11,42 @@
     <message>
         <location line="+31"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Willkommen bei AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Dieses kleine Hilfsprogramm wurde entworfen, um Ihre AppImage-Erfahrung auf Ihrem Computer zu verbessern.&lt;/p&gt;&lt;p&gt;Es scheint, als hätten Sie AppImageLauncher nie zuvor ausgeführt. Bitte nehmen Sie sich eine Minute zeit und konfigurieren Sie Ihre Einstellungen. Sie können diese jederzeit über den Einstellungsdialog ändern.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Willkommen bei AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Dieses kleine Hilfsprogramm wurde entworfen, um Ihre AppImage-Erfahrung auf Ihrem Computer zu verbessern.&lt;/p&gt;&lt;p&gt;Es scheint, als hätten Sie AppImageLauncher nie zuvor ausgeführt. Bitte nehmen Sie sich eine Minute zeit und konfigurieren Sie Ihre Einstellungen. Sie können diese jederzeit über den Einstellungsdialog ändern.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Ask me whether to move new AppImages into a central location</source>
-        <translation type="unfinished">Frage mich, ob neue AppImages in ein zentrales Verzeichnis verschoben werden sollen</translation>
+        <translation>Frage mich, ob neue AppImages in ein zentrales Verzeichnis verschoben werden sollen</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Integration target destination directory:</source>
-        <translation type="unfinished">Integrations-Zielverzeichnis:</translation>
+        <translation>Integrations-Zielverzeichnis:</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>to be filled!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Customize</source>
-        <translation type="unfinished">Anpassen</translation>
+        <translation>Anpassen</translation>
     </message>
     <message>
         <location filename="../src/ui/first-run.cpp" line="+86"/>
         <source>Choose integration destination dir</source>
-        <translation type="unfinished">Wähle Integrations-Zielverzeichnis</translation>
+        <translation>Wähle Integrations-Zielverzeichnis</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>(default)</source>
-        <translation type="unfinished">(Standard)</translation>
+        <translation>(Standard)</translation>
     </message>
 </context>
 <context>
@@ -215,22 +215,22 @@ Kaputte Syntax:
     <message>
         <location line="-91"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
-        <translation type="unfinished">Fehler beim Registrieren des AppImages in AppImageLauncherFS: Registrieren des AppImage-Pfades %1 fehlgeschlagen</translation>
+        <translation>Fehler beim Registrieren des AppImages in AppImageLauncherFS: Registrieren des AppImage-Pfades %1 fehlgeschlagen</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not open map file</source>
-        <translation type="unfinished">Fehler beim Registrieren des AppImages in AppImageLauncherFS: konnte Map-Datei nicht öffnen</translation>
+        <translation>Fehler beim Registrieren des AppImages in AppImageLauncherFS: konnte Map-Datei nicht öffnen</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</source>
-        <translation type="unfinished">Fehler beim Registrieren des AppImages in AppImageLauncherFS: konnte virtuelle Datei für AppImage nicht finden</translation>
+        <translation>Fehler beim Registrieren des AppImages in AppImageLauncherFS: konnte virtuelle Datei für AppImage nicht finden</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Failed to register AppImage in AppImageLauncherFS: unknown failure</source>
-        <translation type="unfinished">Fehler beim Registrieren des AppImages in AppImageLauncherFS: unbekannter Fehler</translation>
+        <translation>Fehler beim Registrieren des AppImages in AppImageLauncherFS: unbekannter Fehler</translation>
     </message>
     <message>
         <location line="+92"/>
@@ -339,7 +339,7 @@ Kaputte Syntax:
         <source>Not an AppImage:
 
 %1</source>
-        <translation type="unfinished">Kein AppImage:
+        <translation>Kein AppImage:
 
 %1</translation>
     </message>
@@ -348,7 +348,7 @@ Kaputte Syntax:
         <source>Refusing to work on non-integrated AppImage:
 
 %1</source>
-        <translation type="unfinished">Verweigere Arbeit an nicht integriertem AppImage:
+        <translation>Verweigere Arbeit an nicht integriertem AppImage:
 
 %1</translation>
     </message>
@@ -437,7 +437,7 @@ Stattdessen versuchen, das AppImage zu kopieren?</translation>
         <source>Failed to call stat() on path:
 
 %1</source>
-        <translation type="unfinished">Aufruf von stat() auf Pfad fehlgeschlagen:
+        <translation>Aufruf von stat() auf Pfad fehlgeschlagen:
 
 %1</translation>
     </message>
@@ -555,27 +555,27 @@ Das AppImage unterstützt keine Updates. Bitte fragen Sie die Autoren, die Updat
     <message>
         <location filename="../src/ui/remove.ui" line="+14"/>
         <source>Please confirm</source>
-        <translation type="unfinished">Bitte bestätigen</translation>
+        <translation>Bitte bestätigen</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove this AppImage?&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sind Sie sicher, dass Sie dieses AppImage entfernen wollen?&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sind Sie sicher, dass Sie dieses AppImage entfernen wollen?&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>%1</source>
-        <translation type="unfinished">%1</translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uncheck to only remove the desktop integration, but leave the file on the system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Abwählen, um nur die Desktop-Integration zu entfernen, die Datei aber auf dem System zu behalten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Abwählen, um nur die Desktop-Integration zu entfernen, die Datei aber auf dem System zu behalten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Remove AppImage file from system</source>
-        <translation type="unfinished">AppImage vom System entfernen</translation>
+        <translation>AppImage vom System entfernen</translation>
     </message>
 </context>
 </TS>
