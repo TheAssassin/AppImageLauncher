@@ -6,37 +6,37 @@
     <message>
         <location filename="../src/ui/first-run.ui" line="+20"/>
         <source>First run</source>
-        <translation type="unfinished"></translation>
+        <translation>First run</translation>
     </message>
     <message>
         <location line="+31"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Ask me whether to move new AppImages into a central location</source>
-        <translation type="unfinished"></translation>
+        <translation>Ask me whether to move new AppImages into a central location</translation>
     </message>
     <message>
         <location line="+35"/>
         <source>Integration target destination directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Integration target destination directory:</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>Customize</source>
-        <translation type="unfinished"></translation>
+        <translation>Customize</translation>
     </message>
     <message>
         <location filename="../src/ui/first-run.cpp" line="+86"/>
         <source>Choose integration destination dir</source>
-        <translation type="unfinished"></translation>
+        <translation>Choose integration destination dir</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>(default)</source>
-        <translation type="unfinished"></translation>
+        <translation>(default)</translation>
     </message>
 </context>
 <context>
@@ -205,22 +205,22 @@ Invalid syntax:
     <message>
         <location line="-91"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not open map file</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to register AppImage in AppImageLauncherFS: could not open map file</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Failed to register AppImage in AppImageLauncherFS: unknown failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to register AppImage in AppImageLauncherFS: unknown failure</translation>
     </message>
     <message>
         <location line="+92"/>
@@ -329,14 +329,18 @@ Invalid syntax:
         <source>Not an AppImage:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Not an AppImage:
+
+%1</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Refusing to work on non-integrated AppImage:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Refusing to work on non-integrated AppImage:
+
+%1</translation>
     </message>
     <message>
         <source>Please confirm</source>
@@ -423,7 +427,9 @@ Try to copy AppImage instead?</translation>
         <source>Failed to call stat() on path:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to call stat() on path:
+
+%1</translation>
     </message>
     <message>
         <source>Failed to copy AppImage to target location</source>
@@ -539,27 +545,27 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location filename="../src/ui/remove.ui" line="+14"/>
         <source>Please confirm</source>
-        <translation type="unfinished">Please confirm</translation>
+        <translation>Please confirm</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove this AppImage?&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove this AppImage?&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>%1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uncheck to only remove the desktop integration, but leave the file on the system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uncheck to only remove the desktop integration, but leave the file on the system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Remove AppImage file from system</source>
-        <translation type="unfinished"></translation>
+        <translation>Remove AppImage file from system</translation>
     </message>
 </context>
 </TS>
