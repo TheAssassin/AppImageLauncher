@@ -2,9 +2,57 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de">
 <context>
+    <name>FirstRunDialog</name>
+    <message>
+        <location filename="../src/ui/first-run.ui" line="+20"/>
+        <source>First run</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Ask me whether to move new AppImages into a central location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Integration target destination directory:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>to be filled!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Customize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/first-run.cpp" line="+86"/>
+        <source>Choose integration destination dir</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>(default)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+411"/>
+        <location filename="../src/ui/main.cpp" line="+431"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
@@ -45,7 +93,7 @@ Sollten Sie Nein wählen, wird das AppImage einmalig ausgeführt, und es wird im
         <translation>Fehler beim Deregistrieren des AppImages vor der Reintegration</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+423"/>
+        <location filename="../src/shared/shared.cpp" line="+471"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -70,8 +118,8 @@ Kaputte Syntax:
 <context>
     <name>QObject</name>
     <message>
-        <location line="-264"/>
-        <location line="+408"/>
+        <location line="-267"/>
+        <location line="+411"/>
         <location filename="../src/ui/remove_main.cpp" line="+105"/>
         <location line="+13"/>
         <location line="+12"/>
@@ -81,7 +129,7 @@ Kaputte Syntax:
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-390"/>
+        <location filename="../src/ui/main.cpp" line="-408"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher unterstützt zur Zeit keine AppImages vom Typ %1.</translation>
     </message>
@@ -209,7 +257,7 @@ Kaputte Syntax:
         <translation>Datei ist kein AppImage: %1</translation>
     </message>
     <message>
-        <location line="+111"/>
+        <location line="+129"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
         <translation>Das Verzeichnis zum Speichern der integrierten AppImages ist derzeit:
@@ -338,8 +386,8 @@ Kaputte Syntax:
         <translation>Bei Klick auf Nein wird das AppImage einmalig ausgeführt, und das System in seinem derzeitigen Zustand belassen.</translation>
     </message>
     <message>
-        <location line="-380"/>
-        <location line="+384"/>
+        <location line="-383"/>
+        <location line="+387"/>
         <location filename="../src/ui/update_main.cpp" line="+12"/>
         <source>Warning</source>
         <translation>Warnung</translation>
