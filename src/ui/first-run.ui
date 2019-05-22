@@ -83,7 +83,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string notr="true">placeholder</string>
    </property>
   </widget>
   <widget class="QWidget" name="verticalLayoutWidget">
@@ -119,7 +119,7 @@
          </font>
         </property>
         <property name="text">
-         <string>to be filled!</string>
+         <string notr="true">path placeholder</string>
         </property>
        </widget>
       </item>
