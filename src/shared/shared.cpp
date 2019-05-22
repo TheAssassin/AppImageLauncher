@@ -515,7 +515,9 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
     // the following lines make things work during development: here, the build dir path is inserted instead, which
     // allows for testing with the latest changes
     if (!QDir(privateLibDirPath).exists()) {
-        privateLibDirPath = ownBinaryDirPath;
+        // this makes sure that when we're running from a local dev build, we end up in the right directory
+        // very important when running this code from the daemon, since it's not in the same directory as the helpers
+        privateLibDirPath = ownBinaryDirPath + "/../ui";
     }
 
     // add Remove action
