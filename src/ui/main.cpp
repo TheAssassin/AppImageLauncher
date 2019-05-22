@@ -361,9 +361,8 @@ int main(int argc, char** argv) {
         displayError("Could not read config file");
     }
 
-    // if the user opted out of the "ask move" thing, we acn just run the AppImage
-    qDebug() << config->allKeys();
-    if (!config->contains("AppImageLauncher/ask_to_move") || !config->value("AppImageLauncher/ask_to_move").toBool()) {
+    // if the user opted out of the "ask move" thing, we can just run the AppImage
+    if (config->contains("AppImageLauncher/ask_to_move") && !config->value("AppImageLauncher/ask_to_move").toBool()) {
         return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
     }
 
