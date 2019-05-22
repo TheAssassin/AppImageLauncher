@@ -45,6 +45,9 @@ int main(int argc, char* argv[]) {
                     if (!appimage_is_registered_in_system(path.toStdString().c_str())) {
                         std::cout << "AppImage is not integrated yet, integrating" << std::endl;
                         worker.scheduleForIntegration(path);
+                    } else if (!desktopFileHasBeenUpdatedSinceLastUpdate(path)) {
+                        std::cout << "AppImage has been integrated already but needs to be reintegrated" << std::endl;
+                        worker.scheduleForIntegration(path);
                     } else {
                         std::cout << "AppImage integrated already, skipping" << std::endl;
                     }
