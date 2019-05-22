@@ -11,6 +11,9 @@ using namespace appimagelauncher::cli;
 using namespace appimagelauncher::cli::commands;
 
 int main(int argc, char** argv) {
+    // we don't have support for UI (and don't want that), so let's tell shared to not display dialogs
+    setenv("_FORCE_HEADLESS", "1", 1);
+
     QCoreApplication app(argc, argv);
 
     QCommandLineParser parser;
