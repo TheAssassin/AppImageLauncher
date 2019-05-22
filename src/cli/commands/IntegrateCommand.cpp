@@ -44,7 +44,7 @@ namespace appimagelauncher {
                     if (QFileInfo(pathToAppImage).absoluteFilePath() != QFileInfo(pathToIntegratedAppImage).absoluteFilePath()) {
                         qout() << "Moving AppImage to integration directory" << endl;
 
-                        if (!QFile(pathToIntegratedAppImage).remove()) {
+                        if (QFile::exists(pathToIntegratedAppImage) && !QFile(pathToIntegratedAppImage).remove()) {
                             qerr() << "Could not move AppImage into integration directory (error: failed to overwrite existing file)" << endl;
                             continue;
                         }
