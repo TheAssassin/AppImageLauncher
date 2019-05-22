@@ -16,10 +16,15 @@ namespace appimagelauncher {
                 }
 
                 // make sure all AppImages exist on disk before further processing
-                for (const auto& path : arguments) {
+                for (auto& path : arguments) {
                     if (!QFileInfo(path).exists()) {
                         throw UsageError("could not find file " + path);
                     }
+
+                    // make path absolute
+                    // that will just prevent mistakes in libappimage and shared etc.
+                    // (stuff like TryExec keys etc. being set to paths relative to CWD when running the command , ...)
+                    path = QFileInfo(path).absolutePath();
                 }
 
                 for (const auto& pathToAppImage : arguments) {
