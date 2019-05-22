@@ -16,6 +16,9 @@
 #include "worker.h"
 
 int main(int argc, char* argv[]) {
+    // make sure shared won't try to use the UI
+    setenv("_FORCE_HEADLESS", "1", 1);
+
     QCoreApplication app(argc, argv);
 
     // by default, watch configured/default destination directory only

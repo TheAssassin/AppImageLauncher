@@ -172,7 +172,12 @@ std::shared_ptr<QSettings> getConfig() {
 
 // TODO: check if this works with Wayland
 bool isHeadless() {
-    bool isHeadless = false;
+    bool isHeadless = true;
+
+    // not really clean to abuse env vars as "global storage", but hey, it works
+    if (getenv("_FORCE_HEADLESS")) {
+        return true;
+    }
 
     QProcess proc;
     proc.setProgram("xhost");
