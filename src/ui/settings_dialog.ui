@@ -23,7 +23,7 @@
       <item>
        <widget class="QCheckBox" name="checkBoxAskMove">
         <property name="text">
-         <string>Ask wheter to move AppImage files into the applications directory</string>
+         <string>Ask whether to move AppImage files into the applications directory</string>
         </property>
        </widget>
       </item>
@@ -50,7 +50,7 @@
       <item row="0" column="0" colspan="2">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Location were to store your AppImage files to ease its management using the file manager.</string>
+         <string>Location where to store your AppImage files to ease their management using the file manager.</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
@@ -67,7 +67,7 @@
       <item row="2" column="0">
        <widget class="QCheckBox" name="checkBoxEnableDaemon">
         <property name="text">
-         <string>Execute auto-integration daemon</string>
+         <string>Enable auto-integration daemon</string>
         </property>
        </widget>
       </item>
