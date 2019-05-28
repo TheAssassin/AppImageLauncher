@@ -1,4 +1,5 @@
 #pragma once
+
 // system
 #include <memory>
 
@@ -16,8 +17,6 @@ Q_OBJECT
 
 public:
     explicit SettingsDialog(QWidget* parent = nullptr);
-
-    void setSettingsFile(const std::shared_ptr<QSettings>& settingsFile);
 
     ~SettingsDialog() override;
 

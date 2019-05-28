@@ -1,11 +1,17 @@
+// libraries
 #include <QtWidgets/QFileDialog>
+
+// local
 #include "settings_dialog.h"
 #include "ui_settings_dialog.h"
+#include "shared.h"
 
 SettingsDialog::SettingsDialog(QWidget* parent) :
         QDialog(parent),
         ui(new Ui::SettingsDialog) {
     ui->setupUi(this);
+
+    loadSettings();
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &SettingsDialog::onDialogAccepted);
     connect(ui->toolButtonChooseAppsDir, &QToolButton::released, this, &SettingsDialog::onChooseAppsDirClicked);
@@ -15,13 +21,9 @@ SettingsDialog::~SettingsDialog() {
     delete ui;
 }
 
-void SettingsDialog::setSettingsFile(const std::shared_ptr<QSettings>& settingsFile) {
-    SettingsDialog::settingsFile = settingsFile;
-
-    loadSettings();
-}
-
 void SettingsDialog::loadSettings() {
+    settingsFile = getConfig();
+
     if (settingsFile) {
         ui->checkBoxEnableDaemon->setChecked(settingsFile->value("AppImageLauncher/enable_daemon", false).toBool());
         ui->checkBoxAskMove->setChecked(settingsFile->value("AppImageLauncher/ask_to_move", false).toBool());
@@ -31,25 +33,27 @@ void SettingsDialog::loadSettings() {
 
 void SettingsDialog::onDialogAccepted() {
     saveSettings();
-
     toggleDaemon();
 }
 
 void SettingsDialog::saveSettings() {
-    settingsFile->setValue("AppImageLauncher/enable_daemon", ui->checkBoxEnableDaemon->isChecked());
-    settingsFile->setValue("AppImageLauncher/ask_to_move", ui->checkBoxAskMove->isChecked());
-    settingsFile->setValue("AppImageLauncher/destination", ui->lineEditApplicationsDir->text());
+    createConfigFile(ui->checkBoxAskMove->isChecked(),
+                     ui->lineEditApplicationsDir->text(),
+                     ui->checkBoxEnableDaemon->isChecked());
+
+    settingsFile = getConfig();
 }
 
 void SettingsDialog::toggleDaemon() {
     // assumes defaults if config doesn't exist or lacks the related key(s)
-    if (settingsFile || !settingsFile->contains("AppImageLauncher/enable_daemon") ||
-        settingsFile->value("AppImageLauncher/enable_daemon").toBool()) {
-        system("systemctl --user enable appimagelauncherd.service");
-        system("systemctl --user start  appimagelauncherd.service");
-    } else {
-        system("systemctl --user disable appimagelauncherd.service");
-        system("systemctl --user stop    appimagelauncherd.service");
+    if (settingsFile) {
+        if (settingsFile->value("AppImageLauncher/enable_daemon", false).toBool()) {
+            system("systemctl --user enable appimagelauncherd.service");
+            system("systemctl --user start  appimagelauncherd.service");
+        } else {
+            system("systemctl --user disable appimagelauncherd.service");
+            system("systemctl --user stop    appimagelauncherd.service");
+        }
     }
 }
 
