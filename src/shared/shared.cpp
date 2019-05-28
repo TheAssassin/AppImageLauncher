@@ -151,9 +151,6 @@ std::shared_ptr<QSettings> getConfig() {
     // it again, we'd leave a lot of systems in the old state, and would have to write some complex code to resolve
     // the situation
     // therefore, the file is simply created, but left empty intentionally
-    if (!QFileInfo::exists(configFilePath)) {
-        return nullptr;
-    }
 
     auto rv = std::make_shared<QSettings>(configFilePath, QSettings::IniFormat);
 

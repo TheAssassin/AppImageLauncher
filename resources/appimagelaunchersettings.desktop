@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Exec=AppImageLauncherSettings %f
+Name=AppImageLauncher Settings
+Icon=AppImageLauncher
+Terminal=false
+Categories=Utility;
+X-AppImage-Integrate=false
+StartupWMClass=AppImageLauncher
