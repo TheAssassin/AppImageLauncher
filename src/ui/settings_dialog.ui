@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>458</width>
-    <height>370</height>
+    <width>472</width>
+    <height>376</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -60,7 +60,7 @@
       <item row="1" column="0">
        <widget class="QLineEdit" name="lineEditApplicationsDir">
         <property name="text">
-         <string>/path</string>
+         <string notr="true">/path</string>
         </property>
        </widget>
       </item>

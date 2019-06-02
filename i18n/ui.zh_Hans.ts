@@ -82,7 +82,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
         <translation>未能在重新集成 AppImage 前注销它</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+478"/>
+        <location filename="../src/shared/shared.cpp" line="+476"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -107,8 +107,8 @@ Invalid syntax:
 <context>
     <name>QObject</name>
     <message>
-        <location line="-269"/>
-        <location line="+417"/>
+        <location line="-267"/>
+        <location line="+415"/>
         <location filename="../src/ui/remove_main.cpp" line="+105"/>
         <location line="+13"/>
         <location line="+12"/>
@@ -379,8 +379,8 @@ Invalid syntax:
         <translation>选择否将运行一次 AppImage ，并保留当前系统状态。</translation>
     </message>
     <message>
-        <location line="-389"/>
-        <location line="+393"/>
+        <location line="-387"/>
+        <location line="+391"/>
         <location filename="../src/ui/update_main.cpp" line="+12"/>
         <source>Warning</source>
         <translation>警告</translation>
@@ -390,7 +390,7 @@ Invalid syntax:
         <translation type="vanished">未能将 AppImage 移动到目标位置</translation>
     </message>
     <message>
-        <location line="-281"/>
+        <location line="-279"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>未能通过 libappimage 在系统中注册 AppImage</translation>
     </message>
@@ -415,7 +415,7 @@ Invalid syntax:
         <translation>AppImage 有无效桌面文件</translation>
     </message>
     <message>
-        <location line="+256"/>
+        <location line="+254"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>未能移动 AppImage 到目标位置。
@@ -595,12 +595,7 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>/path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
+        <location line="+17"/>
         <source>Enable auto-integration daemon</source>
         <translation type="unfinished"></translation>
     </message>

@@ -73,7 +73,7 @@ Elegir No ejecutará AppImage una vez, y dejará la AppImage en su directorio ac
         <translation>Error al eliminar el registro de AppImage antes de volver a integrarlo</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+478"/>
+        <location filename="../src/shared/shared.cpp" line="+476"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -108,8 +108,8 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
 <context>
     <name>QObject</name>
     <message>
-        <location line="-269"/>
-        <location line="+417"/>
+        <location line="-267"/>
+        <location line="+415"/>
         <location filename="../src/ui/remove_main.cpp" line="+105"/>
         <location line="+13"/>
         <location line="+12"/>
@@ -375,8 +375,8 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>Elegir No ejecutará AppImage una vez y dejará el sistema en su estado actual.</translation>
     </message>
     <message>
-        <location line="-389"/>
-        <location line="+393"/>
+        <location line="-387"/>
+        <location line="+391"/>
         <location filename="../src/ui/update_main.cpp" line="+12"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
@@ -386,7 +386,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation type="vanished">Error al mover AppImage a la ubicación de destino</translation>
     </message>
     <message>
-        <location line="-281"/>
+        <location line="-279"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Error al registrar AppImage en el sistema a través de libappimage</translation>
     </message>
@@ -411,7 +411,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>AppImage tiene un archivo de escritorio no válido</translation>
     </message>
     <message>
-        <location line="+256"/>
+        <location line="+254"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Error al mover AppImage a la ubicación de destino.
@@ -589,12 +589,7 @@ Este AppImage no soporta actualizaciones. Por favor solicite al autor que incluy
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>/path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
+        <location line="+17"/>
         <source>Enable auto-integration daemon</source>
         <translation type="unfinished"></translation>
     </message>

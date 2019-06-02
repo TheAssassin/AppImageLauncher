@@ -81,7 +81,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
         <translation>Failed to unregister AppImage before re-integrating it</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+478" />
+        <location filename="../src/shared/shared.cpp" line="+476" />
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -106,8 +106,8 @@ Invalid syntax:
 <context>
     <name>QObject</name>
     <message>
-        <location line="-269" />
-        <location line="+417" />
+        <location line="-267" />
+        <location line="+415" />
         <location filename="../src/ui/remove_main.cpp" line="+105" />
         <location line="+13" />
         <location line="+12" />
@@ -378,8 +378,8 @@ Invalid syntax:
         <translation>Choosing No will run the AppImage once, and leave the system in its current state.</translation>
     </message>
     <message>
-        <location line="-389" />
-        <location line="+393" />
+        <location line="-387" />
+        <location line="+391" />
         <location filename="../src/ui/update_main.cpp" line="+12" />
         <source>Warning</source>
         <translation>Warning</translation>
@@ -389,7 +389,7 @@ Invalid syntax:
         <translation type="vanished">Failed to move AppImage to target location</translation>
     </message>
     <message>
-        <location line="-281" />
+        <location line="-279" />
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Failed to register AppImage in system via libappimage</translation>
     </message>
@@ -414,7 +414,7 @@ Invalid syntax:
         <translation>AppImage has invalid desktop file</translation>
     </message>
     <message>
-        <location line="+256" />
+        <location line="+254" />
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Failed to move AppImage to target location.
@@ -594,12 +594,11 @@ The AppImage doesn't support updating. Please ask the authors to set upupdate in
         <translation>Location where to store your AppImage files to ease their management using the file manager.</translation>
     </message>
     <message>
-        <location line="+10" />
         <source>/path</source>
-        <translation>/path</translation>
+        <translation type="vanished">/path</translation>
     </message>
     <message>
-        <location line="+7" />
+        <location line="+17" />
         <source>Enable auto-integration daemon</source>
         <translation>Enable auto-integration daemon</translation>
     </message>

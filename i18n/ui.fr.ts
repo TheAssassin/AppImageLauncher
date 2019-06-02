@@ -83,7 +83,7 @@ Sélectionner Non lancera l&apos;AppImage une fois et laissera l&apos;AppImage d
         <translation>Impossible de désenregistrer l&apos;AppImage avant de la réintégrer</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+478"/>
+        <location filename="../src/shared/shared.cpp" line="+476"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -108,8 +108,8 @@ Syntaxe invalide :
 <context>
     <name>QObject</name>
     <message>
-        <location line="-269"/>
-        <location line="+417"/>
+        <location line="-267"/>
+        <location line="+415"/>
         <location filename="../src/ui/remove_main.cpp" line="+105"/>
         <location line="+13"/>
         <location line="+12"/>
@@ -376,8 +376,8 @@ Syntaxe invalide :
         <translation>Sélectionner Non lancera l&apos;AppImage une fois et laissera votre système dans son état actuel.</translation>
     </message>
     <message>
-        <location line="-389"/>
-        <location line="+393"/>
+        <location line="-387"/>
+        <location line="+391"/>
         <location filename="../src/ui/update_main.cpp" line="+12"/>
         <source>Warning</source>
         <translation>Avertissement</translation>
@@ -387,7 +387,7 @@ Syntaxe invalide :
         <translation type="vanished">Impossible de déplacer l&apos;AppImage vers son répertoire cible</translation>
     </message>
     <message>
-        <location line="-281"/>
+        <location line="-279"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Impossible d&apos;enregistrer l&apos;AppImage dans le système via libappimage</translation>
     </message>
@@ -412,7 +412,7 @@ Syntaxe invalide :
         <translation>L&apos;AppImage a un fichier « desktop » invalide</translation>
     </message>
     <message>
-        <location line="+256"/>
+        <location line="+254"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Impossible de déplacer l&apos;AppImage vers le répertoire cible.
@@ -590,12 +590,7 @@ Cette AppImage ne prend pas en charge les mises à jour. Veuillez contacter les 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>/path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
+        <location line="+17"/>
         <source>Enable auto-integration daemon</source>
         <translation type="unfinished"></translation>
     </message>

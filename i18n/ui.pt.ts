@@ -83,7 +83,7 @@ Escolher Não, irá executar a AppImage uma vez e mantê-la na directória em qu
         <translation>Falha ao desregistrar a AppImage antes de a reintegrar</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+478"/>
+        <location filename="../src/shared/shared.cpp" line="+476"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -108,8 +108,8 @@ Sintaxe inválida:
 <context>
     <name>QObject</name>
     <message>
-        <location line="-269"/>
-        <location line="+417"/>
+        <location line="-267"/>
+        <location line="+415"/>
         <location filename="../src/ui/remove_main.cpp" line="+105"/>
         <location line="+13"/>
         <location line="+12"/>
@@ -376,8 +376,8 @@ Sintaxe inválida:
         <translation>Escolher Não irá executar a AppImage uma vez e deixar o sistema no seu estado actual.</translation>
     </message>
     <message>
-        <location line="-389"/>
-        <location line="+393"/>
+        <location line="-387"/>
+        <location line="+391"/>
         <location filename="../src/ui/update_main.cpp" line="+12"/>
         <source>Warning</source>
         <translation>Aviso</translation>
@@ -387,7 +387,7 @@ Sintaxe inválida:
         <translation type="vanished">Falha ao mover a AppImage para a localização de destino</translation>
     </message>
     <message>
-        <location line="-281"/>
+        <location line="-279"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Falha ao registar AppImage no sistema via libappimage</translation>
     </message>
@@ -412,7 +412,7 @@ Sintaxe inválida:
         <translation>AppImage tem um ficheiro de ambiente de trabalho inválido</translation>
     </message>
     <message>
-        <location line="+256"/>
+        <location line="+254"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Falha ao mover AppImage para a localização de destino.
@@ -590,12 +590,7 @@ Esta AppImage não suporta actualização. Por favor, peça aos autores para adi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>/path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
+        <location line="+17"/>
         <source>Enable auto-integration daemon</source>
         <translation type="unfinished"></translation>
     </message>
