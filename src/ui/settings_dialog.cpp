@@ -15,6 +15,16 @@ SettingsDialog::SettingsDialog(QWidget* parent) :
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &SettingsDialog::onDialogAccepted);
     connect(ui->toolButtonChooseAppsDir, &QToolButton::released, this, &SettingsDialog::onChooseAppsDirClicked);
+
+    QStringList availableFeatures;
+
+#ifdef ENABLE_UPDATE_HELPER
+    availableFeatures << "<span style='color: green;'>✔</span> " + tr("updater available for AppImages supporting AppImageUpdate");
+#else
+    availableFeatures << "<span style='color: red;'>🞬</span> " + tr("updater unavailable");
+#endif
+
+    ui->featuresLabel->setText(availableFeatures.join('\n'));
 }
 
 SettingsDialog::~SettingsDialog() {
