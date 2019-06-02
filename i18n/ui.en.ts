@@ -40,7 +40,7 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+431" />
+        <location filename="../src/ui/main.cpp" line="+430" />
         <source>Warning</source>
         <translation>Warning</translation>
     </message>
@@ -81,7 +81,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
         <translation>Failed to unregister AppImage before re-integrating it</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+471" />
+        <location filename="../src/shared/shared.cpp" line="+478" />
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -106,8 +106,8 @@ Invalid syntax:
 <context>
     <name>QObject</name>
     <message>
-        <location line="-267" />
-        <location line="+411" />
+        <location line="-269" />
+        <location line="+417" />
         <location filename="../src/ui/remove_main.cpp" line="+105" />
         <location line="+13" />
         <location line="+12" />
@@ -117,7 +117,7 @@ Invalid syntax:
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-408" />
+        <location filename="../src/ui/main.cpp" line="-407" />
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher does not support type %1 AppImages at the moment.</translation>
     </message>
@@ -245,7 +245,7 @@ Invalid syntax:
         <translation>Not an AppImage: %1</translation>
     </message>
     <message>
-        <location line="+129" />
+        <location line="+128" />
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
         <translation>The directory the integrated AppImages are stored in is currently set to:
@@ -378,8 +378,8 @@ Invalid syntax:
         <translation>Choosing No will run the AppImage once, and leave the system in its current state.</translation>
     </message>
     <message>
-        <location line="-383" />
-        <location line="+387" />
+        <location line="-389" />
+        <location line="+393" />
         <location filename="../src/ui/update_main.cpp" line="+12" />
         <source>Warning</source>
         <translation>Warning</translation>
@@ -389,7 +389,7 @@ Invalid syntax:
         <translation type="vanished">Failed to move AppImage to target location</translation>
     </message>
     <message>
-        <location line="-275" />
+        <location line="-281" />
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Failed to register AppImage in system via libappimage</translation>
     </message>
@@ -414,7 +414,7 @@ Invalid syntax:
         <translation>AppImage has invalid desktop file</translation>
     </message>
     <message>
-        <location line="+250" />
+        <location line="+256" />
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Failed to move AppImage to target location.
@@ -564,6 +564,64 @@ The AppImage doesn't support updating. Please ask the authors to set upupdate in
         <location line="+3" />
         <source>Remove AppImage file from system</source>
         <translation>Remove AppImage file from system</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog</name>
+    <message>
+        <location filename="../src/ui/settings_dialog.ui" line="+14" />
+        <source>AppImageLauncher Settings</source>
+        <translation>AppImageLauncher Settings</translation>
+    </message>
+    <message>
+        <location line="+6" />
+        <source>Launcher Dialog</source>
+        <translation>Launcher Dialog</translation>
+    </message>
+    <message>
+        <location line="+6" />
+        <source>Ask whether to move AppImage files into the applications directory</source>
+        <translation>Ask whether to move AppImage files into the applications directory</translation>
+    </message>
+    <message>
+        <location line="+10" />
+        <source>Applications directory</source>
+        <translation>Applications directory</translation>
+    </message>
+    <message>
+        <location line="+17" />
+        <source>Location where to store your AppImage files to ease their management using the file manager.</source>
+        <translation>Location where to store your AppImage files to ease their management using the file manager.</translation>
+    </message>
+    <message>
+        <location line="+10" />
+        <source>/path</source>
+        <translation>/path</translation>
+    </message>
+    <message>
+        <location line="+7" />
+        <source>Enable auto-integration daemon</source>
+        <translation>Enable auto-integration daemon</translation>
+    </message>
+    <message>
+        <location line="+13" />
+        <source>Available Features</source>
+        <translation>Available Features</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settings_dialog.cpp" line="+22" />
+        <source>updater available for AppImages supporting AppImageUpdate</source>
+        <translation>updater available for AppImages supporting AppImageUpdate</translation>
+    </message>
+    <message>
+        <location line="+2" />
+        <source>updater unavailable</source>
+        <translation>updater unavailable</translation>
+    </message>
+    <message>
+        <location line="+49" />
+        <source>Select Applications directory</source>
+        <translation>Select Applications directory</translation>
     </message>
 </context>
 </TS>
