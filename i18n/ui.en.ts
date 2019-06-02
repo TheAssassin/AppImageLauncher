@@ -590,8 +590,12 @@ The AppImage doesn't support updating. Please ask the authors to set upupdate in
     </message>
     <message>
         <location line="+17" />
+        <source>Location where to store your AppImage files to ease their management</source>
+        <translation>Location where to store your AppImage files to ease their management</translation>
+    </message>
+    <message>
         <source>Location where to store your AppImage files to ease their management using the file manager.</source>
-        <translation>Location where to store your AppImage files to ease their management using the file manager.</translation>
+        <translation type="vanished">Location where to store your AppImage files to ease their management using the file manager.</translation>
     </message>
     <message>
         <source>/path</source>

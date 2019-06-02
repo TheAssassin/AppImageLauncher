@@ -592,7 +592,7 @@ Das AppImage unterstützt keine Updates. Bitte fragen Sie die Autoren, die Updat
     </message>
     <message>
         <location line="+17"/>
-        <source>Location where to store your AppImage files to ease their management using the file manager.</source>
+        <source>Location where to store your AppImage files to ease their management</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
