@@ -612,27 +612,27 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="+7"/>
         <source>Location where to store your AppImage files to ease their management</source>
-        <translation type="unfinished"></translation>
+        <translation>Ort zur Speicherung der AppImage-Dateien, um sie leichter handhaben zu können</translation>
     </message>
     <message>
         <location line="-28"/>
         <source>Enable auto-integration daemon</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-Integrations-Dienst aktivieren</translation>
     </message>
     <message>
         <location line="+50"/>
         <source>Available Features</source>
-        <translation type="unfinished"></translation>
+        <translation>Verfügbare Features</translation>
     </message>
     <message>
         <location filename="../src/ui/settings_dialog.cpp" line="+33"/>
         <source>updater available for AppImages supporting AppImageUpdate</source>
-        <translation type="unfinished"></translation>
+        <translation>Updater verfügbar für AppImages, die AppImageUpdate unterstützen</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>updater unavailable</source>
-        <translation type="unfinished"></translation>
+        <translation>Updater nicht verfügbar</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -642,7 +642,7 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="+51"/>
         <source>Select Applications directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Wähle Applications-Verzeichnis</translation>
     </message>
 </context>
 </TS>
