@@ -573,22 +573,22 @@ Das AppImage unterstützt keine Updates. Bitte fragen Sie die Autoren, die Updat
     <message>
         <location filename="../src/ui/settings_dialog.ui" line="+14"/>
         <source>AppImageLauncher Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImageLauncher-Einstellungen</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Launcher Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Launcher-Dialog</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Ask whether to move AppImage files into the applications directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Frage, ob AppImages in Applications-Verzeichnis verschoben werden sollen</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Applications directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Applications-Verzeichnis</translation>
     </message>
     <message>
         <location line="+17"/>
