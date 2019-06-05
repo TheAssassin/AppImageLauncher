@@ -1,7 +1,7 @@
 language: cpp
 compiler: gcc
 sudo: required
-dist: trusty
+dist: xenial
 # temporarily disabled due to performance issues on Travis CI
 #cache: ccache
 
@@ -32,7 +32,7 @@ matrix:
         - docker
       install:
       script: bash -ex travis/travis-cosmic.sh
-    - env: BIONIC= ARCH=x86_64
+    - env: XENIAL=1 ARCH=x86_64
       addons:
         apt:
           update: true
@@ -51,7 +51,7 @@ matrix:
             - libcurl3
             - libbsd-dev
             - libboost-filesystem-dev
-    - env: BIONIC= ARCH=i386
+    - env: XENIAL=1 ARCH=i386
       addons:
         apt:
           update: true
