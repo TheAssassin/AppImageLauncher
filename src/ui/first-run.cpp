@@ -93,7 +93,7 @@ private Q_SLOTS:
         // updating never is a bad idea
         updateDestinationDirLabel();
     }
-    
+
 private:
     void updateDestinationDirLabel() {
         QString text = destinationDir;
@@ -112,8 +112,7 @@ private:
 
         // set up logo in a QLabel
         firstRunDialog->logoLabel->setText("");
-        auto pixmap = QPixmap::fromImage(QImage(":/AppImageLauncher.svg")).scaled(
-                firstRunDialog->logoLabel->size(),
+        auto pixmap = QPixmap::fromImage(QImage(":/AppImageLauncher.svg")).scaled(QSize(128,128),
                 Qt::KeepAspectRatio, Qt::SmoothTransformation
         );
         firstRunDialog->logoLabel->setPixmap(pixmap);
@@ -129,12 +128,8 @@ private:
         connect(firstRunDialog->askMoveCheckBox, &QCheckBox::stateChanged, this, &FirstRunDialog::handleAskMoveCheckBoxStateChange);
 
         connect(firstRunDialog->customizeIntegrationDirButton, &QPushButton::clicked, this, &FirstRunDialog::handleCustomizeIntegrationDirButtonClicked);
-
-        // 20 minutes of trial and error and the solution to make the window _really_ fixed size is sooo simple...
-        // another day, another thing learned about Qt's madnesses...
-        setFixedSize(width(), height());
     }
-    
+
 public:
     FirstRunDialog() {
         initUi();
