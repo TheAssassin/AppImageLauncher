@@ -6,37 +6,38 @@
     <message>
         <location filename="../src/ui/first-run.ui" line="+20"/>
         <source>First run</source>
-        <translation type="unfinished"></translation>
+        <translation>Primera ejecución</translation>
     </message>
     <message>
         <location line="+55"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Bienvenido a AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Este pequeño ayudante esta
+diseñado para mejorar tu experiencia de AppImage en tu computadora.&lt;/p&gt;&lt;p&gt;Parece que nunca has ejecutado AppImageLauncher antes. Por favor tome un minuto y configura tus preferencias. Siempre puedes cambiarlos más adelante, usando el panel de control.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Ask me whether to move new AppImages into a central location</source>
-        <translation type="unfinished"></translation>
+        <translation>Pregúntame si debo mover las nuevas AppImages a una ubicación central</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Integration target destination directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorio destino de la integración del objetivo:</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>Customize</source>
-        <translation type="unfinished"></translation>
+        <translation>Personalizar</translation>
     </message>
     <message>
         <location filename="../src/ui/first-run.cpp" line="+86"/>
         <source>Choose integration destination dir</source>
-        <translation type="unfinished"></translation>
+        <translation>Elija la dirección del destino de integración</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>(default)</source>
-        <translation type="unfinished"></translation>
+        <translation>(por defecto)</translation>
     </message>
 </context>
 <context>
@@ -210,22 +211,22 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
     <message>
         <location line="+68"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al registrar AppImage en AppImageLauncherFS: no se pudo registrar la ruta de AppImage %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not open map file</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al registrar AppImage en AppImageLauncherFS: no se pudo abrir el archivo de mapa</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al registrar AppImage en AppImageLauncherFS: no se pudo encontrar el archivo virtual para AppImage</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Failed to register AppImage in AppImageLauncherFS: unknown failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al registrar AppImage en AppImageLauncherFS: error desconocido</translation>
     </message>
     <message>
         <location line="+92"/>
@@ -333,14 +334,18 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <source>Not an AppImage:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No es una AppImage:
+
+%1</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Refusing to work on non-integrated AppImage:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Negándose a trabajar en AppImage no integrado:
+
+%1</translation>
     </message>
     <message>
         <source>Please confirm</source>
@@ -426,7 +431,9 @@ Intenta copiar AppImage en su lugar?</translation>
         <source>Failed to call stat() on path:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al llamar a stat () en la ruta:
+
+%1</translation>
     </message>
     <message>
         <source>Failed to copy AppImage to target location</source>
@@ -547,27 +554,27 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location filename="../src/ui/remove.ui" line="+14"/>
         <source>Please confirm</source>
-        <translation type="unfinished">Por favor confirmar</translation>
+        <translation>Por favor confirmar</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove this AppImage?&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Estás seguro de que quieres eliminar esta AppImage?&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>%1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uncheck to only remove the desktop integration, but leave the file on the system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Desmarque solo eliminar la integración de escritorio, pero deje el archivo en el sistema.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Remove AppImage file from system</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar el archivo AppImage del sistema</translation>
     </message>
 </context>
 <context>
@@ -575,22 +582,22 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location filename="../src/ui/settings_dialog.ui" line="+14"/>
         <source>AppImageLauncher Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración de AppImageLauncher</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Launcher Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Diálogo de lanzador</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Ask whether to move AppImage files into the applications directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Preguntar si mover archivos de AppImage en el directorio de aplicaciones</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Applications directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorio de aplicaciones</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -605,27 +612,27 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="+7"/>
         <source>Location where to store your AppImage files to ease their management</source>
-        <translation type="unfinished"></translation>
+        <translation>Ubicación donde almacenar sus archivos de AppImage para facilitar su gestión</translation>
     </message>
     <message>
         <location line="-28"/>
         <source>Enable auto-integration daemon</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar demonio de autointegración</translation>
     </message>
     <message>
         <location line="+50"/>
         <source>Available Features</source>
-        <translation type="unfinished"></translation>
+        <translation>Características disponibles</translation>
     </message>
     <message>
         <location filename="../src/ui/settings_dialog.cpp" line="+33"/>
         <source>updater available for AppImages supporting AppImageUpdate</source>
-        <translation type="unfinished"></translation>
+        <translation>actualizador disponible para AppImages soportando AppImageUpdate</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>updater unavailable</source>
-        <translation type="unfinished"></translation>
+        <translation>actualizador no disponible</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -635,7 +642,7 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="+51"/>
         <source>Select Applications directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione el directorio de aplicaciones</translation>
     </message>
 </context>
 </TS>
