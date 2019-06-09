@@ -63,7 +63,13 @@ A few articles have been written about AppImageLauncher already:
 
 AppImageLauncher is supposed to integrate deeply in the systems. Therefore, an installation via native system packages is the preferred way to install AppImageLauncher. This way, AppImageLauncher's package can perform the necessary steps to have your system use it for all AppImage invocations.
 
-AppImageLauncher is built on Ubuntu trusty. The Debian and RPM packages provided on the [release page](https://github.com/TheAssassin/AppImageLauncher/releases) are tested on the following platforms:
+Compatibility table (likely incomplete, please feel free to send PRs to add distributions)
+
+| Release filename | Build system | Compatible distributions (incomplete) |
+| ---------------- | ------------ | ------------------------------------- |
+| `appimagelauncher-<version>_(amd64,i386).deb` | Ubuntu xenial | Ubuntu xenial (16.04), Debian jessie (8, oldstable), Netrunner 17.01 |
+| `appimagelauncher-<version>.bionic_(amd64,i386).deb` | Ubuntu bionic | Ubuntu bionic (18.04) and newer, Debian stretch (9, stable) and newer, Netrunner 18.03 and newer |
+| `appimagelauncher-<version>.(i386,x86_64).rpm` | Ubuntu xenial | openSUSE Leap 42 and newer, possibly openSUSE Tumbleweed, SUSE Enterprise Linux, RHEL 7, CentOS 7 |
 
   - Ubuntu trusty (14.04) and newer
     - **Important:** Ubuntu bionic (and newer) broke with the backwards compatibility of its `libcurl` packages, therefore users of these systems need to install the special `bionic` package
