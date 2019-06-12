@@ -176,16 +176,15 @@ void Worker::scheduleForUnintegration(const QString& path) {
 }
 
 void Worker::startTimerIfNecessary() {
-    if (!d->timerActive) {
-        d->timerActive = true;
-        auto* timer = new QTimer();
-        timer->setSingleShot(true);
-        timer->setInterval(d->TIMEOUT);
-        connect(timer, &QTimer::timeout, [this, timer]() {
-            d->timerActive = false;
-            executeDeferredOperations();
-            delete timer;
-        });
-        timer->start();
+    if (d->timerActive) {
+        return;
     }
+
+    // start timer and notify future calls to this that a timer is already running
+    d->timerActive = true;
+
+    QTimer::singleShot(d->TIMEOUT, [this]() {
+        d->timerActive = false;
+        executeDeferredOperations();
+    });
 }
