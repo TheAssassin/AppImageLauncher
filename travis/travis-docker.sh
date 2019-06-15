@@ -17,7 +17,7 @@ DOCKERFILE=Dockerfile.build-"$DOCKER_DIST"
 
 if [ ! -f "$DOCKERFILE" ]; then
     echo "Error: $DOCKERFILE could not be found"
-    exit
+    exit 1
 fi
 
 if [ "$ARCH" == "i386" ]; then
