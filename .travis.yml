@@ -1,106 +1,30 @@
 language: cpp
-compiler: gcc
-sudo: required
-dist: xenial
-# temporarily disabled due to performance issues on Travis CI
-#cache: ccache
 
 notifications:
   email: false
 
+services:
+  - docker
+
 matrix:
   include:
-    # hack to get proper bionic images
-    # no install step, but works with docker
-    - env: BIONIC=1 ARCH=x86_64
-      services:
-        - docker
-      install:
-      script: bash -ex travis/travis-bionic.sh
-    - env: BIONIC=1 ARCH=i386
-      services:
-        - docker
-      install:
-      script: bash -ex travis/travis-bionic.sh
-#    - env: COSMIC=1 ARCH=x86_64
-#      services:
-#        - docker
-#      install:
-#      script: bash -ex travis/travis-cosmic.sh
-#    - env: COSMIC=1 ARCH=i386
-#      services:
-#        - docker
-#      install:
-#      script: bash -ex travis/travis-cosmic.sh
-    - env: XENIAL=1 ARCH=x86_64
-      addons:
-        apt:
-          update: true
-          packages:
-            - qtbase5-dev
-            - qt5-qmake
-            - libqt5core5a
-            - libqt5gui5
-            - libcurl4-openssl-dev
-            - libqt5widgets5
-            - librsvg2-bin
-            - libfuse-dev
-            - desktop-file-utils
-            - ccache
-            - rpm
-            - libcurl3
-            - libbsd-dev
-            - libboost-filesystem-dev
-    - env: XENIAL=1 ARCH=i386
-      addons:
-        apt:
-          update: true
-          packages:
-            - gcc-multilib
-            - g++-multilib
-            - libfuse2:i386
-            - qtbase5-dev:i386
-            - qt5-qmake:i386
-            - qtbase5-dev-tools:i386
-            - qttools5-dev-tools:i386
-            - libqt5core5a:i386
-            - libqt5gui5:i386
-            - libcurl4-openssl-dev:i386
-            - libqt5widgets5:i386
-            - librsvg2-bin:i386
-            - libfuse-dev:i386
-            - desktop-file-utils
-            - ccache
-            - rpm
-            - libcurl3:i386
-            - libbsd-dev:i386
-            - libglib2.0-dev:i386
-            - liblzma-dev:i386
-            - libgtest-dev
-            - libcairo-dev:i386
-            - libgl1-mesa-dev:i386
-            - libglu1-mesa-dev:i386
-            - libpng-dev:i386
-            - libfontconfig1-dev:i386
-            - libfreetype6-dev:i386
-            - libarchive-dev:i386
-            - libboost-filesystem-dev:i386
-            - perl3:i386
-            - libssl1.0.0:i386
-            - libgtk-3-0:i386
-
-install:
-  - ccache -M 5G
-  #- source /opt/qt*/bin/qt*-env.sh
+    - env: DIST=bionic ARCH=x86_64
+    - env: DIST=bionic ARCH=i386
+    - env: DIST=xenial ARCH=x86_64
+    - env: DIST=xenial ARCH=i386
 
 script:
-  - bash -ex travis/travis-build.sh
+  - bash -ex travis/travis-docker.sh "$DIST"
 
 after_success:
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
   - if [ "$TRAVIS_BRANCH" != "master" ] && [ "$TRAVIS_TAG" == "" ]; then export TRAVIS_EVENT_TYPE=pull_request; fi
-  - if [ "$BIONIC" == "" ] && [ "$COSMIC" == "" ]; then bash upload.sh appimagelauncher*.{deb,rpm}* appimagelauncher*.tar*; fi
-  - if [ "$BIONIC" != "" ] || [ "$COSMIC" != "" ]; then bash upload.sh appimagelauncher*.deb*; fi
+  - |2
+    if [ "$DIST" == "xenial" ]; then
+        bash upload.sh appimagelauncher*.{deb,rpm}* appimagelauncher*.tar*
+    else
+        bash upload.sh appimagelauncher*.deb*
+    fi
 
 branches:
   except:

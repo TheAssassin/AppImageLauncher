@@ -4,7 +4,7 @@ set -x
 set -e
 
 # use RAM disk if possible
-if [ "$BIONIC" == "" ] && [ "$COSMIC" == "" ] && [ -d /dev/shm ]; then
+if [ "$CI" == "" ] && [ -d /dev/shm ]; then
     TEMP_BASE=/dev/shm
 else
     TEMP_BASE=/tmp
