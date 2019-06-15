@@ -17,6 +17,7 @@ RUN apt-get update && \
         libbsd-dev \
         qttools5-dev-tools \
         \
+        rpm \
         gcc \
         g++ \
         cmake \
