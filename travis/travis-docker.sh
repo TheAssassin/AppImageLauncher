@@ -28,4 +28,4 @@ fi
 docker build -t "$IMAGE" -f "$DOCKERFILE" .
 
 docker run -e ARCH -e TRAVIS_BUILD_NUMBER --rm -it -v $(readlink -f ..):/ws "$IMAGE" \
-    bash -xc "export CI=1 && export DOCKER_DIST=\"$DOCKER_DIST\" && cd /ws && travis/travis-build.sh"
+    bash -xc "export CI=1 && export DOCKER_DIST=\"$DOCKER_DIST\" && cd /ws && source travis/travis-build.sh"
