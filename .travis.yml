@@ -85,6 +85,9 @@ matrix:
             - libfreetype6-dev:i386
             - libarchive-dev:i386
             - libboost-filesystem-dev:i386
+            - perl3:i386
+            - libssl1.0.0:i386
+            - libgtk-3-0:i386
 
 install:
   - ccache -M 5G
