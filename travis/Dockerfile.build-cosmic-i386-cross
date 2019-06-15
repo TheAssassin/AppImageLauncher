@@ -27,7 +27,6 @@ RUN dpkg --add-architecture i386 && \
         libgl1-mesa-dev:i386 \
         libglu1-mesa-dev:i386 \
         \
-        ccache \
         rpm \
         gcc-multilib \
         g++-multilib \
