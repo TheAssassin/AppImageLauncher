@@ -9,7 +9,7 @@ RUN dpkg --add-architecture i386 && \
         libfuse2:i386 \
         qtbase5-dev:i386 \
         qt5-qmake:i386 \
-        qtbase5-dev-tools:i386 \
+        qtbase5-dev-tools \
         libqt5core5a:i386 \
         libqt5gui5:i386 \
         libcurl4-openssl-dev:i386 \
@@ -17,8 +17,8 @@ RUN dpkg --add-architecture i386 && \
         libqt5widgets5:i386 \
         librsvg2-bin:i386 \
         libfuse-dev:i386 \
-        libcurl4:i386 \
-        libcurl4 \
+        libcurl3:i386 \
+        libcurl3 \
         libbsd-dev:i386 \
         libglib2.0-dev:i386 \
         liblzma-dev:i386 \
@@ -43,6 +43,7 @@ RUN dpkg --add-architecture i386 && \
         desktop-file-utils \
         pkg-config \
         qttools5-dev-tools:i386 \
-        qt5-qmake-bin:i386 \
+        libfontconfig1-dev:i386 \
+        libfreetype6-dev:i386 \
         libarchive-dev:i386 \
         libboost-filesystem-dev:i386
