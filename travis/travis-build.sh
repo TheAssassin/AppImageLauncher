@@ -61,7 +61,7 @@ cmake .
 cpack -V -G DEB
 
 # skip RPM and source tarball build on bionic
-if [ "$BIONIC" == "" ] && [ "$COSMIC" == "" ]; then
+if [ "$DEBIAN_DIST" == "xenial" ]; then
     # build RPM package
     cpack -V -G RPM
 
@@ -75,7 +75,7 @@ if [ "$BIONIC" == "" ] && [ "$COSMIC" == "" ]; then
 fi
 
 # move AppImages to old cwd
-if [ "$BIONIC" == "" ] && [ "$COSMIC" == "" ]; then
+if [ "$DEBIAN_DIST" == "xenial" ]; then
     mv appimagelauncher*.{deb,rpm}* appimagelauncher*.tar* "$OLD_CWD"/
 else
     mv appimagelauncher*.deb* "$OLD_CWD"/
