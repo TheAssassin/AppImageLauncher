@@ -34,7 +34,11 @@ export PATH=$(readlink -f bin/):"$PATH"
 which cmake
 cmake --version
 
-EXTRA_CMAKE_FLAGS="-DCPACK_DEBIAN_COMPATIBILITY_LEVEL=\"$DEBIAN_DIST\""
+if [ "$DOCKER_DIST" != "" ]; then
+    EXTRA_CMAKE_FLAGS="-DCPACK_DEBIAN_COMPATIBILITY_LEVEL=\"$DEBIAN_DIST\""
+else
+    echo "--- WARNING --- DEBIAN_DIST has not been set"
+fi
 
 if [ "$ARCH" == "i386" ]; then
     EXTRA_CMAKE_FLAGS="$EXTRA_CMAKE_FLAGS -DCMAKE_TOOLCHAIN_FILE=$REPO_ROOT/cmake/toolchains/i386-linux-gnu.cmake -DUSE_SYSTEM_XZ=ON -DUSE_SYSTEM_LIBARCHIVE=ON"
