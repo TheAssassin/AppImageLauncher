@@ -35,7 +35,7 @@ which cmake
 cmake --version
 
 if [ "$DEBIAN_DIST" != "" ]; then
-    EXTRA_CMAKE_FLAGS="-DCPACK_DEBIAN_COMPATIBILITY_LEVEL=\"$DEBIAN_DIST\""
+    EXTRA_CMAKE_FLAGS=-DCPACK_DEBIAN_COMPATIBILITY_LEVEL="$DEBIAN_DIST"
 else
     echo "--- WARNING --- DEBIAN_DIST has not been set"
 fi
