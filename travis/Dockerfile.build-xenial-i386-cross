@@ -1,7 +1,7 @@
 # used to cache installed dependencies for bionic builds
 # this speeds up builds during development, as the dependencies are just installed _once_
 
-FROM ubuntu:xenial
+FROM i386/ubuntu:xenial
 
 RUN dpkg --add-architecture i386 && \
     apt-get update && \
