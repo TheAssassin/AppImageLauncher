@@ -51,6 +51,7 @@ namespace appimagelauncher {
 
                     auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
 
+                    // check if it's already in the right place
                     if (QFileInfo(pathToAppImage).absoluteFilePath() != QFileInfo(pathToIntegratedAppImage).absoluteFilePath()) {
                         qout() << "Moving AppImage to integration directory" << endl;
 
@@ -63,8 +64,7 @@ namespace appimagelauncher {
                             qerr() << "Cannot move AppImage to integration directory (permission problem?), attempting to copy instead" << endl;
 
                             if (!QFile(pathToAppImage).copy(pathToIntegratedAppImage)) {
-                                qerr() << "Failed to copy AppImage, giving up" << endl;
-                                continue;
+                                throw CliError("Failed to copy AppImage, giving up");
                             }
                         }
                     } else {
