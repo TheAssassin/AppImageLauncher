@@ -860,3 +860,8 @@ bool fsDaemonHasBeenRestartedSinceLastUpdate() {
 
     return serviceStartTime > ownBinaryMTime;
 }
+
+bool isAppImage(const QString& path) {
+    const auto type = appimage_get_type(path.toUtf8(), false);
+    return type > 0 && type <= 2;
+}

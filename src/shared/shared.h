@@ -90,3 +90,6 @@ bool desktopFileHasBeenUpdatedSinceLastUpdate(const QString& pathToAppImage);
 
 // returns true if the AppImageLauncherFS service was restarted since the last AppImageLauncher update
 bool fsDaemonHasBeenRestartedSinceLastUpdate();
+
+// checks whether a file is an AppImage
+bool isAppImage(const QString& path);

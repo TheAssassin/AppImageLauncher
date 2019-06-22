@@ -30,6 +30,16 @@ namespace appimagelauncher {
                 for (const auto& pathToAppImage : arguments) {
                     qout() << "Processing " << pathToAppImage << endl;
 
+                    if (!QFileInfo(pathToAppImage).isFile()) {
+                        qerr() << "Warning: Not a file, skipping: " << pathToAppImage << endl;
+                        continue;
+                    }
+
+                    if (!isAppImage(pathToAppImage)) {
+                        qerr() << "Warning: Not an AppImage, skipping: " << pathToAppImage << endl;
+                        continue;
+                    }
+
                     if (hasAlreadyBeenIntegrated(pathToAppImage)) {
                         if (desktopFileHasBeenUpdatedSinceLastUpdate(pathToAppImage)) {
                             qout() << "AppImage has been integrated already and doesn't need to be re-integrated, skipping" << endl;
