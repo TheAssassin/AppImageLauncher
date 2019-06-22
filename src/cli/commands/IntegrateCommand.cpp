@@ -24,7 +24,7 @@ namespace appimagelauncher {
                     // make path absolute
                     // that will just prevent mistakes in libappimage and shared etc.
                     // (stuff like TryExec keys etc. being set to paths relative to CWD when running the command , ...)
-                    path = QFileInfo(path).absolutePath();
+                    path = QFileInfo(path).absoluteFilePath();
                 }
 
                 for (const auto& pathToAppImage : arguments) {
