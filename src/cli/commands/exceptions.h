@@ -9,6 +9,11 @@
 namespace appimagelauncher {
     namespace cli {
         namespace commands {
+            class CliError : public std::runtime_error {
+            public:
+                explicit CliError(const QString& message) : std::runtime_error(message.toStdString()) {}
+            };
+
             class CommandNotFoundError : public std::runtime_error {
             private:
                 QString commandName;
@@ -22,9 +27,9 @@ namespace appimagelauncher {
                 }
             };
 
-            class UsageError : public std::runtime_error {
+            class UsageError : public CliError {
             public:
-                explicit UsageError(const QString& message) : std::runtime_error(message.toStdString()) {}
+                using CliError::CliError;
             };
 
             class InvalidArgumentsError : public UsageError {
