@@ -432,18 +432,6 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
 
     std::vector<std::string> desktopActions = {"Remove"};
 
-#ifdef ENABLE_UPDATE_HELPER
-    desktopActions.emplace_back("Update");
-#endif
-
-    g_key_file_set_string_list(
-        desktopFile.get(),
-        G_KEY_FILE_DESKTOP_GROUP,
-        G_KEY_FILE_DESKTOP_KEY_ACTIONS,
-        convertToCharPointerList(desktopActions).data(),
-        desktopActions.size()
-    );
-
     // load translations from JSON file(s)
     QMap<QString, QString> removeActionNameTranslations;
 
@@ -543,7 +531,12 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
     // add Update action
     {
         appimage::update::Updater updater(pathToAppImage.toStdString());
+
+        // but only if there's update information
         if (!updater.updateInformation().empty()) {
+            // section needs to be announced in desktop actions list
+            desktopActions.emplace_back("Update");
+
             const auto updateSectionName = "Desktop Action Update";
 
             g_key_file_set_string(desktopFile.get(), updateSectionName, "Name", "Update AppImage");
@@ -562,6 +555,15 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
         }
     }
 #endif
+
+    // add desktop actions key
+    g_key_file_set_string_list(
+            desktopFile.get(),
+            G_KEY_FILE_DESKTOP_GROUP,
+            G_KEY_FILE_DESKTOP_KEY_ACTIONS,
+            convertToCharPointerList(desktopActions).data(),
+            desktopActions.size()
+    );
 
     // add version key
     const auto version = QApplication::applicationVersion().replace("version ", "").toStdString();
