@@ -478,11 +478,11 @@ Try to copy AppImage instead?</translation>
         <source>Could not find update information in AppImage:
 %1
 
-The AppImage doesn't support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
+The AppImage doesn't support updating. Please ask the authors to set up update information to allow for easy updating.</source>
         <translation>Could not find update information in AppImage:
 %1
 
-The AppImage doesn't support updating. Please ask the authors to set upupdate information to allow for easy updating.</translation>
+The AppImage doesn't support updating. Please ask the authors to set up update information to allow for easy updating.</translation>
     </message>
     <message>
         <location line="+12" />
