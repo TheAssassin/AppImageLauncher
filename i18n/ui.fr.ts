@@ -9,17 +9,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+55"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+22"/>
         <source>Ask me whether to move new AppImages into a central location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+21"/>
         <source>Integration target destination directory:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -83,7 +83,7 @@ Sélectionner Non lancera l&apos;AppImage une fois et laissera l&apos;AppImage d
         <translation>Impossible de désenregistrer l&apos;AppImage avant de la réintégrer</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+476"/>
+        <location filename="../src/shared/shared.cpp" line="+464"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -108,8 +108,8 @@ Syntaxe invalide :
 <context>
     <name>QObject</name>
     <message>
-        <location line="-267"/>
-        <location line="+415"/>
+        <location line="-255"/>
+        <location line="+417"/>
         <location filename="../src/ui/remove_main.cpp" line="+105"/>
         <location line="+13"/>
         <location line="+12"/>
@@ -203,7 +203,12 @@ Syntaxe invalide :
         <translation>Impossible de nettoyer les anciens fichiers « desktop »</translation>
     </message>
     <message>
-        <location line="-91"/>
+        <location line="-159"/>
+        <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+68"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -376,8 +381,8 @@ Syntaxe invalide :
         <translation>Sélectionner Non lancera l&apos;AppImage une fois et laissera votre système dans son état actuel.</translation>
     </message>
     <message>
-        <location line="-387"/>
-        <location line="+391"/>
+        <location line="-389"/>
+        <location line="+393"/>
         <location filename="../src/ui/update_main.cpp" line="+12"/>
         <source>Warning</source>
         <translation>Avertissement</translation>
@@ -387,7 +392,7 @@ Syntaxe invalide :
         <translation type="vanished">Impossible de déplacer l&apos;AppImage vers son répertoire cible</translation>
     </message>
     <message>
-        <location line="-279"/>
+        <location line="-281"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Impossible d&apos;enregistrer l&apos;AppImage dans le système via libappimage</translation>
     </message>
@@ -412,7 +417,7 @@ Syntaxe invalide :
         <translation>L&apos;AppImage a un fichier « desktop » invalide</translation>
     </message>
     <message>
-        <location line="+254"/>
+        <location line="+256"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Impossible de déplacer l&apos;AppImage vers le répertoire cible.
@@ -470,15 +475,22 @@ Essayer plutôt de la copier ?</translation>
         <translation>Aucune information de mise à jour trouvée</translation>
     </message>
     <message>
+        <source>Could not find update information in AppImage:
+%1
+
+The AppImage doesn&apos;t support updating. Please ask the authors to set update information to allow for easy updating.</source>
+        <translation type="vanished">Impossible de trouver des informations de mise à jour dans l&apos;AppImage :
+%1
+
+Cette AppImage ne prend pas en charge les mises à jour. Veuillez contacter les auteurs pour qu&apos;ils définissent des informations de mise à jour, ce qui permet les mises à jour automatiques.</translation>
+    </message>
+    <message>
         <location line="+1"/>
         <source>Could not find update information in AppImage:
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation>Impossible de trouver des informations de mise à jour dans l&apos;AppImage :
-%1
-
-Cette AppImage ne prend pas en charge les mises à jour. Veuillez contacter les auteurs pour qu&apos;ils définissent des informations de mise à jour, ce qui permet les mises à jour automatiques.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+12"/>

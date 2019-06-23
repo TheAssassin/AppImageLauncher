@@ -9,17 +9,17 @@
         <translation>Erste Ausführung</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+55"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Willkommen bei AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Dieses kleine Hilfsprogramm wurde entworfen, um Ihre AppImage-Erfahrung auf Ihrem Computer zu verbessern.&lt;/p&gt;&lt;p&gt;Es scheint, als hätten Sie AppImageLauncher nie zuvor ausgeführt. Bitte nehmen Sie sich eine Minute zeit und konfigurieren Sie Ihre Einstellungen. Sie können diese jederzeit über den Einstellungsdialog ändern.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+22"/>
         <source>Ask me whether to move new AppImages into a central location</source>
         <translation>Frage mich, ob neue AppImages in ein zentrales Verzeichnis verschoben werden sollen</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+21"/>
         <source>Integration target destination directory:</source>
         <translation>Integrations-Zielverzeichnis:</translation>
     </message>
@@ -83,7 +83,7 @@ Sollten Sie Nein wählen, wird das AppImage einmalig ausgeführt, und es wird im
         <translation>Fehler beim Deregistrieren des AppImages vor der Reintegration</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+476"/>
+        <location filename="../src/shared/shared.cpp" line="+464"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -108,8 +108,8 @@ Kaputte Syntax:
 <context>
     <name>QObject</name>
     <message>
-        <location line="-267"/>
-        <location line="+415"/>
+        <location line="-255"/>
+        <location line="+417"/>
         <location filename="../src/ui/remove_main.cpp" line="+105"/>
         <location line="+13"/>
         <location line="+12"/>
@@ -203,7 +203,12 @@ Kaputte Syntax:
         <translation>Fehler beim Aufräumen der alten Desktop-Dateien</translation>
     </message>
     <message>
-        <location line="-91"/>
+        <location line="-159"/>
+        <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+68"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
         <translation>Fehler beim Registrieren des AppImages in AppImageLauncherFS: Registrieren des AppImage-Pfades %1 fehlgeschlagen</translation>
     </message>
@@ -380,8 +385,8 @@ Kaputte Syntax:
         <translation>Bei Klick auf Nein wird das AppImage einmalig ausgeführt, und das System in seinem derzeitigen Zustand belassen.</translation>
     </message>
     <message>
-        <location line="-387"/>
-        <location line="+391"/>
+        <location line="-389"/>
+        <location line="+393"/>
         <location filename="../src/ui/update_main.cpp" line="+12"/>
         <source>Warning</source>
         <translation>Warnung</translation>
@@ -391,7 +396,7 @@ Kaputte Syntax:
         <translation type="vanished">Verschieben des AppImages in Zielverzeichnis fehlgeschlagen</translation>
     </message>
     <message>
-        <location line="-279"/>
+        <location line="-281"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Fehler beim Registrieren des AppImages im System via libappimage</translation>
     </message>
@@ -416,7 +421,7 @@ Kaputte Syntax:
         <translation>AppImage hat ungültige Desktop-Datei</translation>
     </message>
     <message>
-        <location line="+254"/>
+        <location line="+256"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Fehler beim Verschieben des AppImages in Zielverzeichnis.
@@ -476,15 +481,22 @@ Stattdessen versuchen, das AppImage zu kopieren?</translation>
         <translation>Keine Update-Informationen gefunden</translation>
     </message>
     <message>
+        <source>Could not find update information in AppImage:
+%1
+
+The AppImage doesn&apos;t support updating. Please ask the authors to set update information to allow for easy updating.</source>
+        <translation type="vanished">Konnte keine Update-Informationen finden im AppImage:
+%1
+
+Das AppImage unterstützt keine Updates. Bitte fragen Sie die Autoren, die Update-Informationen zu setzen, um einfaches Aktualisieren zu ermöglichen.</translation>
+    </message>
+    <message>
         <location line="+1"/>
         <source>Could not find update information in AppImage:
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation>Konnte keine Update-Informationen finden im AppImage:
-%1
-
-Das AppImage unterstützt keine Updates. Bitte fragen Sie die Autoren, die Update-Informationen zu setzen, um einfaches Aktualisieren zu ermöglichen.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+12"/>

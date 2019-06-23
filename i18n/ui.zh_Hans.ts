@@ -9,17 +9,17 @@
         <translation>首次运行</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+55"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;欢迎使用 AppImageLauncher！&lt;/span&gt;&lt;/p&gt;&lt;p&gt;这个小助手旨在改善您的计算机上的 AppImage 体验。&lt;/p&gt;&lt;p&gt;看来您以前从未运行过 AppImageLauncher 。请花一点时间配置您的偏好。您随后可以使用控制面板更改这些内容。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+22"/>
         <source>Ask me whether to move new AppImages into a central location</source>
         <translation>询问我是否要将新的 AppImage 移动到一个中心位置</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+21"/>
         <source>Integration target destination directory:</source>
         <translation>集成目标文件夹：</translation>
     </message>
@@ -82,7 +82,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
         <translation>未能在重新集成 AppImage 前注销它</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+476"/>
+        <location filename="../src/shared/shared.cpp" line="+464"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -107,8 +107,8 @@ Invalid syntax:
 <context>
     <name>QObject</name>
     <message>
-        <location line="-267"/>
-        <location line="+415"/>
+        <location line="-255"/>
+        <location line="+417"/>
         <location filename="../src/ui/remove_main.cpp" line="+105"/>
         <location line="+13"/>
         <location line="+12"/>
@@ -202,7 +202,12 @@ Invalid syntax:
         <translation>清除旧桌面文件失败</translation>
     </message>
     <message>
-        <location line="-91"/>
+        <location line="-159"/>
+        <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+68"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
         <translation>在 AppImageLauncherFSFailed 中注册 AppImage 失败：注册 AppImage 路径 %1 失败</translation>
     </message>
@@ -379,8 +384,8 @@ Invalid syntax:
         <translation>选择否将运行一次 AppImage ，并保留当前系统状态。</translation>
     </message>
     <message>
-        <location line="-387"/>
-        <location line="+391"/>
+        <location line="-389"/>
+        <location line="+393"/>
         <location filename="../src/ui/update_main.cpp" line="+12"/>
         <source>Warning</source>
         <translation>警告</translation>
@@ -390,7 +395,7 @@ Invalid syntax:
         <translation type="vanished">未能将 AppImage 移动到目标位置</translation>
     </message>
     <message>
-        <location line="-279"/>
+        <location line="-281"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>未能通过 libappimage 在系统中注册 AppImage</translation>
     </message>
@@ -415,7 +420,7 @@ Invalid syntax:
         <translation>AppImage 有无效桌面文件</translation>
     </message>
     <message>
-        <location line="+254"/>
+        <location line="+256"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>未能移动 AppImage 到目标位置。
@@ -475,15 +480,22 @@ Try to copy AppImage instead?</source>
         <translation>未找到更新信息</translation>
     </message>
     <message>
+        <source>Could not find update information in AppImage:
+%1
+
+The AppImage doesn&apos;t support updating. Please ask the authors to set update information to allow for easy updating.</source>
+        <translation type="vanished">AppImage 中未找到更新信息：
+%1
+
+此 AppImage 不支持更新。请要求作者创建更新信息以便轻松更新。</translation>
+    </message>
+    <message>
         <location line="+1"/>
         <source>Could not find update information in AppImage:
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation>AppImage 中未找到更新信息：
-%1
-
-此 AppImage 不支持更新。请要求作者创建更新信息以便轻松更新。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+12"/>

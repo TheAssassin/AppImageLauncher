@@ -9,17 +9,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+55"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+22"/>
         <source>Ask me whether to move new AppImages into a central location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+21"/>
         <source>Integration target destination directory:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -73,7 +73,7 @@ Elegir No ejecutará AppImage una vez, y dejará la AppImage en su directorio ac
         <translation>Error al eliminar el registro de AppImage antes de volver a integrarlo</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+476"/>
+        <location filename="../src/shared/shared.cpp" line="+464"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -108,8 +108,8 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
 <context>
     <name>QObject</name>
     <message>
-        <location line="-267"/>
-        <location line="+415"/>
+        <location line="-255"/>
+        <location line="+417"/>
         <location filename="../src/ui/remove_main.cpp" line="+105"/>
         <location line="+13"/>
         <location line="+12"/>
@@ -203,7 +203,12 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>Error al limpiar los viejos archivos de escritorio</translation>
     </message>
     <message>
-        <location line="-91"/>
+        <location line="-159"/>
+        <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+68"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -375,8 +380,8 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>Elegir No ejecutará AppImage una vez y dejará el sistema en su estado actual.</translation>
     </message>
     <message>
-        <location line="-387"/>
-        <location line="+391"/>
+        <location line="-389"/>
+        <location line="+393"/>
         <location filename="../src/ui/update_main.cpp" line="+12"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
@@ -386,7 +391,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation type="vanished">Error al mover AppImage a la ubicación de destino</translation>
     </message>
     <message>
-        <location line="-279"/>
+        <location line="-281"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Error al registrar AppImage en el sistema a través de libappimage</translation>
     </message>
@@ -411,7 +416,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>AppImage tiene un archivo de escritorio no válido</translation>
     </message>
     <message>
-        <location line="+254"/>
+        <location line="+256"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Error al mover AppImage a la ubicación de destino.
@@ -465,15 +470,22 @@ Intenta copiar AppImage en su lugar?</translation>
         <translation>No se encontraron actualizaciones</translation>
     </message>
     <message>
+        <source>Could not find update information in AppImage:
+%1
+
+The AppImage doesn&apos;t support updating. Please ask the authors to set update information to allow for easy updating.</source>
+        <translation type="vanished">No se encontró la información de actualización en la AppImage:
+%1
+
+Este AppImage no soporta actualizaciones. Por favor solicite al autor que incluya la información de actualizaciones.</translation>
+    </message>
+    <message>
         <location line="+1"/>
         <source>Could not find update information in AppImage:
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation>No se encontró la información de actualización en la AppImage:
-%1
-
-Este AppImage no soporta actualizaciones. Por favor solicite al autor que incluya la información de actualizaciones.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+12"/>

@@ -7,17 +7,17 @@
         <translation>First run</translation>
     </message>
     <message>
-        <location line="+31" />
+        <location line="+55" />
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-size:11pt; font-weight:600;"&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-size:11pt; font-weight:600;"&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+19" />
+        <location line="+22" />
         <source>Ask me whether to move new AppImages into a central location</source>
         <translation>Ask me whether to move new AppImages into a central location</translation>
     </message>
     <message>
-        <location line="+35" />
+        <location line="+21" />
         <source>Integration target destination directory:</source>
         <translation>Integration target destination directory:</translation>
     </message>
@@ -81,7 +81,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
         <translation>Failed to unregister AppImage before re-integrating it</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+476" />
+        <location filename="../src/shared/shared.cpp" line="+464" />
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -106,8 +106,8 @@ Invalid syntax:
 <context>
     <name>QObject</name>
     <message>
-        <location line="-267" />
-        <location line="+415" />
+        <location line="-255" />
+        <location line="+417" />
         <location filename="../src/ui/remove_main.cpp" line="+105" />
         <location line="+13" />
         <location line="+12" />
@@ -201,7 +201,12 @@ Invalid syntax:
         <translation>Failed to clean up old desktop files</translation>
     </message>
     <message>
-        <location line="-91" />
+        <location line="-159" />
+        <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
+        <translation>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</translation>
+    </message>
+    <message>
+        <location line="+68" />
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
         <translation>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</translation>
     </message>
@@ -378,8 +383,8 @@ Invalid syntax:
         <translation>Choosing No will run the AppImage once, and leave the system in its current state.</translation>
     </message>
     <message>
-        <location line="-387" />
-        <location line="+391" />
+        <location line="-389" />
+        <location line="+393" />
         <location filename="../src/ui/update_main.cpp" line="+12" />
         <source>Warning</source>
         <translation>Warning</translation>
@@ -389,7 +394,7 @@ Invalid syntax:
         <translation type="vanished">Failed to move AppImage to target location</translation>
     </message>
     <message>
-        <location line="-279" />
+        <location line="-281" />
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Failed to register AppImage in system via libappimage</translation>
     </message>
@@ -414,7 +419,7 @@ Invalid syntax:
         <translation>AppImage has invalid desktop file</translation>
     </message>
     <message>
-        <location line="+254" />
+        <location line="+256" />
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Failed to move AppImage to target location.
@@ -472,6 +477,16 @@ Try to copy AppImage instead?</translation>
         <location line="+7" />
         <source>No update information found</source>
         <translation>No update information found</translation>
+    </message>
+    <message>
+        <source>Could not find update information in AppImage:
+%1
+
+The AppImage doesn't support updating. Please ask the authors to set update information to allow for easy updating.</source>
+        <translation type="vanished">Could not find update information in AppImage:
+%1
+
+The AppImage doesn't support updating. Please ask the authors to set update information to allow for easy updating.</translation>
     </message>
     <message>
         <location line="+1" />
