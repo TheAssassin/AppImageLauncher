@@ -48,7 +48,9 @@ add_subdirectory(daemon)
 add_subdirectory(ui)
 
 # FUSE filesystem AppImageLauncherFS
-add_subdirectory(fusefs)
+if(NOT BUILD_LITE)
+    add_subdirectory(fusefs)
+endif()
 
 # CLI helper allowing other tools to utilize AppImageLauncher's code for e.g., integrating AppImages
 add_subdirectory(cli)
