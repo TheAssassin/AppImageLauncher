@@ -42,7 +42,7 @@ fi
 
 if [ "$ARCH" == "i386" ]; then
     EXTRA_CMAKE_FLAGS="$EXTRA_CMAKE_FLAGS -DCMAKE_TOOLCHAIN_FILE=$REPO_ROOT/cmake/toolchains/i386-linux-gnu.cmake -DUSE_SYSTEM_XZ=ON -DUSE_SYSTEM_LIBARCHIVE=ON"
-    if [ "$BIONIC" == "" ] && [ "$COSMIC" == "" ]; then
+    if [ "$DEBIAN_DIST" != "bionic" ] && [ "$DEBIAN_DIST" != "cosmic" ]; then
         export QT_SELECT=qt5-i386-linux-gnu
     else
         export QT_SELECT=qt5
