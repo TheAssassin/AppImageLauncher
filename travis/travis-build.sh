@@ -52,7 +52,7 @@ fi
 cmake "$REPO_ROOT" -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RelWithDebInfo $EXTRA_CMAKE_FLAGS -DTRAVIS_BUILD=ON -DBUILD_TESTING=OFF
 
 # now, compile
-make
+make -j $(nproc)
 
 # re-run cmake to find built shared objects with the globs, and update the CPack files
 cmake .
