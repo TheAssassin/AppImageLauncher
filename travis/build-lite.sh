@@ -71,8 +71,8 @@ wget https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/downloa
 wget https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-"$ARCH".AppImage
 chmod -v +x linuxdeploy*-"$ARCH".AppImage
 
-export OUTPUT=appimagelauncher-lite-"$VERSION"-"$ARCH".AppImage
 export VERSION=$(src/cli/ail-cli --version | awk '{print $3}')
+export OUTPUT=appimagelauncher-lite-"$VERSION"-"$ARCH".AppImage
 export APPIMAGE_EXTRACT_AND_RUN=1
 
 ./linuxdeploy-"$ARCH".AppImage --plugin qt --appdir $(readlink -f AppDir) --custom-apprun "$REPO_ROOT"/resources/appimagelauncher-lite-AppRun.sh --output appimage -d "$REPO_ROOT"/resources/appimagelauncher-lite.desktop
