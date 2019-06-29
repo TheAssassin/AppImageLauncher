@@ -8,7 +8,7 @@ fi
 
 # shift does not work if no arguments have been passed, therefore we just handle that situation right now
 if [[ "$1" == "" ]]; then
-    echo "Usage: ${APPIMAGE:-$0} <operation> [...]" 1>&2
+    echo "Error: no option passed, use --help for more information"
     exit 2
 fi
 
@@ -118,11 +118,31 @@ ail_lite_uninstall() {
     return 0
 }
 
+print_help() {
+    echo "Usage: $0 <option> ..."
+    echo
+    echo "Main options:"
+    echo "  install       Install AppImageLauncher into your user account"
+    echo "  uninstall     Uninstall AppImageLauncher from your user account"
+    echo "  help|--help   Display this help"
+    echo
+    echo "Other options (mainly for use by AppImageLauncher Lite internally):"
+    echo "  appimagelauncherd          Run appimagelauncherd"
+    echo "  AppImageLauncherSettings   Display AppImageLauncher Lite configuration utility"
+    echo "  cli [or ali-cli]           Run AppImageLauncher cli (use \"cli --help\" for more information)"
+    echo "  remove <path>              Run removal helper to remove AppImage <path>"
+    echo "  update <path>              Run update helper to update AppImage <path>"
+}
+
 # ensure this important variable is available, as most operations (except for install) can be done without being run
 # from via AppImage runtime (e.g., while the AppImage is extracted, which is great for testing)
 export APPDIR=${APPDIR:-$(readlink -f $(dirname "$0"))}
 
 case "$firstarg" in
+    help|--help)
+        print_help
+        exit 0
+        ;;
     appimagelauncherd|AppImageLauncherSettings)
         exec "$APPDIR"/usr/bin/"$firstarg" "$@"
         ;;
