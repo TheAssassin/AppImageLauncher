@@ -493,6 +493,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
     }
 #endif
 
+#ifndef BUILD_LITE
     // PRIVATE_LIBDIR will be a relative path most likely
     // therefore, we need to detect the install prefix based on our own binary path, and then calculate the path to
     // the helper tools based on that
@@ -508,15 +509,28 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
         privateLibDirPath = ownBinaryDirPath + "/../ui";
     }
 
+    const char helperIconName[] = "AppImageLauncher";
+#else
+    const char helperIconName[] = "AppImageLauncher-Lite";
+#endif
+
     // add Remove action
     {
         const auto removeSectionName = "Desktop Action Remove";
 
         g_key_file_set_string(desktopFile.get(), removeSectionName, "Name", "Remove AppImage from system");
-        g_key_file_set_string(desktopFile.get(), removeSectionName, "Icon", "AppImageLauncher");
+        g_key_file_set_string(desktopFile.get(), removeSectionName, "Icon", helperIconName);
 
         std::ostringstream removeExecPath;
-        removeExecPath << privateLibDirPath.toStdString() << "/remove" << " \"" << pathToAppImage.toStdString() << "\"";
+
+#ifndef BUILD_LITE
+        removeExecPath << privateLibDirPath.toStdString() << "/remove";
+#else
+        removeExecPath << getenv("HOME") << "/.local/lib/appimagelauncher-lite/appimagelauncher-lite.AppImage remove";
+#endif
+
+        removeExecPath << " \"" << pathToAppImage.toStdString() << "\"";
+
         g_key_file_set_string(desktopFile.get(), removeSectionName, "Exec", removeExecPath.str().c_str());
 
         // install translations
@@ -540,10 +554,17 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
             const auto updateSectionName = "Desktop Action Update";
 
             g_key_file_set_string(desktopFile.get(), updateSectionName, "Name", "Update AppImage");
-            g_key_file_set_string(desktopFile.get(), updateSectionName, "Icon", "AppImageLauncher");
+            g_key_file_set_string(desktopFile.get(), updateSectionName, "Icon", helperIconName);
 
             std::ostringstream updateExecPath;
-            updateExecPath << privateLibDirPath.toStdString() << "/update" << " \"" << pathToAppImage.toStdString() << "\"";;
+
+#ifndef BUILD_LITE
+            updateExecPath << privateLibDirPath.toStdString() << "/update";
+#else
+            updateExecPath << getenv("HOME") << "/.local/lib/appimagelauncher-lite/appimagelauncher-lite.AppImage update";
+#endif
+            updateExecPath << " \"" << pathToAppImage.toStdString() << "\"";
+
             g_key_file_set_string(desktopFile.get(), updateSectionName, "Exec", updateExecPath.str().c_str());
 
             // install translations

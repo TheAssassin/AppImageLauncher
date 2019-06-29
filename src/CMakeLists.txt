@@ -35,6 +35,10 @@ endif()
 
 add_compile_options(-Wall -Wpedantic)
 
+if(BUILD_LITE)
+    add_definitions(-DBUILD_LITE)
+endif()
+
 # utility libraries
 add_subdirectory(fswatcher)
 add_subdirectory(i18n)
