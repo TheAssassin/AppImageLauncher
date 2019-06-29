@@ -73,6 +73,7 @@ chmod -v +x linuxdeploy*-"$ARCH".AppImage
 
 export OUTPUT=appimagelauncher-lite-"$VERSION"-"$ARCH".AppImage
 export VERSION=$(src/cli/ail-cli --version)
+export APPIMAGE_EXTRACT_AND_RUN=1
 
 ./linuxdeploy-x86_64.AppImage --plugin qt --appdir $(readlink -f AppDir) --custom-apprun "$REPO_ROOT"/resources/appimagelauncher-lite-AppRun.sh --output appimage -d "$REPO_ROOT"/resources/appimagelauncher-lite.desktop
 
