@@ -13,6 +13,15 @@ SettingsDialog::SettingsDialog(QWidget* parent) :
 
     loadSettings();
 
+// cosmetic changes in lite mode
+#ifndef BUILD_LITE
+    ui->checkBoxEnableDaemon->setChecked(true);
+    ui->checkBoxEnableDaemon->setEnabled(false);
+
+    ui->checkBoxAskMove->setChecked(false);
+    ui->checkBoxAskMove->setEnabled(false);
+#endif
+
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &SettingsDialog::onDialogAccepted);
     connect(ui->toolButtonChooseAppsDir, &QToolButton::released, this, &SettingsDialog::onChooseAppsDirClicked);
 
@@ -22,6 +31,12 @@ SettingsDialog::SettingsDialog(QWidget* parent) :
     availableFeatures << "<span style='color: green;'>✔</span> " + tr("updater available for AppImages supporting AppImageUpdate");
 #else
     availableFeatures << "<span style='color: red;'>🞬</span> " + tr("updater unavailable");
+#endif
+
+#ifndef BUILD_LITE
+    availableFeatures << "<br /><br />"
+                      << tr("<strong>Note: this is an AppImageLauncher Lite build, only supports a limited set of features</strong><br />"
+                            "Please install the full version via the provided native packages to enjoy the full AppImageLauncher experience");
 #endif
 
     ui->featuresLabel->setText(availableFeatures.join('\n'));
