@@ -9,4 +9,7 @@ Restart=always
 RestartSec=2
 
 [Install]
-WantedBy=multi-user.target
+# multi-user.target etc. seem to be buggy on some systems, it may not even exist on some systems
+# can be checked with systemctl --user list-units --type target
+# default seems to work better -- thanks @smac89 for the hint
+WantedBy=default.target
