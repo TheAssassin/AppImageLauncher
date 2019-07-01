@@ -12,6 +12,10 @@ matrix:
     - env: DIST=bionic ARCH=i386
     - env: DIST=xenial ARCH=x86_64
     - env: DIST=xenial ARCH=i386
+    - env: DIST=xenial ARCH=x86_64 BUILD_LITE=1
+      name: AppImageLauncher Lite AppImage x86_64
+    - env: DIST=xenial ARCH=i386 BUILD_LITE=1
+      name: AppImageLauncher Lite AppImage i386
 
 script:
   - bash -ex travis/travis-docker.sh "$DIST"
@@ -20,7 +24,9 @@ after_success:
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
   - if [ "$TRAVIS_BRANCH" != "master" ] && [ "$TRAVIS_TAG" == "" ]; then export TRAVIS_EVENT_TYPE=pull_request; fi
   - |2
-    if [ "$DIST" == "xenial" ]; then
+    if [[ "$BUILD_LITE" != "" ]]; then
+        bash upload.sh appimagelauncher-lite-*.AppImage*
+    elif [[ "$DIST" == "xenial" ]]; then
         bash upload.sh appimagelauncher*.{deb,rpm}* appimagelauncher*.tar*
     else
         bash upload.sh appimagelauncher*.deb*

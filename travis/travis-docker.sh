@@ -27,5 +27,11 @@ fi
 
 docker build -t "$IMAGE" -f "$DOCKERFILE" .
 
+if [[ "$BUILD_LITE" == "" ]]; then
+    build_script=travis-build.sh
+else
+    build_script=build-lite.sh
+fi
+
 docker run -e ARCH -e TRAVIS_BUILD_NUMBER --rm -it -v $(readlink -f ..):/ws "$IMAGE" \
-    bash -xc "export CI=1 && export DEBIAN_DIST=\"$DOCKER_DIST\" && cd /ws && source travis/travis-build.sh"
+    bash -xc "export CI=1 && export DEBIAN_DIST=\"$DOCKER_DIST\" && cd /ws && source travis/$build_script"

@@ -46,4 +46,5 @@ RUN dpkg --add-architecture i386 && \
         libfontconfig1-dev:i386 \
         libfreetype6-dev:i386 \
         libarchive-dev:i386 \
-        libboost-filesystem-dev:i386
+        libboost-filesystem-dev:i386 \
+        zlib1g:i386

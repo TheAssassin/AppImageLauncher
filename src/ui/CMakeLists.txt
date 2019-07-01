@@ -1,18 +1,20 @@
-# main AppImageLauncher application
-add_executable(AppImageLauncher main.cpp resources.qrc first-run.cpp first-run.h first-run.ui)
-target_link_libraries(AppImageLauncher shared PkgConfig::glib libappimage shared)
+if(NOT BUILD_LITE)
+    # main AppImageLauncher application
+    add_executable(AppImageLauncher main.cpp resources.qrc first-run.cpp first-run.h first-run.ui)
+    target_link_libraries(AppImageLauncher shared PkgConfig::glib libappimage shared)
 
-# set binary runtime rpath to make sure the libappimage.so built and installed by this project is going to be used
-# by the installed binaries (be it the .deb, the AppImage, or whatever)
-# in order to make the whole install tree relocatable, a relative path is used
-set_target_properties(AppImageLauncher PROPERTIES INSTALL_RPATH ${_rpath})
+    # set binary runtime rpath to make sure the libappimage.so built and installed by this project is going to be used
+    # by the installed binaries (be it the .deb, the AppImage, or whatever)
+    # in order to make the whole install tree relocatable, a relative path is used
+    set_target_properties(AppImageLauncher PROPERTIES INSTALL_RPATH ${_rpath})
 
-install(
-    TARGETS
-    AppImageLauncher
-    RUNTIME DESTINATION ${_bindir} COMPONENT APPIMAGELAUNCHER
-    LIBRARY DESTINATION ${_libdir} COMPONENT APPIMAGELAUNCHER
-)
+    install(
+        TARGETS
+        AppImageLauncher
+        RUNTIME DESTINATION ${_bindir} COMPONENT APPIMAGELAUNCHER
+        LIBRARY DESTINATION ${_libdir} COMPONENT APPIMAGELAUNCHER
+    )
+endif()
 
 # AppImageLauncherSettings application
 add_executable(AppImageLauncherSettings settings_main.cpp settings_dialog.ui settings_dialog.cpp)

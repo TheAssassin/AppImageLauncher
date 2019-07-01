@@ -45,4 +45,5 @@ RUN dpkg --add-architecture i386 && \
         qttools5-dev-tools:i386 \
         qt5-qmake-bin:i386 \
         libarchive-dev:i386 \
-        libboost-filesystem-dev:i386
+        libboost-filesystem-dev:i386 \
+        zlib1g:i386

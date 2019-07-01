@@ -35,6 +35,10 @@ endif()
 
 add_compile_options(-Wall -Wpedantic)
 
+if(BUILD_LITE)
+    add_definitions(-DBUILD_LITE)
+endif()
+
 # utility libraries
 add_subdirectory(fswatcher)
 add_subdirectory(i18n)
@@ -48,7 +52,9 @@ add_subdirectory(daemon)
 add_subdirectory(ui)
 
 # FUSE filesystem AppImageLauncherFS
-add_subdirectory(fusefs)
+if(NOT BUILD_LITE)
+    add_subdirectory(fusefs)
+endif()
 
 # CLI helper allowing other tools to utilize AppImageLauncher's code for e.g., integrating AppImages
 add_subdirectory(cli)
