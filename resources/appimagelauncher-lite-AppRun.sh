@@ -150,7 +150,8 @@ case "$firstarg" in
         exec "$APPDIR"/usr/bin/ail-cli "$@"
         ;;
     remove|update)
-        exec "$APPDIR"/usr/lib/**/appimagelauncher/"$firstarg" "$@"
+        #exec "$APPDIR"/usr/lib/**/appimagelauncher/"$firstarg" "$@"
+        exec "$APPDIR"/usr/bin/"$firstarg" "$@"
         ;;
     install)
         if test_globally_installed; then
