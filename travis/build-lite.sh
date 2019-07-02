@@ -76,6 +76,6 @@ export OUTPUT=appimagelauncher-lite-"$VERSION"-"$ARCH".AppImage
 export APPIMAGE_EXTRACT_AND_RUN=1
 
 ./linuxdeploy-"$ARCH".AppImage --plugin qt --appdir $(readlink -f AppDir) --custom-apprun "$REPO_ROOT"/resources/appimagelauncher-lite-AppRun.sh --output appimage \
-    -d "$REPO_ROOT"/resources/appimagelauncher-lite.desktop -e AppDir/usr/lib/*/appimagelauncher/remove -e AppDir/usr/lib/*/appimagelauncher/update
+    -d "$REPO_ROOT"/resources/appimagelauncher-lite.desktop -e AppDir/usr/lib/{,*/}appimagelauncher/remove -e AppDir/usr/lib/{,*/}appimagelauncher/update
 
 mv "$OUTPUT" "$OLD_CWD"
