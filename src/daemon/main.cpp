@@ -85,10 +85,10 @@ int main(int argc, char* argv[]) {
 
     // watch directory in a thread
     QThread watcherThread;
+    watcher.moveToThread(&watcherThread);
     QThread::connect(&watcherThread, &QThread::started, &watcher, &FileSystemWatcher::readEventsForever);
+    QThread::connect(&watcherThread, &QThread::finished, &watcher, &FileSystemWatcher::stopWatching);
     watcherThread.start();
 
-    app.exec();
-
-    watcher.stopWatching();
+    return app.exec();
 }
