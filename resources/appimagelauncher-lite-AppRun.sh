@@ -86,10 +86,10 @@ EOF
 Version=1.0
 Type=Application
 Exec=${installed_appimage_path} AppImageLauncherSettings %f
-Name=AppImageLauncher Settings
+Name=AppImageLauncher
 Icon=AppImageLauncher-Lite
 Terminal=false
-Categories=Utility;
+Categories=Settings;
 X-AppImage-Integrate=false
 StartupWMClass=AppImageLauncherSettings
 EOF
