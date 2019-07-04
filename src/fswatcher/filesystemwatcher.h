@@ -29,6 +29,9 @@ public:
     bool startWatching();
     bool stopWatching();
 
+    bool addPath(const QString &path);
+    bool removePath(const QString &path);
+
 public slots:
     void readEventsForever();
 

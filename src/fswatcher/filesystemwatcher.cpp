@@ -5,6 +5,7 @@
 
 // library includes
 #include <QDir>
+#include <QSet>
 #include <QStringList>
 #include <QThread>
 #include <sys/inotify.h>
@@ -30,7 +31,7 @@ public:
     };
 
 public:
-    QStringList watchedDirectories;
+    QSet<QString> watchedDirectories;
 
 private:
     int fd = -1;
@@ -89,36 +90,57 @@ public:
     };
 
     bool startWatching() {
-        static const auto mask = fileCreationEvents | fileModificationEvents | fileDeletionEvents;
-
         for (const auto& directory : watchedDirectories) {
-            const int watchFd = inotify_add_watch(fd, directory.toStdString().c_str(), mask);
-
-            if (watchFd == -1) {
-                const auto error = errno;
-                std::cerr << "Failed to start watching: " << strerror(error) << std::endl;
+            if (!watchDir(directory))
                 return false;
-            }
-
-            watchFdMap[watchFd] = directory;
         }
 
         return true;
     }
 
-    bool stopWatching() {
-        while (!watchFdMap.empty()) {
-            const auto pair = *(watchFdMap.begin());
-            const auto watchFd = pair.first;
+    bool watchDir(const QString& directory) {
+        static const unsigned int mask = fileCreationEvents | fileModificationEvents | fileDeletionEvents;
 
-            if (inotify_rm_watch(fd, watchFd) == -1) {
-                const auto error = errno;
-                std::cerr << "Failed to stop watching: " << strerror(error) << std::endl;
-                return false;
-            }
+        const int watchFd = inotify_add_watch(fd, directory.toStdString().c_str(), mask);
 
-            watchFdMap.erase(watchFd);
+        if (watchFd == -1) {
+            const auto error = errno;
+            std::cerr << "Failed to start watching: " << strerror(error) << std::endl;
+            return false;
         }
+
+        watchFdMap[watchFd] = directory;
+        return true;
+    }
+
+    bool unWatchFd(int fd) {
+        if (inotify_rm_watch(fd, fd) == -1) {
+            const auto error = errno;
+            std::cerr << "Failed to stop watching: " << strerror(error) << std::endl;
+            return false;
+        }
+
+        watchFdMap.erase(fd);
+        return true;
+    }
+
+    /**
+     * Lookup for the fd related with <path> in the watchFdMap
+     * @param path
+     * @return fd or -1 if not found
+     */
+    int getWatchFd(const QString& path) {
+        for (const auto itr: watchFdMap)
+            if (itr.second == path)
+                return itr.first;
+
+        return -1;
+    }
+
+    bool stopWatching() {
+        for (const auto itr: watchFdMap)
+            if (!unWatchFd(itr.first))
+                return false;
 
         return true;
     }
@@ -131,15 +153,16 @@ FileSystemWatcher::FileSystemWatcher() {
 FileSystemWatcher::FileSystemWatcher(const QString& path) : FileSystemWatcher() {
     if (!QDir(path).exists())
         QDir().mkdir(path);
-    d->watchedDirectories.append(path);
+    d->watchedDirectories.insert(path);
 }
 
 FileSystemWatcher::FileSystemWatcher(const QStringList& paths) : FileSystemWatcher() {
-    d->watchedDirectories.append(paths);
+    for (const auto& path: paths)
+        d->watchedDirectories.insert(path);
 }
 
 QStringList FileSystemWatcher::directories() {
-    return d->watchedDirectories;
+    return d->watchedDirectories.toList();
 }
 
 bool FileSystemWatcher::startWatching() {
@@ -170,4 +193,28 @@ void FileSystemWatcher::readEventsForever() {
             }
         }
     }
+}
+
+bool FileSystemWatcher::addPath(const QString& path) {
+    // only add a new watch if it's not being watched already
+    if (!d->watchedDirectories.contains(path)) {
+        bool ok = d->watchDir(path);
+        if (ok)
+            d->watchedDirectories.insert(path);
+
+        return ok;
+    } else
+        return true;
+}
+
+bool FileSystemWatcher::removePath(const QString& path) {
+    int fd = d->getWatchFd(path);
+    if (fd < 0)
+        return false;
+
+    bool ok = d->unWatchFd(fd);
+    if (ok)
+        d->watchedDirectories.remove(path);
+    return ok;
+
 }
