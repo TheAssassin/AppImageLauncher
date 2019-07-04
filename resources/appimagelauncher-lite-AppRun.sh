@@ -101,6 +101,10 @@ EOF
     # notify desktop of changes
     ail_lite_notify_desktop_integration
 
+    # Suppress desktop integration scripts in AppImages
+    mkdir -p $HOME/.local/share/appimagekit
+    touch $HOME/.local/share/appimagekit/no_desktopintegration
+
     echo "AppImageLauncher Lite has been installed successfully."
     return 0
 }
@@ -113,6 +117,10 @@ ail_lite_uninstall() {
 
     # remove all the installed files
     rm -r "$install_dir"
+
+    # Remove desktop integration scripts in AppImages suppression
+    rm $HOME/.local/share/appimagekit/no_desktopintegration
+    rmdir $HOME/.local/share/appimagekit
 
     echo "AppImageLauncher Lite has been uninstalled successfully."
     return 0
