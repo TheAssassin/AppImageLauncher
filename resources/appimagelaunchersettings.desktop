@@ -2,9 +2,9 @@
 Version=1.0
 Type=Application
 Exec=AppImageLauncherSettings %f
-Name=AppImageLauncher Settings
+Name=AppImageLauncher
 Icon=AppImageLauncher
 Terminal=false
-Categories=Utility;
+Categories=Settings;
 X-AppImage-Integrate=false
 StartupWMClass=AppImageLauncher
