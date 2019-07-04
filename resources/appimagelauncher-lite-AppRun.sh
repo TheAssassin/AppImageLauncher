@@ -103,8 +103,8 @@ EOF
     ail_lite_notify_desktop_integration
 
     # Suppress desktop integration scripts in AppImages
-    mkdir -p $appimagekit_path
-    touch $appimagekit_path/no_desktopintegration
+    mkdir -p "$appimagekit_path"
+    touch "$appimagekit_path"/no_desktopintegration
 
     echo "AppImageLauncher Lite has been installed successfully."
     return 0
@@ -120,8 +120,8 @@ ail_lite_uninstall() {
     rm -r "$install_dir"
 
     # Attempt to remove desktop integration scripts in AppImages suppression
-    rm $appimagekit_path/no_desktopintegration || true
-    rmdir $appimagekit_path || true
+    rm "$appimagekit_path"/no_desktopintegration || true
+    rmdir "$appimagekit_path" || true
 
     echo "AppImageLauncher Lite has been uninstalled successfully."
     return 0
