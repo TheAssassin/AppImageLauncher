@@ -25,7 +25,7 @@ typedef std::pair<QString, OP_TYPE> Operation;
 
 class Worker::PrivateData {
 public:
-    std::atomic<bool> timerActive;
+    QTimer deferredOperationsTimer;
 
     static constexpr int TIMEOUT = 15 * 1000;
 
@@ -40,7 +40,8 @@ public:
         std::shared_ptr<QMutex> mutex;
 
     public:
-        OperationTask(const Operation& operation, std::shared_ptr<QMutex> mutex) : operation(operation), mutex(std::move(mutex)) {}
+        OperationTask(const Operation& operation, std::shared_ptr<QMutex> mutex) : operation(operation),
+                                                                                   mutex(std::move(mutex)) {}
 
         void run() override {
             const auto& path = operation.first;
@@ -90,7 +91,10 @@ public:
     };
 
 public:
-    PrivateData() : timerActive(false) {}
+    PrivateData() {
+        deferredOperationsTimer.setSingleShot(true);
+        deferredOperationsTimer.setInterval(TIMEOUT);
+    }
 
 public:
     // in addition to a simple duplicate check, this function is context sensitive
@@ -114,7 +118,8 @@ public:
 Worker::Worker() {
     d = std::make_shared<PrivateData>();
 
-    connect(this, &Worker::startTimer, this, &Worker::startTimerIfNecessary);
+    connect(this, &Worker::startTimer, this, &Worker::startTimerIfNecessary, Qt::QueuedConnection);
+    connect(&d->deferredOperationsTimer, &QTimer::timeout, this, &Worker::executeDeferredOperations);
 }
 
 void Worker::executeDeferredOperations() {
@@ -176,15 +181,6 @@ void Worker::scheduleForUnintegration(const QString& path) {
 }
 
 void Worker::startTimerIfNecessary() {
-    if (d->timerActive) {
-        return;
-    }
-
-    // start timer and notify future calls to this that a timer is already running
-    d->timerActive = true;
-
-    QTimer::singleShot(d->TIMEOUT, [this]() {
-        d->timerActive = false;
-        executeDeferredOperations();
-    });
+    if (!d->deferredOperationsTimer.isActive())
+        QMetaObject::invokeMethod(&d->deferredOperationsTimer, "start");
 }
