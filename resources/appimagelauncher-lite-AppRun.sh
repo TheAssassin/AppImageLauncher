@@ -23,7 +23,7 @@ settings_desktop_file_path=~/.local/share/applications/"$prefix"-AppImageLaunche
 systemd_user_units_dir=~/.config/systemd/user/
 appimagelauncherd_systemd_service_name=appimagelauncherd.service
 integrated_icon_path=~/.local/share/icons/hicolor/scalable/apps/AppImageLauncher-Lite.svg
-appimagekit_path=~/.local/share/appimagekit
+no_desktop_integration_marker_path=~/.local/share/appimagekit/no_desktopintegration
 
 test_globally_installed() {
     which AppImageLauncher &>/dev/null && return 0
@@ -103,8 +103,8 @@ EOF
     ail_lite_notify_desktop_integration
 
     # Suppress desktop integration scripts in AppImages
-    mkdir -p "$appimagekit_path"
-    touch "$appimagekit_path"/no_desktopintegration
+    mkdir -p $(dirname "$no_desktop_integration_marker_path")
+    touch "$no_desktop_integration_marker_path"
 
     echo "AppImageLauncher Lite has been installed successfully."
     return 0
@@ -120,8 +120,8 @@ ail_lite_uninstall() {
     rm -r "$install_dir"
 
     # Attempt to remove desktop integration scripts in AppImages suppression
-    rm "$appimagekit_path"/no_desktopintegration || true
-    rmdir "$appimagekit_path" || true
+    rm "$no_desktop_integration_marker_path" || true
+    rmdir $(dirname "$no_desktop_integration_marker_path") || true
 
     echo "AppImageLauncher Lite has been uninstalled successfully."
     return 0
