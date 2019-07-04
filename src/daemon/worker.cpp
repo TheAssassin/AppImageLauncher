@@ -5,7 +5,6 @@
 
 // library includes
 #include <QFile>
-#include <QMutex>
 #include <QObject>
 #include <QSysInfo>
 #include <QTimer>
@@ -29,19 +28,15 @@ public:
 
     static constexpr int TIMEOUT = 15 * 1000;
 
-    QMutex mutex;
-
     // std::set is unordered, therefore using std::deque to keep the order of the operations
     std::deque<Operation> deferredOperations;
 
     class OperationTask : public QRunnable {
     private:
         Operation operation;
-        std::shared_ptr<QMutex> mutex;
 
     public:
-        OperationTask(const Operation& operation, std::shared_ptr<QMutex> mutex) : operation(operation),
-                                                                                   mutex(std::move(mutex)) {}
+        OperationTask(const Operation& operation) : operation(operation) {}
 
         void run() override {
             const auto& path = operation.first;
@@ -52,36 +47,25 @@ public:
             const auto isAppImage = 0 < appImageType && appImageType <= 2;
 
             if (type == INTEGRATE) {
-                mutex->lock();
                 std::cout << "Integrating: " << path.toStdString() << std::endl;
-                mutex->unlock();
-
                 if (!exists) {
-                    mutex->lock();
                     std::cout << "ERROR: file does not exist, cannot integrate" << std::endl;
-                    mutex->unlock();
                     return;
                 }
 
                 if (!isAppImage) {
-                    mutex->lock();
                     std::cout << "ERROR: not an AppImage, skipping" << std::endl;
-                    mutex->unlock();
                     return;
                 }
 
                 // check for X-AppImage-Integrate=false
                 if (appimage_shall_not_be_integrated(path.toStdString().c_str())) {
-                    mutex->lock();
                     std::cout << "WARNING: AppImage shall not be integrated, skipping" << std::endl;
-                    mutex->unlock();
                     return;
                 }
 
                 if (!installDesktopFileAndIcons(path)) {
-                    mutex->lock();
                     std::cout << "ERROR: Failed to register AppImage in system" << std::endl;
-                    mutex->unlock();
                     return;
                 }
             } else if (type == UNINTEGRATE) {
@@ -123,16 +107,12 @@ Worker::Worker() {
 }
 
 void Worker::executeDeferredOperations() {
-    d->mutex.lock();
-
     std::cout << "Executing deferred operations" << std::endl;
-
-    auto outputMutex = std::make_shared<QMutex>();
 
     while (!d->deferredOperations.empty()) {
         auto operation = d->deferredOperations.front();
         d->deferredOperations.pop_front();
-        QThreadPool::globalInstance()->start(new PrivateData::OperationTask(operation, outputMutex));
+        QThreadPool::globalInstance()->start(new PrivateData::OperationTask(operation));
     }
 
     // wait until all AppImages have been integrated
@@ -149,14 +129,9 @@ void Worker::executeDeferredOperations() {
         std::cout << "Failed to update desktop database and icon caches" << std::endl;
 
     std::cout << "Done" << std::endl;
-
-    // while unlocking would be possible before the cleanup, this allows for a more consistent console output
-    d->mutex.unlock();
 }
 
 void Worker::scheduleForIntegration(const QString& path) {
-    d->mutex.lock();
-
     auto operation = std::make_pair(path, INTEGRATE);
     if (!d->isDuplicate(operation)) {
         std::cout << "Scheduling for (re-)integration: " << path.toStdString() << std::endl;
@@ -164,20 +139,15 @@ void Worker::scheduleForIntegration(const QString& path) {
         emit startTimer();
     }
 
-    d->mutex.unlock();
 }
 
 void Worker::scheduleForUnintegration(const QString& path) {
-    d->mutex.lock();
-
     auto operation = std::make_pair(path, UNINTEGRATE);
     if (!d->isDuplicate(operation)) {
         std::cout << "Scheduling for unintegration: " << path.toStdString() << std::endl;
         d->deferredOperations.push_back(operation);
         emit startTimer();
     }
-
-    d->mutex.unlock();
 }
 
 void Worker::startTimerIfNecessary() {
