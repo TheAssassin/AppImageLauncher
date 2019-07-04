@@ -120,8 +120,8 @@ ail_lite_uninstall() {
     rm -r "$install_dir"
 
     # Attempt to remove desktop integration scripts in AppImages suppression
-    rm "$no_desktop_integration_marker_path" || true
-    rmdir $(dirname "$no_desktop_integration_marker_path") || true
+    [[ -f "$no_desktop_integration_marker_path" ]] && rm "$no_desktop_integration_marker_path"
+    [[ -d $(dirname "$no_desktop_integration_marker_path") ]] && rmdir $(dirname "$no_desktop_integration_marker_path")
 
     echo "AppImageLauncher Lite has been uninstalled successfully."
     return 0
