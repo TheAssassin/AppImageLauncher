@@ -78,7 +78,7 @@ EOF
 
     systemctl --user daemon-reload
     systemctl --user enable "$appimagelauncherd_systemd_service_name"
-    systemctl --user start "$appimagelauncherd_systemd_service_name"
+    systemctl --user restart "$appimagelauncherd_systemd_service_name"
 
     # set up desktop file for AppImageLauncherSettings
     cat > ~/.local/share/applications/appimagelauncher-lite-AppImageLauncherSettings.desktop <<EOF
