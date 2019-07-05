@@ -164,7 +164,7 @@ void FileSystemWatcher::readEventsForever() {
             const auto mask = event.mask;
             if (mask & d->fileChangeEvents) {
                 emit fileChanged(event.path);
-            } else if (mask & d->fileRemovedEvents) {
+            } else if (mask & d->fileRemovalEvents) {
                 emit fileRemoved(event.path);
             }
         }
