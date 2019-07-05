@@ -24,8 +24,7 @@ public:
 class FileSystemWatcher::PrivateData {
 public:
     enum EVENT_TYPES {
-        fileCreationEvents = IN_CREATE | IN_MOVED_TO,
-        fileModificationEvents = IN_CLOSE_WRITE | IN_MODIFY,
+        fileCreationEvents = IN_CLOSE_WRITE | IN_MOVE,
         fileDeletionEvents = IN_DELETE | IN_MOVED_FROM,
     };
 
@@ -89,7 +88,7 @@ public:
     };
 
     bool startWatching() {
-        static const auto mask = fileCreationEvents | fileModificationEvents | fileDeletionEvents;
+        static const auto mask = fileCreationEvents | fileDeletionEvents;
 
         for (const auto& directory : watchedDirectories) {
             const int watchFd = inotify_add_watch(fd, directory.toStdString().c_str(), mask);
@@ -165,8 +164,6 @@ void FileSystemWatcher::readEventsForever() {
                 emit fileCreated(event.path);
             } else if (mask & d->fileDeletionEvents) {
                 emit fileDeleted(event.path);
-            } else if (mask & d->fileModificationEvents) {
-                emit fileModified(event.path);
             }
         }
     }

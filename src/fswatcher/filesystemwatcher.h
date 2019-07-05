@@ -37,6 +37,5 @@ public:
 
 signals:
     void fileCreated(QString path);
-    void fileModified(QString path);
     void fileDeleted(QString path);
 };

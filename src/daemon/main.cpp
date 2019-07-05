@@ -75,7 +75,6 @@ int main(int argc, char* argv[]) {
     workerThread.start();
 
     FileSystemWatcher::connect(&watcher, &FileSystemWatcher::fileCreated, &worker, &Worker::scheduleForIntegration);
-    FileSystemWatcher::connect(&watcher, &FileSystemWatcher::fileModified, &worker, &Worker::scheduleForIntegration);
     FileSystemWatcher::connect(&watcher, &FileSystemWatcher::fileDeleted, &worker, &Worker::scheduleForUnintegration);
 
     if (!watcher.startWatching()) {
