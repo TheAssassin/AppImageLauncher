@@ -27,7 +27,7 @@ public:
         // events that indicate file creations, modifications etc.
         fileChangeEvents = IN_CLOSE_WRITE | IN_MOVE,
         // events that indicate a file removal from a directory, e.g., deletion or moving to another location
-        fileRemovedEvents = IN_DELETE | IN_MOVED_FROM,
+        fileRemovalEvents = IN_DELETE | IN_MOVED_FROM,
     };
 
 public:
@@ -90,7 +90,7 @@ public:
     };
 
     bool startWatching() {
-        static const auto mask = fileCreationEvents | fileDeletionEvents;
+        static const auto mask = fileChangeEvents | fileRemovalEvents;
 
         for (const auto& directory : watchedDirectories) {
             const int watchFd = inotify_add_watch(fd, directory.toStdString().c_str(), mask);
