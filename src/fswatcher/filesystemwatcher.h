@@ -30,7 +30,7 @@ public:
     bool stopWatching();
 
 public slots:
-    void readEventsForever();
+    void readEvents();
 
 public:
     QStringList directories();

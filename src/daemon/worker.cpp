@@ -5,11 +5,11 @@
 
 // library includes
 #include <QFile>
-#include <QMutex>
 #include <QObject>
 #include <QSysInfo>
 #include <QTimer>
 #include <QThreadPool>
+#include <QMutexLocker>
 #include <appimage/appimage.h>
 
 // local includes
@@ -25,11 +25,9 @@ typedef std::pair<QString, OP_TYPE> Operation;
 
 class Worker::PrivateData {
 public:
-    std::atomic<bool> timerActive;
+    QTimer deferredOperationsTimer;
 
     static constexpr int TIMEOUT = 15 * 1000;
-
-    QMutex mutex;
 
     // std::set is unordered, therefore using std::deque to keep the order of the operations
     std::deque<Operation> deferredOperations;
@@ -40,7 +38,8 @@ public:
         std::shared_ptr<QMutex> mutex;
 
     public:
-        OperationTask(const Operation& operation, std::shared_ptr<QMutex> mutex) : operation(operation), mutex(std::move(mutex)) {}
+        OperationTask(const Operation& operation, std::shared_ptr<QMutex> mutex) : operation(operation),
+                                                                                   mutex(std::move(mutex)) {}
 
         void run() override {
             const auto& path = operation.first;
@@ -51,36 +50,31 @@ public:
             const auto isAppImage = 0 < appImageType && appImageType <= 2;
 
             if (type == INTEGRATE) {
-                mutex->lock();
-                std::cout << "Integrating: " << path.toStdString() << std::endl;
-                mutex->unlock();
+                {   // Scope for Output Mutex Locker
+                    QMutexLocker mutexLocker(mutex.get());
+                    std::cout << "Integrating: " << path.toStdString() << std::endl;
 
-                if (!exists) {
-                    mutex->lock();
-                    std::cout << "ERROR: file does not exist, cannot integrate" << std::endl;
-                    mutex->unlock();
-                    return;
-                }
+                    if (!exists) {
+                        std::cout << "ERROR: file does not exist, cannot integrate" << std::endl;
+                        return;
+                    }
 
-                if (!isAppImage) {
-                    mutex->lock();
-                    std::cout << "ERROR: not an AppImage, skipping" << std::endl;
-                    mutex->unlock();
-                    return;
+                    if (!isAppImage) {
+                        std::cout << "ERROR: not an AppImage, skipping" << std::endl;
+                        return;
+                    }
                 }
 
                 // check for X-AppImage-Integrate=false
                 if (appimage_shall_not_be_integrated(path.toStdString().c_str())) {
-                    mutex->lock();
+                    QMutexLocker mutexLocker(mutex.get());
                     std::cout << "WARNING: AppImage shall not be integrated, skipping" << std::endl;
-                    mutex->unlock();
                     return;
                 }
 
                 if (!installDesktopFileAndIcons(path)) {
-                    mutex->lock();
+                    QMutexLocker mutexLocker(mutex.get());
                     std::cout << "ERROR: Failed to register AppImage in system" << std::endl;
-                    mutex->unlock();
                     return;
                 }
             } else if (type == UNINTEGRATE) {
@@ -90,7 +84,10 @@ public:
     };
 
 public:
-    PrivateData() : timerActive(false) {}
+    PrivateData() {
+        deferredOperationsTimer.setSingleShot(true);
+        deferredOperationsTimer.setInterval(TIMEOUT);
+    }
 
 public:
     // in addition to a simple duplicate check, this function is context sensitive
@@ -114,12 +111,11 @@ public:
 Worker::Worker() {
     d = std::make_shared<PrivateData>();
 
-    connect(this, &Worker::startTimer, this, &Worker::startTimerIfNecessary);
+    connect(this, &Worker::startTimer, this, &Worker::startTimerIfNecessary, Qt::QueuedConnection);
+    connect(&d->deferredOperationsTimer, &QTimer::timeout, this, &Worker::executeDeferredOperations);
 }
 
 void Worker::executeDeferredOperations() {
-    d->mutex.lock();
-
     std::cout << "Executing deferred operations" << std::endl;
 
     auto outputMutex = std::make_shared<QMutex>();
@@ -144,14 +140,9 @@ void Worker::executeDeferredOperations() {
         std::cout << "Failed to update desktop database and icon caches" << std::endl;
 
     std::cout << "Done" << std::endl;
-
-    // while unlocking would be possible before the cleanup, this allows for a more consistent console output
-    d->mutex.unlock();
 }
 
 void Worker::scheduleForIntegration(const QString& path) {
-    d->mutex.lock();
-
     auto operation = std::make_pair(path, INTEGRATE);
     if (!d->isDuplicate(operation)) {
         std::cout << "Scheduling for (re-)integration: " << path.toStdString() << std::endl;
@@ -159,32 +150,18 @@ void Worker::scheduleForIntegration(const QString& path) {
         emit startTimer();
     }
 
-    d->mutex.unlock();
 }
 
 void Worker::scheduleForUnintegration(const QString& path) {
-    d->mutex.lock();
-
     auto operation = std::make_pair(path, UNINTEGRATE);
     if (!d->isDuplicate(operation)) {
         std::cout << "Scheduling for unintegration: " << path.toStdString() << std::endl;
         d->deferredOperations.push_back(operation);
         emit startTimer();
     }
-
-    d->mutex.unlock();
 }
 
 void Worker::startTimerIfNecessary() {
-    if (d->timerActive) {
-        return;
-    }
-
-    // start timer and notify future calls to this that a timer is already running
-    d->timerActive = true;
-
-    QTimer::singleShot(d->TIMEOUT, [this]() {
-        d->timerActive = false;
-        executeDeferredOperations();
-    });
+    if (!d->deferredOperationsTimer.isActive())
+        QMetaObject::invokeMethod(&d->deferredOperationsTimer, "start");
 }

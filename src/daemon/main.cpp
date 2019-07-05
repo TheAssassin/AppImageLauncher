@@ -69,25 +69,16 @@ int main(int argc, char* argv[]) {
     }
     std::cout << std::endl;
 
-    // move worker to thread to allow for integrating files asynchronously
-    QThread workerThread;
-    worker.moveToThread(&workerThread);
-    workerThread.start();
-
-    FileSystemWatcher::connect(&watcher, &FileSystemWatcher::fileChanged, &worker, &Worker::scheduleForIntegration);
-    FileSystemWatcher::connect(&watcher, &FileSystemWatcher::fileRemoved, &worker, &Worker::scheduleForUnintegration);
+    FileSystemWatcher::connect(&watcher, &FileSystemWatcher::fileChanged, &worker, &Worker::scheduleForIntegration, Qt::QueuedConnection);
+    FileSystemWatcher::connect(&watcher, &FileSystemWatcher::fileRemoved, &worker, &Worker::scheduleForUnintegration, Qt::QueuedConnection);
 
     if (!watcher.startWatching()) {
         std::cerr << "Could not start watching directories" << std::endl;
         return 1;
     }
 
-    // watch directory in a thread
-    QThread watcherThread;
-    watcher.moveToThread(&watcherThread);
-    QThread::connect(&watcherThread, &QThread::started, &watcher, &FileSystemWatcher::readEventsForever);
-    QThread::connect(&watcherThread, &QThread::finished, &watcher, &FileSystemWatcher::stopWatching);
-    watcherThread.start();
+    watcher.startWatching();
+    QObject::connect(&app, &QCoreApplication::aboutToQuit, &watcher, &FileSystemWatcher::stopWatching);
 
-    return app.exec();
+    return QCoreApplication::exec();
 }

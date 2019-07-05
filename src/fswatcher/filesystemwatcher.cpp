@@ -5,6 +5,7 @@
 
 // library includes
 #include <QDir>
+#include <QTimer>
 #include <QStringList>
 #include <QThread>
 #include <sys/inotify.h>
@@ -32,6 +33,7 @@ public:
 
 public:
     QStringList watchedDirectories;
+    QTimer eventsLoopTimer;
 
 private:
     int fd = -1;
@@ -102,6 +104,7 @@ public:
             }
 
             watchFdMap[watchFd] = directory;
+            eventsLoopTimer.start();
         }
 
         return true;
@@ -119,6 +122,7 @@ public:
             }
 
             watchFdMap.erase(watchFd);
+            eventsLoopTimer.stop();
         }
 
         return true;
@@ -127,6 +131,9 @@ public:
 
 FileSystemWatcher::FileSystemWatcher() {
     d = std::make_shared<PrivateData>();
+
+    d->eventsLoopTimer.setInterval(100);
+    connect(&d->eventsLoopTimer, &QTimer::timeout, this, &FileSystemWatcher::readEvents);
 }
 
 FileSystemWatcher::FileSystemWatcher(const QString& path) : FileSystemWatcher() {
@@ -151,22 +158,16 @@ bool FileSystemWatcher::stopWatching() {
     return d->stopWatching();
 }
 
-void FileSystemWatcher::readEventsForever() {
-    while (true) {
-        auto events = d->readEventsFromFd();
+void FileSystemWatcher::readEvents() {
+    auto events = d->readEventsFromFd();
 
-        if (events.empty()) {
-            QThread::msleep(100);
-            continue;
-        }
+    for (const auto& event : events) {
+        const auto mask = event.mask;
 
-        for (const auto& event : events) {
-            const auto mask = event.mask;
-            if (mask & d->fileChangeEvents) {
-                emit fileChanged(event.path);
-            } else if (mask & d->fileRemovalEvents) {
-                emit fileRemoved(event.path);
-            }
+        if (mask & d->fileChangeEvents) {
+            emit fileChanged(event.path);
+        } else if (mask & d->fileRemovalEvents) {
+            emit fileRemoved(event.path);
         }
     }
 }
