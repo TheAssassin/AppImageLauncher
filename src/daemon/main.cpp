@@ -69,9 +69,8 @@ int main(int argc, char* argv[]) {
     }
     std::cout << std::endl;
 
-    FileSystemWatcher::connect(&watcher, &FileSystemWatcher::fileCreated, &worker, &Worker::scheduleForIntegration, Qt::QueuedConnection);
-    FileSystemWatcher::connect(&watcher, &FileSystemWatcher::fileModified, &worker, &Worker::scheduleForIntegration, Qt::QueuedConnection);
-    FileSystemWatcher::connect(&watcher, &FileSystemWatcher::fileDeleted, &worker, &Worker::scheduleForUnintegration, Qt::QueuedConnection);
+    FileSystemWatcher::connect(&watcher, &FileSystemWatcher::fileChanged, &worker, &Worker::scheduleForIntegration, Qt::QueuedConnection);
+    FileSystemWatcher::connect(&watcher, &FileSystemWatcher::fileRemoved, &worker, &Worker::scheduleForUnintegration, Qt::QueuedConnection);
 
     if (!watcher.startWatching()) {
         std::cerr << "Could not start watching directories" << std::endl;
