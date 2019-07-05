@@ -9,6 +9,7 @@
 #include <QSysInfo>
 #include <QTimer>
 #include <QThreadPool>
+#include <QMutexLocker>
 #include <appimage/appimage.h>
 
 // local includes
@@ -34,9 +35,11 @@ public:
     class OperationTask : public QRunnable {
     private:
         Operation operation;
+        std::shared_ptr<QMutex> mutex;
 
     public:
-        OperationTask(const Operation& operation) : operation(operation) {}
+        OperationTask(const Operation& operation, std::shared_ptr<QMutex> mutex) : operation(operation),
+                                                                                   mutex(std::move(mutex)) {}
 
         void run() override {
             const auto& path = operation.first;
@@ -47,24 +50,30 @@ public:
             const auto isAppImage = 0 < appImageType && appImageType <= 2;
 
             if (type == INTEGRATE) {
-                std::cout << "Integrating: " << path.toStdString() << std::endl;
-                if (!exists) {
-                    std::cout << "ERROR: file does not exist, cannot integrate" << std::endl;
-                    return;
-                }
+                {   // Scope for Output Mutex Locker
+                    QMutexLocker mutexLocker(mutex.get());
+                    std::cout << "Integrating: " << path.toStdString() << std::endl;
 
-                if (!isAppImage) {
-                    std::cout << "ERROR: not an AppImage, skipping" << std::endl;
-                    return;
+                    if (!exists) {
+                        std::cout << "ERROR: file does not exist, cannot integrate" << std::endl;
+                        return;
+                    }
+
+                    if (!isAppImage) {
+                        std::cout << "ERROR: not an AppImage, skipping" << std::endl;
+                        return;
+                    }
                 }
 
                 // check for X-AppImage-Integrate=false
                 if (appimage_shall_not_be_integrated(path.toStdString().c_str())) {
+                    QMutexLocker mutexLocker(mutex.get());
                     std::cout << "WARNING: AppImage shall not be integrated, skipping" << std::endl;
                     return;
                 }
 
                 if (!installDesktopFileAndIcons(path)) {
+                    QMutexLocker mutexLocker(mutex.get());
                     std::cout << "ERROR: Failed to register AppImage in system" << std::endl;
                     return;
                 }
@@ -109,10 +118,12 @@ Worker::Worker() {
 void Worker::executeDeferredOperations() {
     std::cout << "Executing deferred operations" << std::endl;
 
+    auto outputMutex = std::make_shared<QMutex>();
+
     while (!d->deferredOperations.empty()) {
         auto operation = d->deferredOperations.front();
         d->deferredOperations.pop_front();
-        QThreadPool::globalInstance()->start(new PrivateData::OperationTask(operation));
+        QThreadPool::globalInstance()->start(new PrivateData::OperationTask(operation, outputMutex));
     }
 
     // wait until all AppImages have been integrated
