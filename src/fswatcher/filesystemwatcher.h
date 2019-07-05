@@ -36,6 +36,6 @@ public:
     QStringList directories();
 
 signals:
-    void fileCreated(QString path);
-    void fileDeleted(QString path);
+    void fileChanged(QString path);
+    void fileRemoved(QString path);
 };
