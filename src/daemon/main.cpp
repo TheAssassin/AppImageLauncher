@@ -79,7 +79,7 @@ int main(int argc, char* argv[]) {
     }
 
     watcher.startWatching();
-    QThread::connect(&app, &QCoreApplication::aboutToQuit, &watcher, &FileSystemWatcher::stopWatching);
+    QObject::connect(&app, &QCoreApplication::aboutToQuit, &watcher, &FileSystemWatcher::stopWatching);
 
-    return app.exec();
+    return QCoreApplication::exec();
 }
