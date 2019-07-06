@@ -360,8 +360,8 @@ Invalid syntax:
     </message>
     <message>
         <location line="+13" />
-        <source>Failed to move AppImage into trash bin directory</source>
-        <translation>Failed to move AppImage into trash bin directory</translation>
+        <source>Could not move to Trash</source>
+        <translation>Could not move to Trash</translation>
     </message>
     <message>
         <source>Failed to remove AppImage: %1</source>

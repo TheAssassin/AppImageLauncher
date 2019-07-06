@@ -331,7 +331,7 @@ Invalid syntax:
     </message>
     <message>
         <location line="+13"/>
-        <source>Failed to move AppImage into trash bin directory</source>
+        <source>Could not move to Trash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

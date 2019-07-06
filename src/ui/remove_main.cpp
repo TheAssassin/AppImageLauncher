@@ -116,7 +116,7 @@ int main(int argc, char** argv) {
                     QMessageBox::critical(
                             nullptr,
                             QObject::tr("Error"),
-                            QObject::tr("Failed to move AppImage into trash bin directory")
+                            QObject::tr("Could not move to Trash")
                     );
                     return 1;
                 }

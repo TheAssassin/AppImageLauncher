@@ -357,7 +357,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
     </message>
     <message>
         <location line="+13"/>
-        <source>Failed to move AppImage into trash bin directory</source>
+        <source>Could not move to Trash</source>
         <translation>No se pudo mover la AppImage a la papelera</translation>
     </message>
     <message>

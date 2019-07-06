@@ -358,7 +358,7 @@ Syntaxe invalide :
     </message>
     <message>
         <location line="+13"/>
-        <source>Failed to move AppImage into trash bin directory</source>
+        <source>Could not move to Trash</source>
         <translation>Impossible de déplacer l&apos;AppImage vers le répertoire de corbeille</translation>
     </message>
     <message>
