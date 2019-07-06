@@ -23,6 +23,7 @@ settings_desktop_file_path=~/.local/share/applications/"$prefix"-AppImageLaunche
 systemd_user_units_dir=~/.config/systemd/user/
 appimagelauncherd_systemd_service_name=appimagelauncherd.service
 integrated_icon_path=~/.local/share/icons/hicolor/scalable/apps/AppImageLauncher-Lite.svg
+no_desktop_integration_marker_path=~/.local/share/appimagekit/no_desktopintegration
 
 test_globally_installed() {
     which AppImageLauncher &>/dev/null && return 0
@@ -78,7 +79,7 @@ EOF
 
     systemctl --user daemon-reload
     systemctl --user enable "$appimagelauncherd_systemd_service_name"
-    systemctl --user start "$appimagelauncherd_systemd_service_name"
+    systemctl --user restart "$appimagelauncherd_systemd_service_name"
 
     # set up desktop file for AppImageLauncherSettings
     cat > ~/.local/share/applications/appimagelauncher-lite-AppImageLauncherSettings.desktop <<EOF
@@ -101,6 +102,10 @@ EOF
     # notify desktop of changes
     ail_lite_notify_desktop_integration
 
+    # Suppress desktop integration scripts in AppImages
+    mkdir -p $(dirname "$no_desktop_integration_marker_path")
+    touch "$no_desktop_integration_marker_path"
+
     echo "AppImageLauncher Lite has been installed successfully."
     return 0
 }
@@ -113,6 +118,10 @@ ail_lite_uninstall() {
 
     # remove all the installed files
     rm -r "$install_dir"
+
+    # Attempt to remove desktop integration scripts in AppImages suppression
+    [[ -f "$no_desktop_integration_marker_path" ]] && rm "$no_desktop_integration_marker_path"
+    [[ -d $(dirname "$no_desktop_integration_marker_path") ]] && rmdir $(dirname "$no_desktop_integration_marker_path")
 
     echo "AppImageLauncher Lite has been uninstalled successfully."
     return 0

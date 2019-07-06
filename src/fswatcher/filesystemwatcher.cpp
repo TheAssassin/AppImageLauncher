@@ -5,6 +5,7 @@
 
 // library includes
 #include <QDir>
+#include <QTimer>
 #include <QStringList>
 #include <QThread>
 #include <sys/inotify.h>
@@ -24,13 +25,15 @@ public:
 class FileSystemWatcher::PrivateData {
 public:
     enum EVENT_TYPES {
-        fileCreationEvents = IN_CREATE | IN_MOVED_TO,
-        fileModificationEvents = IN_CLOSE_WRITE | IN_MODIFY,
-        fileDeletionEvents = IN_DELETE | IN_MOVED_FROM,
+        // events that indicate file creations, modifications etc.
+        fileChangeEvents = IN_CLOSE_WRITE | IN_MOVE,
+        // events that indicate a file removal from a directory, e.g., deletion or moving to another location
+        fileRemovalEvents = IN_DELETE | IN_MOVED_FROM,
     };
 
 public:
     QStringList watchedDirectories;
+    QTimer eventsLoopTimer;
 
 private:
     int fd = -1;
@@ -89,7 +92,7 @@ public:
     };
 
     bool startWatching() {
-        static const auto mask = fileCreationEvents | fileModificationEvents | fileDeletionEvents;
+        static const auto mask = fileChangeEvents | fileRemovalEvents;
 
         for (const auto& directory : watchedDirectories) {
             const int watchFd = inotify_add_watch(fd, directory.toStdString().c_str(), mask);
@@ -101,6 +104,7 @@ public:
             }
 
             watchFdMap[watchFd] = directory;
+            eventsLoopTimer.start();
         }
 
         return true;
@@ -118,6 +122,7 @@ public:
             }
 
             watchFdMap.erase(watchFd);
+            eventsLoopTimer.stop();
         }
 
         return true;
@@ -126,6 +131,9 @@ public:
 
 FileSystemWatcher::FileSystemWatcher() {
     d = std::make_shared<PrivateData>();
+
+    d->eventsLoopTimer.setInterval(100);
+    connect(&d->eventsLoopTimer, &QTimer::timeout, this, &FileSystemWatcher::readEvents);
 }
 
 FileSystemWatcher::FileSystemWatcher(const QString& path) : FileSystemWatcher() {
@@ -150,24 +158,16 @@ bool FileSystemWatcher::stopWatching() {
     return d->stopWatching();
 }
 
-void FileSystemWatcher::readEventsForever() {
-    while (true) {
-        auto events = d->readEventsFromFd();
+void FileSystemWatcher::readEvents() {
+    auto events = d->readEventsFromFd();
 
-        if (events.empty()) {
-            QThread::msleep(100);
-            continue;
-        }
+    for (const auto& event : events) {
+        const auto mask = event.mask;
 
-        for (const auto& event : events) {
-            const auto mask = event.mask;
-            if (mask & d->fileCreationEvents) {
-                emit fileCreated(event.path);
-            } else if (mask & d->fileDeletionEvents) {
-                emit fileDeleted(event.path);
-            } else if (mask & d->fileModificationEvents) {
-                emit fileModified(event.path);
-            }
+        if (mask & d->fileChangeEvents) {
+            emit fileChanged(event.path);
+        } else if (mask & d->fileRemovalEvents) {
+            emit fileRemoved(event.path);
         }
     }
 }
