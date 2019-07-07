@@ -14,7 +14,7 @@ SettingsDialog::SettingsDialog(QWidget* parent) :
     loadSettings();
 
 // cosmetic changes in lite mode
-#ifndef BUILD_LITE
+#ifdef BUILD_LITE
     ui->checkBoxEnableDaemon->setChecked(true);
     ui->checkBoxEnableDaemon->setEnabled(false);
 
