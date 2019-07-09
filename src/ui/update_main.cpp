@@ -194,7 +194,7 @@ int main(int argc, char** argv) {
     const auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
 
     if (!appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str())) {
-        if (!integrateAppImage(pathToUpdatedAppImage, pathToIntegratedAppImage)) {
+        if (!installDesktopFileAndIcons(pathToUpdatedAppImage)) {
             criticalUpdaterError(QObject::tr("Failed to register updated AppImage in system"));
             return 1;
         }
