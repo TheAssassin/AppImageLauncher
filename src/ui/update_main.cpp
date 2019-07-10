@@ -186,7 +186,24 @@ int main(int argc, char** argv) {
 
     // a crappy attempt to prevent deletion of the updated AppImage in a rare case (see below)
     const auto pathToIntegratedUpdatedAppImage = buildPathToIntegratedAppImage(pathToUpdatedAppImage);
-    
+
+    if (removeAfterUpdate) {
+        // make sure not to delete the updated(!) AppImage if the filenames of the new and old file are equal
+        // in this case, a warning is shown, asking the user whether to overwrite the old file, and in that case we
+        // don't need to unregister nor delete the file
+        if (pathToIntegratedAppImage != pathToIntegratedUpdatedAppImage) {
+            if (appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false) != 0) {
+                criticalUpdaterError(QObject::tr("Failed to unregister old AppImage in system"));
+                return 1;
+            }
+
+            if (!QFile::remove(pathToAppImage)) {
+                criticalUpdaterError(QObject::tr("Failed to remove old AppImage"));
+                return 1;
+            }
+        }
+    }
+
     // we're done!
     return 0;
 }
