@@ -70,22 +70,6 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    bool hasBeenRegisteredBefore;
-
-    if (!(hasBeenRegisteredBefore = hasAlreadyBeenIntegrated(pathToAppImage))) {
-        QString message = QObject::tr("The AppImage hasn't been integrated before. This tool will, however, integrate the "
-                          "updated AppImage.") +
-                          "\n\n" +
-                          QObject::tr("Do you wish to continue?");
-
-        switch (QMessageBox::warning(nullptr, QObject::tr("Warning"), message, QMessageBox::Ok | QMessageBox::Cancel)) {
-            case (QMessageBox::Ok):
-                break;
-            default:
-                return 0;
-        }
-    }
-
     appimage::update::qt::QtUpdater updater(pathToAppImage);
     updater.enableRunUpdatedAppImageButton(false);
 
@@ -194,7 +178,7 @@ int main(int argc, char** argv) {
     const auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
 
     if (!appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str())) {
-        if (!integrateAppImage(pathToUpdatedAppImage, pathToIntegratedAppImage)) {
+        if (!installDesktopFileAndIcons(pathToUpdatedAppImage)) {
             criticalUpdaterError(QObject::tr("Failed to register updated AppImage in system"));
             return 1;
         }
@@ -208,7 +192,7 @@ int main(int argc, char** argv) {
         // in this case, a warning is shown, asking the user whether to overwrite the old file, and in that case we
         // don't need to unregister nor delete the file
         if (pathToIntegratedAppImage != pathToIntegratedUpdatedAppImage) {
-            if (hasBeenRegisteredBefore && appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false) != 0) {
+            if (appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false) != 0) {
                 criticalUpdaterError(QObject::tr("Failed to unregister old AppImage in system"));
                 return 1;
             }

@@ -682,7 +682,6 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
     return INTEGRATION_SUCCESSFUL;
 }
 
-
 QString getAppImageDigestMd5(const QString& path) {
     // try to read embedded MD5 digest
     unsigned long offset = 0, length = 0;
