@@ -39,7 +39,7 @@
       <item row="2" column="0">
        <widget class="QCheckBox" name="checkBoxEnableDaemon">
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enabling the auto-integration deamon will cause that the AppImage files that are manually copied into the &amp;quot;Applications directory&amp;quot; to be integrated. If the files are remove the integration will be also removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, the daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot;. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="text">
          <string>Enable auto-integration daemon</string>
