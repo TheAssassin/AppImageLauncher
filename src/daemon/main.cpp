@@ -16,9 +16,6 @@
 #include "filesystemwatcher.h"
 #include "worker.h"
 
-// binary modification time. It's used to restart the daemon if the binary changes
-long binaryModificationTime;
-
 /**
  * Read the modification time of the file pointed by <filePath>
  * @param filePath
@@ -31,14 +28,17 @@ long readFileModificationTime(char* filePath) {
 }
 
 /**
- * Monitors whether the application binary has changed since the process was started. In such case the applciation
+ * Monitors whether the application binary has changed since the process was started. In such case the application
  * is restarted.
  *
  * @param argv
  */
 QTimer* setupBinaryUpdatesMonitor(char* const* argv) {
     auto* timer = new QTimer();
-    binaryModificationTime = readFileModificationTime(argv[0]);
+    // It's used to restart the daemon if the binary changes
+    static const long binaryModificationTime = readFileModificationTime(argv[0]);
+
+    // callback to compare and restart the app if the binary changed since it was started
     QObject::connect(timer, &QTimer::timeout, [argv]() {
         long newBinaryModificationTime = readFileModificationTime(argv[0]);
         if (newBinaryModificationTime != binaryModificationTime) {
@@ -48,7 +48,8 @@ QTimer* setupBinaryUpdatesMonitor(char* const* argv) {
         }
     });
 
-    timer->setInterval(10 * 1000);
+    // check every 5 min
+    timer->setInterval(5 * 60 * 1000);
     return timer;
 
 }
