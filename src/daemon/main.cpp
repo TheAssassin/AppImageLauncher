@@ -2,6 +2,7 @@
 #include <deque>
 #include <set>
 #include <iostream>
+#include <sys/stat.h>
 
 // library includes
 #include <QCoreApplication>
@@ -14,6 +15,43 @@
 #include "shared.h"
 #include "filesystemwatcher.h"
 #include "worker.h"
+
+// binary modification time. It's used to restart the daemon if the binary changes
+long binaryModificationTime;
+
+/**
+ * Read the modification time of the file pointed by <filePath>
+ * @param filePath
+ * @return file modification time
+ */
+long readFileModificationTime(char* filePath) {
+    struct stat attrib = {0x0};
+    stat(filePath, &attrib);
+    return attrib.st_ctime;
+}
+
+/**
+ * Monitors whether the application binary has changed since the process was started. In such case the applciation
+ * is restarted.
+ *
+ * @param argv
+ */
+QTimer* setupBinaryUpdatesMonitor(char* const* argv) {
+    auto* timer = new QTimer();
+    binaryModificationTime = readFileModificationTime(argv[0]);
+    QObject::connect(timer, &QTimer::timeout, [argv]() {
+        long newBinaryModificationTime = readFileModificationTime(argv[0]);
+        if (newBinaryModificationTime != binaryModificationTime) {
+            std::cerr << "Binary file changed since the applications was started, proceeding to restart it."
+                      << std::endl;
+            execv(argv[0], argv);
+        }
+    });
+
+    timer->setInterval(10 * 1000);
+    return timer;
+
+}
 
 int main(int argc, char* argv[]) {
     // make sure shared won't try to use the UI
@@ -69,8 +107,10 @@ int main(int argc, char* argv[]) {
     }
     std::cout << std::endl;
 
-    FileSystemWatcher::connect(&watcher, &FileSystemWatcher::fileChanged, &worker, &Worker::scheduleForIntegration, Qt::QueuedConnection);
-    FileSystemWatcher::connect(&watcher, &FileSystemWatcher::fileRemoved, &worker, &Worker::scheduleForUnintegration, Qt::QueuedConnection);
+    FileSystemWatcher::connect(&watcher, &FileSystemWatcher::fileChanged, &worker, &Worker::scheduleForIntegration,
+                               Qt::QueuedConnection);
+    FileSystemWatcher::connect(&watcher, &FileSystemWatcher::fileRemoved, &worker, &Worker::scheduleForUnintegration,
+                               Qt::QueuedConnection);
 
     if (!watcher.startWatching()) {
         std::cerr << "Could not start watching directories" << std::endl;
@@ -79,6 +119,9 @@ int main(int argc, char* argv[]) {
 
     watcher.startWatching();
     QObject::connect(&app, &QCoreApplication::aboutToQuit, &watcher, &FileSystemWatcher::stopWatching);
+
+    QTimer* binaryUpdatesMonitor = setupBinaryUpdatesMonitor(argv);
+    binaryUpdatesMonitor->start();
 
     return QCoreApplication::exec();
 }
