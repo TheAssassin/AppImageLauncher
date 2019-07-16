@@ -36,6 +36,16 @@
       <string>Applications directory</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
+      <item row="2" column="0">
+       <widget class="QCheckBox" name="checkBoxEnableDaemon">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, the daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot;. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="text">
+         <string>Enable auto-integration daemon</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="1">
        <widget class="QToolButton" name="toolButtonChooseAppsDir">
         <property name="text">
@@ -47,16 +57,6 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0" colspan="2">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Location where to store your AppImage files to ease their management</string>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="0">
        <widget class="QLineEdit" name="lineEditApplicationsDir">
         <property name="text">
@@ -64,10 +64,13 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QCheckBox" name="checkBoxEnableDaemon">
+      <item row="0" column="0" colspan="2">
+       <widget class="QLabel" name="label">
         <property name="text">
-         <string>Enable auto-integration daemon</string>
+         <string>Location where to store your AppImage files to ease their management</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
