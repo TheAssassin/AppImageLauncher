@@ -75,6 +75,7 @@ WantedBy=default.target
 EOF
 
     # now we need to make systemd aware of your service file
+    mkdir -p "$systemd_user_units_dir"
     ln -s "$install_dir"/systemd/"$appimagelauncherd_systemd_service_name" "$systemd_user_units_dir"/
 
     systemctl --user daemon-reload
