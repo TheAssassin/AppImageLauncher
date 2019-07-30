@@ -69,9 +69,9 @@ Compatibility table (likely incomplete, please feel free to send PRs to add dist
 
 | Release filename | Build system | Compatible distributions (incomplete) |
 | ---------------- | ------------ | ------------------------------------- |
-| `appimagelauncher-<version>.xenial_(amd64,i386).deb` | Ubuntu xenial | Ubuntu xenial (16.04), Debian jessie (8, oldstable), Netrunner 17.01 |
-| `appimagelauncher-<version>.bionic_(amd64,i386).deb` | Ubuntu bionic | Ubuntu bionic (18.04) and newer, Debian stretch (9, stable) and newer, Netrunner 18.03 and newer |
-| `appimagelauncher-<version>.(i386,x86_64).rpm` | Ubuntu xenial | openSUSE Leap 42 and newer, possibly openSUSE Tumbleweed, SUSE Enterprise Linux, RHEL 7, CentOS 7 |
+| `appimagelauncher-<version>.xenial_(amd64,i386).deb` | Ubuntu xenial | Ubuntu xenial (16.04), Debian stretch (9), Netrunner 17.01 |
+| `appimagelauncher-<version>.bionic_(amd64,i386).deb` | Ubuntu bionic | Ubuntu bionic (18.04) and newer, Debian buster (10) and newer, Netrunner 18.03 and newer |
+| `appimagelauncher-<version>.(i386,x86_64).rpm`       | Ubuntu xenial | openSUSE Leap 42 and newer, possibly openSUSE Tumbleweed, SUSE Enterprise Linux, RHEL 7, CentOS 7 |
 
   - Ubuntu trusty (14.04) and newer
     - **Important:** Ubuntu bionic (and newer) broke with the backwards compatibility of its `libcurl` packages, therefore users of these systems need to install the special `bionic` package
