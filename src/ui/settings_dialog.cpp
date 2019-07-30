@@ -33,7 +33,7 @@ SettingsDialog::SettingsDialog(QWidget* parent) :
     availableFeatures << "<span style='color: red;'>🞬</span> " + tr("updater unavailable");
 #endif
 
-#ifndef BUILD_LITE
+#ifdef BUILD_LITE
     availableFeatures << "<br /><br />"
                       << tr("<strong>Note: this is an AppImageLauncher Lite build, only supports a limited set of features</strong><br />"
                             "Please install the full version via the provided native packages to enjoy the full AppImageLauncher experience");
