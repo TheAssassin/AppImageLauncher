@@ -6,7 +6,8 @@ FROM i386/ubuntu:xenial
 RUN dpkg --add-architecture i386 && \
     apt-get update && \
     apt-get -y --no-install-recommends install software-properties-common && \
-    add-apt-repository -y ppa:beineri/opt-qt-5.12.3-xenial && \apt-get update && \
+    add-apt-repository -y ppa:beineri/opt-qt-5.12.3-xenial && \
+    apt-get update && \
     apt-get -y --no-install-recommends install \
         qt512-meta-minimal:i386 \
         libfuse2:i386 \
