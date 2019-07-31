@@ -54,7 +54,7 @@ void SettingsDialog::loadSettings() {
         ui->checkBoxAskMove->setChecked(settingsFile->value("AppImageLauncher/ask_to_move", false).toBool());
         ui->lineEditApplicationsDir->setText(settingsFile->value("AppImageLauncher/destination").toString());
     } else {
-        ui->lineEditApplicationsDir->setText(QDir::homePath() + "/Applications");
+        ui->lineEditApplicationsDir->setPlaceholderText(QDir::homePath() + "/Applications");
     }
 }
 
