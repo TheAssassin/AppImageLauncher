@@ -11,6 +11,8 @@ SettingsDialog::SettingsDialog(QWidget* parent) :
         ui(new Ui::SettingsDialog) {
     ui->setupUi(this);
 
+    ui->lineEditApplicationsDir->setPlaceholderText(integratedAppImagesDestination().absolutePath());
+
     loadSettings();
 
 // cosmetic changes in lite mode
@@ -86,7 +88,7 @@ void SettingsDialog::onChooseAppsDirClicked() {
     QFileDialog fileDialog(this);
     fileDialog.setFileMode(QFileDialog::DirectoryOnly);
     fileDialog.setWindowTitle(tr("Select Applications directory"));
-    fileDialog.setDirectory(QDir::home());
+    fileDialog.setDirectory(integratedAppImagesDestination().absolutePath());
     if (fileDialog.exec()) {
         QString dirPath = fileDialog.selectedFiles().first();
         ui->lineEditApplicationsDir->setText(dirPath);
