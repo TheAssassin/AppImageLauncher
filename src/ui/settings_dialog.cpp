@@ -53,6 +53,8 @@ void SettingsDialog::loadSettings() {
         ui->checkBoxEnableDaemon->setChecked(settingsFile->value("AppImageLauncher/enable_daemon", false).toBool());
         ui->checkBoxAskMove->setChecked(settingsFile->value("AppImageLauncher/ask_to_move", false).toBool());
         ui->lineEditApplicationsDir->setText(settingsFile->value("AppImageLauncher/destination").toString());
+    } else {
+        ui->lineEditApplicationsDir->setText(QDir::homePath() + "/Applications");
     }
 }
 
