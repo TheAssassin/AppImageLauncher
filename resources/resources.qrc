@@ -1,0 +1,10 @@
+<RCC>
+  <qresource prefix="/">
+    <file>icons/fallback/scalable/apps/AppImageLauncher.svg</file>
+    <file>icons/fallback/index.theme</file>
+    <file>icons/fallback/scalable/actions/gtk-cancel.svg</file>
+    <file>icons/fallback/scalable/actions/gtk-ok.svg</file>
+    <file>icons/fallback/scalable/places/folder.svg</file>
+    <file>icons/hicolor/scalable/apps/AppImageLauncher.svg</file>
+  </qresource>
+</RCC>

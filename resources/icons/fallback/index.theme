@@ -1,0 +1,21 @@
+[Icon Theme]
+Name=Fallback
+Comment=Fallback icon theme for AppImageLauncher
+
+Directories=scalable/actions,scalable/places
+Inherits=gnome,hicolor,Numix,breeze,hicolor
+
+[scalable/apps]
+Size=24
+Context=Applications
+Type=Scalable
+
+[scalable/actions]
+Size=24
+Context=Actions
+Type=Scalable
+
+[scalable/places]
+Size=24
+Context=Places
+Type=Scalable

@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>AppImageLauncher Settings</string>
   </property>
+  <property name="windowIcon">
+   <iconset theme="AppImageLauncher"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QGroupBox" name="groupBoxLancher">
@@ -138,7 +141,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../resources/resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>
