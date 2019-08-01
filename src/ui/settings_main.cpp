@@ -7,12 +7,8 @@
 #include "settings_dialog.h"
 
 int main(int argc, char** argv) {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
-    QIcon::setFallbackThemeName("fallback");
-#else
-    // QIcon::setFallbackThemeName is not available until Qt 5.12
+    // QIcon::setFallbackThemeName doesn't have effect on gtk styles 
     QIcon::setThemeName("fallback");
-#endif
 
     QApplication app(argc, argv);
     SettingsDialog dialog;
