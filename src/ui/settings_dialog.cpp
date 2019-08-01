@@ -86,9 +86,11 @@ void SettingsDialog::toggleDaemon() {
 
 void SettingsDialog::onChooseAppsDirClicked() {
     QFileDialog fileDialog(this);
+
     fileDialog.setFileMode(QFileDialog::DirectoryOnly);
     fileDialog.setWindowTitle(tr("Select Applications directory"));
     fileDialog.setDirectory(integratedAppImagesDestination().absolutePath());
+
     if (fileDialog.exec()) {
         QString dirPath = fileDialog.selectedFiles().first();
         ui->lineEditApplicationsDir->setText(dirPath);
