@@ -6,7 +6,6 @@
 // library includes
 #include <QDir>
 #include <QTimer>
-#include <QStringList>
 #include <QThread>
 #include <sys/inotify.h>
 
@@ -32,7 +31,7 @@ public:
     };
 
 public:
-    QStringList watchedDirectories;
+    QSet<QString> watchedDirectories;
     QTimer eventsLoopTimer;
 
 private:
@@ -139,14 +138,14 @@ FileSystemWatcher::FileSystemWatcher() {
 FileSystemWatcher::FileSystemWatcher(const QString& path) : FileSystemWatcher() {
     if (!QDir(path).exists())
         QDir().mkdir(path);
-    d->watchedDirectories.append(path);
+    d->watchedDirectories.insert(path);
 }
 
-FileSystemWatcher::FileSystemWatcher(const QStringList& paths) : FileSystemWatcher() {
-    d->watchedDirectories.append(paths);
+FileSystemWatcher::FileSystemWatcher(const QSet<QString>& paths) : FileSystemWatcher() {
+    d->watchedDirectories = paths;
 }
 
-QStringList FileSystemWatcher::directories() {
+QSet<QString> FileSystemWatcher::directories() {
     return d->watchedDirectories;
 }
 

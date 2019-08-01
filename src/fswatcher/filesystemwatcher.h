@@ -3,6 +3,7 @@
 
 // library includes
 #include <QObject>
+#include <QSet>
 #include <QString>
 #include <QThread>
 
@@ -22,7 +23,7 @@ private:
 
 public:
     explicit FileSystemWatcher(const QString& path);
-    explicit FileSystemWatcher(const QStringList& paths);
+    explicit FileSystemWatcher(const QSet<QString>& paths);
     FileSystemWatcher();
 
 public:
@@ -33,7 +34,7 @@ public slots:
     void readEvents();
 
 public:
-    QStringList directories();
+    QSet<QString> directories();
 
 signals:
     void fileChanged(QString path);
