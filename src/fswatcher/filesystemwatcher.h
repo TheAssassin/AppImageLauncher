@@ -11,7 +11,7 @@
 
 class FileSystemWatcherError : public std::runtime_error {
 public:
-    FileSystemWatcherError(const QString& message) : std::runtime_error(message.toStdString().c_str()) {};
+    explicit FileSystemWatcherError(const QString& message) : std::runtime_error(message.toStdString().c_str()) {};
 };
 
 class FileSystemWatcher : public QObject {
