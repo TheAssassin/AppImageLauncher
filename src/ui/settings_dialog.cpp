@@ -24,7 +24,8 @@ SettingsDialog::SettingsDialog(QWidget* parent) :
     ui->checkBoxAskMove->setEnabled(false);
 #endif
 
-    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &SettingsDialog::onDialogAccepted);
+    connect(ui->pushButtonOk, &QPushButton::released, this, &SettingsDialog::onDialogAccepted);
+    connect(ui->pushButtonCancel, &QPushButton::released, this, &SettingsDialog::reject);
     connect(ui->toolButtonChooseAppsDir, &QToolButton::released, this, &SettingsDialog::onChooseAppsDirClicked);
 
     QStringList availableFeatures;
@@ -61,6 +62,8 @@ void SettingsDialog::loadSettings() {
 void SettingsDialog::onDialogAccepted() {
     saveSettings();
     toggleDaemon();
+
+    accept();
 }
 
 void SettingsDialog::saveSettings() {
