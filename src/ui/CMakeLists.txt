@@ -1,6 +1,8 @@
+set(QRC_RESOURCES ${PROJECT_SOURCE_DIR}/resources/resources.qrc)
+
 if(NOT BUILD_LITE)
     # main AppImageLauncher application
-    add_executable(AppImageLauncher main.cpp ../../resources/resources.qrc first-run.cpp first-run.h first-run.ui)
+    add_executable(AppImageLauncher main.cpp ${QRC_RESOURCES} first-run.cpp first-run.h first-run.ui)
     target_link_libraries(AppImageLauncher shared PkgConfig::glib libappimage shared)
 
     # set binary runtime rpath to make sure the libappimage.so built and installed by this project is going to be used
@@ -17,7 +19,7 @@ if(NOT BUILD_LITE)
 endif()
 
 # AppImageLauncherSettings application
-add_executable(AppImageLauncherSettings ../../resources/resources.qrc settings_main.cpp settings_dialog.ui settings_dialog.cpp)
+add_executable(AppImageLauncherSettings ${QRC_RESOURCES} settings_main.cpp settings_dialog.ui settings_dialog.cpp)
 target_link_libraries(AppImageLauncherSettings shared)
 
 # set binary runtime rpath to make sure the libappimage.so built and installed by this project is going to be used
@@ -33,7 +35,7 @@ install(
 )
 
 # AppImage removal helper
-add_executable(remove remove_main.cpp remove.ui ../../resources/resources.qrc)
+add_executable(remove remove_main.cpp remove.ui ${QRC_RESOURCES})
 target_link_libraries(remove shared translationmanager libappimage)
 # see AppImageLauncher for a description
 set_target_properties(remove PROPERTIES INSTALL_RPATH "\$ORIGIN")
@@ -46,7 +48,7 @@ install(
 
 # AppImage update helper
 if(ENABLE_UPDATE_HELPER)
-    add_executable(update update_main.cpp ../../resources/resources.qrc)
+    add_executable(update update_main.cpp ${QRC_RESOURCES})
     target_link_libraries(update shared translationmanager libappimage libappimageupdate-qt)
     # see AppImageLauncher for a description
     set_target_properties(update PROPERTIES INSTALL_RPATH "\$ORIGIN")
