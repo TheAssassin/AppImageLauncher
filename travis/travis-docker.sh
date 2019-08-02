@@ -23,19 +23,14 @@ cd $(readlink -f $(dirname "$0"))
 IMAGE=appimagelauncher-build:"$DOCKER_DIST"
 DOCKERFILE=Dockerfile.build-"$DOCKER_DIST"
 
-if [ "$BUILD_LITE" != "" ]; then
-    IMAGE="$IMAGE"-lite
-    DOCKERFILE="$DOCKERFILE"-lite
-fi
-
-if [ "$ARCH" == "i386" ]; then
-    IMAGE="$IMAGE"-i386-cross
-    DOCKERFILE="$DOCKERFILE"-i386-cross
-fi
-
 if [ ! -f "$DOCKERFILE" ]; then
     echo "Error: $DOCKERFILE could not be found"
     exit 1
+fi
+
+if [ "$ARCH" == "i386" ]; then
+    IMAGE=appimagelauncher-build:"$DOCKER_DIST"-i386-cross
+    DOCKERFILE=Dockerfile.build-"$DOCKER_DIST"-i386-cross
 fi
 
 docker build -t "$IMAGE" -f "$DOCKERFILE" .
