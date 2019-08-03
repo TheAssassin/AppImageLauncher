@@ -94,6 +94,11 @@ public:
         static const auto mask = fileChangeEvents | fileRemovalEvents;
 
         for (const auto& directory : watchedDirectories) {
+            if (!QDir(directory).exists()) {
+                std::cerr << "Warning: directory " << directory.toStdString() << "does not exist, skipping" << std::endl;
+                continue;
+            }
+
             const int watchFd = inotify_add_watch(fd, directory.toStdString().c_str(), mask);
 
             if (watchFd == -1) {
