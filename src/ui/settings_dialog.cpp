@@ -91,6 +91,10 @@ void SettingsDialog::onChooseAppsDirClicked() {
     fileDialog.setWindowTitle(tr("Select Applications directory"));
     fileDialog.setDirectory(integratedAppImagesDestination().absolutePath());
 
+    // Gtk+ >= 3 segfaults when trying to use the native dialog, therefore we need to enforce the Qt one
+    // See #218 for more information
+    fileDialog.setOption(QFileDialog::DontUseNativeDialog, true);
+
     if (fileDialog.exec()) {
         QString dirPath = fileDialog.selectedFiles().first();
         ui->lineEditApplicationsDir->setText(dirPath);
