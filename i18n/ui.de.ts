@@ -205,7 +205,7 @@ Kaputte Syntax:
     <message>
         <location line="-159"/>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Registrieren des AppImages in AppImageLauncherFS: Fehler beim Starten von appimagelauncherfs.service</translation>
     </message>
     <message>
         <location line="+68"/>
@@ -493,7 +493,10 @@ Das AppImage unterstützt keine Updates. Bitte fragen Sie die Autoren, die Updat
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation type="unfinished"></translation>
+        <translation>Konnte keine Update-Informationen finden im AppImage:
+%1
+
+Das AppImage unterstützt keine Updates. Bitten Sie die Autoren, die Update-Informationen zu setzen, um einfaches Aktualisieren zu ermöglichen.</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -602,12 +605,12 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="+6"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, the daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot;. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wenn aktiviert, wird der Dienst automatisch AppImages, die in das &amp;quot;Applikationsverzeichnis&amp;quot; kopiert werden, integrieren. Wenn die Dateien gelöscht werden, wird der Dienst die Integrationsdaten automatisch aufräumen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Applications directory path</source>
-        <translation type="unfinished"></translation>
+        <translation>Pfad des Applikationsverzeichnisses</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -637,7 +640,7 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="+5"/>
         <source>&lt;strong&gt;Note: this is an AppImageLauncher Lite build, only supports a limited set of features&lt;/strong&gt;&lt;br /&gt;Please install the full version via the provided native packages to enjoy the full AppImageLauncher experience</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;strong&gt;Anmerkung: dies ist ein AppImageLauncher-Lite-Build, welcher nur ein begrenztes Spektrum an Funktionen bietet&lt;/strong&gt;&lt;br /&gt;Bitte installieren Sie die Vollversion mittels der bereitgestellten nativen Pakete, um in den Genuss der vollständigen AppImageLauncher-Erfahrung kommen zu können</translation>
     </message>
     <message>
         <location line="+51"/>
