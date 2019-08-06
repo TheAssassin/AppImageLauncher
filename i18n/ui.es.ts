@@ -206,7 +206,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
     <message>
         <location line="-159"/>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al registrar AppImage en AppImageLauncherFS: error al intentar iniciar appimagelauncherfs.service</translation>
     </message>
     <message>
         <location line="+68"/>
@@ -489,7 +489,10 @@ Este AppImage no soporta actualizaciones. Por favor solicite al autor que incluy
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo encontrar la información de actualización en AppImage:
+%1
+
+AppImage no admite la actualización. Solicite a los autores que configuren información actualizada para permitir una fácil actualización.</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -602,12 +605,12 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="+6"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, the daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot;. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cuando está habilitado, el daemon integra automáticamente AppImages que copia en el&amp;quot;Directorio de aplicaciones&amp;quot;.Cuando los archivos se eliminan, el demonio limpiará los datos de integración.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Applications directory path</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruta del directorio de aplicaciones</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -637,7 +640,7 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="+5"/>
         <source>&lt;strong&gt;Note: this is an AppImageLauncher Lite build, only supports a limited set of features&lt;/strong&gt;&lt;br /&gt;Please install the full version via the provided native packages to enjoy the full AppImageLauncher experience</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;strong&gt;Nota: esta es una compilación de AppImageLauncher Lite, solo admite un conjunto limitado de características&lt;/strong&gt;&lt;br /&gt;Instale la versión completa a través de los paquetes nativos provistos para disfrutar de la experiencia completa de AppImageLauncher</translation>
     </message>
     <message>
         <location line="+51"/>
