@@ -60,42 +60,6 @@ ail_lite_install() {
         return 2
     fi
 
-    if test_root_user; then
-tput setaf 1
-        tput bold
-        cat <<EOF
-##################################################################
-#                                                                #
-#   ██╗    ██╗ █████╗ ██████╗ ███╗   ██╗██╗███╗   ██╗ ██████╗    #
-#   ██║    ██║██╔══██╗██╔══██╗████╗  ██║██║████╗  ██║██╔════╝    #
-#   ██║ █╗ ██║███████║██████╔╝██╔██╗ ██║██║██╔██╗ ██║██║  ███╗   #
-#   ██║███╗██║██╔══██║██╔══██╗██║╚██╗██║██║██║╚██╗██║██║   ██║   #
-#   ╚███╔███╔╝██║  ██║██║  ██║██║ ╚████║██║██║ ╚████║╚██████╔╝   #
-#    ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═══╝ ╚═════╝    #
-#                                                                #
-##################################################################
-EOF
-        tput sgr0
-
-        echo
-        echo "Installation as root is **not** supported or recommended!"
-        echo "The installation routine is designed only for regular users."
-        echo "If you run this with e.g., sudo, please re-run without, root permissions"
-        echo "are not required by this installer."
-        echo
-        read -p "Continue at your own risk? [yN] " -n1 -r
-        echo
-
-        case "$REPLY" in
-            y|Y)
-                echo "Continuing installation as per user's request"
-                ;;
-            *)
-                return 1
-                ;;
-        esac
-    fi
-
     # create default Applications directory
     mkdir -p ~/Applications
 
@@ -218,6 +182,42 @@ case "$firstarg" in
         if test_globally_installed; then
             echo "Error: AppImageLauncher is installed system-wide already, not installing on top" 1>&2
             exit 2
+        fi
+
+        if test_root_user; then
+            tput setaf 1
+            tput bold
+            cat <<EOF
+##################################################################
+#                                                                #
+#   ██╗    ██╗ █████╗ ██████╗ ███╗   ██╗██╗███╗   ██╗ ██████╗    #
+#   ██║    ██║██╔══██╗██╔══██╗████╗  ██║██║████╗  ██║██╔════╝    #
+#   ██║ █╗ ██║███████║██████╔╝██╔██╗ ██║██║██╔██╗ ██║██║  ███╗   #
+#   ██║███╗██║██╔══██║██╔══██╗██║╚██╗██║██║██║╚██╗██║██║   ██║   #
+#   ╚███╔███╔╝██║  ██║██║  ██║██║ ╚████║██║██║ ╚████║╚██████╔╝   #
+#    ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═══╝ ╚═════╝    #
+#                                                                #
+##################################################################
+EOF
+            tput sgr0
+
+            echo
+            echo "Installation as root is **not** supported or recommended!"
+            echo "The installation routine is designed only for regular users."
+            echo "If you run this with e.g., sudo, please re-run without, root permissions"
+            echo "are not required by this installer."
+            echo
+            read -p "Continue at your own risk? [yN] " -n1 -r
+            echo
+
+            case "$REPLY" in
+                y|Y)
+                    echo "Continuing installation as per user's request"
+                    ;;
+                *)
+                    return 1
+                    ;;
+            esac
         fi
 
         if test_installed_already; then
