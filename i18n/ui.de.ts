@@ -314,7 +314,7 @@ Kaputte Syntax:
     <message>
         <location filename="../src/ui/remove_main.cpp" line="-28"/>
         <source>Helper to delete integrated AppImages easily, e.g., from the application launcher&apos;s context menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Hilfsprogramm zum einfachen Löschen integrierter AppImages, z.B. durch das Kontextmenü des Programm-Menüs</translation>
     </message>
     <message>
         <location line="+19"/>
@@ -330,7 +330,7 @@ Kaputte Syntax:
         <location line="+18"/>
         <location line="+11"/>
         <source>AppImage delete helper error</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImage Lösch-Hilfsprogramm Fehler</translation>
     </message>
     <message>
         <source>AppImage remove helper error</source>
@@ -572,12 +572,12 @@ Das AppImage unterstützt keine Updates. Bitten Sie die Autoren, die Update-Info
     <message>
         <location filename="../src/ui/remove.ui" line="+17"/>
         <source>Delete AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImage löschen</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to delete this AppImage?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sind Sie sicher, dass Sie dieses AppImage löschen möchten?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
