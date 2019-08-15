@@ -108,9 +108,9 @@ Invalid syntax:
     <name>QObject</name>
     <message>
         <location line="-262"/>
-        <location line="+443"/>
-        <location filename="../src/ui/remove_main.cpp" line="+105"/>
-        <location line="+13"/>
+        <location line="+445"/>
+        <location filename="../src/ui/remove_main.cpp" line="+109"/>
+        <location line="+12"/>
         <location line="+12"/>
         <location filename="../src/ui/update_main.cpp" line="+119"/>
         <location line="+40"/>
@@ -239,7 +239,7 @@ Invalid syntax:
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/ui/remove_main.cpp" line="-65"/>
+        <location filename="../src/ui/remove_main.cpp" line="-68"/>
         <location filename="../src/ui/update_main.cpp" line="-97"/>
         <source>Error: no such file or directory: %1</source>
         <translation>错误：无此文件或文件夹： %1</translation>
@@ -302,18 +302,21 @@ Invalid syntax:
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/ui/remove_main.cpp" line="-28"/>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
-        <translation>桌面集成后移除 AppImage ，供 Linux 发行版使用</translation>
+        <translation type="vanished">桌面集成后移除 AppImage ，供 Linux 发行版使用</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>AppImageLauncher remove</source>
         <comment>remove helper app name</comment>
-        <translation>AppImageLauncher 移除</translation>
+        <translation type="vanished">AppImageLauncher 移除</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location filename="../src/ui/remove_main.cpp" line="-28"/>
+        <source>Helper to delete integrated AppImages easily, e.g., from the application launcher&apos;s context menuz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>Path to AppImage</source>
         <translation>AppImage 路径</translation>
     </message>
@@ -325,8 +328,12 @@ Invalid syntax:
     <message>
         <location line="+18"/>
         <location line="+11"/>
+        <source>AppImage delete helper error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>AppImage remove helper error</source>
-        <translation>AppImage 移除助手错误</translation>
+        <translation type="vanished">AppImage 移除助手错误</translation>
     </message>
     <message>
         <location line="-10"/>
@@ -355,12 +362,12 @@ Invalid syntax:
         <translation type="vanished">你确定要移除此 AppImage 吗？</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+23"/>
         <source>Failed to unregister AppImage: %1</source>
         <translation>未能注销 AppImage： %1</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+12"/>
         <source>Failed to move AppImage into trash bin directory</source>
         <translation>将 AppImage 移入垃圾箱文件夹失败</translation>
     </message>
@@ -384,8 +391,8 @@ Invalid syntax:
         <translation>选择否将运行一次 AppImage ，并保留当前系统状态。</translation>
     </message>
     <message>
-        <location line="-415"/>
-        <location line="+419"/>
+        <location line="-417"/>
+        <location line="+421"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
@@ -394,7 +401,7 @@ Invalid syntax:
         <translation type="vanished">未能将 AppImage 移动到目标位置</translation>
     </message>
     <message>
-        <location line="-307"/>
+        <location line="-309"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>未能通过 libappimage 在系统中注册 AppImage</translation>
     </message>
@@ -419,7 +426,7 @@ Invalid syntax:
         <translation>AppImage 有无效桌面文件</translation>
     </message>
     <message>
-        <location line="+282"/>
+        <location line="+284"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>未能移动 AppImage 到目标位置。
@@ -551,14 +558,22 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
 <context>
     <name>RemoveDialog</name>
     <message>
-        <location filename="../src/ui/remove.ui" line="+14"/>
         <source>Please confirm</source>
-        <translation>请确认</translation>
+        <translation type="vanished">请确认</translation>
     </message>
     <message>
-        <location line="+18"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove this AppImage?&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;您确定要移除此 AppImage 吗？&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;您确定要移除此 AppImage 吗？&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/remove.ui" line="+17"/>
+        <source>Delete AppImage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to delete this AppImage?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+22"/>
@@ -566,14 +581,12 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
         <translation>%1</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uncheck to only remove the desktop integration, but leave the file on the system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;取消勾选则仅删除桌面集成，但将文件保留在系统上。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;取消勾选则仅删除桌面集成，但将文件保留在系统上。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Remove AppImage file from system</source>
-        <translation>从系统中移除 AppImage 文件</translation>
+        <translation type="vanished">从系统中移除 AppImage 文件</translation>
     </message>
 </context>
 <context>

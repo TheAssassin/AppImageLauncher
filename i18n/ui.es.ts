@@ -110,9 +110,9 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
     <name>QObject</name>
     <message>
         <location line="-262"/>
-        <location line="+443"/>
-        <location filename="../src/ui/remove_main.cpp" line="+105"/>
-        <location line="+13"/>
+        <location line="+445"/>
+        <location filename="../src/ui/remove_main.cpp" line="+109"/>
+        <location line="+12"/>
         <location line="+12"/>
         <location filename="../src/ui/update_main.cpp" line="+119"/>
         <location line="+40"/>
@@ -241,7 +241,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/ui/remove_main.cpp" line="-65"/>
+        <location filename="../src/ui/remove_main.cpp" line="-68"/>
         <location filename="../src/ui/update_main.cpp" line="-97"/>
         <source>Error: no such file or directory: %1</source>
         <translation>Error: no hay tal archivo o directorio: %1</translation>
@@ -303,18 +303,21 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../src/ui/remove_main.cpp" line="-28"/>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
-        <translation>Elimina AppImages después de la integración del escritorio, para ser utilizado por las distribuciones de Linux</translation>
+        <translation type="vanished">Elimina AppImages después de la integración del escritorio, para ser utilizado por las distribuciones de Linux</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>AppImageLauncher remove</source>
         <comment>remove helper app name</comment>
-        <translation>AppImageLauncher eliminar</translation>
+        <translation type="vanished">AppImageLauncher eliminar</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location filename="../src/ui/remove_main.cpp" line="-28"/>
+        <source>Helper to delete integrated AppImages easily, e.g., from the application launcher&apos;s context menuz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>Path to AppImage</source>
         <translation>Ruta hacia AppImage</translation>
     </message>
@@ -326,8 +329,12 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
     <message>
         <location line="+18"/>
         <location line="+11"/>
+        <source>AppImage delete helper error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>AppImage remove helper error</source>
-        <translation>AppImage eliminar error de ayuda</translation>
+        <translation type="vanished">AppImage eliminar error de ayuda</translation>
     </message>
     <message>
         <location line="-10"/>
@@ -356,12 +363,12 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation type="vanished">Seguro que desea eliminar esta AppImage?</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+23"/>
         <source>Failed to unregister AppImage: %1</source>
         <translation>Error al anular el registro de AppImage: %1</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+12"/>
         <source>Failed to move AppImage into trash bin directory</source>
         <translation>No se pudo mover la AppImage a la papelera</translation>
     </message>
@@ -385,8 +392,8 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>Elegir No ejecutará AppImage una vez y dejará el sistema en su estado actual.</translation>
     </message>
     <message>
-        <location line="-415"/>
-        <location line="+419"/>
+        <location line="-417"/>
+        <location line="+421"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
     </message>
@@ -395,7 +402,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation type="vanished">Error al mover AppImage a la ubicación de destino</translation>
     </message>
     <message>
-        <location line="-307"/>
+        <location line="-309"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Error al registrar AppImage en el sistema a través de libappimage</translation>
     </message>
@@ -420,7 +427,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>AppImage tiene un archivo de escritorio no válido</translation>
     </message>
     <message>
-        <location line="+282"/>
+        <location line="+284"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Error al mover AppImage a la ubicación de destino.
@@ -555,14 +562,22 @@ AppImage no admite la actualización. Solicite a los autores que configuren info
 <context>
     <name>RemoveDialog</name>
     <message>
-        <location filename="../src/ui/remove.ui" line="+14"/>
         <source>Please confirm</source>
-        <translation>Por favor confirmar</translation>
+        <translation type="vanished">Por favor confirmar</translation>
     </message>
     <message>
-        <location line="+18"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove this AppImage?&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Estás seguro de que quieres eliminar esta AppImage?&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Estás seguro de que quieres eliminar esta AppImage?&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/remove.ui" line="+17"/>
+        <source>Delete AppImage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to delete this AppImage?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+22"/>
@@ -570,14 +585,12 @@ AppImage no admite la actualización. Solicite a los autores que configuren info
         <translation>%1</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uncheck to only remove the desktop integration, but leave the file on the system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Desmarque solo eliminar la integración de escritorio, pero deje el archivo en el sistema.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Desmarque solo eliminar la integración de escritorio, pero deje el archivo en el sistema.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Remove AppImage file from system</source>
-        <translation>Eliminar el archivo AppImage del sistema</translation>
+        <translation type="vanished">Eliminar el archivo AppImage del sistema</translation>
     </message>
 </context>
 <context>

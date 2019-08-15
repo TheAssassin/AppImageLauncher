@@ -9,17 +9,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+55"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+22"/>
         <source>Ask me whether to move new AppImages into a central location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+21"/>
         <source>Integration target destination directory:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -47,13 +47,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>AppImage has already been integrated, but it is not in the current integration destination directory.
-
-Do you want to move it into the new destination?
-Choosing No will run the AppImage once, and leave the AppImage in its current directory.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location line="+1"/>
         <source>AppImage %1 has already been integrated, but it is not in the current integration destination directory.
 
@@ -65,16 +58,12 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location line="+23"/>
         <source>Failed to unregister AppImage before re-integrating it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+476"/>
+        <location filename="../src/shared/shared.cpp" line="+471"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -93,12 +82,12 @@ Invalid syntax:
 <context>
     <name>QObject</name>
     <message>
-        <location line="-267"/>
-        <location line="+415"/>
-        <location filename="../src/ui/remove_main.cpp" line="+105"/>
-        <location line="+13"/>
+        <location line="-262"/>
+        <location line="+445"/>
+        <location filename="../src/ui/remove_main.cpp" line="+109"/>
         <location line="+12"/>
-        <location filename="../src/ui/update_main.cpp" line="+135"/>
+        <location line="+12"/>
+        <location filename="../src/ui/update_main.cpp" line="+119"/>
         <location line="+40"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
@@ -111,35 +100,6 @@ Invalid syntax:
     <message>
         <location line="+8"/>
         <source>Could not make AppImage executable: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to open AppImage for reading: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to create temporary directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to create temporary copy of type 1 AppImage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to open temporary AppImage copy for writing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to remove magic bytes from temporary AppImage copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>execv() failed: %1</source>
-        <comment>error message</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>runtime not found: no such file or directory: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -188,7 +148,12 @@ Invalid syntax:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-91"/>
+        <location line="-159"/>
+        <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+68"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -220,8 +185,8 @@ Invalid syntax:
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/ui/remove_main.cpp" line="-65"/>
-        <location filename="../src/ui/update_main.cpp" line="-113"/>
+        <location filename="../src/ui/remove_main.cpp" line="-68"/>
+        <location filename="../src/ui/update_main.cpp" line="-97"/>
         <source>Error: no such file or directory: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -235,10 +200,6 @@ Invalid syntax:
         <location line="+128"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -283,17 +244,11 @@ Invalid syntax:
     </message>
     <message>
         <location filename="../src/ui/remove_main.cpp" line="-28"/>
-        <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
+        <source>Helper to delete integrated AppImages easily, e.g., from the application launcher&apos;s context menuz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>AppImageLauncher remove</source>
-        <comment>remove helper app name</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+17"/>
+        <location line="+19"/>
         <source>Path to AppImage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -305,7 +260,7 @@ Invalid syntax:
     <message>
         <location line="+18"/>
         <location line="+11"/>
-        <source>AppImage remove helper error</source>
+        <source>AppImage delete helper error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -323,25 +278,13 @@ Invalid syntax:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please confirm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove this AppImage?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+19"/>
+        <location line="+23"/>
         <source>Failed to unregister AppImage: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+12"/>
         <source>Failed to move AppImage into trash bin directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to remove AppImage: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -360,18 +303,13 @@ Invalid syntax:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-387"/>
-        <location line="+391"/>
-        <location filename="../src/ui/update_main.cpp" line="+12"/>
+        <location line="-417"/>
+        <location line="+421"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed to move AppImage to target location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-279"/>
+        <location line="-309"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -396,24 +334,20 @@ Invalid syntax:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+254"/>
+        <location line="+284"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+158"/>
+        <location line="+157"/>
         <source>Failed to call stat() on path:
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed to copy AppImage to target location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/update_main.cpp" line="-52"/>
+        <location filename="../src/ui/update_main.cpp" line="-40"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -424,27 +358,13 @@ Try to copy AppImage instead?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+44"/>
-        <source>The AppImage hasn&apos;t been integrated before. This tool will, however, integrate the updated AppImage.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Do you wish to continue?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+36"/>
+        <location line="+67"/>
         <source>No updates found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Could not find updates for AppImage %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to check for updates. Please check the command line output for details.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -513,28 +433,18 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
 <context>
     <name>RemoveDialog</name>
     <message>
-        <location filename="../src/ui/remove.ui" line="+14"/>
-        <source>Please confirm</source>
+        <location filename="../src/ui/remove.ui" line="+17"/>
+        <source>Delete AppImage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+18"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove this AppImage?&lt;/body&gt;&lt;/html&gt;</source>
+        <location line="+14"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to delete this AppImage?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+22"/>
         <source>%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uncheck to only remove the desktop integration, but leave the file on the system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Remove AppImage file from system</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -561,22 +471,32 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+6"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, the daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot;. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>Applications directory path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Location where to store your AppImage files to ease their management</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="-28"/>
         <source>Enable auto-integration daemon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+50"/>
         <source>Available Features</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settings_dialog.cpp" line="+22"/>
+        <location filename="../src/ui/settings_dialog.cpp" line="+33"/>
         <source>updater available for AppImages supporting AppImageUpdate</source>
         <translation type="unfinished"></translation>
     </message>
@@ -586,7 +506,12 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+5"/>
+        <source>&lt;strong&gt;Note: this is an AppImageLauncher Lite build, only supports a limited set of features&lt;/strong&gt;&lt;br /&gt;Please install the full version via the provided native packages to enjoy the full AppImageLauncher experience</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+51"/>
         <source>Select Applications directory</source>
         <translation type="unfinished"></translation>
     </message>

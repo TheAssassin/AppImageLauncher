@@ -109,9 +109,9 @@ Sintaxe inválida:
     <name>QObject</name>
     <message>
         <location line="-262"/>
-        <location line="+443"/>
-        <location filename="../src/ui/remove_main.cpp" line="+105"/>
-        <location line="+13"/>
+        <location line="+445"/>
+        <location filename="../src/ui/remove_main.cpp" line="+109"/>
+        <location line="+12"/>
         <location line="+12"/>
         <location filename="../src/ui/update_main.cpp" line="+119"/>
         <location line="+40"/>
@@ -240,7 +240,7 @@ Sintaxe inválida:
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/ui/remove_main.cpp" line="-65"/>
+        <location filename="../src/ui/remove_main.cpp" line="-68"/>
         <location filename="../src/ui/update_main.cpp" line="-97"/>
         <source>Error: no such file or directory: %1</source>
         <translation>Erro: ficheiro ou directória não existe: %1</translation>
@@ -303,18 +303,21 @@ Sintaxe inválida:
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../src/ui/remove_main.cpp" line="-28"/>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
-        <translation>Remove AppImages após integração no ambiente de trabalho, para usar em distribuições Linux</translation>
+        <translation type="vanished">Remove AppImages após integração no ambiente de trabalho, para usar em distribuições Linux</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>AppImageLauncher remove</source>
         <comment>remove helper app name</comment>
-        <translation>Remover AppImageLauncher</translation>
+        <translation type="vanished">Remover AppImageLauncher</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location filename="../src/ui/remove_main.cpp" line="-28"/>
+        <source>Helper to delete integrated AppImages easily, e.g., from the application launcher&apos;s context menuz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>Path to AppImage</source>
         <translation>Caminho para AppImage</translation>
     </message>
@@ -326,8 +329,12 @@ Sintaxe inválida:
     <message>
         <location line="+18"/>
         <location line="+11"/>
+        <source>AppImage delete helper error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>AppImage remove helper error</source>
-        <translation>Erro no Assistente de Remoção de AppImage</translation>
+        <translation type="vanished">Erro no Assistente de Remoção de AppImage</translation>
     </message>
     <message>
         <location line="-10"/>
@@ -352,12 +359,12 @@ Sintaxe inválida:
         <translation type="vanished">Tem a certeza que deseja remover esta AppImage?</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+23"/>
         <source>Failed to unregister AppImage: %1</source>
         <translation>Falha ao desregistrar AppImage: %1</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+12"/>
         <source>Failed to move AppImage into trash bin directory</source>
         <translation>Falha ao mover AppImage para a directória da lixeira</translation>
     </message>
@@ -381,8 +388,8 @@ Sintaxe inválida:
         <translation>Escolher Não irá executar a AppImage uma vez e deixar o sistema no seu estado actual.</translation>
     </message>
     <message>
-        <location line="-415"/>
-        <location line="+419"/>
+        <location line="-417"/>
+        <location line="+421"/>
         <source>Warning</source>
         <translation>Aviso</translation>
     </message>
@@ -391,7 +398,7 @@ Sintaxe inválida:
         <translation type="vanished">Falha ao mover a AppImage para a localização de destino</translation>
     </message>
     <message>
-        <location line="-307"/>
+        <location line="-309"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Falha ao registar AppImage no sistema via libappimage</translation>
     </message>
@@ -416,7 +423,7 @@ Sintaxe inválida:
         <translation>AppImage tem um ficheiro de ambiente de trabalho inválido</translation>
     </message>
     <message>
-        <location line="+282"/>
+        <location line="+284"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Falha ao mover AppImage para a localização de destino.
@@ -546,28 +553,22 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
 <context>
     <name>RemoveDialog</name>
     <message>
-        <location filename="../src/ui/remove.ui" line="+14"/>
         <source>Please confirm</source>
-        <translation type="unfinished">Por favor confirme</translation>
+        <translation type="obsolete">Por favor confirme</translation>
     </message>
     <message>
-        <location line="+18"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove this AppImage?&lt;/body&gt;&lt;/html&gt;</source>
+        <location filename="../src/ui/remove.ui" line="+17"/>
+        <source>Delete AppImage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to delete this AppImage?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+22"/>
         <source>%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uncheck to only remove the desktop integration, but leave the file on the system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Remove AppImage file from system</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
