@@ -313,7 +313,7 @@ Syntaxe invalide :
     </message>
     <message>
         <location filename="../src/ui/remove_main.cpp" line="-28"/>
-        <source>Helper to delete integrated AppImages easily, e.g., from the application launcher&apos;s context menuz</source>
+        <source>Helper to delete integrated AppImages easily, e.g., from the application launcher&apos;s context menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

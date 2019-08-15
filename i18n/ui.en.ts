@@ -310,9 +310,13 @@ Invalid syntax:
         <translation type="vanished">AppImageLauncher remove</translation>
     </message>
     <message>
-        <location filename="../src/ui/remove_main.cpp" line="-28" />
         <source>Helper to delete integrated AppImages easily, e.g., from the application launcher's context menuz</source>
-        <translation>Helper to delete integrated AppImages easily, e.g., from the application launcher's context menuz</translation>
+        <translation type="vanished">Helper to delete integrated AppImages easily, e.g., from the application launcher's context menuz</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/remove_main.cpp" line="-28" />
+        <source>Helper to delete integrated AppImages easily, e.g., from the application launcher's context menu</source>
+        <translation>Helper to delete integrated AppImages easily, e.g., from the application launcher's context menu</translation>
     </message>
     <message>
         <location line="+19" />

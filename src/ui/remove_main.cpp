@@ -35,7 +35,7 @@ bool unregisterAppImage(const QString& pathToAppImage) {
 
 int main(int argc, char** argv) {
     QCommandLineParser parser;
-    parser.setApplicationDescription(QObject::tr("Helper to delete integrated AppImages easily, e.g., from the application launcher's context menuz"));
+    parser.setApplicationDescription(QObject::tr("Helper to delete integrated AppImages easily, e.g., from the application launcher's context menu"));
     QApplication app(argc, argv);
     QApplication::setApplicationDisplayName("AppImageLauncher");
     QApplication::setWindowIcon(QIcon(":/AppImageLauncher.svg"));
