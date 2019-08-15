@@ -28,7 +28,13 @@ no_desktop_integration_marker_path=~/.local/share/appimagekit/no_desktopintegrat
 test_globally_installed() {
     which AppImageLauncher &>/dev/null && return 0
     type AppImageLauncher &>/dev/null && return 0
-    [[ -d /usr/lib/*/appimagelauncher ]] && return 0
+
+    # SC2144 -d doesn't work with globs, using a loop therefore
+    for i in /usr/lib/*/appimagelauncher; do
+        if [[ -d "$i" ]]; then
+            return 0
+        fi
+    done
 
     return 1
 }
