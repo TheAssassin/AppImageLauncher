@@ -45,6 +45,10 @@ test_installed_already() {
     return 1
 }
 
+test_root_user() {
+    [[ "$(id -u)" -eq 0 ]]
+}
+
 ail_lite_notify_desktop_integration() {
     update-desktop-database ~/.local/share/applications
     gtk-update-icon-cache
@@ -54,6 +58,42 @@ ail_lite_install() {
     if [[ "$APPIMAGE" == "" ]]; then
         echo "Error: not running from AppImage, aborting"
         return 2
+    fi
+
+    if test_root_user; then
+tput setaf 1
+        tput bold
+        cat <<EOF
+##################################################################
+#                                                                #
+#   ██╗    ██╗ █████╗ ██████╗ ███╗   ██╗██╗███╗   ██╗ ██████╗    #
+#   ██║    ██║██╔══██╗██╔══██╗████╗  ██║██║████╗  ██║██╔════╝    #
+#   ██║ █╗ ██║███████║██████╔╝██╔██╗ ██║██║██╔██╗ ██║██║  ███╗   #
+#   ██║███╗██║██╔══██║██╔══██╗██║╚██╗██║██║██║╚██╗██║██║   ██║   #
+#   ╚███╔███╔╝██║  ██║██║  ██║██║ ╚████║██║██║ ╚████║╚██████╔╝   #
+#    ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═══╝ ╚═════╝    #
+#                                                                #
+##################################################################
+EOF
+        tput sgr0
+
+        echo
+        echo "Installation as root is **not** supported or recommended!"
+        echo "The installation routine is designed only for regular users."
+        echo "If you run this with e.g., sudo, please re-run without, root permissions"
+        echo "are not required by this installer."
+        echo
+        read -p "Continue at your own risk? [yN] " -n1 -r
+        echo
+
+        case "$REPLY" in
+            y|Y)
+                echo "Continuing installation as per user's request"
+                ;;
+            *)
+                return 1
+                ;;
+        esac
     fi
 
     # create default Applications directory
