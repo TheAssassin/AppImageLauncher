@@ -126,6 +126,11 @@ ail_lite_uninstall() {
     # remove all the installed files
     rm -r "$install_dir"
 
+    # remove desktop integration of several tools
+    rm "$settings_desktop_file_path"
+    rm "$integrated_icon_path"
+    ail_lite_notify_desktop_integration
+
     # Attempt to remove desktop integration scripts in AppImages suppression
     [[ -f "$no_desktop_integration_marker_path" ]] && rm "$no_desktop_integration_marker_path"
     [[ -d $(dirname "$no_desktop_integration_marker_path") ]] && rmdir $(dirname "$no_desktop_integration_marker_path")
