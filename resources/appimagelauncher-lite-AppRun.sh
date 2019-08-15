@@ -89,7 +89,7 @@ EOF
     systemctl --user restart "$appimagelauncherd_systemd_service_name"
 
     # set up desktop file for AppImageLauncherSettings
-    cat > ~/.local/share/applications/appimagelauncher-lite-AppImageLauncherSettings.desktop <<EOF
+    cat > "$settings_desktop_file_path" <<EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
