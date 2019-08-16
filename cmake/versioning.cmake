@@ -1,6 +1,6 @@
 set(V_MAJOR 1)
-set(V_MINOR 3)
-set(V_PATCH 1)
+set(V_MINOR 4)
+set(V_PATCH 0)
 set(V_SUFFIX "")
 
 set(APPIMAGELAUNCHER_VERSION ${V_MAJOR}.${V_MINOR}.${V_PATCH}${V_SUFFIX})

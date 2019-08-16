@@ -405,9 +405,16 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
                 auto match = regex.match(QString::fromStdString(currentNameEntry));
 
                 if (match.hasMatch()) {
-                    const unsigned int num = match.captured(0).toUInt();
-                    if (num >= currentNumber)
+                    // 0 = entire string
+                    // 1 = first group
+                    const QString numString = match.captured(1);
+                    const int num = numString.toInt();
+
+                    // monotonic counting, i.e., never try to "be smart" by e.g., filling in the gaps between
+                    // previous numbers
+                    if (num >= currentNumber) {
                         currentNumber = num + 1;
+                    }
                 }
             }
 

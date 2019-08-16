@@ -10,6 +10,14 @@ set -e
 
 export DOCKER_DIST="$1"
 
+case "$DOCKER_DIST" in
+    xenial|bionic)
+        ;;
+    *)
+        echo "Error: invalid/unsupported distro: $DOCKER_DIST"
+        exit 1
+esac
+
 cd $(readlink -f $(dirname "$0"))
 
 IMAGE=appimagelauncher-build:"$DOCKER_DIST"

@@ -11,6 +11,8 @@ SettingsDialog::SettingsDialog(QWidget* parent) :
         ui(new Ui::SettingsDialog) {
     ui->setupUi(this);
 
+    ui->lineEditApplicationsDir->setPlaceholderText(integratedAppImagesDestination().absolutePath());
+
     loadSettings();
 
 // cosmetic changes in lite mode
@@ -33,7 +35,7 @@ SettingsDialog::SettingsDialog(QWidget* parent) :
     availableFeatures << "<span style='color: red;'>🞬</span> " + tr("updater unavailable");
 #endif
 
-#ifndef BUILD_LITE
+#ifdef BUILD_LITE
     availableFeatures << "<br /><br />"
                       << tr("<strong>Note: this is an AppImageLauncher Lite build, only supports a limited set of features</strong><br />"
                             "Please install the full version via the provided native packages to enjoy the full AppImageLauncher experience");
@@ -84,9 +86,15 @@ void SettingsDialog::toggleDaemon() {
 
 void SettingsDialog::onChooseAppsDirClicked() {
     QFileDialog fileDialog(this);
+
     fileDialog.setFileMode(QFileDialog::DirectoryOnly);
     fileDialog.setWindowTitle(tr("Select Applications directory"));
-    fileDialog.setDirectory(QDir::home());
+    fileDialog.setDirectory(integratedAppImagesDestination().absolutePath());
+
+    // Gtk+ >= 3 segfaults when trying to use the native dialog, therefore we need to enforce the Qt one
+    // See #218 for more information
+    fileDialog.setOption(QFileDialog::DontUseNativeDialog, true);
+
     if (fileDialog.exec()) {
         QString dirPath = fileDialog.selectedFiles().first();
         ui->lineEditApplicationsDir->setText(dirPath);

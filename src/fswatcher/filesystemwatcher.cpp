@@ -6,7 +6,6 @@
 // library includes
 #include <QDir>
 #include <QTimer>
-#include <QStringList>
 #include <QThread>
 #include <sys/inotify.h>
 
@@ -32,7 +31,7 @@ public:
     };
 
 public:
-    QStringList watchedDirectories;
+    QSet<QString> watchedDirectories;
     QTimer eventsLoopTimer;
 
 private:
@@ -95,6 +94,11 @@ public:
         static const auto mask = fileChangeEvents | fileRemovalEvents;
 
         for (const auto& directory : watchedDirectories) {
+            if (!QDir(directory).exists()) {
+                std::cerr << "Warning: directory " << directory.toStdString() << "does not exist, skipping" << std::endl;
+                continue;
+            }
+
             const int watchFd = inotify_add_watch(fd, directory.toStdString().c_str(), mask);
 
             if (watchFd == -1) {
@@ -139,14 +143,14 @@ FileSystemWatcher::FileSystemWatcher() {
 FileSystemWatcher::FileSystemWatcher(const QString& path) : FileSystemWatcher() {
     if (!QDir(path).exists())
         QDir().mkdir(path);
-    d->watchedDirectories.append(path);
+    d->watchedDirectories.insert(path);
 }
 
-FileSystemWatcher::FileSystemWatcher(const QStringList& paths) : FileSystemWatcher() {
-    d->watchedDirectories.append(paths);
+FileSystemWatcher::FileSystemWatcher(const QSet<QString>& paths) : FileSystemWatcher() {
+    d->watchedDirectories = paths;
 }
 
-QStringList FileSystemWatcher::directories() {
+QSet<QString> FileSystemWatcher::directories() {
     return d->watchedDirectories;
 }
 

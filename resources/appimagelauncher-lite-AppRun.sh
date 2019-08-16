@@ -28,7 +28,13 @@ no_desktop_integration_marker_path=~/.local/share/appimagekit/no_desktopintegrat
 test_globally_installed() {
     which AppImageLauncher &>/dev/null && return 0
     type AppImageLauncher &>/dev/null && return 0
-    [[ -d /usr/lib/*/appimagelauncher ]] && return 0
+
+    # SC2144 -d doesn't work with globs, using a loop therefore
+    for i in /usr/lib/*/appimagelauncher; do
+        if [[ -d "$i" ]]; then
+            return 0
+        fi
+    done
 
     return 1
 }
@@ -37,6 +43,10 @@ test_installed_already() {
     [[ -d "$install_dir" ]] && return 0
 
     return 1
+}
+
+test_root_user() {
+    [[ "$(id -u)" -eq 0 ]]
 }
 
 ail_lite_notify_desktop_integration() {
@@ -75,6 +85,7 @@ WantedBy=default.target
 EOF
 
     # now we need to make systemd aware of your service file
+    mkdir -p "$systemd_user_units_dir"
     ln -s "$install_dir"/systemd/"$appimagelauncherd_systemd_service_name" "$systemd_user_units_dir"/
 
     systemctl --user daemon-reload
@@ -82,7 +93,7 @@ EOF
     systemctl --user restart "$appimagelauncherd_systemd_service_name"
 
     # set up desktop file for AppImageLauncherSettings
-    cat > ~/.local/share/applications/appimagelauncher-lite-AppImageLauncherSettings.desktop <<EOF
+    cat > "$settings_desktop_file_path" <<EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
@@ -90,7 +101,7 @@ Exec=${installed_appimage_path} AppImageLauncherSettings %f
 Name=AppImageLauncher Settings
 Icon=AppImageLauncher-Lite
 Terminal=false
-Categories=Utility;
+Categories=Settings;
 X-AppImage-Integrate=false
 StartupWMClass=AppImageLauncherSettings
 EOF
@@ -118,6 +129,11 @@ ail_lite_uninstall() {
 
     # remove all the installed files
     rm -r "$install_dir"
+
+    # remove desktop integration of several tools
+    rm "$settings_desktop_file_path"
+    rm "$integrated_icon_path"
+    ail_lite_notify_desktop_integration
 
     # Attempt to remove desktop integration scripts in AppImages suppression
     [[ -f "$no_desktop_integration_marker_path" ]] && rm "$no_desktop_integration_marker_path"
@@ -166,6 +182,42 @@ case "$firstarg" in
         if test_globally_installed; then
             echo "Error: AppImageLauncher is installed system-wide already, not installing on top" 1>&2
             exit 2
+        fi
+
+        if test_root_user; then
+            tput setaf 1
+            tput bold
+            cat <<EOF
+##################################################################
+#                                                                #
+#   ██╗    ██╗ █████╗ ██████╗ ███╗   ██╗██╗███╗   ██╗ ██████╗    #
+#   ██║    ██║██╔══██╗██╔══██╗████╗  ██║██║████╗  ██║██╔════╝    #
+#   ██║ █╗ ██║███████║██████╔╝██╔██╗ ██║██║██╔██╗ ██║██║  ███╗   #
+#   ██║███╗██║██╔══██║██╔══██╗██║╚██╗██║██║██║╚██╗██║██║   ██║   #
+#   ╚███╔███╔╝██║  ██║██║  ██║██║ ╚████║██║██║ ╚████║╚██████╔╝   #
+#    ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═══╝ ╚═════╝    #
+#                                                                #
+##################################################################
+EOF
+            tput sgr0
+
+            echo
+            echo "Installation as root is **not** supported or recommended!"
+            echo "The installation routine is designed only for regular users."
+            echo "If you run this with e.g., sudo, please re-run without, root permissions"
+            echo "are not required by this installer."
+            echo
+            read -p "Continue at your own risk? [yN] " -n1 -r
+            echo
+
+            case "$REPLY" in
+                y|Y)
+                    echo "Continuing installation as per user's request"
+                    ;;
+                *)
+                    return 1
+                    ;;
+            esac
         fi
 
         if test_installed_already; then

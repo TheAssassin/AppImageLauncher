@@ -104,7 +104,7 @@ int main(int argc, char* argv[]) {
 
     std::cout << "Watching directories: ";
     for (const auto& dir : watcher.directories()) {
-        std::cout << dir.toStdString().c_str();
+        std::cout << dir.toStdString().c_str() << " ";
     }
     std::cout << std::endl;
 
