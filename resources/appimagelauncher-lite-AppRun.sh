@@ -101,7 +101,7 @@ Exec=${installed_appimage_path} AppImageLauncherSettings %f
 Name=AppImageLauncher Settings
 Icon=AppImageLauncher-Lite
 Terminal=false
-Categories=Utility;
+Categories=Settings;
 X-AppImage-Integrate=false
 StartupWMClass=AppImageLauncherSettings
 EOF

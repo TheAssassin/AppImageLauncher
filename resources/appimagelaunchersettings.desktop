@@ -5,6 +5,6 @@ Exec=AppImageLauncherSettings %f
 Name=AppImageLauncher Settings
 Icon=AppImageLauncher
 Terminal=false
-Categories=Utility;
+Categories=Settings;
 X-AppImage-Integrate=false
 StartupWMClass=AppImageLauncher
