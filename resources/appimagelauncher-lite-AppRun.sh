@@ -86,7 +86,7 @@ EOF
 Version=1.0
 Type=Application
 Exec=${installed_appimage_path} AppImageLauncherSettings %f
-Name=AppImageLauncher
+Name=AppImageLauncher Settings
 Icon=AppImageLauncher-Lite
 Terminal=false
 Categories=Settings;
