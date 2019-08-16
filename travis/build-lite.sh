@@ -25,6 +25,9 @@ cleanup () {
 
 trap cleanup EXIT
 
+# install librsvg2
+apt-get install -y librsvg2-dev
+
 # store repo root as variable
 REPO_ROOT=$(readlink -f $(dirname "${BASH_SOURCE[0]}")/..)
 OLD_CWD=$(readlink -f .)
