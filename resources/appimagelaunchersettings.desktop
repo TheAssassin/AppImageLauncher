@@ -2,7 +2,7 @@
 Version=1.0
 Type=Application
 Exec=AppImageLauncherSettings %f
-Name=AppImageLauncher
+Name=AppImageLauncher Settings
 Icon=AppImageLauncher
 Terminal=false
 Categories=Settings;
