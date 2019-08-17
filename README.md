@@ -64,6 +64,7 @@ A few articles have been written about AppImageLauncher already:
   - https://linuxmint.hu/blog/2018/12/appimage (Hungarian)
   - https://www.freeyourdesktop.com/2018/07/install-manage-appimages-with-appimagelauncher/ (English)
     - please note that AppImageLauncher could *not* be "installed" via AppImage at that time, only recently we added a Lite version that now can be installed from an AppImage (more information will follow soon!)
+  - https://forum.pardus.org.tr/t/appimagelauncher-tek-tiklama-ile-appimage-sisteminizle-butunlestiriniz/11275 (Turkish)
 
 
 ## Installation
