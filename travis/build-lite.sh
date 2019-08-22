@@ -71,7 +71,19 @@ wget https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/downloa
 wget https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-"$ARCH".AppImage
 chmod -v +x linuxdeploy*-"$ARCH".AppImage
 
-export VERSION=$(src/cli/ail-cli --version | awk '{print $3}')
+VERSION=$(src/cli/ail-cli --version | awk '{print $3}')
+
+travis_build="$TRAVIS_BUILD_NUMBER"
+
+if [[ "$travis_build" != "" ]]; then
+    VERSION="${VERSION}-travis${travis_build}"
+else
+    VERSION="${VERSION}-local"
+fi
+
+# might seem pointless, but it's necessary to have the version number written inside the AppImage as well, so don't remove
+export VERSION
+
 export OUTPUT=appimagelauncher-lite-"$VERSION"-"$ARCH".AppImage
 export APPIMAGE_EXTRACT_AND_RUN=1
 
