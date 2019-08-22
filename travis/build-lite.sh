@@ -81,6 +81,8 @@ else
     VERSION="${VERSION}-local"
 fi
 
+VERSION="${VERSION}~$(cd "$REPO_ROOT" && git rev-parse --short HEAD)"
+
 # might seem pointless, but it's necessary to have the version number written inside the AppImage as well, so don't remove
 export VERSION
 
