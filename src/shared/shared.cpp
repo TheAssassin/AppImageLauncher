@@ -25,6 +25,7 @@ extern "C" {
 #include <QMessageBox>
 #include <QObject>
 #include <QRegularExpression>
+#include <QSet>
 #include <QSettings>
 #include <QStandardPaths>
 #ifdef ENABLE_UPDATE_HELPER
@@ -235,6 +236,10 @@ QDir integratedAppImagesDestination() {
         return config->value(keyName).toString();
 
     return DEFAULT_INTEGRATION_DESTINATION;
+}
+
+QSet<QString> additionalAppImagesLocations() {
+    return QSet<QString>{} << "/Applications";
 }
 
 QString buildPathToIntegratedAppImage(const QString& pathToAppImage) {

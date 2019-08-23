@@ -60,9 +60,22 @@ int main(int argc, char* argv[]) {
 
     QCoreApplication app(argc, argv);
 
-    // by default, watch configured/default destination directory only
+    // watchers are kind of value objects, the watched directories may not change over the lifetime of the object
+    // therefore we need to create a set beforehand, containing all directories we want to have watched
+    QSet<QString> watchedDirectories;
+
+    // of course we need to watch the main integration directory
     const auto defaultDestination = integratedAppImagesDestination();
-    FileSystemWatcher watcher(defaultDestination.absolutePath());
+    watchedDirectories.insert(defaultDestination.absolutePath());
+
+    // however, there's likely additional ones to watch
+    const auto additionalDirs = additionalAppImagesLocations();
+    for (const auto& d : additionalDirs) {
+        watchedDirectories.insert(QDir(d).absolutePath());
+    }
+
+    // time to create the watcher object
+    FileSystemWatcher watcher(watchedDirectories);
 
     // create a daemon worker instance
     // it is used to integrate all AppImages initially, and to integrate files found via inotify
@@ -71,6 +84,7 @@ int main(int argc, char* argv[]) {
     // initial search for AppImages; if AppImages are found, they will be integrated, unless they already are
     std::cout << "Searching for existing AppImages" << std::endl;
     for (const auto& dir : watcher.directories()) {
+        std::cout << "Searching directory: " << dir.toStdString() << std::endl;
         for (QDirIterator it(dir); it.hasNext();) {
             const auto& path = it.next();
             if (QFileInfo(path).isFile()) {
