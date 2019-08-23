@@ -31,4 +31,5 @@ RUN apt-get update && \
         desktop-file-utils \
         pkg-config \
         libarchive-dev \
-        libboost-filesystem-dev
+        libboost-filesystem-dev \
+        librsvg2-dev

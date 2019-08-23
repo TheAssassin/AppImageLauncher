@@ -49,7 +49,8 @@ RUN dpkg --add-architecture i386 && \
         libfreetype6-dev:i386 \
         libarchive-dev:i386 \
         libboost-filesystem-dev:i386 \
-        zlib1g:i386
+        zlib1g:i386 \
+        librsvg2-dev:i386
 
 # https://github.com/TheAssassin/AppImageLauncher/issues/199
 RUN bash -xc "apt-get update && \

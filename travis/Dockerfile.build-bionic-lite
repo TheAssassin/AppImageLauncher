@@ -34,7 +34,8 @@ RUN apt-get update && \
         desktop-file-utils \
         pkg-config \
         libarchive-dev \
-        libboost-filesystem-dev
+        libboost-filesystem-dev \
+        librsvg2-dev
 
 # https://github.com/TheAssassin/AppImageLauncher/issues/199
 RUN bash -xc "apt-get update && \

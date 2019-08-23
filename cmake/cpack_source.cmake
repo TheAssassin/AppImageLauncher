@@ -17,7 +17,7 @@ set(CPACK_SOURCE_IGNORE_FILES
 )
 
 # source tarball filename (without extension)
-set(CPACK_SOURCE_PACKAGE_FILE_NAME appimagelauncher-git${APPIMAGELAUNCHER_GIT_COMMIT_DATE_SHORT}.${APPIMAGELAUNCHER_GIT_COMMIT}.source)
+set(CPACK_SOURCE_PACKAGE_FILE_NAME appimagelauncher-${APPIMAGELAUNCHER_GIT_COMMIT}.source)
 
 # build .tar.xz archives to get the maximum amount of compression and produce small tarballs
 set(CPACK_SOURCE_GENERATOR TXZ)
