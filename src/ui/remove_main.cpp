@@ -80,14 +80,14 @@ int main(int argc, char** argv) {
 
     // this tool should not do anything if the file isn't integrated
     // the file is only supposed to work on integrated AppImages and _nothing else_
-    if (!hasAlreadyBeenIntegrated(pathToAppImage)) {
-        QMessageBox::critical(
-                nullptr,
-                QObject::tr("AppImage delete helper error"),
-                QObject::tr("Refusing to work on non-integrated AppImage:\n\n%1").arg(pathToAppImage)
-        );
-        return 1;
-    }
+//    if (!hasAlreadyBeenIntegrated(pathToAppImage)) {
+//        QMessageBox::critical(
+//                nullptr,
+//                QObject::tr("AppImage delete helper error"),
+//                QObject::tr("Refusing to work on non-integrated AppImage:\n\n%1").arg(pathToAppImage)
+//        );
+//        return 1;
+//    }
 
     QDialog dialog;
     Ui::RemoveDialog ui;
