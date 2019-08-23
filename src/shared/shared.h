@@ -97,3 +97,8 @@ bool fsDaemonHasBeenRestartedSinceLastUpdate();
 
 // checks whether a file is an AppImage
 bool isAppImage(const QString& path);
+
+// when a file doesn't belong to the current user, this method shows a dialog asking whether to relaunch as that user
+// this can be used when e.g., updating AppImages owned by root or other users
+// uses pkexec, gksudo, gksu etc., whatever is available
+void checkAuthorizationAndShowDialogIfNecessary(const QString& path);

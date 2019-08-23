@@ -899,3 +899,97 @@ bool isAppImage(const QString& path) {
     const auto type = appimage_get_type(path.toUtf8(), false);
     return type > 0 && type <= 2;
 }
+
+QString which(const std::string& name) {
+    std::vector<char> command(4096);
+    snprintf(command.data(), command.size()-1, "which %s", name.c_str());
+
+    auto* proc = popen(command.data(), "r");
+
+    if (proc == nullptr)
+        throw std::runtime_error("Failed to start process for which");
+
+    std::vector<char> outBuf(4096);
+
+    fread(outBuf.data(), sizeof(char), outBuf.size()-1, proc);
+
+    pclose(proc);
+
+    QString rv(outBuf.data());
+
+    rv.replace("\n", "");
+
+    return rv;
+}
+
+void checkAuthorizationAndShowDialogIfNecessary(const QString& path) {
+    const uint32_t ownUid = getuid();
+    const uint32_t fileOwnerUid = QFileInfo(path).ownerId();
+    const auto fileOwnerUsername = QFileInfo(path).owner();
+
+    if (ownUid != fileOwnerUid) {
+        auto* messageBox = new QMessageBox(
+            QMessageBox::Warning,
+            QMessageBox::tr("Permissions problem"),
+            QMessageBox::tr("File %1 is owned by another user: %2\n\nRelaunch with their permissions?").arg(path).arg(fileOwnerUsername),
+            QMessageBox::Ok | QMessageBox::Abort,
+            nullptr
+        );
+
+        messageBox->setDefaultButton(QMessageBox::Ok);
+        messageBox->show();
+
+        QApplication::exec();
+
+        const auto relaunch = messageBox->clickedButton() == messageBox->button(QMessageBox::Ok);
+
+        if (!relaunch) {
+            qDebug() << "Dialog aborted";
+            exit(1);
+        }
+
+        qDebug() << "ok, attempting relaunch with root helper";
+
+        // pkexec doesn't retain $DISPLAY etc., as per the man page, so we can't run UI programs with it
+        for (const auto& rootHelperFilename : {/*"pkexec",*/ "gksudo", "gksu"}) {
+            const auto rootHelperPath = which(rootHelperFilename);
+            qDebug() << rootHelperFilename << rootHelperPath;
+
+            if (rootHelperPath.isEmpty())
+                continue;
+
+            std::vector<char*> argv = {
+                strdup(rootHelperPath.toStdString().c_str()),
+            };
+
+            if (fileOwnerUid != 0) {
+                argv.emplace_back(strdup("--user"));
+                argv.emplace_back(strdup(std::to_string(fileOwnerUid).c_str()));
+            }
+
+            for (const auto& arg : QCoreApplication::arguments()) {
+                argv.emplace_back(strdup(arg.toStdString().c_str()));
+            }
+
+            argv.emplace_back(nullptr);
+
+            const auto rv = execv(strdup(rootHelperPath.toStdString().c_str()), argv.data());
+
+            // if the execution fails, we should signalize this to the user instead of silently failing over to the
+            // next tool
+            QMessageBox::critical(
+                    nullptr,
+                    QMessageBox::tr("Error"),
+                    QMessageBox::tr("Failed to run permissions helper, exited with return code %1").arg(rv)
+            );
+            exit(1);
+        }
+
+        QMessageBox::critical(
+            nullptr,
+            QMessageBox::tr("Error"),
+            QMessageBox::tr("Could not find suitable permissions helper, aborting")
+        );
+        exit(1);
+    }
+}

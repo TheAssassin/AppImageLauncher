@@ -67,6 +67,8 @@ int main(int argc, char** argv) {
         return 1;
     }
 
+    checkAuthorizationAndShowDialogIfNecessary(pathToAppImage);
+
     const auto type = appimage_get_type(pathToAppImage.toStdString().c_str(), false);
 
     if (type <= 0 || type > 2) {
