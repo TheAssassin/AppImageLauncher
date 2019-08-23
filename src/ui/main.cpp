@@ -424,7 +424,19 @@ int main(int argc, char** argv) {
             return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
         };
 
-        if (!isInDirectory(pathToAppImage, integratedAppImagesDestination().path())) {
+        bool needToAskAboutMoving = !isInDirectory(pathToAppImage, integratedAppImagesDestination().path());
+
+        // not so fast: even if it's not in the main integration directory, there's more viable locations where
+        // AppImages may reside just fine
+        if (needToAskAboutMoving) {
+            for (const auto& additionalLocation : additionalAppImagesLocations()) {
+                if (isInDirectory(pathToAppImage, additionalLocation)) {
+                    needToAskAboutMoving = false;
+                }
+            }
+        }
+
+        if (needToAskAboutMoving) {
             auto* messageBox = new QMessageBox(
                 QMessageBox::Warning,
                 QMessageBox::tr("Warning"),
@@ -445,7 +457,7 @@ int main(int argc, char** argv) {
             messageBox->setDefaultButton(QMessageBox::Yes);
             messageBox->show();
 
-             QApplication::exec();
+            QApplication::exec();
 
             // if the user selects No, then continue as if the AppImage would not be in this directory
             if (messageBox->clickedButton() == messageBox->button(QMessageBox::Yes)) {
