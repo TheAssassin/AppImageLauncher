@@ -150,6 +150,8 @@ int main(int argc, char** argv) {
         removeAfterUpdate = removeCheckBox.isChecked();
     }
 
+    checkAuthorizationAndShowDialogIfNecessary(pathToAppImage);
+
     auto rv = updater.exec();
 
     // if the update has failed, return immediately
