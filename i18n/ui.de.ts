@@ -109,24 +109,26 @@ Kaputte Syntax:
     <message>
         <location line="+446"/>
         <source>Permissions problem</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechte-Problem</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File %1 is owned by another user: %2
 
 Relaunch with their permissions?</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei %1 gehört anderem Nutzer: %2
+
+Neu starten mit deren Rechten?</translation>
     </message>
     <message>
         <location line="+49"/>
         <source>Failed to run permissions helper, exited with return code %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Ausführen des Rechte-Hilfsprogramms, beendet mit Rückgabewert %1</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Could not find suitable permissions helper, aborting</source>
-        <translation type="unfinished"></translation>
+        <translation>Konnte kein geeignetes Rechte-Hilfsprogramm finden, breche ab</translation>
     </message>
 </context>
 <context>
