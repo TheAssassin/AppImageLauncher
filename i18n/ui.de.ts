@@ -42,7 +42,7 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+430"/>
+        <location filename="../src/ui/main.cpp" line="+442"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
@@ -74,16 +74,18 @@ Sollten Sie Nein wählen, wird das AppImage einmalig ausgeführt, und es wird im
 </translation>
     </message>
     <message>
+        <location filename="../src/shared/shared.cpp" line="+982"/>
+        <location line="+8"/>
         <source>Error</source>
-        <translation type="vanished">Fehler</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location filename="../src/ui/main.cpp" line="+23"/>
         <source>Failed to unregister AppImage before re-integrating it</source>
         <translation>Fehler beim Deregistrieren des AppImages vor der Reintegration</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+471"/>
+        <location filename="../src/shared/shared.cpp" line="-514"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -104,22 +106,44 @@ Kaputte Syntax:
 
 %1</translation>
     </message>
+    <message>
+        <location line="+446"/>
+        <source>Permissions problem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>File %1 is owned by another user: %2
+
+Relaunch with their permissions?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+49"/>
+        <source>Failed to run permissions helper, exited with return code %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Could not find suitable permissions helper, aborting</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location line="-262"/>
-        <location line="+445"/>
-        <location filename="../src/ui/remove_main.cpp" line="+109"/>
+        <location line="-770"/>
+        <location line="+449"/>
+        <location filename="../src/ui/remove_main.cpp" line="+111"/>
         <location line="+12"/>
         <location line="+12"/>
         <location filename="../src/ui/update_main.cpp" line="+119"/>
-        <location line="+40"/>
+        <location line="+42"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-407"/>
+        <location filename="../src/ui/main.cpp" line="-419"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher unterstützt zur Zeit keine AppImages vom Typ %1.</translation>
     </message>
@@ -240,8 +264,8 @@ Kaputte Syntax:
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/ui/remove_main.cpp" line="-68"/>
-        <location filename="../src/ui/update_main.cpp" line="-97"/>
+        <location filename="../src/ui/remove_main.cpp" line="-70"/>
+        <location filename="../src/ui/update_main.cpp" line="-99"/>
         <source>Error: no such file or directory: %1</source>
         <translation>Fehler: Datei oder Verzeichnis nicht gefunden: %1</translation>
     </message>
@@ -252,7 +276,7 @@ Kaputte Syntax:
         <translation>Datei ist kein AppImage: %1</translation>
     </message>
     <message>
-        <location line="+128"/>
+        <location line="+140"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
         <translation>Das Verzeichnis zum Speichern der integrierten AppImages ist derzeit:
@@ -327,8 +351,7 @@ Kaputte Syntax:
         <translation>&lt;Pfad&gt;</translation>
     </message>
     <message>
-        <location line="+18"/>
-        <location line="+11"/>
+        <location line="+20"/>
         <source>AppImage delete helper error</source>
         <translation>AppImage Lösch-Hilfsprogramm Fehler</translation>
     </message>
@@ -337,7 +360,7 @@ Kaputte Syntax:
         <translation type="vanished">AppImage Löschhelfer Fehler</translation>
     </message>
     <message>
-        <location line="-10"/>
+        <location line="+1"/>
         <source>Not an AppImage:
 
 %1</source>
@@ -346,11 +369,10 @@ Kaputte Syntax:
 %1</translation>
     </message>
     <message>
-        <location line="+11"/>
         <source>Refusing to work on non-integrated AppImage:
 
 %1</source>
-        <translation>Verweigere Arbeit an nicht integriertem AppImage:
+        <translation type="vanished">Verweigere Arbeit an nicht integriertem AppImage:
 
 %1</translation>
     </message>
@@ -363,7 +385,7 @@ Kaputte Syntax:
         <translation type="vanished">Sind Sie sicher, dass Sie dieses AppImage entfernen möchten?</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+34"/>
         <source>Failed to unregister AppImage: %1</source>
         <translation>Fehler beim Deregistrieren des AppImages: %1</translation>
     </message>
@@ -392,8 +414,8 @@ Kaputte Syntax:
         <translation>Bei Klick auf Nein wird das AppImage einmalig ausgeführt, und das System in seinem derzeitigen Zustand belassen.</translation>
     </message>
     <message>
-        <location line="-417"/>
-        <location line="+421"/>
+        <location line="-421"/>
+        <location line="+425"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
@@ -530,7 +552,7 @@ Das AppImage unterstützt keine Updates. Bitten Sie die Autoren, die Update-Info
         <translation>Entferne altes AppImage nach erfolgreicher Aktualisierung</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+24"/>
         <source>Failed to update AppImage:
 
 %1</source>

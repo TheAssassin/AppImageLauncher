@@ -42,7 +42,7 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+430"/>
+        <location filename="../src/ui/main.cpp" line="+442"/>
         <source>Warning</source>
         <translation>Aviso</translation>
     </message>
@@ -74,16 +74,18 @@ Escolher Não, irá executar a AppImage uma vez e mantê-la na directória em qu
 </translation>
     </message>
     <message>
+        <location filename="../src/shared/shared.cpp" line="+982"/>
+        <location line="+8"/>
         <source>Error</source>
-        <translation type="vanished">Erro</translation>
+        <translation>Erro</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location filename="../src/ui/main.cpp" line="+23"/>
         <source>Failed to unregister AppImage before re-integrating it</source>
         <translation>Falha ao desregistrar a AppImage antes de a reintegrar</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+471"/>
+        <location filename="../src/shared/shared.cpp" line="-514"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -104,22 +106,44 @@ Sintaxe inválida:
 
 %1</translation>
     </message>
+    <message>
+        <location line="+446"/>
+        <source>Permissions problem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>File %1 is owned by another user: %2
+
+Relaunch with their permissions?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+49"/>
+        <source>Failed to run permissions helper, exited with return code %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Could not find suitable permissions helper, aborting</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location line="-262"/>
-        <location line="+445"/>
-        <location filename="../src/ui/remove_main.cpp" line="+109"/>
+        <location line="-770"/>
+        <location line="+449"/>
+        <location filename="../src/ui/remove_main.cpp" line="+111"/>
         <location line="+12"/>
         <location line="+12"/>
         <location filename="../src/ui/update_main.cpp" line="+119"/>
-        <location line="+40"/>
+        <location line="+42"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-407"/>
+        <location filename="../src/ui/main.cpp" line="-419"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher não suporta o tipo %1 AppImages de momento.</translation>
     </message>
@@ -240,8 +264,8 @@ Sintaxe inválida:
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/ui/remove_main.cpp" line="-68"/>
-        <location filename="../src/ui/update_main.cpp" line="-97"/>
+        <location filename="../src/ui/remove_main.cpp" line="-70"/>
+        <location filename="../src/ui/update_main.cpp" line="-99"/>
         <source>Error: no such file or directory: %1</source>
         <translation>Erro: ficheiro ou directória não existe: %1</translation>
     </message>
@@ -252,7 +276,7 @@ Sintaxe inválida:
         <translation>Não é uma AppImage: %1</translation>
     </message>
     <message>
-        <location line="+128"/>
+        <location line="+140"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
         <translation>A directória das AppImages integradas está definida como:
@@ -327,8 +351,7 @@ Sintaxe inválida:
         <translation></translation>
     </message>
     <message>
-        <location line="+18"/>
-        <location line="+11"/>
+        <location line="+20"/>
         <source>AppImage delete helper error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -337,15 +360,8 @@ Sintaxe inválida:
         <translation type="vanished">Erro no Assistente de Remoção de AppImage</translation>
     </message>
     <message>
-        <location line="-10"/>
+        <location line="+1"/>
         <source>Not an AppImage:
-
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Refusing to work on non-integrated AppImage:
 
 %1</source>
         <translation type="unfinished"></translation>
@@ -359,7 +375,7 @@ Sintaxe inválida:
         <translation type="vanished">Tem a certeza que deseja remover esta AppImage?</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+34"/>
         <source>Failed to unregister AppImage: %1</source>
         <translation>Falha ao desregistrar AppImage: %1</translation>
     </message>
@@ -388,8 +404,8 @@ Sintaxe inválida:
         <translation>Escolher Não irá executar a AppImage uma vez e deixar o sistema no seu estado actual.</translation>
     </message>
     <message>
-        <location line="-417"/>
-        <location line="+421"/>
+        <location line="-421"/>
+        <location line="+425"/>
         <source>Warning</source>
         <translation>Aviso</translation>
     </message>
@@ -521,7 +537,7 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
         <translation>Remover a AppImage antiga após uma actualização com sucesso</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+24"/>
         <source>Failed to update AppImage:
 
 %1</source>

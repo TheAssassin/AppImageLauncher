@@ -43,7 +43,7 @@ diseñado para mejorar tu experiencia de AppImage en tu computadora.&lt;/p&gt;&l
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+430"/>
+        <location filename="../src/ui/main.cpp" line="+442"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
     </message>
@@ -65,16 +65,18 @@ Elegir No ejecutará AppImage una vez, y dejará la AppImage en su directorio ac
 </translation>
     </message>
     <message>
+        <location filename="../src/shared/shared.cpp" line="+982"/>
+        <location line="+8"/>
         <source>Error</source>
-        <translation type="vanished">Error</translation>
+        <translation>Error</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location filename="../src/ui/main.cpp" line="+23"/>
         <source>Failed to unregister AppImage before re-integrating it</source>
         <translation>Error al eliminar el registro de AppImage antes de volver a integrarlo</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+471"/>
+        <location filename="../src/shared/shared.cpp" line="-514"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -96,11 +98,33 @@ Sintaxis inválida:
 %1</translation>
     </message>
     <message>
+        <location line="+446"/>
+        <source>Permissions problem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>File %1 is owned by another user: %2
+
+Relaunch with their permissions?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+49"/>
+        <source>Failed to run permissions helper, exited with return code %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Could not find suitable permissions helper, aborting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>AppImage has already been integrated, but it is not in the current integration destination directory.
 
 Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.</source>
-        <translation>Este AppImage ya fue integrado pero no se encuentra ubicado en el &quot;directorio de aplicaciones&quot;. 
+        <translation type="vanished">Este AppImage ya fue integrado pero no se encuentra ubicado en el &quot;directorio de aplicaciones&quot;. 
 
 Desea mover el archivo a dicho directorio?
 Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archivo permanecerá en su ubicación actual.</translation>
@@ -109,18 +133,18 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
 <context>
     <name>QObject</name>
     <message>
-        <location line="-262"/>
-        <location line="+445"/>
-        <location filename="../src/ui/remove_main.cpp" line="+109"/>
+        <location line="-770"/>
+        <location line="+449"/>
+        <location filename="../src/ui/remove_main.cpp" line="+111"/>
         <location line="+12"/>
         <location line="+12"/>
         <location filename="../src/ui/update_main.cpp" line="+119"/>
-        <location line="+40"/>
+        <location line="+42"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-407"/>
+        <location filename="../src/ui/main.cpp" line="-419"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher aun no soporta AppImages tipo %1.</translation>
     </message>
@@ -241,8 +265,8 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/ui/remove_main.cpp" line="-68"/>
-        <location filename="../src/ui/update_main.cpp" line="-97"/>
+        <location filename="../src/ui/remove_main.cpp" line="-70"/>
+        <location filename="../src/ui/update_main.cpp" line="-99"/>
         <source>Error: no such file or directory: %1</source>
         <translation>Error: no hay tal archivo o directorio: %1</translation>
     </message>
@@ -253,7 +277,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>No es una AppImage: %1</translation>
     </message>
     <message>
-        <location line="+128"/>
+        <location line="+140"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
         <translation>Las AppImages integradas en el sistema son guardadas en: %1</translation>
@@ -327,8 +351,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>&lt;ruta&gt;</translation>
     </message>
     <message>
-        <location line="+18"/>
-        <location line="+11"/>
+        <location line="+20"/>
         <source>AppImage delete helper error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -337,7 +360,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation type="vanished">AppImage eliminar error de ayuda</translation>
     </message>
     <message>
-        <location line="-10"/>
+        <location line="+1"/>
         <source>Not an AppImage:
 
 %1</source>
@@ -346,11 +369,10 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
 %1</translation>
     </message>
     <message>
-        <location line="+11"/>
         <source>Refusing to work on non-integrated AppImage:
 
 %1</source>
-        <translation>Negándose a trabajar en AppImage no integrado:
+        <translation type="vanished">Negándose a trabajar en AppImage no integrado:
 
 %1</translation>
     </message>
@@ -363,7 +385,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation type="vanished">Seguro que desea eliminar esta AppImage?</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+34"/>
         <source>Failed to unregister AppImage: %1</source>
         <translation>Error al anular el registro de AppImage: %1</translation>
     </message>
@@ -392,8 +414,8 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>Elegir No ejecutará AppImage una vez y dejará el sistema en su estado actual.</translation>
     </message>
     <message>
-        <location line="-417"/>
-        <location line="+421"/>
+        <location line="-421"/>
+        <location line="+425"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
     </message>
@@ -526,7 +548,7 @@ AppImage no admite la actualización. Solicite a los autores que configuren info
         <translation>Eliminar AppImage anterior después de una actualización exitosa</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+24"/>
         <source>Failed to update AppImage:
 
 %1</source>
