@@ -102,3 +102,6 @@ bool isAppImage(const QString& path);
 // this can be used when e.g., updating AppImages owned by root or other users
 // uses pkexec, gksudo, gksu etc., whatever is available
 void checkAuthorizationAndShowDialogIfNecessary(const QString& path);
+
+// clean up desktop integration files installed while originally integrating the AppImage
+bool unregisterAppImage(const QString& pathToAppImage);

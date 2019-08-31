@@ -24,15 +24,6 @@ extern "C" {
 #include "trashbin.h"
 #include "ui_remove.h"
 
-bool unregisterAppImage(const QString& pathToAppImage) {
-    auto rv = appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false);
-
-    if (rv != 0)
-        return false;
-
-    return true;
-}
-
 int main(int argc, char** argv) {
     QCommandLineParser parser;
     parser.setApplicationDescription(QObject::tr("Helper to delete integrated AppImages easily, e.g., from the application launcher's context menu"));

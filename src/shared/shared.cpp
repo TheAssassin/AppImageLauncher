@@ -314,6 +314,7 @@ bool updateDesktopDatabaseAndIconCaches() {
         {"gtk-update-icon-cache-3.0", "~/.local/share/icons/hicolor/ -t"},
         {"gtk-update-icon-cache", "~/.local/share/icons/hicolor/ -t"},
         {"xdg-desktop-menu", "forceupdate"},
+        {"update-mime-database", "~/.local/share/mime "},
     };
 
     for (const auto& command : commands) {
@@ -992,4 +993,13 @@ void checkAuthorizationAndShowDialogIfNecessary(const QString& path) {
         );
         exit(1);
     }
+}
+
+bool unregisterAppImage(const QString& pathToAppImage) {
+    auto rv = appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false);
+
+    if (rv != 0)
+        return false;
+
+    return true;
 }
