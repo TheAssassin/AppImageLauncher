@@ -3,6 +3,7 @@ Version=1.0
 Type=Application
 Exec=AppImageLauncherSettings %f
 Name=AppImageLauncher Settings
+Name[de]=AppImageLauncher-Einstellungen
 Icon=AppImageLauncher
 Terminal=false
 Categories=Settings;
