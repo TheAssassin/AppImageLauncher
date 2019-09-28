@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/ui/first-run.ui" line="+20"/>
         <source>First run</source>
-        <translation type="unfinished"></translation>
+        <translation>Первый запуск</translation>
     </message>
     <message>
         <location line="+55"/>
@@ -36,7 +36,7 @@
     <message>
         <location line="+17"/>
         <source>(default)</source>
-        <translation type="unfinished"></translation>
+        <translation>(по умолчанию)</translation>
     </message>
 </context>
 <context>
@@ -44,7 +44,7 @@
     <message>
         <location filename="../src/ui/main.cpp" line="+442"/>
         <source>Warning</source>
-        <translation type="unfinished">Предупреждение</translation>
+        <translation>Предупреждение</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -61,7 +61,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
         <location filename="../src/shared/shared.cpp" line="+982"/>
         <location line="+8"/>
         <source>Error</source>
-        <translation type="unfinished">Ошибка</translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <location filename="../src/ui/main.cpp" line="+23"/>
@@ -471,7 +471,9 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
         <source>Failed to check for updates:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось проверить обновления:
+
+%1</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -493,7 +495,9 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
         <source>Failed to update AppImage:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось обновить AppImage:
+
+%1</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -525,17 +529,17 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location filename="../src/ui/remove.ui" line="+17"/>
         <source>Delete AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить AppImage</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to delete this AppImage?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Вы уверены, что хотите удалить этот AppImage?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>%1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1</translation>
     </message>
 </context>
 <context>
@@ -543,7 +547,7 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location filename="../src/ui/settings_dialog.ui" line="+14"/>
         <source>AppImageLauncher Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки AppImageLauncher</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -578,7 +582,7 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="-28"/>
         <source>Enable auto-integration daemon</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить демон автоматической интеграции</translation>
     </message>
     <message>
         <location line="+50"/>
@@ -603,7 +607,7 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="+51"/>
         <source>Select Applications directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор директории приложений</translation>
     </message>
 </context>
 </TS>
