@@ -101,7 +101,8 @@ bool isAppImage(const QString& path);
 // when a file doesn't belong to the current user, this method shows a dialog asking whether to relaunch as that user
 // this can be used when e.g., updating AppImages owned by root or other users
 // uses pkexec, gksudo, gksu etc., whatever is available
-void checkAuthorizationAndShowDialogIfNecessary(const QString& path);
+// the second argument is the question that will be asked in the dialog displayed in case a relaunch is necessary
+void checkAuthorizationAndShowDialogIfNecessary(const QString& path, const QString& question);
 
 // clean up desktop integration files installed while originally integrating the AppImage
 bool unregisterAppImage(const QString& pathToAppImage);

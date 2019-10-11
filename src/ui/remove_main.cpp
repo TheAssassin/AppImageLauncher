@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    checkAuthorizationAndShowDialogIfNecessary(pathToAppImage);
+    checkAuthorizationAndShowDialogIfNecessary(pathToAppImage, "Delete anyway?");
 
     const auto type = appimage_get_type(pathToAppImage.toStdString().c_str(), false);
 

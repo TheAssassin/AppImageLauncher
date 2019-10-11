@@ -923,16 +923,22 @@ QString which(const std::string& name) {
     return rv;
 }
 
-void checkAuthorizationAndShowDialogIfNecessary(const QString& path) {
+void checkAuthorizationAndShowDialogIfNecessary(const QString& path, const QString& question) {
     const uint32_t ownUid = getuid();
     const uint32_t fileOwnerUid = QFileInfo(path).ownerId();
     const auto fileOwnerUsername = QFileInfo(path).owner();
 
     if (ownUid != fileOwnerUid) {
+        qDebug() << "attempting relaunch with root helper";
+
+        QString messageBoxText = QMessageBox::tr("File %1 is owned by another user: %2").arg(path).arg(fileOwnerUsername);
+        messageBoxText += "\n\n";
+        messageBoxText += question;
+
         auto* messageBox = new QMessageBox(
             QMessageBox::Warning,
             QMessageBox::tr("Permissions problem"),
-            QMessageBox::tr("File %1 is owned by another user: %2\n\nRelaunch with their permissions?").arg(path).arg(fileOwnerUsername),
+            messageBoxText,
             QMessageBox::Ok | QMessageBox::Abort,
             nullptr
         );
@@ -954,10 +960,12 @@ void checkAuthorizationAndShowDialogIfNecessary(const QString& path) {
         // pkexec doesn't retain $DISPLAY etc., as per the man page, so we can't run UI programs with it
         for (const auto& rootHelperFilename : {/*"pkexec",*/ "gksudo", "gksu"}) {
             const auto rootHelperPath = which(rootHelperFilename);
-            qDebug() << rootHelperFilename << rootHelperPath;
+            qDebug() << "trying root helper " << rootHelperFilename << rootHelperPath;
 
             if (rootHelperPath.isEmpty())
                 continue;
+
+            qDebug() << rootHelperFilename << rootHelperPath;
 
             std::vector<char*> argv = {
                 strdup(rootHelperPath.toStdString().c_str()),
