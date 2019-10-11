@@ -9,6 +9,7 @@ endif()
 
 # used by the update helper
 if(ENABLE_UPDATE_HELPER)
+    set(BUILD_QT_UI On CACHE BOOL "" FORCE)
     add_subdirectory(AppImageUpdate EXCLUDE_FROM_ALL)
 endif()
 
