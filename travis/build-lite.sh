@@ -99,6 +99,4 @@ install "$REPO_ROOT"/resources/appimagelauncher-lite-installer-common.sh $(readl
     -e $(find AppDir/usr/lib/{,*/}appimagelauncher/remove | head -n1) \
     -e $(find AppDir/usr/lib/{,*/}appimagelauncher/update | head -n1)
 
-bash
-
 mv "$OUTPUT" "$OLD_CWD"
