@@ -86,12 +86,19 @@ VERSION="${VERSION}~$(cd "$REPO_ROOT" && git rev-parse --short HEAD)"
 # might seem pointless, but it's necessary to have the version number written inside the AppImage as well, so don't remove
 export VERSION
 
-export OUTPUT=appimagelauncher-lite-"$VERSION"-"$ARCH".AppImage
+export OUTPUT=$(echo appimagelauncher-lite-"$VERSION"-"$ARCH".AppImage | tr '~' -)
+
 export APPIMAGE_EXTRACT_AND_RUN=1
+
+# since we extracted common parts from the installer built into the AppRun script, we have to copy the "library" script
+# before building an AppImage
+install "$REPO_ROOT"/resources/appimagelauncher-lite-installer-common.sh $(readlink -f AppDir/)
 
 ./linuxdeploy-"$ARCH".AppImage --plugin qt --appdir $(readlink -f AppDir) --custom-apprun "$REPO_ROOT"/resources/appimagelauncher-lite-AppRun.sh --output appimage \
     -d "$REPO_ROOT"/resources/appimagelauncher-lite.desktop \
     -e $(find AppDir/usr/lib/{,*/}appimagelauncher/remove | head -n1) \
     -e $(find AppDir/usr/lib/{,*/}appimagelauncher/update | head -n1)
+
+bash
 
 mv "$OUTPUT" "$OLD_CWD"
