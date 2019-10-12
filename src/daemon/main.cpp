@@ -18,6 +18,8 @@
 #include "filesystemwatcher.h"
 #include "worker.h"
 
+#define UPDATE_WATCHED_DIRECTORIES_INTERVAL 30 * 1000
+
 /**
  * Read the modification time of the file pointed by <filePath>
  * @param filePath
@@ -170,11 +172,39 @@ int main(int argc, char* argv[]) {
     // it is used to integrate all AppImages initially, and to integrate files found via inotify
     Worker worker;
 
+    // we we update the watched directories, the file system watcher can calculate whether there's new directories
+    // to watch
+    // these
+    QObject::connect(&watcher, &FileSystemWatcher::newDirectoriesToWatch, &app, [&worker](const QDirSet& newDirs) {
+        if (!newDirs.empty()) {
+            qDebug() << "No changes in watched directories detected";
+        } else {
+            std::cout << "Discovered new directories to watch, integrating existing AppImages initially" << std::endl;
+
+            initialSearchForAppImages(newDirs, worker);
+
+            // (re-)integrate all AppImages at once
+            worker.executeDeferredOperations();
+        }
+    });
+
     // search directories to watch once initially
+    // we *have* to do this even though we connect this signal above, as the first update occurs in the constructor
+    // and we cannot connect signals before construction has finished for obvious reasons
     initialSearchForAppImages(watcher.directories(), worker);
 
     // (re-)integrate all AppImages at once
     worker.executeDeferredOperations();
+
+    // we regularly want to update
+    {
+        auto* timer = new QTimer(&app);
+        timer->setInterval(UPDATE_WATCHED_DIRECTORIES_INTERVAL);
+        QTimer::connect(timer, &QTimer::timeout, &app, [&watcher, monitorMountedFilesystems]() {
+            watcher.updateWatchedDirectories(getDirectoriesToWatch(monitorMountedFilesystems));
+        });
+        timer->start();
+    }
 
     // after (re-)integrating all AppImages, clean up old desktop integration resources before start
     if (!cleanUpOldDesktopIntegrationResources()) {
