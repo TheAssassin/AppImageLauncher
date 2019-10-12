@@ -31,12 +31,12 @@ public:
     };
 
 public:
-    QSet<QString> watchedDirectories;
+    QDirSet watchedDirectories;
     QTimer eventsLoopTimer;
 
 private:
     int fd = -1;
-    std::map<int, QString> watchFdMap;
+    std::map<int, QDir> watchFdMap;
 
 public:
     // reads events from the inotify fd and emits the correct signals
@@ -72,8 +72,8 @@ public:
 
             // initialize new INotifyEvent with the data from the currentEvent
             QString relativePath(currentEvent->name);
-            auto directoryPath = watchFdMap[currentEvent->wd];
-            events.emplace_back(currentEvent->mask, directoryPath + "/" + relativePath);
+            auto directory = watchFdMap[currentEvent->wd];
+            events.emplace_back(currentEvent->mask, directory.absolutePath() + "/" + relativePath);
 
             // update current position in buffer
             p += sizeof(struct inotify_event) + currentEvent->len;
@@ -90,15 +90,16 @@ public:
         }
     };
 
-    bool startWatching(const QString& directory) {
+    bool startWatching(const QDir& directory) {
         static const auto mask = fileChangeEvents | fileRemovalEvents;
 
-        if (!QDir(directory).exists()) {
-            std::cerr << "Warning: directory " << directory.toStdString() << "does not exist, skipping" << std::endl;
+        if (!directory.exists()) {
+            std::cerr << "Warning: directory " << directory.absolutePath().toStdString()
+                      << "does not exist, skipping" << std::endl;
             return true;
         }
 
-        const int watchFd = inotify_add_watch(fd, directory.toStdString().c_str(), mask);
+        const int watchFd = inotify_add_watch(fd, directory.absolutePath().toStdString().c_str(), mask);
 
         if (watchFd == -1) {
             const auto error = errno;
@@ -157,17 +158,18 @@ FileSystemWatcher::FileSystemWatcher() {
     connect(&d->eventsLoopTimer, &QTimer::timeout, this, &FileSystemWatcher::readEvents);
 }
 
-FileSystemWatcher::FileSystemWatcher(const QString& path) : FileSystemWatcher() {
-    if (!QDir(path).exists())
-        QDir().mkdir(path);
-    d->watchedDirectories.insert(path);
+FileSystemWatcher::FileSystemWatcher(const QDir& directory) : FileSystemWatcher() {
+    // TODO: no longer auto-create the directory once we update the watched directories regularly
+    if (!QDir(directory).exists())
+        QDir().mkdir(directory.absolutePath());
+    d->watchedDirectories.insert(directory);
 }
 
-FileSystemWatcher::FileSystemWatcher(const QSet<QString>& paths) : FileSystemWatcher() {
+FileSystemWatcher::FileSystemWatcher(const QDirSet& paths) : FileSystemWatcher() {
     d->watchedDirectories = paths;
 }
 
-QSet<QString> FileSystemWatcher::directories() {
+QDirSet FileSystemWatcher::directories() {
     return d->watchedDirectories;
 }
 

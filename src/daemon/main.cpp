@@ -99,7 +99,7 @@ int main(int argc, char* argv[]) {
 
     // watchers are kind of value objects, the watched directories may not change over the lifetime of the object
     // therefore we need to create a set beforehand, containing all directories we want to have watched
-    QSet<QString> watchedDirectories;
+    QDirSet watchedDirectories;
 
     // of course we need to watch the main integration directory
     const auto defaultDestination = integratedAppImagesDestination();
@@ -117,7 +117,7 @@ int main(int argc, char* argv[]) {
     // this option is for debugging the
     if (listWatchedDirectories) {
         for (const auto& watchedDir : watchedDirectories) {
-            std::cout << watchedDir.toStdString() << std::endl;
+            std::cout << watchedDir.absolutePath().toStdString() << std::endl;
         }
         return 0;
     }
@@ -132,7 +132,7 @@ int main(int argc, char* argv[]) {
     // initial search for AppImages; if AppImages are found, they will be integrated, unless they already are
     std::cout << "Searching for existing AppImages" << std::endl;
     for (const auto& dir : watcher.directories()) {
-        std::cout << "Searching directory: " << dir.toStdString() << std::endl;
+        std::cout << "Searching directory: " << dir.absolutePath().toStdString() << std::endl;
         for (QDirIterator it(dir); it.hasNext();) {
             const auto& path = it.next();
             if (QFileInfo(path).isFile()) {
@@ -166,7 +166,7 @@ int main(int argc, char* argv[]) {
 
     std::cout << "Watching directories: ";
     for (const auto& dir : watcher.directories()) {
-        std::cout << dir.toStdString().c_str() << " ";
+        std::cout << dir.absolutePath().toStdString().c_str() << " ";
     }
     std::cout << std::endl;
 
