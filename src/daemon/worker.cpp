@@ -116,6 +116,10 @@ Worker::Worker() {
 }
 
 void Worker::executeDeferredOperations() {
+    if (d->deferredOperations.empty()) {
+        return;
+    }
+
     std::cout << "Executing deferred operations" << std::endl;
 
     auto outputMutex = std::make_shared<QMutex>();
