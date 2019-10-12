@@ -90,6 +90,22 @@ void initialSearchForAppImages(const QDirSet& dirsToSearch, Worker& worker) {
     }
 }
 
+QDirSet getDirectoriesToWatch(const bool monitorMountedFilesystems) {
+    auto watchedDirectories = QDirSet();
+
+    // of course we need to watch the main integration directory
+    const auto defaultDestination = integratedAppImagesDestination();
+    watchedDirectories.insert(defaultDestination);
+
+    // however, there's likely additional ones to watch
+    const auto additionalDirs = additionalAppImagesLocations(monitorMountedFilesystems);
+    for (const auto& d : additionalDirs) {
+        watchedDirectories.insert(QDir(d).absolutePath());
+    }
+
+    return watchedDirectories;
+}
+
 int main(int argc, char* argv[]) {
     // make sure shared won't try to use the UI
     setenv("_FORCE_HEADLESS", "1", 1);
@@ -132,22 +148,12 @@ int main(int argc, char* argv[]) {
     // parse arguments
     parser.process(app);
 
-    // watchers are kind of value objects, the watched directories may not change over the lifetime of the object
-    // therefore we need to create a set beforehand, containing all directories we want to have watched
-    QDirSet watchedDirectories;
-
-    // of course we need to watch the main integration directory
-    const auto defaultDestination = integratedAppImagesDestination();
-    watchedDirectories.insert(defaultDestination);
-
     const auto monitorMountedFilesystems = parser.isSet(monitorMountedFilesystemsOption);
     const auto listWatchedDirectories = parser.isSet(listWatchedDirectoriesOption);
 
-    // however, there's likely additional ones to watch
-    const auto additionalDirs = additionalAppImagesLocations(monitorMountedFilesystems);
-    for (const auto& d : additionalDirs) {
-        watchedDirectories.insert(QDir(d).absolutePath());
-    }
+    // watchers are kind of value objects, the watched directories may not change over the lifetime of the object
+    // therefore we need to create a set beforehand, containing all directories we want to have watched
+    QDirSet watchedDirectories = getDirectoriesToWatch(monitorMountedFilesystems);
 
     // this option is for debugging the
     if (listWatchedDirectories) {
