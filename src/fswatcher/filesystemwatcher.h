@@ -26,11 +26,9 @@ public:
     explicit FileSystemWatcher(const QSet<QString>& paths);
     FileSystemWatcher();
 
-public:
+public slots:
     bool startWatching();
     bool stopWatching();
-
-public slots:
     void readEvents();
 
 public:
