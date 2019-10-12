@@ -1,13 +1,14 @@
 // system includes
 #include <deque>
-#include <set>
 #include <iostream>
+#include <sstream>
 #include <sys/stat.h>
 
 // library includes
+#include <QCommandLineParser>
 #include <QCoreApplication>
+#include <QDebug>
 #include <QDirIterator>
-#include <QMutex>
 #include <QTimer>
 #include <appimage/appimage.h>
 
@@ -58,7 +59,43 @@ int main(int argc, char* argv[]) {
     // make sure shared won't try to use the UI
     setenv("_FORCE_HEADLESS", "1", 1);
 
+    QCommandLineParser parser;
+    parser.setApplicationDescription(
+        QObject::tr(
+            "Tracks AppImages in applications directories (user's, system and other ones). "
+            "Automatically integrates AppImages moved into those directories and unintegrates ones removed from them."
+        )
+    );
+
+    parser.addHelpOption();
+    parser.addVersionOption();
+
+    QCommandLineOption monitorMountedFilesystemsOption(
+        "monitor-mounted-filesystems",
+        QObject::tr("Search for AppImages in /Applications directories suitable mounted filesystems")
+    );
+
+    QCommandLineOption listWatchedDirectoriesOption(
+        "list-watched-directories",
+        QObject::tr("Lists directories watched by this daemon and exit")
+    );
+
+    if (!parser.addOption(listWatchedDirectoriesOption) || !parser.addOption(monitorMountedFilesystemsOption)) {
+        throw std::runtime_error("could not add Qt command line option for some reason");
+    }
+
     QCoreApplication app(argc, argv);
+
+    {
+        std::ostringstream version;
+        version << "version " << APPIMAGELAUNCHER_VERSION << " "
+                << "(git commit " << APPIMAGELAUNCHER_GIT_COMMIT << "), built on "
+                << APPIMAGELAUNCHER_BUILD_DATE;
+        QCoreApplication::setApplicationVersion(QString::fromStdString(version.str()));
+    }
+
+    // parse arguments
+    parser.process(app);
 
     // watchers are kind of value objects, the watched directories may not change over the lifetime of the object
     // therefore we need to create a set beforehand, containing all directories we want to have watched
@@ -68,10 +105,21 @@ int main(int argc, char* argv[]) {
     const auto defaultDestination = integratedAppImagesDestination();
     watchedDirectories.insert(defaultDestination.absolutePath());
 
+    const auto monitorMountedFilesystems = parser.isSet(monitorMountedFilesystemsOption);
+    const auto listWatchedDirectories = parser.isSet(listWatchedDirectoriesOption);
+
     // however, there's likely additional ones to watch
-    const auto additionalDirs = additionalAppImagesLocations();
+    const auto additionalDirs = additionalAppImagesLocations(monitorMountedFilesystems);
     for (const auto& d : additionalDirs) {
         watchedDirectories.insert(QDir(d).absolutePath());
+    }
+
+    // this option is for debugging the
+    if (listWatchedDirectories) {
+        for (const auto& watchedDir : watchedDirectories) {
+            std::cout << watchedDir.toStdString() << std::endl;
+        }
+        return 0;
     }
 
     // time to create the watcher object
