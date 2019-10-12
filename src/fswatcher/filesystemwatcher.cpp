@@ -95,7 +95,7 @@ public:
 
         if (!directory.exists()) {
             std::cerr << "Warning: directory " << directory.absolutePath().toStdString()
-                      << "does not exist, skipping" << std::endl;
+                      << " does not exist, skipping" << std::endl;
             return true;
         }
 
