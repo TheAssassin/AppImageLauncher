@@ -200,7 +200,7 @@ int main(int argc, char* argv[]) {
     watcher.startWatching();
     QObject::connect(&app, &QCoreApplication::aboutToQuit, &watcher, &FileSystemWatcher::stopWatching);
 
-    QTimer* binaryUpdatesMonitor = setupBinaryUpdatesMonitor(argv);
+    auto* binaryUpdatesMonitor = setupBinaryUpdatesMonitor(argv);
     binaryUpdatesMonitor->start();
 
     return QCoreApplication::exec();
