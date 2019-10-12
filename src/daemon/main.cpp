@@ -53,6 +53,34 @@ QTimer* setupBinaryUpdatesMonitor(char* const* argv) {
     timer->setInterval(5 * 60 * 1000);
     return timer;
 
+void initialSearchForAppImages(const QDirSet& dirsToSearch, Worker& worker) {
+    // initial search for AppImages; if AppImages are found, they will be integrated, unless they already are
+    std::cout << "Searching for existing AppImages" << std::endl;
+    for (const auto& dir : dirsToSearch) {
+        std::cout << "Searching directory: " << dir.absolutePath().toStdString() << std::endl;
+        for (QDirIterator it(dir); it.hasNext();) {
+            const auto& path = it.next();
+            if (QFileInfo(path).isFile()) {
+                const auto appImageType = appimage_get_type(path.toStdString().c_str(), false);
+                const auto isAppImage = 0 < appImageType && appImageType <= 2;
+                if (isAppImage) {
+                    // at application startup, we don't want to integrate AppImages that have been integrated already,
+                    // as that it slows down very much
+                    // the integration will be updated as soon as any of these AppImages is run with AppImageLauncher
+                    std::cout << "Found AppImage: " << path.toStdString() << std::endl;
+                    if (!appimage_is_registered_in_system(path.toStdString().c_str())) {
+                        std::cout << "AppImage is not integrated yet, integrating" << std::endl;
+                        worker.scheduleForIntegration(path);
+                    } else if (!desktopFileHasBeenUpdatedSinceLastUpdate(path)) {
+                        std::cout << "AppImage has been integrated already but needs to be reintegrated" << std::endl;
+                        worker.scheduleForIntegration(path);
+                    } else {
+                        std::cout << "AppImage integrated already, skipping" << std::endl;
+                    }
+                }
+            }
+        }
+    }
 }
 
 int main(int argc, char* argv[]) {
@@ -129,33 +157,9 @@ int main(int argc, char* argv[]) {
     // it is used to integrate all AppImages initially, and to integrate files found via inotify
     Worker worker;
 
-    // initial search for AppImages; if AppImages are found, they will be integrated, unless they already are
-    std::cout << "Searching for existing AppImages" << std::endl;
-    for (const auto& dir : watcher.directories()) {
-        std::cout << "Searching directory: " << dir.absolutePath().toStdString() << std::endl;
-        for (QDirIterator it(dir); it.hasNext();) {
-            const auto& path = it.next();
-            if (QFileInfo(path).isFile()) {
-                const auto appImageType = appimage_get_type(path.toStdString().c_str(), false);
-                const auto isAppImage = 0 < appImageType && appImageType <= 2;
-                if (isAppImage) {
-                    // at application startup, we don't want to integrate AppImages that have been integrated already,
-                    // as that it slows down very much
-                    // the integration will be updated as soon as any of these AppImages is run with AppImageLauncher
-                    std::cout << "Found AppImage: " << path.toStdString() << std::endl;
-                    if (!appimage_is_registered_in_system(path.toStdString().c_str())) {
-                        std::cout << "AppImage is not integrated yet, integrating" << std::endl;
-                        worker.scheduleForIntegration(path);
-                    } else if (!desktopFileHasBeenUpdatedSinceLastUpdate(path)) {
-                        std::cout << "AppImage has been integrated already but needs to be reintegrated" << std::endl;
-                        worker.scheduleForIntegration(path);
-                    } else {
-                        std::cout << "AppImage integrated already, skipping" << std::endl;
-                    }
-                }
-            }
-        }
-    }
+    // search directories to watch once initially
+    initialSearchForAppImages(watcher.directories(), worker);
+
     // (re-)integrate all AppImages at once
     worker.executeDeferredOperations();
 
