@@ -90,26 +90,46 @@ public:
         }
     };
 
-    bool startWatching() {
+    bool startWatching(const QString& directory) {
         static const auto mask = fileChangeEvents | fileRemovalEvents;
 
-        for (const auto& directory : watchedDirectories) {
-            if (!QDir(directory).exists()) {
-                std::cerr << "Warning: directory " << directory.toStdString() << "does not exist, skipping" << std::endl;
-                continue;
-            }
-
-            const int watchFd = inotify_add_watch(fd, directory.toStdString().c_str(), mask);
-
-            if (watchFd == -1) {
-                const auto error = errno;
-                std::cerr << "Failed to start watching: " << strerror(error) << std::endl;
-                return false;
-            }
-
-            watchFdMap[watchFd] = directory;
-            eventsLoopTimer.start();
+        if (!QDir(directory).exists()) {
+            std::cerr << "Warning: directory " << directory.toStdString() << "does not exist, skipping" << std::endl;
+            return true;
         }
+
+        const int watchFd = inotify_add_watch(fd, directory.toStdString().c_str(), mask);
+
+        if (watchFd == -1) {
+            const auto error = errno;
+            std::cerr << "Failed to start watching: " << strerror(error) << std::endl;
+            return false;
+        }
+
+        watchFdMap[watchFd] = directory;
+        eventsLoopTimer.start();
+
+        return true;
+    }
+
+    bool startWatching() {
+        for (const auto& directory : watchedDirectories) {
+            if (!startWatching(directory))
+                return false;
+        }
+
+        return true;
+    }
+
+    bool stopWatching(int watchFd) {
+        if (inotify_rm_watch(fd, watchFd) == -1) {
+            const auto error = errno;
+            std::cerr << "Failed to stop watching: " << strerror(error) << std::endl;
+            return false;
+        }
+
+        watchFdMap.erase(watchFd);
+        eventsLoopTimer.stop();
 
         return true;
     }
@@ -119,15 +139,12 @@ public:
             const auto pair = *(watchFdMap.begin());
             const auto watchFd = pair.first;
 
-            if (inotify_rm_watch(fd, watchFd) == -1) {
-                const auto error = errno;
-                std::cerr << "Failed to stop watching: " << strerror(error) << std::endl;
+            if (!stopWatching(watchFd)) {
                 return false;
             }
-
-            watchFdMap.erase(watchFd);
-            eventsLoopTimer.stop();
         }
+
+        eventsLoopTimer.stop();
 
         return true;
     }
