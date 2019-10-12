@@ -42,6 +42,7 @@ public slots:
     bool startWatching();
     bool stopWatching();
     void readEvents();
+    bool updateWatchedDirectories(const QDirSet& watchedDirectories);
 
 public:
     QDirSet directories();
@@ -49,4 +50,5 @@ public:
 signals:
     void fileChanged(QString path);
     void fileRemoved(QString path);
+    void newDirectoriesToWatch(QDirSet set);
 };

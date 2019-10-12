@@ -158,15 +158,12 @@ FileSystemWatcher::FileSystemWatcher() {
     connect(&d->eventsLoopTimer, &QTimer::timeout, this, &FileSystemWatcher::readEvents);
 }
 
-FileSystemWatcher::FileSystemWatcher(const QDir& directory) : FileSystemWatcher() {
-    // TODO: no longer auto-create the directory once we update the watched directories regularly
-    if (!QDir(directory).exists())
-        QDir().mkdir(directory.absolutePath());
-    d->watchedDirectories.insert(directory);
+FileSystemWatcher::FileSystemWatcher(const QDir& path) : FileSystemWatcher() {
+    updateWatchedDirectories(QDirSet{{path}});
 }
 
 FileSystemWatcher::FileSystemWatcher(const QDirSet& paths) : FileSystemWatcher() {
-    d->watchedDirectories = paths;
+    updateWatchedDirectories(paths);
 }
 
 QDirSet FileSystemWatcher::directories() {
@@ -193,4 +190,37 @@ void FileSystemWatcher::readEvents() {
             emit fileRemoved(event.path);
         }
     }
+}
+
+bool FileSystemWatcher::updateWatchedDirectories(const QDirSet& watchedDirectories) {
+    // first, we calculate which directores are new to be watched
+    QDirSet changedDirectories;
+
+    for (const auto& i : watchedDirectories) {
+        bool entryFound = false;
+
+        for (const auto& j : d->watchedDirectories) {
+            if (i == j) {
+                entryFound = true;
+                break;
+            }
+        }
+
+        if (!entryFound) {
+            changedDirectories.insert(i);
+        }
+    }
+
+    emit newDirectoriesToWatch(changedDirectories);
+
+    // now we can update the internal state
+    d->watchedDirectories = watchedDirectories;
+
+    if (!stopWatching())
+        return false;
+
+    if (!startWatching())
+        return false;
+
+    return true;
 }
