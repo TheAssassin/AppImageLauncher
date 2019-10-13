@@ -401,7 +401,7 @@ QString buildPathToIntegratedAppImage(const QString& pathToAppImage) {
 }
 
 std::map<std::string, std::string> findCollisions(const QString& currentNameEntry) {
-    std::map<std::string, std::string> collisions;
+    std::map<std::string, std::string> collisions{};
 
     // default locations of desktop files on systems
     const auto directories = {QString("/usr/share/applications/"), QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/applications/"};
