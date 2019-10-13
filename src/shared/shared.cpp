@@ -404,7 +404,10 @@ std::map<std::string, std::string> findCollisions(const QString& currentNameEntr
     std::map<std::string, std::string> collisions{};
 
     // default locations of desktop files on systems
-    const auto directories = {QString("/usr/share/applications/"), QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/applications/"};
+    const auto directories = {
+        QString("/usr/share/applications/"),
+        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/applications/"
+    };
 
     for (const auto& directory : directories) {
         QDirIterator iterator(directory, QDirIterator::FollowSymlinks);
@@ -438,12 +441,14 @@ std::map<std::string, std::string> findCollisions(const QString& currentNameEntr
 }
 
 bool updateDesktopDatabaseAndIconCaches() {
+    const auto dataLocation = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+
     const std::map<std::string, std::string> commands = {
-        {"update-desktop-database", "~/.local/share/applications"},
-        {"gtk-update-icon-cache-3.0", "~/.local/share/icons/hicolor/ -t"},
-        {"gtk-update-icon-cache", "~/.local/share/icons/hicolor/ -t"},
+        {"update-desktop-database", dataLocation.toStdString() + "/applications"},
+        {"gtk-update-icon-cache-3.0", dataLocation.toStdString() + "/icons/hicolor/ -t"},
+        {"gtk-update-icon-cache", dataLocation.toStdString() + "/icons/hicolor/ -t"},
         {"xdg-desktop-menu", "forceupdate"},
-        {"update-mime-database", "~/.local/share/mime "},
+        {"update-mime-database", dataLocation.toStdString() + "/mime "},
     };
 
     for (const auto& command : commands) {
@@ -938,7 +943,10 @@ bool cleanUpOldDesktopIntegrationResources(bool verbose) {
             auto* iconValue = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_ICON, nullptr);
 
             if (iconValue != nullptr) {
-                for (QDirIterator it("~/.local/share/icons/", QDirIterator::Subdirectories); it.hasNext();) {
+                const auto dataLocation = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+                const auto iconsPath = QString::fromStdString(dataLocation.toStdString() + "/share/icons/");
+
+                for (QDirIterator it(iconsPath, QDirIterator::Subdirectories); it.hasNext();) {
                     auto path = it.next();
 
                     if (QFileInfo(path).completeBaseName().startsWith(iconValue)) {
