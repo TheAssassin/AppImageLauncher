@@ -127,6 +127,16 @@ public:
         return true;
     }
 
+    bool startWatching(const QDirSet& directories) {
+        for (const auto& directory : directories) {
+            if (!startWatching(directory)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     bool stopWatching(int watchFd) {
         // no matter whether the watch removal succeeds, retrying to remove the watch won't help
         // therefore, we can remove the file descriptor from the map in any case
@@ -154,6 +164,23 @@ public:
         }
 
         eventsLoopTimer.stop();
+
+        return true;
+    }
+
+    bool stopWatching(const QDirSet& directories) {
+        for (const auto& directory : directories) {
+            for (const auto& pair : watchFdMap) {
+                if (pair.second == directory) {
+                    if (!stopWatching(pair.first)) {
+                        return false;
+                    }
+                }
+            }
+
+            // reaching the following line means that we couldn't find the requested path in the fd map
+            return false;
+        }
 
         return true;
     }
@@ -236,15 +263,34 @@ bool FileSystemWatcher::updateWatchedDirectories(QDirSet watchedDirectories) {
         }
     }
 
-    // first, we calculate which directores are new to be watched
-    QDirSet newDirectories;
+    auto setDifference = [](const QDirSet& toExamine, const QDirSet& toSearchFor) -> QDirSet {
+        QDirSet results;
 
-    std::set_difference(
-        watchedDirectories.begin(), watchedDirectories.end(),
-        d->watchedDirectories.begin(), d->watchedDirectories.end(),
-        std::inserter(newDirectories, newDirectories.end()),
-        QDirComparator{}
-    );
+        // QDir behaves weirdly with STL algorithm comparisons etc.
+        // therefore we implement this difference algorithm all by ourselves to make sure it works correctly
+        for (const auto& examined : toExamine) {
+            bool found = false;
+
+            for (const auto& searched : toSearchFor) {
+                if (searched == examined) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                results.insert(examined);
+            }
+        }
+
+        return results;
+    };
+
+    // first, we calculate which directores are new to be watched
+    QDirSet newDirectories = setDifference(watchedDirectories, d->watchedDirectories);
+
+    // to stop watching with a fine granularity, we also need to know which directories have been removed
+    QDirSet disappearedDirectories = setDifference(d->watchedDirectories, watchedDirectories);
 
     emit newDirectoriesToWatch(newDirectories);
 
@@ -256,11 +302,14 @@ bool FileSystemWatcher::updateWatchedDirectories(QDirSet watchedDirectories) {
     if (!d->isRunning)
         return true;
 
-    if (!stopWatching())
+    if (!d->stopWatching(disappearedDirectories))
         return false;
 
-    if (!startWatching())
+    if (!d->startWatching(newDirectories))
         return false;
+
+    // send out the signals for further handling by users of a fs watcher instance
+    emit newDirectoriesToWatch(newDirectories);
 
     return true;
 }
