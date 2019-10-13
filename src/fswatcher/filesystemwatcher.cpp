@@ -93,9 +93,10 @@ public:
 
     PrivateData() : isRunning(false), watchedDirectories(), mutex(new QMutex) {
         inotifyFd = inotify_init1(IN_NONBLOCK);
+
         if (inotifyFd < 0) {
             auto error = errno;
-            throw FileSystemWatcherError(strerror(error));
+            throw FileSystemWatcherError(QString("Failed to initialize inotify, reason: ") + strerror(error));
         }
     };
 
