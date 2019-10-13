@@ -177,8 +177,6 @@ public:
             }
         }
 
-        eventsLoopTimer.stop();
-
         return true;
     }
 
@@ -260,8 +258,12 @@ bool FileSystemWatcher::stopWatching() {
     {
         QMutexLocker lock{d->mutex};
 
-        if (rv)
+        if (rv) {
             d->isRunning = false;
+
+            // we can stop reporting events now, I guess
+            d->eventsLoopTimer.stop();
+        }
     }
 
     return rv;
