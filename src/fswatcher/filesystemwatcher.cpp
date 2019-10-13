@@ -340,15 +340,15 @@ bool FileSystemWatcher::updateWatchedDirectories(QDirSet watchedDirectories) {
             return true;
     }
 
-    if (!d->stopWatching(disappearedDirectories))
-        return false;
-
-    if (!d->startWatching(newDirectories))
-        return false;
+    // we must run both stop and start methods, so we cannot directly return false if either fails
+    // also, this makes sure the signals are sent even in case either of the following methods fails
+    bool rv = true;
+    rv = rv && d->stopWatching(disappearedDirectories);
+    rv = rv && d->startWatching(newDirectories);
 
     // send out the signals for further handling by users of a fs watcher instance
     emit newDirectoriesToWatch(newDirectories);
     emit directoriesToWatchDisappeared(disappearedDirectories);
 
-    return true;
+    return rv;
 }
