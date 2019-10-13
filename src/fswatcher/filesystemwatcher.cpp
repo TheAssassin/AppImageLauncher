@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 // library includes
+#include <QDebug>
 #include <QDir>
 #include <QTimer>
 #include <QThread>
@@ -30,12 +31,15 @@ public:
         fileRemovalEvents = IN_DELETE | IN_MOVED_FROM,
     };
 
+    // tracks whether the watcher is running
+    bool isRunning;
+
 public:
     QDirSet watchedDirectories;
     QTimer eventsLoopTimer;
 
 private:
-    int fd = -1;
+    int inotifyFd = -1;
     std::map<int, QDir> watchFdMap;
 
 public:
@@ -46,7 +50,7 @@ public:
         static const auto bufSize = 4096;
         char buffer[bufSize] __attribute__ ((aligned(8)));
 
-        const auto rv = read(fd, buffer, bufSize);
+        const auto rv = read(inotifyFd, buffer, bufSize);
         const auto error = errno;
 
         if (rv == 0) {
@@ -82,24 +86,30 @@ public:
         return events;
     }
 
-    PrivateData() : watchedDirectories() {
-        fd = inotify_init1(IN_NONBLOCK);
-        if (fd < 0) {
+    PrivateData() : isRunning(false), watchedDirectories() {
+        inotifyFd = inotify_init1(IN_NONBLOCK);
+        if (inotifyFd < 0) {
             auto error = errno;
             throw FileSystemWatcherError(strerror(error));
         }
     };
 
     bool startWatching(const QDir& directory) {
-        static const auto mask = fileChangeEvents | fileRemovalEvents;
-
-        if (!directory.exists()) {
-            std::cerr << "Warning: directory " << directory.absolutePath().toStdString()
-                      << " does not exist, skipping" << std::endl;
+        if (isRunning) {
+            qDebug() << "tried to start file system watcher while it's running already";
             return true;
         }
 
-        const int watchFd = inotify_add_watch(fd, directory.absolutePath().toStdString().c_str(), mask);
+        isRunning = true;
+
+        static const auto mask = fileChangeEvents | fileRemovalEvents;
+
+        if (!directory.exists()) {
+            qDebug() << "Warning: directory " << directory.absolutePath() << " does not exist, skipping";
+            return true;
+        }
+
+        const int watchFd = inotify_add_watch(inotifyFd, directory.absolutePath().toStdString().c_str(), mask);
 
         if (watchFd == -1) {
             const auto error = errno;
@@ -114,23 +124,33 @@ public:
     }
 
     bool startWatching() {
+        if (!isRunning) {
+            qDebug() << "tried to stop file system watcher while stopped";
+            return true;
+        }
+
         for (const auto& directory : watchedDirectories) {
             if (!startWatching(directory))
                 return false;
         }
 
+        isRunning = false;
+
         return true;
     }
 
     bool stopWatching(int watchFd) {
-        if (inotify_rm_watch(fd, watchFd) == -1) {
+        // no matter whether the watch removal succeeds, retrying to remove the watch won't help
+        // therefore, we can remove the file descriptor from the map in any case
+        watchFdMap.erase(watchFd);
+
+        std::cout << "stop watching watchfd " << watchFd << std::endl;
+
+        if (inotify_rm_watch(inotifyFd, watchFd) == -1) {
             const auto error = errno;
             std::cerr << "Failed to stop watching: " << strerror(error) << std::endl;
             return false;
         }
-
-        watchFdMap.erase(watchFd);
-        eventsLoopTimer.stop();
 
         return true;
     }
@@ -141,7 +161,7 @@ public:
             const auto watchFd = pair.first;
 
             if (!stopWatching(watchFd)) {
-                return false;
+                std::cerr << "Warning: Failed to stop watching on file descriptor " << watchFd << std::endl;
             }
         }
 
@@ -192,7 +212,22 @@ void FileSystemWatcher::readEvents() {
     }
 }
 
-bool FileSystemWatcher::updateWatchedDirectories(const QDirSet& watchedDirectories) {
+bool FileSystemWatcher::updateWatchedDirectories(QDirSet watchedDirectories) {
+    // the list may contain entries for directories which don't exist already, therefore we have to remove those first
+    // so when they'll be created, we'll notice
+    {
+        // erase-remove doesn't work with sets apparently (see https://stackoverflow.com/a/26833313)
+        // therefore we use a simple custom algorithm
+        auto it = watchedDirectories.begin();
+        while (it != watchedDirectories.end()) {
+            if (!it->exists()) {
+                it = watchedDirectories.erase(it);
+            } else {
+                ++it;
+            }
+        }
+    }
+
     // first, we calculate which directores are new to be watched
     QDirSet changedDirectories;
 
@@ -215,6 +250,11 @@ bool FileSystemWatcher::updateWatchedDirectories(const QDirSet& watchedDirectori
 
     // now we can update the internal state
     d->watchedDirectories = watchedDirectories;
+
+    // if the watching hasn't been started yet, we shouldn't start/stop any watches
+    // unfortunately we need an extra variable to track this...
+    if (!d->isRunning)
+        return true;
 
     if (!stopWatching())
         return false;

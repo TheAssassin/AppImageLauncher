@@ -42,7 +42,7 @@ public slots:
     bool startWatching();
     bool stopWatching();
     void readEvents();
-    bool updateWatchedDirectories(const QDirSet& watchedDirectories);
+    bool updateWatchedDirectories(QDirSet watchedDirectories);
 
 public:
     QDirSet directories();
