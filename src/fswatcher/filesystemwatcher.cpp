@@ -348,6 +348,7 @@ bool FileSystemWatcher::updateWatchedDirectories(QDirSet watchedDirectories) {
 
     // send out the signals for further handling by users of a fs watcher instance
     emit newDirectoriesToWatch(newDirectories);
+    emit directoriesToWatchDisappeared(disappearedDirectories);
 
     return true;
 }

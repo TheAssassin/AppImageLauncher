@@ -58,4 +58,5 @@ signals:
     void fileChanged(QString path);
     void fileRemoved(QString path);
     void newDirectoriesToWatch(QDirSet set);
+    void directoriesToWatchDisappeared(QDirSet set);
 };
