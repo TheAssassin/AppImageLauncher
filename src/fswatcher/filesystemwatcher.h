@@ -22,7 +22,7 @@ public:
 struct QDirComparator {
 public:
     size_t operator()(const QDir& a, const QDir& b) const {
-        return a == b;
+        return a.absolutePath() < b.absolutePath();
     }
 };
 
