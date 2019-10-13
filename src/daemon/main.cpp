@@ -177,7 +177,7 @@ int main(int argc, char* argv[]) {
     // these
     QObject::connect(&watcher, &FileSystemWatcher::newDirectoriesToWatch, &app, [&worker](const QDirSet& newDirs) {
         if (newDirs.empty()) {
-            qDebug() << "No changes in watched directories detected";
+            qDebug() << "No new directories to watch detected";
         } else {
             std::cout << "Discovered new directories to watch, integrating existing AppImages initially" << std::endl;
 
