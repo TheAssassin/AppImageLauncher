@@ -305,12 +305,12 @@ QSet<QString> additionalAppImagesLocations(const bool includeAllMountPoints) {
     static const auto validFilesystems = {"ext2", "ext3", "ext4", "ntfs", "vfat"};
 
     static const auto blacklistedMountPointPrefixes = {
-        "/var/lib/schroot/",
-        "/run/docker/",
-        "/boot/",
-        "/sys/",
-        "/proc/",
-        "/snap/",
+        "/var/lib/schroot",
+        "/run/docker",
+        "/boot",
+        "/sys",
+        "/proc",
+        "/snap",
     };
 
     if (includeAllMountPoints) {
@@ -340,7 +340,7 @@ QSet<QString> additionalAppImagesLocations(const bool includeAllMountPoints) {
             // either it's a waste of time or otherwise a bad idea, but it will surely save time *not* to search them
             if (std::find_if(blacklistedMountPointPrefixes.begin(), blacklistedMountPointPrefixes.end(),
                              [&mountPoint](const QString& prefix) {
-                                 return mountPoint.startsWith(prefix);
+                                 return mountPoint == prefix || mountPoint.startsWith(prefix + "/");
                              }) != blacklistedMountPointPrefixes.end()) {
                 continue;
             }
