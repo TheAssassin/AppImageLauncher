@@ -229,24 +229,16 @@ bool FileSystemWatcher::updateWatchedDirectories(QDirSet watchedDirectories) {
     }
 
     // first, we calculate which directores are new to be watched
-    QDirSet changedDirectories;
+    QDirSet newDirectories;
 
-    for (const auto& i : watchedDirectories) {
-        bool entryFound = false;
+    std::set_difference(
+        watchedDirectories.begin(), watchedDirectories.end(),
+        d->watchedDirectories.begin(), d->watchedDirectories.end(),
+        std::inserter(newDirectories, newDirectories.end()),
+        QDirComparator{}
+    );
 
-        for (const auto& j : d->watchedDirectories) {
-            if (i == j) {
-                entryFound = true;
-                break;
-            }
-        }
-
-        if (!entryFound) {
-            changedDirectories.insert(i);
-        }
-    }
-
-    emit newDirectoriesToWatch(changedDirectories);
+    emit newDirectoriesToWatch(newDirectories);
 
     // now we can update the internal state
     d->watchedDirectories = watchedDirectories;

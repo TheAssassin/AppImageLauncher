@@ -19,7 +19,14 @@ public:
     }
 };
 
-typedef std::unordered_set<QDir, QDirHash> QDirSet;
+struct QDirComparator {
+public:
+    size_t operator()(const QDir& a, const QDir& b) const {
+        return a == b;
+    }
+};
+
+typedef std::unordered_set<QDir, QDirHash, QDirComparator> QDirSet;
 
 class FileSystemWatcherError : public std::runtime_error {
 public:
