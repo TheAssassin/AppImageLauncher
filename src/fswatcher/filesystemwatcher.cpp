@@ -95,14 +95,9 @@ public:
     };
 
     bool startWatching(const QDir& directory) {
-        if (isRunning) {
-            qDebug() << "tried to start file system watcher while it's running already";
-            return true;
-        }
-
-        isRunning = true;
-
         static const auto mask = fileChangeEvents | fileRemovalEvents;
+
+        qDebug() << "start watching directory " << directory;
 
         if (!directory.exists()) {
             qDebug() << "Warning: directory " << directory.absolutePath() << " does not exist, skipping";
@@ -124,17 +119,10 @@ public:
     }
 
     bool startWatching() {
-        if (!isRunning) {
-            qDebug() << "tried to stop file system watcher while stopped";
-            return true;
-        }
-
         for (const auto& directory : watchedDirectories) {
             if (!startWatching(directory))
                 return false;
         }
-
-        isRunning = false;
 
         return true;
     }
@@ -144,7 +132,7 @@ public:
         // therefore, we can remove the file descriptor from the map in any case
         watchFdMap.erase(watchFd);
 
-        std::cout << "stop watching watchfd " << watchFd << std::endl;
+        qDebug() << "stop watching watchfd " << watchFd;
 
         if (inotify_rm_watch(inotifyFd, watchFd) == -1) {
             const auto error = errno;
@@ -191,11 +179,31 @@ QDirSet FileSystemWatcher::directories() {
 }
 
 bool FileSystemWatcher::startWatching() {
-    return d->startWatching();
+    if (d->isRunning) {
+        qDebug() << "tried to start file system watcher while it's running already";
+        return true;
+    }
+
+    auto rv = d->startWatching();
+
+    if (rv)
+        d->isRunning = true;
+
+    return rv;
 }
 
 bool FileSystemWatcher::stopWatching() {
-    return d->stopWatching();
+    if (!d->isRunning) {
+        qDebug() << "tried to stop file system watcher while stopped";
+        return true;
+    }
+
+    const auto rv = d->stopWatching();
+
+    if (rv)
+        d->isRunning = false;
+
+    return rv;
 }
 
 void FileSystemWatcher::readEvents() {
