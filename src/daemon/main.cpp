@@ -188,6 +188,24 @@ int main(int argc, char* argv[]) {
         }
     });
 
+    // whenever a formerly watched directory disappears, we want to clean the menu from entries pointing to AppImages
+    // in this directory
+    // a good example for this situation is a removable drive that has been unplugged from the computer
+    QObject::connect(&watcher, &FileSystemWatcher::directoriesToWatchDisappeared, &app,
+        [](const QDirSet& disappearedDirs) {
+
+        if (disappearedDirs.empty()) {
+            qDebug() << "No directories disappeared";
+        } else {
+            std::cout << "Directories to watch disappeared, unintegrating AppImages formerly found in there"
+                      << std::endl;
+
+            if (!cleanUpOldDesktopIntegrationResources(true)) {
+                std::cerr << "Error: Failed to clean up old desktop integration resources" << std::endl;
+            }
+        }
+    });
+
     // search directories to watch once initially
     // we *have* to do this even though we connect this signal above, as the first update occurs in the constructor
     // and we cannot connect signals before construction has finished for obvious reasons
