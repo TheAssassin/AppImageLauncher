@@ -125,7 +125,7 @@ int main(int argc, char* argv[]) {
 
     QCommandLineOption monitorMountedFilesystemsOption(
         "monitor-mounted-filesystems",
-        QObject::tr("Search for AppImages in /Applications directories suitable mounted filesystems")
+        QObject::tr("Search for AppImages in /Applications directories in suitable mounted filesystems")
     );
 
     QCommandLineOption listWatchedDirectoriesOption(
