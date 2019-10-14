@@ -92,7 +92,7 @@ void initialSearchForAppImages(const QDirSet& dirsToSearch, Worker& worker) {
     }
 }
 
-QDirSet getDirectoriesToWatch(const bool monitorMountedFilesystems) {
+QDirSet getDirectoriesToWatch(const bool monitorMountedFilesystems, const QDirSet& additionalDirectories = {}) {
     auto watchedDirectories = QDirSet();
 
     // of course we need to watch the main integration directory
@@ -105,7 +105,38 @@ QDirSet getDirectoriesToWatch(const bool monitorMountedFilesystems) {
         watchedDirectories.insert(QDir(d).absolutePath());
     }
 
+    std::copy(
+        additionalDirectories.begin(), additionalDirectories.end(),
+        std::inserter(watchedDirectories, watchedDirectories.end())
+    );
+
     return watchedDirectories;
+}
+
+QDirSet getAdditionalDirectoriesFromConfig() {
+    const auto config = getConfig();
+    constexpr auto configKey = "appimagelauncherd/additional_directories_to_watch";
+
+    QDirSet additionalDirs{};
+
+    const auto configValue = config->value(configKey, "").toString();
+
+    for (auto dirPath : configValue.split(":")) {
+        // make sure to have full path
+        dirPath = expandTilde(dirPath);
+
+        const QDir dir(dirPath);
+
+        if (!dir.exists()) {
+            std::cerr << "Warning: could not find directory " << dirPath.toStdString()
+                      << ", skipping" << std::endl;
+            continue;
+        }
+
+        additionalDirs.insert(dir);
+    }
+
+    return additionalDirs;
 }
 
 int main(int argc, char* argv[]) {
@@ -119,9 +150,6 @@ int main(int argc, char* argv[]) {
             "Automatically integrates AppImages moved into those directories and unintegrates ones removed from them."
         )
     );
-
-    parser.addHelpOption();
-    parser.addVersionOption();
 
     QCommandLineOption monitorMountedFilesystemsOption(
         "monitor-mounted-filesystems",
@@ -153,9 +181,12 @@ int main(int argc, char* argv[]) {
     const auto monitorMountedFilesystems = parser.isSet(monitorMountedFilesystemsOption);
     const auto listWatchedDirectories = parser.isSet(listWatchedDirectoriesOption);
 
+    // read additional directories from the config file
+    const auto configProvidedDirectories = getAdditionalDirectoriesFromConfig();
+
     // watchers are kind of value objects, the watched directories may not change over the lifetime of the object
     // therefore we need to create a set beforehand, containing all directories we want to have watched
-    QDirSet watchedDirectories = getDirectoriesToWatch(monitorMountedFilesystems);
+    QDirSet watchedDirectories = getDirectoriesToWatch(monitorMountedFilesystems, configProvidedDirectories);
 
     // this option is for debugging the
     if (listWatchedDirectories) {
@@ -218,9 +249,14 @@ int main(int argc, char* argv[]) {
     {
         auto* timer = new QTimer(&app);
         timer->setInterval(UPDATE_WATCHED_DIRECTORIES_INTERVAL);
-        QTimer::connect(timer, &QTimer::timeout, &app, [&watcher, monitorMountedFilesystems]() {
-            watcher.updateWatchedDirectories(getDirectoriesToWatch(monitorMountedFilesystems));
-        });
+        QTimer::connect(
+            timer, &QTimer::timeout, &app,
+            [&watcher, monitorMountedFilesystems, &configProvidedDirectories]() {
+                watcher.updateWatchedDirectories(
+                    getDirectoriesToWatch(monitorMountedFilesystems, configProvidedDirectories)
+                );
+            }
+        );
         timer->start();
     }
 
