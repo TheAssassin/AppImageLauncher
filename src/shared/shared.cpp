@@ -161,12 +161,13 @@ std::shared_ptr<QSettings> getConfig() {
     auto rv = std::make_shared<QSettings>(configFilePath, QSettings::IniFormat);
 
     // expand ~ in paths in the config file with $HOME
-    for (const QString& keyContainingPath : {"destination"}){
-        QString fullKey = "AppImageLauncher/" + keyContainingPath;
-
-        if (rv->contains(fullKey)) {
-            auto newValue = expandTilde(rv->value(fullKey).toString());
-            rv->setValue(fullKey, newValue);
+    const auto keysContainingPath = {
+        "AppImageLauncher/destination",
+    };
+    for (const QString& keyContainingPath : keysContainingPath){
+        if (rv->contains(keyContainingPath)) {
+            auto newValue = expandTilde(rv->value(keyContainingPath).toString());
+            rv->setValue(keyContainingPath, newValue);
         }
     }
 
