@@ -1,7 +1,7 @@
 set(V_MAJOR 2)
 set(V_MINOR 0)
 set(V_PATCH 0)
-set(V_SUFFIX "-alpha-2")
+set(V_SUFFIX "-beta-1")
 
 set(APPIMAGELAUNCHER_VERSION ${V_MAJOR}.${V_MINOR}.${V_PATCH}${V_SUFFIX})
 
