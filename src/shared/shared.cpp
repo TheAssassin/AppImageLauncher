@@ -87,7 +87,7 @@ bool makeNonExecutable(const QString& path) {
 }
 
 QString expandTilde(QString path) {
-    if (path[0] == '~') {
+    if ((path.size() == 1 && path[0] == '~') || (path.size() >= 2 && path.startsWith("~/"))) {
         path.remove(0, 1);
         path.prepend(QDir::homePath());
     }
