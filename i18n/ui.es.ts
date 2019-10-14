@@ -65,7 +65,7 @@ Elegir No ejecutará AppImage una vez, y dejará la AppImage en su directorio ac
 </translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+982"/>
+        <location filename="../src/shared/shared.cpp" line="+1128"/>
         <location line="+8"/>
         <source>Error</source>
         <translation>Error</translation>
@@ -76,7 +76,7 @@ Elegir No ejecutará AppImage una vez, y dejará la AppImage en su directorio ac
         <translation>Error al eliminar el registro de AppImage antes de volver a integrarlo</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="-514"/>
+        <location filename="../src/shared/shared.cpp" line="-525"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -98,19 +98,17 @@ Sintaxis inválida:
 %1</translation>
     </message>
     <message>
-        <location line="+446"/>
+        <location line="+449"/>
+        <source>File %1 is owned by another user: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Permissions problem</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>File %1 is owned by another user: %2
-
-Relaunch with their permissions?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+49"/>
+        <location line="+52"/>
         <source>Failed to run permissions helper, exited with return code %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -133,9 +131,9 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
 <context>
     <name>QObject</name>
     <message>
-        <location line="-770"/>
-        <location line="+449"/>
-        <location filename="../src/ui/remove_main.cpp" line="+111"/>
+        <location line="-914"/>
+        <location line="+582"/>
+        <location filename="../src/ui/remove_main.cpp" line="+102"/>
         <location line="+12"/>
         <location line="+12"/>
         <location filename="../src/ui/update_main.cpp" line="+119"/>
@@ -414,8 +412,8 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>Elegir No ejecutará AppImage una vez y dejará el sistema en su estado actual.</translation>
     </message>
     <message>
-        <location line="-421"/>
-        <location line="+425"/>
+        <location line="-554"/>
+        <location line="+558"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
     </message>
@@ -456,7 +454,7 @@ Try to copy AppImage instead?</source>
 Intenta copiar AppImage en su lugar?</translation>
     </message>
     <message>
-        <location line="+157"/>
+        <location line="+160"/>
         <source>Failed to call stat() on path:
 
 %1</source>
@@ -579,6 +577,21 @@ AppImage no admite la actualización. Solicite a los autores que configuren info
     <message>
         <source>Failed to check for updates. Please check the command line output for details.</source>
         <translation type="vanished">No se pudo comprobar la existencia de actualizaciones. Para más detalles consulte los mensajes en la linea de comandos .</translation>
+    </message>
+    <message>
+        <location filename="../src/daemon/main.cpp" line="+117"/>
+        <source>Tracks AppImages in applications directories (user&apos;s, system and other ones). Automatically integrates AppImages moved into those directories and unintegrates ones removed from them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Search for AppImages in /Applications directories suitable mounted filesystems</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Lists directories watched by this daemon and exit</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

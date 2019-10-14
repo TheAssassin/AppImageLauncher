@@ -51,7 +51,7 @@
 
 Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.</source>
-        <translation>AppImage è già stato integrato, ma non si trova nella directory di destinazione dell&apos;integrazione corrente.
+        <translation type="vanished">AppImage è già stato integrato, ma non si trova nella directory di destinazione dell&apos;integrazione corrente.
 
 Vuoi spostarlo nella nuova destinazione?
 Scegliendo No verrà eseguito l&apos;AppImage una volta e lascerà l&apos;AppImage nella sua directory corrente.</translation>
@@ -74,7 +74,7 @@ Scegliendo No verrà eseguito l&apos;AppImage una volta e lascerà l&apos;AppIma
 </translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+982"/>
+        <location filename="../src/shared/shared.cpp" line="+1128"/>
         <location line="+8"/>
         <source>Error</source>
         <translation>Errore</translation>
@@ -85,7 +85,7 @@ Scegliendo No verrà eseguito l&apos;AppImage una volta e lascerà l&apos;AppIma
         <translation>Impossibile annullare la registrazione di AppImage prima di reintegrarlo</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="-514"/>
+        <location filename="../src/shared/shared.cpp" line="-525"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -107,21 +107,25 @@ Sintassi non valida:
 %1</translation>
     </message>
     <message>
-        <location line="+446"/>
+        <location line="+449"/>
+        <source>File %1 is owned by another user: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Permissions problem</source>
         <translation>Problema con le autorizzazioni</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>File %1 is owned by another user: %2
 
 Relaunch with their permissions?</source>
-        <translation>Il file %1 è di proprietà di un altro utente: %2
+        <translation type="vanished">Il file %1 è di proprietà di un altro utente: %2
 
 Rilanciare con i loro permessi?</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+52"/>
         <source>Failed to run permissions helper, exited with return code %1</source>
         <translation>Impossibile eseguire l&apos;helper delle autorizzazioni, chiuso con il codice di ritorno %1</translation>
     </message>
@@ -134,9 +138,9 @@ Rilanciare con i loro permessi?</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location line="-770"/>
-        <location line="+449"/>
-        <location filename="../src/ui/remove_main.cpp" line="+111"/>
+        <location line="-914"/>
+        <location line="+582"/>
+        <location filename="../src/ui/remove_main.cpp" line="+102"/>
         <location line="+12"/>
         <location line="+12"/>
         <location filename="../src/ui/update_main.cpp" line="+119"/>
@@ -156,32 +160,32 @@ Rilanciare con i loro permessi?</translation>
     </message>
     <message>
         <source>Failed to open AppImage for reading: %1</source>
-        <translation>Impossibile aprire AppImage per la lettura: %1</translation>
+        <translation type="vanished">Impossibile aprire AppImage per la lettura: %1</translation>
     </message>
     <message>
         <source>Failed to create temporary directory</source>
-        <translation>Impossibile creare la directory temporanea</translation>
+        <translation type="vanished">Impossibile creare la directory temporanea</translation>
     </message>
     <message>
         <source>Failed to create temporary copy of type 1 AppImage</source>
-        <translation>Impossibile creare una copia temporanea di AppImage di tipo 1</translation>
+        <translation type="vanished">Impossibile creare una copia temporanea di AppImage di tipo 1</translation>
     </message>
     <message>
         <source>Failed to open temporary AppImage copy for writing</source>
-        <translation>Impossibile aprire la copia temporanea di AppImage per la scrittura</translation>
+        <translation type="vanished">Impossibile aprire la copia temporanea di AppImage per la scrittura</translation>
     </message>
     <message>
         <source>Failed to remove magic bytes from temporary AppImage copy</source>
-        <translation>Impossibile rimuovere i byte magici dalla copia temporanea di AppImage</translation>
+        <translation type="vanished">Impossibile rimuovere i byte magici dalla copia temporanea di AppImage</translation>
     </message>
     <message>
         <source>execv() failed: %1</source>
         <comment>error message</comment>
-        <translation>execv() fallito: %1</translation>
+        <translation type="vanished">execv() fallito: %1</translation>
     </message>
     <message>
         <source>runtime not found: no such file or directory: %1</source>
-        <translation>runtime non trovato: nessun file o directory:% 1</translation>
+        <translation type="vanished">runtime non trovato: nessun file o directory:% 1</translation>
     </message>
     <message>
         <location line="+120"/>
@@ -286,7 +290,7 @@ Rilanciare con i loro permessi?</translation>
     </message>
     <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
-        <translation>La directory in cui sono archiviati gli AppImages integrati è attualmente impostata: %1</translation>
+        <translation type="vanished">La directory in cui sono archiviati gli AppImages integrati è attualmente impostata: %1</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -330,12 +334,12 @@ Rilanciare con i loro permessi?</translation>
     </message>
     <message>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
-        <translation>Rimuove AppImages dopo l&apos;integrazione desktop, per l&apos;utilizzo da parte delle distribuzioni Linux</translation>
+        <translation type="vanished">Rimuove AppImages dopo l&apos;integrazione desktop, per l&apos;utilizzo da parte delle distribuzioni Linux</translation>
     </message>
     <message>
         <source>AppImageLauncher remove</source>
         <comment>remove helper app name</comment>
-        <translation>Rimuovi AppImageLauncher</translation>
+        <translation type="vanished">Rimuovi AppImageLauncher</translation>
     </message>
     <message>
         <location filename="../src/ui/remove_main.cpp" line="-28"/>
@@ -359,7 +363,7 @@ Rilanciare con i loro permessi?</translation>
     </message>
     <message>
         <source>AppImage remove helper error</source>
-        <translation>AppImage rimuove l&apos;errore dell&apos;helper</translation>
+        <translation type="vanished">AppImage rimuove l&apos;errore dell&apos;helper</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -374,17 +378,17 @@ Rilanciare con i loro permessi?</translation>
         <source>Refusing to work on non-integrated AppImage:
 
 %1</source>
-        <translation>Rifiuto di lavorare su un AppImage non integrato:
+        <translation type="vanished">Rifiuto di lavorare su un AppImage non integrato:
 
 %1</translation>
     </message>
     <message>
         <source>Please confirm</source>
-        <translation>Si prega di confermare</translation>
+        <translation type="vanished">Si prega di confermare</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this AppImage?</source>
-        <translation>Sei sicuro di voler rimuovere questa AppImage?</translation>
+        <translation type="vanished">Sei sicuro di voler rimuovere questa AppImage?</translation>
     </message>
     <message>
         <location line="+34"/>
@@ -398,7 +402,7 @@ Rilanciare con i loro permessi?</translation>
     </message>
     <message>
         <source>Failed to remove AppImage: %1</source>
-        <translation>Impossibile rimuovere AppImage: %1</translation>
+        <translation type="vanished">Impossibile rimuovere AppImage: %1</translation>
     </message>
     <message>
         <location filename="../src/shared/shared.cpp" line="-27"/>
@@ -416,14 +420,14 @@ Rilanciare con i loro permessi?</translation>
         <translation>Se si sceglie No, AppImage verrà eseguito una volta e il sistema verrà lasciato nello stato corrente.</translation>
     </message>
     <message>
-        <location line="-421"/>
-        <location line="+425"/>
+        <location line="-554"/>
+        <location line="+558"/>
         <source>Warning</source>
         <translation>Avvertimento</translation>
     </message>
     <message>
         <source>Failed to move AppImage to target location</source>
-        <translation>Impossibile spostare AppImage nella posizione di destinazione</translation>
+        <translation type="vanished">Impossibile spostare AppImage nella posizione di destinazione</translation>
     </message>
     <message>
         <location line="-309"/>
@@ -458,7 +462,7 @@ Try to copy AppImage instead?</source>
 Prova invece a copiare AppImage?</translation>
     </message>
     <message>
-        <location line="+157"/>
+        <location line="+160"/>
         <source>Failed to call stat() on path:
 
 %1</source>
@@ -468,7 +472,7 @@ Prova invece a copiare AppImage?</translation>
     </message>
     <message>
         <source>Failed to copy AppImage to target location</source>
-        <translation>Impossibile copiare AppImage nella posizione di destinazione</translation>
+        <translation type="vanished">Impossibile copiare AppImage nella posizione di destinazione</translation>
     </message>
     <message>
         <location filename="../src/ui/update_main.cpp" line="-40"/>
@@ -483,11 +487,11 @@ Prova invece a copiare AppImage?</translation>
     </message>
     <message>
         <source>The AppImage hasn&apos;t been integrated before. This tool will, however, integrate the updated AppImage.</source>
-        <translation>AppImage non è stato integrato prima. Questo strumento, tuttavia, integrerà l&apos;AppImage aggiornato.</translation>
+        <translation type="vanished">AppImage non è stato integrato prima. Questo strumento, tuttavia, integrerà l&apos;AppImage aggiornato.</translation>
     </message>
     <message>
         <source>Do you wish to continue?</source>
-        <translation>Vuoi continuare?</translation>
+        <translation type="vanished">Vuoi continuare?</translation>
     </message>
     <message>
         <location line="+67"/>
@@ -501,7 +505,7 @@ Prova invece a copiare AppImage?</translation>
     </message>
     <message>
         <source>Failed to check for updates. Please check the command line output for details.</source>
-        <translation>Impossibile controllare gli aggiornamenti. Controllare l&apos;output della riga di comando per i dettagli.</translation>
+        <translation type="vanished">Impossibile controllare gli aggiornamenti. Controllare l&apos;output della riga di comando per i dettagli.</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -513,7 +517,7 @@ Prova invece a copiare AppImage?</translation>
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set update information to allow for easy updating.</source>
-        <translation>Impossibile trovare le informazioni di aggiornamento in AppImage:
+        <translation type="vanished">Impossibile trovare le informazioni di aggiornamento in AppImage:
 %1
 
 AppImage non supporta l&apos;aggiornamento. Si prega di chiedere agli autori di impostare le informazioni di aggiornamento per consentire un facile aggiornamento.</translation>
@@ -582,16 +586,31 @@ AppImage non supporta l&apos;aggiornamento. Si prega di chiedere agli autori di 
         <source>Failed to remove old AppImage</source>
         <translation>Impossibile rimuovere la vecchia AppImage</translation>
     </message>
+    <message>
+        <location filename="../src/daemon/main.cpp" line="+117"/>
+        <source>Tracks AppImages in applications directories (user&apos;s, system and other ones). Automatically integrates AppImages moved into those directories and unintegrates ones removed from them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Search for AppImages in /Applications directories suitable mounted filesystems</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Lists directories watched by this daemon and exit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveDialog</name>
     <message>
         <source>Please confirm</source>
-        <translation>Si prega di confermare</translation>
+        <translation type="vanished">Si prega di confermare</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove this AppImage?&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sei sicuro di voler rimuovere questa AppImage?&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sei sicuro di voler rimuovere questa AppImage?&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/remove.ui" line="+17"/>
@@ -610,11 +629,11 @@ AppImage non supporta l&apos;aggiornamento. Si prega di chiedere agli autori di 
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uncheck to only remove the desktop integration, but leave the file on the system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Deseleziona per rimuovere solo l&apos;integrazione desktop, ma lascia il file sul sistema.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Deseleziona per rimuovere solo l&apos;integrazione desktop, ma lascia il file sul sistema.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Remove AppImage file from system</source>
-        <translation>Rimuovere il file AppImage dal sistema</translation>
+        <translation type="vanished">Rimuovere il file AppImage dal sistema</translation>
     </message>
 </context>
 <context>

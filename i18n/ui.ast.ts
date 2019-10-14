@@ -63,7 +63,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+476"/>
+        <location filename="../src/shared/shared.cpp" line="+611"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -79,19 +79,17 @@ Invalid syntax:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+446"/>
+        <location line="+449"/>
+        <source>File %1 is owned by another user: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Permissions problem</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>File %1 is owned by another user: %2
-
-Relaunch with their permissions?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+48"/>
+        <location line="+51"/>
         <location line="+8"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
@@ -110,9 +108,9 @@ Relaunch with their permissions?</source>
 <context>
     <name>QObject</name>
     <message>
-        <location line="-770"/>
-        <location line="+449"/>
-        <location filename="../src/ui/remove_main.cpp" line="+111"/>
+        <location line="-914"/>
+        <location line="+582"/>
+        <location filename="../src/ui/remove_main.cpp" line="+102"/>
         <location line="+12"/>
         <location line="+12"/>
         <location filename="../src/ui/update_main.cpp" line="+119"/>
@@ -323,8 +321,8 @@ Relaunch with their permissions?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-421"/>
-        <location line="+425"/>
+        <location line="-554"/>
+        <location line="+558"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -360,7 +358,7 @@ Try to copy AppImage instead?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+157"/>
+        <location line="+160"/>
         <source>Failed to call stat() on path:
 
 %1</source>
@@ -447,6 +445,21 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="+5"/>
         <source>Failed to remove old AppImage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/daemon/main.cpp" line="+117"/>
+        <source>Tracks AppImages in applications directories (user&apos;s, system and other ones). Automatically integrates AppImages moved into those directories and unintegrates ones removed from them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Search for AppImages in /Applications directories suitable mounted filesystems</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Lists directories watched by this daemon and exit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

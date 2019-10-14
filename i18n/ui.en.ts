@@ -72,7 +72,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
 </translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+982" />
+        <location filename="../src/shared/shared.cpp" line="+1128" />
         <location line="+8" />
         <source>Error</source>
         <translation>Error</translation>
@@ -83,7 +83,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
         <translation>Failed to unregister AppImage before re-integrating it</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="-514" />
+        <location filename="../src/shared/shared.cpp" line="-525" />
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -105,21 +105,25 @@ Invalid syntax:
 %1</translation>
     </message>
     <message>
-        <location line="+446" />
+        <location line="+449" />
+        <source>File %1 is owned by another user: %2</source>
+        <translation>File %1 is owned by another user: %2</translation>
+    </message>
+    <message>
+        <location line="+6" />
         <source>Permissions problem</source>
         <translation>Permissions problem</translation>
     </message>
     <message>
-        <location line="+1" />
         <source>File %1 is owned by another user: %2
 
 Relaunch with their permissions?</source>
-        <translation>File %1 is owned by another user: %2
+        <translation type="vanished">File %1 is owned by another user: %2
 
 Relaunch with their permissions?</translation>
     </message>
     <message>
-        <location line="+49" />
+        <location line="+52" />
         <source>Failed to run permissions helper, exited with return code %1</source>
         <translation>Failed to run permissions helper, exited with return code %1</translation>
     </message>
@@ -132,9 +136,9 @@ Relaunch with their permissions?</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location line="-770" />
-        <location line="+449" />
-        <location filename="../src/ui/remove_main.cpp" line="+111" />
+        <location line="-914" />
+        <location line="+582" />
+        <location filename="../src/ui/remove_main.cpp" line="+102" />
         <location line="+12" />
         <location line="+12" />
         <location filename="../src/ui/update_main.cpp" line="+119" />
@@ -418,8 +422,8 @@ Relaunch with their permissions?</translation>
         <translation>Choosing No will run the AppImage once, and leave the system in its current state.</translation>
     </message>
     <message>
-        <location line="-421" />
-        <location line="+425" />
+        <location line="-554" />
+        <location line="+558" />
         <source>Warning</source>
         <translation>Warning</translation>
     </message>
@@ -460,7 +464,7 @@ Try to copy AppImage instead?</source>
 Try to copy AppImage instead?</translation>
     </message>
     <message>
-        <location line="+157" />
+        <location line="+160" />
         <source>Failed to call stat() on path:
 
 %1</source>
@@ -583,6 +587,21 @@ The AppImage doesn't support updating. Please ask the authors to set upupdate in
         <location line="+5" />
         <source>Failed to remove old AppImage</source>
         <translation>Failed to remove old AppImage</translation>
+    </message>
+    <message>
+        <location filename="../src/daemon/main.cpp" line="+117" />
+        <source>Tracks AppImages in applications directories (user's, system and other ones). Automatically integrates AppImages moved into those directories and unintegrates ones removed from them.</source>
+        <translation>Tracks AppImages in applications directories (user's, system and other ones). Automatically integrates AppImages moved into those directories and unintegrates ones removed from them.</translation>
+    </message>
+    <message>
+        <location line="+11" />
+        <source>Search for AppImages in /Applications directories suitable mounted filesystems</source>
+        <translation>Search for AppImages in /Applications directories suitable mounted filesystems</translation>
+    </message>
+    <message>
+        <location line="+5" />
+        <source>Lists directories watched by this daemon and exit</source>
+        <translation>Lists directories watched by this daemon and exit</translation>
     </message>
 </context>
 <context>
