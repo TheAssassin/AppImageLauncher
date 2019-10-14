@@ -76,6 +76,8 @@ public:
             _id = r._id;
             _path = r._path;
             openFile();
+
+            return *this;
         }
 
         bool operator==(const RegisteredAppImage& r) const {
