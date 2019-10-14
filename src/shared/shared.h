@@ -59,6 +59,9 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
 // destination is a string that, when empty, will be interpreted as "use default"
 void createConfigFile(int askToMove, QString destination, int enableDaemon);
 
+// replaces ~ character in paths with real home directory, if necessary and possible
+QString expandTilde(QString path);
+
 // load config file and return it
 std::shared_ptr<QSettings> getConfig();
 
