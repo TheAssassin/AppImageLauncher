@@ -1,5 +1,6 @@
 // system includes
 #include <algorithm>
+#include <cstring>
 #include <functional>
 #include <iomanip>
 #include <iostream>
@@ -7,7 +8,6 @@
 #include <sstream>
 #include <unordered_map>
 #include <vector>
-#include <string.h>
 #include <unistd.h>
 #include <utility>
 
