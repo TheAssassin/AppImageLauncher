@@ -16,6 +16,7 @@
 
 // local includes
 #include "fs.h"
+#include "shared.h"
 #include "error.h"
 
 namespace bf = boost::filesystem;
@@ -137,7 +138,8 @@ public:
 
         // create mappings for all AppImages in ~/Applications, which are most used
         // TODO: allow "registration" of AppImages in any directory
-        auto applicationsDir = std::string(getenv("HOME")) + "/Applications";
+        auto applicationsDir = integratedAppImagesDestination().path().toStdString();
+
         if (bf::is_directory(applicationsDir)) {
             for (bf::directory_iterator it(applicationsDir); it != bf::directory_iterator(); ++it) {
                 auto path = it->path();

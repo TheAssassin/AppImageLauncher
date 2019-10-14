@@ -11,7 +11,7 @@ set(Boost_USE_STATIC_LIBS ON)
 find_package(Boost REQUIRED COMPONENTS filesystem)
 
 add_executable(appimagelauncherfs main.cpp fs.cpp fs.h error.h)
-target_link_libraries(appimagelauncherfs PUBLIC libfuse Boost::filesystem)
+target_link_libraries(appimagelauncherfs PUBLIC libfuse Boost::filesystem shared)
 
 # ISO C++ spawns annoying warnings about string literals
 target_compile_options(appimagelauncherfs PRIVATE -Wno-write-strings)
