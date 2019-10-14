@@ -4,6 +4,7 @@
 #include <deque>
 
 // library includes
+#include <QDebug>
 #include <QFile>
 #include <QObject>
 #include <QSysInfo>
@@ -116,6 +117,11 @@ Worker::Worker() {
 }
 
 void Worker::executeDeferredOperations() {
+    if (d->deferredOperations.empty()) {
+        qDebug() << "No deferred operations to execute";
+        return;
+    }
+
     std::cout << "Executing deferred operations" << std::endl;
 
     auto outputMutex = std::make_shared<QMutex>();

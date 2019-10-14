@@ -1,7 +1,9 @@
 // system includes
+#include <fstream>
 #include <iostream>
 #include <memory>
 #include <sstream>
+#include <tuple>
 extern "C" {
     #include <appimage/appimage.h>
     #include <glib.h>
@@ -238,8 +240,135 @@ QDir integratedAppImagesDestination() {
     return DEFAULT_INTEGRATION_DESTINATION;
 }
 
-QSet<QString> additionalAppImagesLocations() {
-    return QSet<QString>{} << "/Applications";
+class Mount {
+private:
+    QString device;
+    QString mountPoint;
+    QString fsType;
+    QString mountOptions;
+
+public:
+    Mount(QString device, QString mountPoint, QString fsType, QString mountOptions) :
+        device(std::move(device)),
+        mountPoint(std::move(mountPoint)),
+        fsType(std::move(fsType)),
+        mountOptions(std::move(
+        mountOptions)) {}
+
+    Mount(const Mount& other) = default;
+
+    Mount& operator=(const Mount& other) = default;
+
+public:
+    const QString& getDevice() const {
+        return device;
+    }
+
+    const QString& getMountPoint() const {
+        return mountPoint;
+    }
+
+    const QString& getFsType() const {
+        return fsType;
+    }
+
+    const QString& getMountOptions() const {
+        return mountOptions;
+    }
+};
+
+QList<Mount> listMounts() {
+    QList<Mount> mountedDirectories;
+
+    std::ifstream ifs("/proc/mounts");
+
+    std::string _currentLine;
+    while (std::getline(ifs, _currentLine)) {
+        const auto currentLine = QString::fromStdString(_currentLine);
+
+        const auto parts = currentLine.split(" ");
+
+        mountedDirectories << Mount{parts[0], parts[1], parts[2], parts[3]};
+    }
+
+    return mountedDirectories;
+}
+
+QSet<QString> additionalAppImagesLocations(const bool includeAllMountPoints) {
+    QSet<QString> additionalLocations;
+
+    additionalLocations << "/Applications";
+
+    // integrate AppImages from mounted filesystems, if requested
+    // we don't want to read files from any FUSE mounted filesystems nor from any virtual filesystems
+    // to
+    static const auto validFilesystems = {"ext2", "ext3", "ext4", "ntfs", "vfat"};
+
+    static const auto blacklistedMountPointPrefixes = {
+        "/var/lib/schroot",
+        "/run/docker",
+        "/boot",
+        "/sys",
+        "/proc",
+        "/snap",
+    };
+
+    if (includeAllMountPoints) {
+        for (const auto& mount : listMounts()) {
+            const auto& device = mount.getDevice();
+            const auto& mountPoint = mount.getMountPoint();
+            const auto& fsType = mount.getFsType();
+
+            // we have to filter out virtual filesystems, i.e., ones which have a "nonsense" device path
+            // any device that doesn't start with / is likely virtual, this is the first indicator
+            if (device.size() < 1 || device[0] != '/') {
+                continue;
+            }
+
+            // the device should exist for obvious reasons
+            if (!QFileInfo(QFileInfo(device).absoluteFilePath()).exists()) {
+                continue;
+            }
+
+            // we don't want to mount any loop-mounted or bind-mounted or other devices, only... "native" ones
+            // therefore we permit only "real" devices listed within /dev
+            if (!device.startsWith("/dev/")) {
+                continue;
+            }
+
+            // there's a few locations which we know we don't want to search for AppImages in
+            // either it's a waste of time or otherwise a bad idea, but it will surely save time *not* to search them
+            if (std::find_if(blacklistedMountPointPrefixes.begin(), blacklistedMountPointPrefixes.end(),
+                             [&mountPoint](const QString& prefix) {
+                                 return mountPoint == prefix || mountPoint.startsWith(prefix + "/");
+                             }) != blacklistedMountPointPrefixes.end()) {
+                continue;
+            }
+
+            // we can skip the root mount point, as we handled it above
+            if (mountPoint == "/") {
+                continue;
+            }
+
+            // we only support a limited set of filesystems
+            if (std::find(validFilesystems.begin(), validFilesystems.end(), fsType) == validFilesystems.end()) {
+                continue;
+            }
+
+            // sanity check -- can likely be removed in the future
+            if (mountPoint.isEmpty()) {
+                const auto message = "empty mount point for mount with device " + device.toStdString();
+                throw std::invalid_argument(message);
+            }
+
+            // assemble potential applications location; caller needs to check whether the directory exists before setting
+            // up e.g., an inotify watch
+            const QString additionalLocation(mountPoint + "/Applications");
+            additionalLocations << additionalLocation;
+        }
+    }
+
+    return additionalLocations;
 }
 
 QString buildPathToIntegratedAppImage(const QString& pathToAppImage) {
@@ -272,10 +401,13 @@ QString buildPathToIntegratedAppImage(const QString& pathToAppImage) {
 }
 
 std::map<std::string, std::string> findCollisions(const QString& currentNameEntry) {
-    std::map<std::string, std::string> collisions;
+    std::map<std::string, std::string> collisions{};
 
     // default locations of desktop files on systems
-    const auto directories = {QString("/usr/share/applications/"), QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/applications/"};
+    const auto directories = {
+        QString("/usr/share/applications/"),
+        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/applications/"
+    };
 
     for (const auto& directory : directories) {
         QDirIterator iterator(directory, QDirIterator::FollowSymlinks);
@@ -309,12 +441,14 @@ std::map<std::string, std::string> findCollisions(const QString& currentNameEntr
 }
 
 bool updateDesktopDatabaseAndIconCaches() {
+    const auto dataLocation = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+
     const std::map<std::string, std::string> commands = {
-        {"update-desktop-database", "~/.local/share/applications"},
-        {"gtk-update-icon-cache-3.0", "~/.local/share/icons/hicolor/ -t"},
-        {"gtk-update-icon-cache", "~/.local/share/icons/hicolor/ -t"},
+        {"update-desktop-database", dataLocation.toStdString() + "/applications"},
+        {"gtk-update-icon-cache-3.0", dataLocation.toStdString() + "/icons/hicolor/ -t"},
+        {"gtk-update-icon-cache", dataLocation.toStdString() + "/icons/hicolor/ -t"},
         {"xdg-desktop-menu", "forceupdate"},
-        {"update-mime-database", "~/.local/share/mime "},
+        {"update-mime-database", dataLocation.toStdString() + "/mime "},
     };
 
     for (const auto& command : commands) {
@@ -809,7 +943,10 @@ bool cleanUpOldDesktopIntegrationResources(bool verbose) {
             auto* iconValue = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_ICON, nullptr);
 
             if (iconValue != nullptr) {
-                for (QDirIterator it("~/.local/share/icons/", QDirIterator::Subdirectories); it.hasNext();) {
+                const auto dataLocation = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+                const auto iconsPath = QString::fromStdString(dataLocation.toStdString() + "/share/icons/");
+
+                for (QDirIterator it(iconsPath, QDirIterator::Subdirectories); it.hasNext();) {
                     auto path = it.next();
 
                     if (QFileInfo(path).completeBaseName().startsWith(iconValue)) {

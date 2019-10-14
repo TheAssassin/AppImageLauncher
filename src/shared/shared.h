@@ -67,7 +67,7 @@ QDir integratedAppImagesDestination();
 
 // additional directories to monitor for AppImages, and to permit AppImages to be within (i.e., shall not ask whether
 // to move to the main location, if they're in one of these, it's all good)
-QSet<QString> additionalAppImagesLocations();
+QSet<QString> additionalAppImagesLocations(bool includeValidMountPoints = false);
 
 // build path to standard location for integrated AppImages
 QString buildPathToIntegratedAppImage(const QString& pathToAppImage);

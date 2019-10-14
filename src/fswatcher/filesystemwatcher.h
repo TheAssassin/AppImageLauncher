@@ -1,13 +1,32 @@
 // system includes
+#include <algorithm>
 #include <memory>
+#include <unordered_set>
 
 // library includes
+#include <QDir>
 #include <QObject>
 #include <QSet>
 #include <QString>
 #include <QThread>
 
 #pragma once
+
+struct QDirHash {
+public:
+    size_t operator()(const QDir& dir) const {
+        return qt_hash(dir.absolutePath());
+    }
+};
+
+struct QDirComparator {
+public:
+    size_t operator()(const QDir& a, const QDir& b) const {
+        return a.absolutePath() < b.absolutePath();
+    }
+};
+
+typedef std::unordered_set<QDir, QDirHash, QDirComparator> QDirSet;
 
 class FileSystemWatcherError : public std::runtime_error {
 public:
@@ -22,21 +41,22 @@ private:
     std::shared_ptr<PrivateData> d;
 
 public:
-    explicit FileSystemWatcher(const QString& path);
-    explicit FileSystemWatcher(const QSet<QString>& paths);
+    explicit FileSystemWatcher(const QDir& directory);
+    explicit FileSystemWatcher(const QDirSet& paths);
     FileSystemWatcher();
 
-public:
+public slots:
     bool startWatching();
     bool stopWatching();
-
-public slots:
     void readEvents();
+    bool updateWatchedDirectories(QDirSet watchedDirectories);
 
 public:
-    QSet<QString> directories();
+    QDirSet directories();
 
 signals:
     void fileChanged(QString path);
     void fileRemoved(QString path);
+    void newDirectoriesToWatch(QDirSet set);
+    void directoriesToWatchDisappeared(QDirSet set);
 };
