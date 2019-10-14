@@ -1,4 +1,6 @@
 # define private libraries install destionation
+include(GNUInstallDirs)
+message(${CMAKE_INSTALL_LIBDIR})
 if(NOT IS_ABSOLUTE ${CMAKE_INSTALL_LIBDIR})
     set(_libdir ${CMAKE_INSTALL_LIBDIR})
 else()
@@ -28,7 +30,7 @@ set(_rpath "\$ORIGIN/${_rpath}")
 file(GLOB libappimage_files ${PROJECT_BINARY_DIR}/lib/libappimage/src/libappimage/libappimage.so*)
 file(GLOB libappimageupdate_files ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/src/libappimageupdate.so*)
 file(GLOB libappimageupdate-qt_files ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/src/qt-ui/libappimageupdate-qt.so*)
-message(STATUS  ${PROJECT_BINARY_DIR}/lib/libappimage/src/libappimage/libappimage.so*)
+
 foreach(i libappimage libappimageupdate libappimageupdate-qt)
     # prevent unnecessary messages
     if(NOT i STREQUAL libappimage OR NOT USE_SYSTEM_LIBAPPIMAGE)
