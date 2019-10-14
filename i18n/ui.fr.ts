@@ -570,7 +570,7 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     </message>
     <message>
         <location line="+11"/>
-        <source>Search for AppImages in /Applications directories suitable mounted filesystems</source>
+        <source>Search for AppImages in /Applications directories in suitable mounted filesystems</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

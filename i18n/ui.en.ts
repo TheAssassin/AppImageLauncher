@@ -595,8 +595,12 @@ The AppImage doesn't support updating. Please ask the authors to set upupdate in
     </message>
     <message>
         <location line="+11" />
+        <source>Search for AppImages in /Applications directories in suitable mounted filesystems</source>
+        <translation>Search for AppImages in /Applications directories in suitable mounted filesystems</translation>
+    </message>
+    <message>
         <source>Search for AppImages in /Applications directories suitable mounted filesystems</source>
-        <translation>Search for AppImages in /Applications directories suitable mounted filesystems</translation>
+        <translation type="vanished">Search for AppImages in /Applications directories suitable mounted filesystems</translation>
     </message>
     <message>
         <location line="+5" />
