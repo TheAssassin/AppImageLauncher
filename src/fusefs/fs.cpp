@@ -191,7 +191,7 @@ private:
         auto map = generateTextMap();
 
         // cannot request more bytes than the file size
-        if (offset > map.size())
+        if (offset > static_cast<off_t>(map.size()))
             return -EIO;
 
         size_t bytesToCopy = std::min(bufsize, map.size()) - offset;
