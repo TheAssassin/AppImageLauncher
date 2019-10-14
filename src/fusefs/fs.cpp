@@ -439,9 +439,9 @@ public:
         }
 
         // only left option is that the path refers to a registered AppImage
-        // in this case, we first check whether the path does resolve to a registered AppImage
         try {
-            auto& registeredAppImage = mapPathToRegisteredAppImage(path);
+            // in this case, we first check whether the path does resolve to a registered AppImage
+            (void) mapPathToRegisteredAppImage(path);
 
             return handleReadRegisteredAppImage(buf, bufsize, offset, fi);
         } catch (const CouldNotFindRegisteredAppImageError&) {
