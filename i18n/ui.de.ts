@@ -594,7 +594,7 @@ Das AppImage unterstützt keine Updates. Bitten Sie die Autoren, die Update-Info
     <message>
         <location line="+11"/>
         <source>Search for AppImages in /Applications directories in suitable mounted filesystems</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche nach AppImages in /Applications-Verzeichnis auf geeigneten, eingehängten Dateisystemen</translation>
     </message>
     <message>
         <location line="+5"/>
