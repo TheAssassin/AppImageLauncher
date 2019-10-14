@@ -109,7 +109,7 @@ Kaputte Syntax:
     <message>
         <location line="+449"/>
         <source>File %1 is owned by another user: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei %1 gehört einem anderen Benutzer: %2</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -589,7 +589,7 @@ Das AppImage unterstützt keine Updates. Bitten Sie die Autoren, die Update-Info
     <message>
         <location filename="../src/daemon/main.cpp" line="+117"/>
         <source>Tracks AppImages in applications directories (user&apos;s, system and other ones). Automatically integrates AppImages moved into those directories and unintegrates ones removed from them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Überwacht AppImages in Applikations-Verzeichnissen (dem des Benutzers, des Systems und anderen). Integriert AppImages, die in diese Verzeichnisse verschoben werden, und entfernt die Integration derer, die von dort entfernt werden, automatisch.</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -599,7 +599,7 @@ Das AppImage unterstützt keine Updates. Bitten Sie die Autoren, die Update-Info
     <message>
         <location line="+5"/>
         <source>Lists directories watched by this daemon and exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Listet Verzeichnisse auf, welche von diesem Dienst überwacht werden, und beendet sich</translation>
     </message>
 </context>
 <context>
