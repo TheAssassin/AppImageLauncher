@@ -20,3 +20,8 @@ install(
     TARGETS appimagelauncherfs COMPONENT APPIMAGELAUNCHERFS
     RUNTIME DESTINATION ${_bindir}
 )
+
+set_property(
+    TARGET appimagelauncherfs
+    PROPERTY INSTALL_RPATH ${_rpath}
+)
