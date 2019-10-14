@@ -143,6 +143,11 @@ void createConfigFile(int askToMove, QString destination, int enableDaemon) {
         }
         file.write("\n");
     }
+
+    // TODO: add appimagelauncherd/additional_directories_to_watch to UI
+    file.write("\n\n");
+    file.write("[appimagelauncherd]\n");
+    file.write("# additional_directories_to_watch = ~/otherApplications:/even/more/applications\n");
 }
 
 
