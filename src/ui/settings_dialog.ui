@@ -158,10 +158,10 @@
           <item>
            <widget class="QCheckBox" name="daemonIsEnabledCheckBox">
             <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, the daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot; and the additional directories you configured. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When this box is checked, AppImageLauncher automatically starts a daemon called appimagelauncherd.&lt;/p&gt;&lt;p&gt;This daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot; and the additional directories you configured. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="text">
-             <string>Enable auto-integration daemon</string>
+             <string>Auto start auto-integration daemon</string>
             </property>
            </widget>
           </item>
@@ -184,6 +184,9 @@
            <layout class="QVBoxLayout" name="additionalDirsButtonsLayout">
             <item>
              <widget class="QToolButton" name="additionalDirsAddButton">
+              <property name="toolTip">
+               <string>Add new directory to list</string>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -196,6 +199,9 @@
              <widget class="QToolButton" name="additionalDirsRemoveButton">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="toolTip">
+               <string>Remove selected directory from list</string>
               </property>
               <property name="text">
                <string>-</string>
