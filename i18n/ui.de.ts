@@ -733,7 +733,7 @@ Das AppImage unterstützt keine Updates. Bitten Sie die Autoren, die Update-Info
     <message>
         <location line="+17"/>
         <source>Select additional directory to watch</source>
-        <translation type="unfinished"></translation>
+        <translation>Zusätzlich zu überwachendes Verzeichnis auswählen</translation>
     </message>
 </context>
 </TS>
