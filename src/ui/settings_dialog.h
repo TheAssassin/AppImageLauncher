@@ -5,6 +5,7 @@
 
 // libraries
 #include <QDialog>
+#include <QListWidgetItem>
 #include <QSettings>
 
 
@@ -23,6 +24,8 @@ public:
 protected slots:
     void onChooseAppsDirClicked();
     void onAddDirectoryToWatchButtonClicked();
+    void onRemoveDirectoryToWatchButtonClicked();
+    void onDirectoryToWatchItemActivated(QListWidgetItem* item);
 
     void onDialogAccepted();
 

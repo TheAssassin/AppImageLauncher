@@ -30,6 +30,9 @@ SettingsDialog::SettingsDialog(QWidget* parent) :
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &SettingsDialog::onDialogAccepted);
     connect(ui->chooseAppsDirToolButton, &QToolButton::released, this, &SettingsDialog::onChooseAppsDirClicked);
     connect(ui->additionalDirsAddButton, &QToolButton::released, this, &SettingsDialog::onAddDirectoryToWatchButtonClicked);
+    connect(ui->additionalDirsRemoveButton, &QToolButton::released, this, &SettingsDialog::onRemoveDirectoryToWatchButtonClicked);
+    connect(ui->additionalDirsListWidget, &QListWidget::itemActivated, this, &SettingsDialog::onDirectoryToWatchItemActivated);
+    connect(ui->additionalDirsListWidget, &QListWidget::itemClicked, this, &SettingsDialog::onDirectoryToWatchItemActivated);
 
     QStringList availableFeatures;
 
@@ -158,4 +161,29 @@ void SettingsDialog::onAddDirectoryToWatchButtonClicked() {
         QString dirPath = fileDialog.selectedFiles().first();
         addDirectoryToWatchToListView(dirPath);
     }
+}
+
+void SettingsDialog::onRemoveDirectoryToWatchButtonClicked() {
+    auto* widget = ui->additionalDirsListWidget;
+
+    auto* currentItem = widget->currentItem();
+
+    if (currentItem == nullptr)
+        return;
+
+    const auto index = widget->row(currentItem);
+
+    // after taking it, we have to delete it ourselves, Qt docs say
+    auto deletedItem = widget->takeItem(index);
+    delete deletedItem;
+
+    // we should deactivate the remove button once the last item is gone
+    if (widget->item(0) == nullptr) {
+        ui->additionalDirsRemoveButton->setEnabled(false);
+    }
+}
+
+void SettingsDialog::onDirectoryToWatchItemActivated(QListWidgetItem* item) {
+    // we activate the button based on whether there's an item selected
+    ui->additionalDirsRemoveButton->setEnabled(item != nullptr);
 }
