@@ -102,7 +102,7 @@ QString getConfigFilePath() {
     return configFilePath;
 }
 
-void createConfigFile(int askToMove, QString destination, int enableDaemon, const QStringList& additionalDirsToWatch) {
+void createConfigFile(int askToMove, const QString& destination, int enableDaemon, const QStringList& additionalDirsToWatch) {
     auto configFilePath = getConfigFilePath();
 
     QFile file(configFilePath);
