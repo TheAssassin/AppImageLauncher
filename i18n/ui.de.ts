@@ -656,32 +656,32 @@ Das AppImage unterstützt keine Updates. Bitten Sie die Autoren, die Update-Info
     <message>
         <location line="+119"/>
         <source>General settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Allgemeine Einstellungen</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When this box is checked, AppImageLauncher automatically starts a daemon called appimagelauncherd.&lt;/p&gt;&lt;p&gt;This daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot; and the additional directories you configured. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wenn das Kästchen angehakt wird, wird AppImageLauncher automatisch einen Dienst namens appimagelauncherd starten.&lt;/p&gt;&lt;p&gt;Dieser Dienst integriert AppImages, die Sie in ihr &amp;quot;Applications-Verzeichnis&amp;quot; und in die anderen überwachten Verzeichnisse kopieren, automatisch. Wenn die Dateien gelöscht werden, wird der Dienst die Integrations-Daten automatisch aufräumen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Auto start auto-integration daemon</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-Integrations-Dienst automatisch starten</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Additional directories to watch</source>
-        <translation type="unfinished"></translation>
+        <translation>Zusätzlich zu überwachende Verzeichnisse</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Add new directory to list</source>
-        <translation type="unfinished"></translation>
+        <translation>Neues Verzeichnis zur Liste hinzufügen</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Remove selected directory from list</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewähltes Verzeichnis aus Liste entfernen</translation>
     </message>
     <message>
         <source>Applications directory</source>
