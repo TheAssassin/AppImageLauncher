@@ -72,7 +72,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
 </translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+1128" />
+        <location filename="../src/shared/shared.cpp" line="+1139" />
         <location line="+8" />
         <source>Error</source>
         <translation>Error</translation>
@@ -589,12 +589,12 @@ The AppImage doesn't support updating. Please ask the authors to set upupdate in
         <translation>Failed to remove old AppImage</translation>
     </message>
     <message>
-        <location filename="../src/daemon/main.cpp" line="+117" />
+        <location filename="../src/daemon/main.cpp" line="+148" />
         <source>Tracks AppImages in applications directories (user's, system and other ones). Automatically integrates AppImages moved into those directories and unintegrates ones removed from them.</source>
         <translation>Tracks AppImages in applications directories (user's, system and other ones). Automatically integrates AppImages moved into those directories and unintegrates ones removed from them.</translation>
     </message>
     <message>
-        <location line="+11" />
+        <location line="+8" />
         <source>Search for AppImages in /Applications directories in suitable mounted filesystems</source>
         <translation>Search for AppImages in /Applications directories in suitable mounted filesystems</translation>
     </message>
@@ -650,6 +650,11 @@ The AppImage doesn't support updating. Please ask the authors to set upupdate in
         <translation>AppImageLauncher Settings</translation>
     </message>
     <message>
+        <location line="+10" />
+        <source>AppImageLauncher</source>
+        <translation>AppImageLauncher</translation>
+    </message>
+    <message>
         <location line="+6" />
         <source>Launcher Dialog</source>
         <translation>Launcher Dialog</translation>
@@ -660,22 +665,60 @@ The AppImage doesn't support updating. Please ask the authors to set upupdate in
         <translation>Ask whether to move AppImage files into the applications directory</translation>
     </message>
     <message>
-        <location line="+10" />
-        <source>Applications directory</source>
-        <translation>Applications directory</translation>
+        <location line="+110" />
+        <source>appimagelauncherd</source>
+        <translation>appimagelauncherd</translation>
+    </message>
+    <message>
+        <location line="+9" />
+        <source>General settings</source>
+        <translation>General settings</translation>
     </message>
     <message>
         <location line="+6" />
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, the daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot;. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, the daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot;. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When this box is checked, AppImageLauncher automatically starts a daemon called appimagelauncherd.&lt;/p&gt;&lt;p&gt;This daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot; and the additional directories you configured. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When this box is checked, AppImageLauncher automatically starts a daemon called appimagelauncherd.&lt;/p&gt;&lt;p&gt;This daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot; and the additional directories you configured. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+24" />
+        <location line="+3" />
+        <source>Auto start auto-integration daemon</source>
+        <translation>Auto start auto-integration daemon</translation>
+    </message>
+    <message>
+        <location line="+13" />
+        <source>Additional directories to watch</source>
+        <translation>Additional directories to watch</translation>
+    </message>
+    <message>
+        <location line="+11" />
+        <source>Add new directory to list</source>
+        <translation>Add new directory to list</translation>
+    </message>
+    <message>
+        <location line="+16" />
+        <source>Remove selected directory from list</source>
+        <translation>Remove selected directory from list</translation>
+    </message>
+    <message>
+        <location line="+3" />
+        <source>-</source>
+        <translation>-</translation>
+    </message>
+    <message>
+        <source>Applications directory</source>
+        <translation type="vanished">Applications directory</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, the daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot;. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, the daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot;. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="-150" />
         <source>Applications directory path</source>
         <translation>Applications directory path</translation>
     </message>
     <message>
-        <location line="+7" />
+        <location line="-11" />
         <source>Location where to store your AppImage files to ease their management</source>
         <translation>Location where to store your AppImage files to ease their management</translation>
     </message>
@@ -688,17 +731,16 @@ The AppImage doesn't support updating. Please ask the authors to set upupdate in
         <translation type="vanished">/path</translation>
     </message>
     <message>
-        <location line="-28" />
         <source>Enable auto-integration daemon</source>
-        <translation>Enable auto-integration daemon</translation>
+        <translation type="vanished">Enable auto-integration daemon</translation>
     </message>
     <message>
-        <location line="+50" />
+        <location line="+49" />
         <source>Available Features</source>
         <translation>Available Features</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings_dialog.cpp" line="+33" />
+        <location filename="../src/ui/settings_dialog.cpp" line="+40" />
         <source>updater available for AppImages supporting AppImageUpdate</source>
         <translation>updater available for AppImages supporting AppImageUpdate</translation>
     </message>
@@ -713,9 +755,14 @@ The AppImage doesn't support updating. Please ask the authors to set upupdate in
         <translation>&lt;strong&gt;Note: this is an AppImageLauncher Lite build, only supports a limited set of features&lt;/strong&gt;&lt;br /&gt;Please install the full version via the provided native packages to enjoy the full AppImageLauncher experience</translation>
     </message>
     <message>
-        <location line="+51" />
+        <location line="+109" />
         <source>Select Applications directory</source>
         <translation>Select Applications directory</translation>
+    </message>
+    <message>
+        <location line="+17" />
+        <source>Select additional directory to watch</source>
+        <translation>Select additional directory to watch</translation>
     </message>
 </context>
 </TS>

@@ -74,7 +74,7 @@ Scegliendo No verrà eseguito l&apos;AppImage una volta e lascerà l&apos;AppIma
 </translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+1128"/>
+        <location filename="../src/shared/shared.cpp" line="+1139"/>
         <location line="+8"/>
         <source>Error</source>
         <translation>Errore</translation>
@@ -587,12 +587,12 @@ AppImage non supporta l&apos;aggiornamento. Si prega di chiedere agli autori di 
         <translation>Impossibile rimuovere la vecchia AppImage</translation>
     </message>
     <message>
-        <location filename="../src/daemon/main.cpp" line="+117"/>
+        <location filename="../src/daemon/main.cpp" line="+148"/>
         <source>Tracks AppImages in applications directories (user&apos;s, system and other ones). Automatically integrates AppImages moved into those directories and unintegrates ones removed from them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+8"/>
         <source>Search for AppImages in /Applications directories in suitable mounted filesystems</source>
         <translation type="unfinished"></translation>
     </message>
@@ -644,6 +644,11 @@ AppImage non supporta l&apos;aggiornamento. Si prega di chiedere agli autori di 
         <translation>Impostazioni AppImageLauncher</translation>
     </message>
     <message>
+        <location line="+10"/>
+        <source>AppImageLauncher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+6"/>
         <source>Launcher Dialog</source>
         <translation>Finestra di dialogo Launcher</translation>
@@ -654,37 +659,74 @@ AppImage non supporta l&apos;aggiornamento. Si prega di chiedere agli autori di 
         <translation>Chiedere se spostare i file AppImage nella directory delle applicazioni</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Applications directory</source>
-        <translation>Directory delle applicazioni</translation>
+        <location line="+110"/>
+        <source>appimagelauncherd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>General settings</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, the daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot;. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Se abilitato, il demone integra automaticamente le AppImages copiate dentro nel &amp;quot;Directory delle applicazioni&amp;quot;. Quando i file vengono eliminati, il demone pulirà i dati di integrazione.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When this box is checked, AppImageLauncher automatically starts a daemon called appimagelauncherd.&lt;/p&gt;&lt;p&gt;This daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot; and the additional directories you configured. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+3"/>
+        <source>Auto start auto-integration daemon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Additional directories to watch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Add new directory to list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Remove selected directory from list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Applications directory</source>
+        <translation type="vanished">Directory delle applicazioni</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, the daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot;. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Se abilitato, il demone integra automaticamente le AppImages copiate dentro nel &amp;quot;Directory delle applicazioni&amp;quot;. Quando i file vengono eliminati, il demone pulirà i dati di integrazione.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="-150"/>
         <source>Applications directory path</source>
         <translation>Percorso della directory delle applicazioni</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="-11"/>
         <source>Location where to store your AppImage files to ease their management</source>
         <translation>Posizione in cui archiviare i file AppImage per facilitarne la gestione</translation>
     </message>
     <message>
-        <location line="-28"/>
         <source>Enable auto-integration daemon</source>
-        <translation>Abilita il demone di integrazione automatica</translation>
+        <translation type="vanished">Abilita il demone di integrazione automatica</translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+49"/>
         <source>Available Features</source>
         <translation>Funzionalità disponibili</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings_dialog.cpp" line="+33"/>
+        <location filename="../src/ui/settings_dialog.cpp" line="+40"/>
         <source>updater available for AppImages supporting AppImageUpdate</source>
         <translation>aggiornamento disponibile per AppImages che supporta AppImageUpdate</translation>
     </message>
@@ -699,9 +741,14 @@ AppImage non supporta l&apos;aggiornamento. Si prega di chiedere agli autori di 
         <translation>&lt;strong&gt;Nota: questa è una build di AppImageLauncher Lite, supporta solo un set limitato di funzionalità&lt;/strong&gt;&lt;br /&gt;Installa la versione completa tramite i pacchetti nativi forniti per goderti l&apos;esperienza AppImageLauncher completa</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+109"/>
         <source>Select Applications directory</source>
         <translation>Seleziona la directory Applicazioni</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Select additional directory to watch</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
