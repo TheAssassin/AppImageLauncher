@@ -669,11 +669,6 @@ Das AppImage unterstützt keine Updates. Bitten Sie die Autoren, die Update-Info
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Monitor /Applications directory on all mounted filesystems</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location line="+13"/>
         <source>Additional directories to watch</source>
         <translation type="unfinished"></translation>

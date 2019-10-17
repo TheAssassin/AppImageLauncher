@@ -683,11 +683,6 @@ The AppImage doesn't support updating. Please ask the authors to set upupdate in
         <translation>Auto start auto-integration daemon</translation>
     </message>
     <message>
-        <location line="+3" />
-        <source>Monitor /Applications directory on all mounted filesystems</source>
-        <translation>Monitor /Applications directory on all mounted filesystems</translation>
-    </message>
-    <message>
         <location line="+13" />
         <source>Additional directories to watch</source>
         <translation>Additional directories to watch</translation>
