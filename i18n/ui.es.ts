@@ -671,13 +671,8 @@ AppImage no admite la actualización. Solicite a los autores que configuren info
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+13"/>
         <source>Remove selected directory from list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -689,7 +684,7 @@ AppImage no admite la actualización. Solicite a los autores que configuren info
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cuando está habilitado, el daemon integra automáticamente AppImages que copia en el&amp;quot;Directorio de aplicaciones&amp;quot;.Cuando los archivos se eliminan, el demonio limpiará los datos de integración.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="-160"/>
+        <location line="-144"/>
         <source>Applications directory path</source>
         <translation>Ruta del directorio de aplicaciones</translation>
     </message>

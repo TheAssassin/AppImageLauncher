@@ -187,9 +187,6 @@
               <property name="toolTip">
                <string>Add new directory to list</string>
               </property>
-              <property name="text">
-               <string/>
-              </property>
               <property name="icon">
                <iconset theme="add"/>
               </property>
@@ -202,9 +199,6 @@
               </property>
               <property name="toolTip">
                <string>Remove selected directory from list</string>
-              </property>
-              <property name="text">
-               <string>-</string>
               </property>
               <property name="icon">
                <iconset theme="remove"/>

@@ -693,14 +693,13 @@ The AppImage doesn't support updating. Please ask the authors to set upupdate in
         <translation>Add new directory to list</translation>
     </message>
     <message>
-        <location line="+16" />
+        <location line="+13" />
         <source>Remove selected directory from list</source>
         <translation>Remove selected directory from list</translation>
     </message>
     <message>
-        <location line="+3" />
         <source>-</source>
-        <translation>-</translation>
+        <translation type="vanished">-</translation>
     </message>
     <message>
         <source>Applications directory</source>
@@ -711,7 +710,7 @@ The AppImage doesn't support updating. Please ask the authors to set upupdate in
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, the daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot;. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="-160" />
+        <location line="-144" />
         <source>Applications directory path</source>
         <translation>Applications directory path</translation>
     </message>

@@ -679,13 +679,8 @@ Das AppImage unterstützt keine Updates. Bitten Sie die Autoren, die Update-Info
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+13"/>
         <source>Remove selected directory from list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -697,7 +692,7 @@ Das AppImage unterstützt keine Updates. Bitten Sie die Autoren, die Update-Info
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wenn aktiviert, wird der Dienst automatisch AppImages, die in das &amp;quot;Applikationsverzeichnis&amp;quot; kopiert werden, integrieren. Wenn die Dateien gelöscht werden, wird der Dienst die Integrationsdaten automatisch aufräumen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="-160"/>
+        <location line="-144"/>
         <source>Applications directory path</source>
         <translation>Pfad des Applikationsverzeichnisses</translation>
     </message>

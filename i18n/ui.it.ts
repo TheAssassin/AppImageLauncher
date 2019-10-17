@@ -679,13 +679,8 @@ AppImage non supporta l&apos;aggiornamento. Si prega di chiedere agli autori di 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+13"/>
         <source>Remove selected directory from list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -697,7 +692,7 @@ AppImage non supporta l&apos;aggiornamento. Si prega di chiedere agli autori di 
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Se abilitato, il demone integra automaticamente le AppImages copiate dentro nel &amp;quot;Directory delle applicazioni&amp;quot;. Quando i file vengono eliminati, il demone pulirà i dati di integrazione.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="-160"/>
+        <location line="-144"/>
         <source>Applications directory path</source>
         <translation>Percorso della directory delle applicazioni</translation>
     </message>
