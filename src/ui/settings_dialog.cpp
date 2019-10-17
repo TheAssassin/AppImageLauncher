@@ -11,7 +11,7 @@ SettingsDialog::SettingsDialog(QWidget* parent) :
         ui(new Ui::SettingsDialog) {
     ui->setupUi(this);
 
-    ui->lineEditApplicationsDir->setPlaceholderText(integratedAppImagesDestination().absolutePath());
+    ui->applicationsDirLineEdit->setPlaceholderText(integratedAppImagesDestination().absolutePath());
 
     loadSettings();
 
@@ -25,7 +25,7 @@ SettingsDialog::SettingsDialog(QWidget* parent) :
 #endif
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &SettingsDialog::onDialogAccepted);
-    connect(ui->toolButtonChooseAppsDir, &QToolButton::released, this, &SettingsDialog::onChooseAppsDirClicked);
+    connect(ui->chooseAppsDirToolButton, &QToolButton::released, this, &SettingsDialog::onChooseAppsDirClicked);
 
     QStringList availableFeatures;
 
@@ -52,9 +52,9 @@ void SettingsDialog::loadSettings() {
     settingsFile = getConfig();
 
     if (settingsFile) {
-        ui->checkBoxEnableDaemon->setChecked(settingsFile->value("AppImageLauncher/enable_daemon", false).toBool());
-        ui->checkBoxAskMove->setChecked(settingsFile->value("AppImageLauncher/ask_to_move", false).toBool());
-        ui->lineEditApplicationsDir->setText(settingsFile->value("AppImageLauncher/destination").toString());
+        ui->daemonIsEnabledCheckBox->setChecked(settingsFile->value("AppImageLauncher/enable_daemon", false).toBool());
+        ui->askMoveCheckBox->setChecked(settingsFile->value("AppImageLauncher/ask_to_move", false).toBool());
+        ui->applicationsDirLineEdit->setText(settingsFile->value("AppImageLauncher/destination").toString());
     }
 }
 
@@ -64,9 +64,9 @@ void SettingsDialog::onDialogAccepted() {
 }
 
 void SettingsDialog::saveSettings() {
-    createConfigFile(ui->checkBoxAskMove->isChecked(),
-                     ui->lineEditApplicationsDir->text(),
-                     ui->checkBoxEnableDaemon->isChecked());
+    createConfigFile(ui->askMoveCheckBox->isChecked(),
+                     ui->applicationsDirLineEdit->text(),
+                     ui->daemonIsEnabledCheckBox->isChecked());
 
     settingsFile = getConfig();
 }
@@ -97,6 +97,6 @@ void SettingsDialog::onChooseAppsDirClicked() {
 
     if (fileDialog.exec()) {
         QString dirPath = fileDialog.selectedFiles().first();
-        ui->lineEditApplicationsDir->setText(dirPath);
+        ui->applicationsDirLineEdit->setText(dirPath);
     }
 }
