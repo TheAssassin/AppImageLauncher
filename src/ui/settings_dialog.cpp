@@ -49,6 +49,9 @@ SettingsDialog::SettingsDialog(QWidget* parent) :
 #endif
 
     ui->featuresLabel->setText(availableFeatures.join('\n'));
+
+    // no matter what tab was selected when saving in Qt designer, we want to start up with the first tab
+    ui->tabWidget->setCurrentWidget(ui->launcherTab);
 }
 
 SettingsDialog::~SettingsDialog() {
