@@ -178,7 +178,13 @@ int main(int argc, char* argv[]) {
     // parse arguments
     parser.process(app);
 
-    const auto monitorMountedFilesystems = parser.isSet(monitorMountedFilesystemsOption);
+    // one can either switch on this mode from the command line (convenient for debugging), or via a config file
+    // option
+    const auto monitorMountedFilesystems = (
+        parser.isSet(monitorMountedFilesystemsOption) ||
+            getConfig()->value("appimagelauncherd/monitor_mounted_filesystems", false).toBool()
+    );
+
     const auto listWatchedDirectories = parser.isSet(listWatchedDirectoriesOption);
 
     // read additional directories from the config file
