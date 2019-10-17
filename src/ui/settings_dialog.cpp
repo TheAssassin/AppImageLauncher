@@ -20,11 +20,11 @@ SettingsDialog::SettingsDialog(QWidget* parent) :
 
 // cosmetic changes in lite mode
 #ifdef BUILD_LITE
-    ui->checkBoxEnableDaemon->setChecked(true);
-    ui->checkBoxEnableDaemon->setEnabled(false);
+    ui->daemonIsEnabledCheckBox->setChecked(true);
+    ui->daemonIsEnabledCheckBox->setEnabled(false);
 
-    ui->checkBoxAskMove->setChecked(false);
-    ui->checkBoxAskMove->setEnabled(false);
+    ui->askMoveCheckBox->setChecked(false);
+    ui->askMoveCheckBox->setEnabled(false);
 #endif
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &SettingsDialog::onDialogAccepted);
