@@ -71,6 +71,8 @@ void SettingsDialog::addDirectoryToWatchToListView(const QString& dirPath) {
             if (!icon.isNull())
                 return icon;
         }
+
+        return QIcon{};
     };
 
     if (dir.exists()) {
