@@ -101,8 +101,8 @@ void SettingsDialog::loadSettings() {
     settingsFile = getConfig();
 
     if (settingsFile) {
-        ui->daemonIsEnabledCheckBox->setChecked(settingsFile->value("AppImageLauncher/enable_daemon", false).toBool());
-        ui->askMoveCheckBox->setChecked(settingsFile->value("AppImageLauncher/ask_to_move", false).toBool());
+        ui->daemonIsEnabledCheckBox->setChecked(settingsFile->value("AppImageLauncher/enable_daemon", true).toBool());
+        ui->askMoveCheckBox->setChecked(settingsFile->value("AppImageLauncher/ask_to_move", true).toBool());
         ui->applicationsDirLineEdit->setText(settingsFile->value("AppImageLauncher/destination").toString());
 
         const auto additionalDirsPath = settingsFile->value("appimagelauncherd/additional_directories_to_watch", "").toString();
