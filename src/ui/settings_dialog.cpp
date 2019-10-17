@@ -1,5 +1,8 @@
 // libraries
-#include <QtWidgets/QFileDialog>
+#include <QDebug>
+#include <QFileDialog>
+#include <QFileIconProvider>
+#include <QStringListModel>
 
 // local
 #include "settings_dialog.h"
@@ -26,6 +29,7 @@ SettingsDialog::SettingsDialog(QWidget* parent) :
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &SettingsDialog::onDialogAccepted);
     connect(ui->chooseAppsDirToolButton, &QToolButton::released, this, &SettingsDialog::onChooseAppsDirClicked);
+    connect(ui->additionalDirsAddButton, &QToolButton::released, this, &SettingsDialog::onAddDirectoryToWatchButtonClicked);
 
     QStringList availableFeatures;
 
@@ -48,6 +52,39 @@ SettingsDialog::~SettingsDialog() {
     delete ui;
 }
 
+void SettingsDialog::addDirectoryToWatchToListView(const QString& dirPath) {
+    const QDir dir(dirPath);
+
+    // we don't want to redundantly add the main integration directory
+    if (dir == integratedAppImagesDestination())
+        return;
+
+    QIcon icon;
+
+    auto findIcon = [](const std::initializer_list<QString>& names) {
+        for (const auto& i : names) {
+            auto icon = QIcon::fromTheme(i);
+
+            if (!icon.isNull())
+                return icon;
+        }
+    };
+
+    if (dir.exists()) {
+        icon = findIcon({"folder"});
+    } else {
+        // TODO: search for more meaningful icon, "remove" doesn't really show the directory is missing
+        icon = findIcon({"remove"});
+    }
+
+    if (icon.isNull()) {
+        qDebug() << "item icon unavailable, using fallback";
+    }
+
+    auto* item = new QListWidgetItem(icon, dirPath);
+    ui->additionalDirsListWidget->addItem(item);
+}
+
 void SettingsDialog::loadSettings() {
     settingsFile = getConfig();
 
@@ -55,6 +92,11 @@ void SettingsDialog::loadSettings() {
         ui->daemonIsEnabledCheckBox->setChecked(settingsFile->value("AppImageLauncher/enable_daemon", false).toBool());
         ui->askMoveCheckBox->setChecked(settingsFile->value("AppImageLauncher/ask_to_move", false).toBool());
         ui->applicationsDirLineEdit->setText(settingsFile->value("AppImageLauncher/destination").toString());
+
+        const auto additionalDirsPath = settingsFile->value("appimagelauncherd/additional_directories_to_watch", "").toString();
+        for (const auto& dirPath : additionalDirsPath.split(":")) {
+            addDirectoryToWatchToListView(dirPath);
+        }
     }
 }
 
@@ -98,5 +140,22 @@ void SettingsDialog::onChooseAppsDirClicked() {
     if (fileDialog.exec()) {
         QString dirPath = fileDialog.selectedFiles().first();
         ui->applicationsDirLineEdit->setText(dirPath);
+    }
+}
+
+void SettingsDialog::onAddDirectoryToWatchButtonClicked() {
+    QFileDialog fileDialog(this);
+
+    fileDialog.setFileMode(QFileDialog::DirectoryOnly);
+    fileDialog.setWindowTitle(tr("Select additional directory to watch"));
+    fileDialog.setDirectory(integratedAppImagesDestination().absolutePath());
+
+    // Gtk+ >= 3 segfaults when trying to use the native dialog, therefore we need to enforce the Qt one
+    // See #218 for more information
+    fileDialog.setOption(QFileDialog::DontUseNativeDialog, true);
+
+    if (fileDialog.exec()) {
+        QString dirPath = fileDialog.selectedFiles().first();
+        addDirectoryToWatchToListView(dirPath);
     }
 }

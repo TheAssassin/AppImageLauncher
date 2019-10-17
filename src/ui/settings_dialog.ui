@@ -178,12 +178,12 @@
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <widget class="QListView" name="additionalDirsListView"/>
+           <widget class="QListWidget" name="additionalDirsListWidget"/>
           </item>
           <item>
            <layout class="QVBoxLayout" name="additionalDirsButtonsLayout">
             <item>
-             <widget class="QToolButton" name="AdditionalDirsAddButton">
+             <widget class="QToolButton" name="additionalDirsAddButton">
               <property name="text">
                <string/>
               </property>
@@ -194,6 +194,9 @@
             </item>
             <item>
              <widget class="QToolButton" name="additionalDirsRemoveButton">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>-</string>
               </property>

@@ -22,6 +22,7 @@ public:
 
 protected slots:
     void onChooseAppsDirClicked();
+    void onAddDirectoryToWatchButtonClicked();
 
     void onDialogAccepted();
 
@@ -31,6 +32,8 @@ private:
     void saveSettings();
 
     void toggleDaemon();
+
+    void addDirectoryToWatchToListView(const QString& dirPath);
 
     Ui::SettingsDialog* ui;
     std::shared_ptr<QSettings> settingsFile;
