@@ -102,7 +102,11 @@ QString getConfigFilePath() {
     return configFilePath;
 }
 
-void createConfigFile(int askToMove, const QString& destination, int enableDaemon, const QStringList& additionalDirsToWatch) {
+void createConfigFile(int askToMove,
+                      const QString& destination,
+                      int enableDaemon,
+                      const QStringList& additionalDirsToWatch,
+                      int monitorMountedFilesystems) {
     auto configFilePath = getConfigFilePath();
 
     QFile file(configFilePath);
@@ -145,12 +149,27 @@ void createConfigFile(int askToMove, const QString& destination, int enableDaemo
     }
 
     file.write("\n\n");
+
+    // daemon configs
     file.write("[appimagelauncherd]\n");
+
     if (additionalDirsToWatch.empty()) {
         file.write("# additional_directories_to_watch = ~/otherApplications:/even/more/applications\n");
     } else {
         file.write("additional_directories_to_watch = ");
         file.write(additionalDirsToWatch.join(':').toUtf8());
+        file.write("\n");
+    }
+
+    if (monitorMountedFilesystems < 0) {
+        file.write("# monitor_mounted_filesystems = false\n");
+    } else {
+        file.write("monitor_mounted_filesystems = ");
+        if (monitorMountedFilesystems == 0) {
+            file.write("false");
+        } else {
+            file.write("true");
+        }
         file.write("\n");
     }
 }

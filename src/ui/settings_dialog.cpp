@@ -128,10 +128,25 @@ void SettingsDialog::saveSettings() {
         }
     }
 
+    // temporary workaround to fill in the monitorMountedFilesystems with the same value it had in the old settings
+    // this is supposed to support the option while hiding it in the settings
+    int monitorMountedFilesystems = -1;
+    {
+        const auto oldSettings = getConfig();
+
+        static constexpr auto oldKey = "appimagelauncherd/monitor_mounted_filesystems";
+
+        if (oldSettings->contains(oldKey)) {
+            const auto oldValue = oldSettings->value(oldKey).toBool();
+            monitorMountedFilesystems = oldValue ? 1 : 0;
+        }
+    }
+
     createConfigFile(ui->askMoveCheckBox->isChecked(),
                      ui->applicationsDirLineEdit->text(),
                      ui->daemonIsEnabledCheckBox->isChecked(),
-                     additionalDirsToWatch);
+                     additionalDirsToWatch,
+                     monitorMountedFilesystems);
 
     settingsFile = getConfig();
 }

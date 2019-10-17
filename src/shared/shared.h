@@ -57,7 +57,8 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
 // askToMove and enableDaemon both are bools but represented as int to add some sort of "unset" state
 // < 0: unset; 0 = false; > 0 = true
 // destination is a string that, when empty, will be interpreted as "use default"
-void createConfigFile(int askToMove, const QString& destination, int enableDaemon, const QStringList& additionalDirsToWatch = {});
+void createConfigFile(int askToMove, const QString& destination, int enableDaemon,
+                      const QStringList& additionalDirsToWatch = {}, int monitorMountedFilesystems = -1);
 
 // replaces ~ character in paths with real home directory, if necessary and possible
 QString expandTilde(QString path);
