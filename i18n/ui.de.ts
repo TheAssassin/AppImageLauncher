@@ -644,12 +644,7 @@ Das AppImage unterstützt keine Updates. Bitten Sie die Autoren, die Update-Info
         <translation>AppImageLauncher-Einstellungen</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>AppImageLauncher</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location line="+16"/>
         <source>Launcher Dialog</source>
         <translation>Launcher-Dialog</translation>
     </message>
@@ -659,12 +654,7 @@ Das AppImage unterstützt keine Updates. Bitten Sie die Autoren, die Update-Info
         <translation>Frage, ob AppImages in Applications-Verzeichnis verschoben werden sollen</translation>
     </message>
     <message>
-        <location line="+110"/>
-        <source>appimagelauncherd</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
+        <location line="+119"/>
         <source>General settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -676,6 +666,16 @@ Das AppImage unterstützt keine Updates. Bitten Sie die Autoren, die Update-Info
     <message>
         <location line="+3"/>
         <source>Auto start auto-integration daemon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When this box is checked, appimagelauncherd will additionally monitor a directory called Applications in the root of every mounted filesystem. This involves removable devices such as USB pen drives or HDDs as well as optical drives such as CDs and DVDs and other HDDs or SSDs mounted permanently in your computer, basically everything your file manager shows you as &amp;quot;device&amp;quot; on the left.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;This option is most useful to people who store applications on removable devices and want to have them integrated in their launcher menu automatically when they plug in their drive. It&apos;s not recommended to use this option for average users, as there are security concerns.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;A safer alternative is to add the directories you want to have monitored for AppImages additionally to the list below.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Monitor /Applications directory on all mounted filesystems</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -707,7 +707,7 @@ Das AppImage unterstützt keine Updates. Bitten Sie die Autoren, die Update-Info
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wenn aktiviert, wird der Dienst automatisch AppImages, die in das &amp;quot;Applikationsverzeichnis&amp;quot; kopiert werden, integrieren. Wenn die Dateien gelöscht werden, wird der Dienst die Integrationsdaten automatisch aufräumen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="-150"/>
+        <location line="-160"/>
         <source>Applications directory path</source>
         <translation>Pfad des Applikationsverzeichnisses</translation>
     </message>
