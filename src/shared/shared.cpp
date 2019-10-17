@@ -102,7 +102,7 @@ QString getConfigFilePath() {
     return configFilePath;
 }
 
-void createConfigFile(int askToMove, QString destination, int enableDaemon) {
+void createConfigFile(int askToMove, QString destination, int enableDaemon, const QStringList& additionalDirsToWatch) {
     auto configFilePath = getConfigFilePath();
 
     QFile file(configFilePath);
@@ -144,10 +144,15 @@ void createConfigFile(int askToMove, QString destination, int enableDaemon) {
         file.write("\n");
     }
 
-    // TODO: add appimagelauncherd/additional_directories_to_watch to UI
     file.write("\n\n");
     file.write("[appimagelauncherd]\n");
-    file.write("# additional_directories_to_watch = ~/otherApplications:/even/more/applications\n");
+    if (additionalDirsToWatch.empty()) {
+        file.write("# additional_directories_to_watch = ~/otherApplications:/even/more/applications\n");
+    } else {
+        file.write("additional_directories_to_watch = ");
+        file.write(additionalDirsToWatch.join(':').toUtf8());
+        file.write("\n");
+    }
 }
 
 

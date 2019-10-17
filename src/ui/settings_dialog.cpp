@@ -59,6 +59,10 @@ SettingsDialog::~SettingsDialog() {
 }
 
 void SettingsDialog::addDirectoryToWatchToListView(const QString& dirPath) {
+    // empty paths are not permitted
+    if (dirPath.isEmpty())
+        return;
+
     const QDir dir(dirPath);
 
     // we don't want to redundantly add the main integration directory
@@ -114,9 +118,20 @@ void SettingsDialog::onDialogAccepted() {
 }
 
 void SettingsDialog::saveSettings() {
+    QStringList additionalDirsToWatch;
+
+    {
+        QListWidgetItem* currentItem;
+
+        for (int i = 0; (currentItem = ui->additionalDirsListWidget->item(i)) != nullptr; ++i) {
+            additionalDirsToWatch << currentItem->text();
+        }
+    }
+
     createConfigFile(ui->askMoveCheckBox->isChecked(),
                      ui->applicationsDirLineEdit->text(),
-                     ui->daemonIsEnabledCheckBox->isChecked());
+                     ui->daemonIsEnabledCheckBox->isChecked(),
+                     additionalDirsToWatch);
 
     settingsFile = getConfig();
 }
