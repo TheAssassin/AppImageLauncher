@@ -514,11 +514,6 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When this box is checked, appimagelauncherd will additionally monitor a directory called Applications in the root of every mounted filesystem. This involves removable devices such as USB pen drives or HDDs as well as optical drives such as CDs and DVDs and other HDDs or SSDs mounted permanently in your computer, basically everything your file manager shows you as &amp;quot;device&amp;quot; on the left.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;This option is most useful to people who store applications on removable devices and want to have them integrated in their launcher menu automatically when they plug in their drive. It&apos;s not recommended to use this option for average users, as there are security concerns.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;A safer alternative is to add the directories you want to have monitored for AppImages additionally to the list below.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location line="+3"/>
         <source>Monitor /Applications directory on all mounted filesystems</source>
         <translation type="unfinished"></translation>
