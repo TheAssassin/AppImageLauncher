@@ -10,23 +10,10 @@
 #include <QString>
 #include <QThread>
 
+// local includes
+#include "types.h"
+
 #pragma once
-
-struct QDirHash {
-public:
-    size_t operator()(const QDir& dir) const {
-        return qt_hash(dir.absolutePath());
-    }
-};
-
-struct QDirComparator {
-public:
-    size_t operator()(const QDir& a, const QDir& b) const {
-        return a.absolutePath() < b.absolutePath();
-    }
-};
-
-typedef std::unordered_set<QDir, QDirHash, QDirComparator> QDirSet;
 
 class FileSystemWatcherError : public std::runtime_error {
 public:

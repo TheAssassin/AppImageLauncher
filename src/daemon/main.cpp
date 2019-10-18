@@ -92,27 +92,6 @@ void initialSearchForAppImages(const QDirSet& dirsToSearch, Worker& worker) {
     }
 }
 
-QDirSet getDirectoriesToWatch(const bool monitorMountedFilesystems, const QDirSet& additionalDirectories = {}) {
-    auto watchedDirectories = QDirSet();
-
-    // of course we need to watch the main integration directory
-    const auto defaultDestination = integratedAppImagesDestination();
-    watchedDirectories.insert(defaultDestination);
-
-    // however, there's likely additional ones to watch
-    const auto additionalDirs = additionalAppImagesLocations(monitorMountedFilesystems);
-    for (const auto& d : additionalDirs) {
-        watchedDirectories.insert(QDir(d).absolutePath());
-    }
-
-    std::copy(
-        additionalDirectories.begin(), additionalDirectories.end(),
-        std::inserter(watchedDirectories, watchedDirectories.end())
-    );
-
-    return watchedDirectories;
-}
-
 QDirSet getAdditionalDirectoriesFromConfig(const std::shared_ptr<QSettings>& config) {
     // getConfig might've returned a null pointer, therefore we have to check this before proceeding
     if (config == nullptr)
@@ -200,7 +179,7 @@ int main(int argc, char* argv[]) {
 
     // watchers are kind of value objects, the watched directories may not change over the lifetime of the object
     // therefore we need to create a set beforehand, containing all directories we want to have watched
-    QDirSet watchedDirectories = getDirectoriesToWatch(monitorMountedFilesystems, configProvidedDirectories);
+    QDirSet watchedDirectories = daemonDirectoriesToWatch(monitorMountedFilesystems, configProvidedDirectories);
 
     // this option is for debugging the
     if (listWatchedDirectories) {
@@ -267,7 +246,7 @@ int main(int argc, char* argv[]) {
             timer, &QTimer::timeout, &app,
             [&watcher, monitorMountedFilesystems, &configProvidedDirectories]() {
                 watcher.updateWatchedDirectories(
-                    getDirectoriesToWatch(monitorMountedFilesystems, configProvidedDirectories)
+                    daemonDirectoriesToWatch(monitorMountedFilesystems, configProvidedDirectories)
                 );
             }
         );

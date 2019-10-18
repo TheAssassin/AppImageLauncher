@@ -401,6 +401,27 @@ QSet<QString> additionalAppImagesLocations(const bool includeAllMountPoints) {
     return additionalLocations;
 }
 
+QDirSet daemonDirectoriesToWatch(const bool monitorMountedFilesystems, const QDirSet& additionalDirectories) {
+    auto watchedDirectories = QDirSet();
+
+    // of course we need to watch the main integration directory
+    const auto defaultDestination = integratedAppImagesDestination();
+    watchedDirectories.insert(defaultDestination);
+
+    // however, there's likely additional ones to watch
+    const auto additionalDirs = additionalAppImagesLocations(monitorMountedFilesystems);
+    for (const auto& d : additionalDirs) {
+        watchedDirectories.insert(QDir(d).absolutePath());
+    }
+
+    std::copy(
+        additionalDirectories.begin(), additionalDirectories.end(),
+        std::inserter(watchedDirectories, watchedDirectories.end())
+    );
+
+    return watchedDirectories;
+}
+
 QString buildPathToIntegratedAppImage(const QString& pathToAppImage) {
     // if type 2 AppImage, we can build a "content-aware" filename
     // see #7 for details

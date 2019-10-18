@@ -11,6 +11,9 @@
 #include <QString>
 #include <QSettings>
 
+// local headers
+#include "types.h"
+
 enum IntegrationState {
     INTEGRATION_FAILED = 0,
     INTEGRATION_SUCCESSFUL,
@@ -72,6 +75,10 @@ QDir integratedAppImagesDestination();
 // additional directories to monitor for AppImages, and to permit AppImages to be within (i.e., shall not ask whether
 // to move to the main location, if they're in one of these, it's all good)
 QSet<QString> additionalAppImagesLocations(bool includeValidMountPoints = false);
+
+// calculate list of directories the daemon has to watch
+// AppImages inside there should furthermore not be moved out of there and into the main integration directory
+QDirSet daemonDirectoriesToWatch(bool monitorMountedFilesystems, const QDirSet& additionalDirectories = {});
 
 // build path to standard location for integrated AppImages
 QString buildPathToIntegratedAppImage(const QString& pathToAppImage);
