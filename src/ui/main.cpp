@@ -430,7 +430,7 @@ int main(int argc, char** argv) {
 
         // okay, I'll try to prove you wrong
         {
-            auto directoriesNotToAskAboutMovingFor = daemonDirectoriesToWatch();
+            auto directoriesNotToAskAboutMovingFor = daemonDirectoriesToWatch(config);
 
             // normally the main integration destination should be contained
             // but bugs happen, and we want to be sure not to create a weird situation where you'd be asked about
