@@ -114,6 +114,10 @@ QDirSet getDirectoriesToWatch(const bool monitorMountedFilesystems, const QDirSe
 }
 
 QDirSet getAdditionalDirectoriesFromConfig(const std::shared_ptr<QSettings>& config) {
+    // getConfig might've returned a null pointer, therefore we have to check this before proceeding
+    if (config == nullptr)
+        return {};
+
     constexpr auto configKey = "appimagelauncherd/additional_directories_to_watch";
 
     QDirSet additionalDirs{};
