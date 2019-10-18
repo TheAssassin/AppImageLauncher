@@ -78,7 +78,7 @@ QSet<QString> additionalAppImagesLocations(bool includeValidMountPoints = false)
 
 // calculate list of directories the daemon has to watch
 // AppImages inside there should furthermore not be moved out of there and into the main integration directory
-QDirSet daemonDirectoriesToWatch(bool monitorMountedFilesystems, const QDirSet& additionalDirectories = {});
+QDirSet daemonDirectoriesToWatch(const std::shared_ptr<QSettings>& config = nullptr);
 
 // build path to standard location for integrated AppImages
 QString buildPathToIntegratedAppImage(const QString& pathToAppImage);

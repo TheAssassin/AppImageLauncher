@@ -401,23 +401,67 @@ QSet<QString> additionalAppImagesLocations(const bool includeAllMountPoints) {
     return additionalLocations;
 }
 
-QDirSet daemonDirectoriesToWatch(const bool monitorMountedFilesystems, const QDirSet& additionalDirectories) {
+bool shallMonitorMountedFilesystems(std::shared_ptr<QSettings> config) {
+    return config != nullptr &&
+           config->value("appimagelauncherd/monitor_mounted_filesystems", "false").toBool();
+}
+
+QDirSet getAdditionalDirectoriesFromConfig(const std::shared_ptr<QSettings>& config) {
+    // getConfig might've returned a null pointer, therefore we have to check this before proceeding
+    if (config == nullptr)
+        return {};
+
+    constexpr auto configKey = "appimagelauncherd/additional_directories_to_watch";
+
+    QDirSet additionalDirs{};
+
+    const auto configValue = config->value(configKey, "").toString();
+
+    for (auto dirPath : configValue.split(":")) {
+        // make sure to have full path
+        dirPath = expandTilde(dirPath);
+
+        const QDir dir(dirPath);
+
+        if (!dir.exists()) {
+            std::cerr << "Warning: could not find directory " << dirPath.toStdString()
+                      << ", skipping" << std::endl;
+            continue;
+        }
+
+        additionalDirs.insert(dir);
+    }
+
+    return additionalDirs;
+}
+
+QDirSet daemonDirectoriesToWatch(const std::shared_ptr<QSettings>& config) {
     auto watchedDirectories = QDirSet();
 
     // of course we need to watch the main integration directory
     const auto defaultDestination = integratedAppImagesDestination();
     watchedDirectories.insert(defaultDestination);
 
-    // however, there's likely additional ones to watch
-    const auto additionalDirs = additionalAppImagesLocations(monitorMountedFilesystems);
-    for (const auto& d : additionalDirs) {
-        watchedDirectories.insert(QDir(d).absolutePath());
+    // however, there's likely additional ones to watch, like a system-wide Applications directory
+    {
+        bool monitorMountedFilesystems = config != nullptr && shallMonitorMountedFilesystems(config);
+
+        const auto additionalDirs = additionalAppImagesLocations(monitorMountedFilesystems);
+
+        for (const auto& d : additionalDirs) {
+            watchedDirectories.insert(QDir(d).absolutePath());
+        }
     }
 
-    std::copy(
-        additionalDirectories.begin(), additionalDirectories.end(),
-        std::inserter(watchedDirectories, watchedDirectories.end())
-    );
+    // also, we should include additional directories from the config file
+    {
+        const auto configProvidedDirectories = getAdditionalDirectoriesFromConfig(config);
+
+        std::copy(
+            configProvidedDirectories.begin(), configProvidedDirectories.end(),
+            std::inserter(watchedDirectories, watchedDirectories.end())
+        );
+    }
 
     return watchedDirectories;
 }

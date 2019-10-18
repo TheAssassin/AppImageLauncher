@@ -92,35 +92,6 @@ void initialSearchForAppImages(const QDirSet& dirsToSearch, Worker& worker) {
     }
 }
 
-QDirSet getAdditionalDirectoriesFromConfig(const std::shared_ptr<QSettings>& config) {
-    // getConfig might've returned a null pointer, therefore we have to check this before proceeding
-    if (config == nullptr)
-        return {};
-
-    constexpr auto configKey = "appimagelauncherd/additional_directories_to_watch";
-
-    QDirSet additionalDirs{};
-
-    const auto configValue = config->value(configKey, "").toString();
-
-    for (auto dirPath : configValue.split(":")) {
-        // make sure to have full path
-        dirPath = expandTilde(dirPath);
-
-        const QDir dir(dirPath);
-
-        if (!dir.exists()) {
-            std::cerr << "Warning: could not find directory " << dirPath.toStdString()
-                      << ", skipping" << std::endl;
-            continue;
-        }
-
-        additionalDirs.insert(dir);
-    }
-
-    return additionalDirs;
-}
-
 int main(int argc, char* argv[]) {
     // make sure shared won't try to use the UI
     setenv("_FORCE_HEADLESS", "1", 1);
@@ -163,21 +134,9 @@ int main(int argc, char* argv[]) {
     // load config file
     const auto config = getConfig();
 
-    // one can either switch on this mode from the command line (convenient for debugging), or via a config file
-    // option
-    const auto monitorMountedFilesystems = (
-        parser.isSet(monitorMountedFilesystemsOption) || (
-            config != nullptr &&
-            config->value("appimagelauncherd/monitor_mounted_filesystems", "false").toBool()
-        )
-    );
-
     const auto listWatchedDirectories = parser.isSet(listWatchedDirectoriesOption);
 
-    // read additional directories from the config file
-    const auto configProvidedDirectories = getAdditionalDirectoriesFromConfig(config);
-
-    QDirSet watchedDirectories = daemonDirectoriesToWatch(monitorMountedFilesystems, configProvidedDirectories);
+    QDirSet watchedDirectories = daemonDirectoriesToWatch(config);
 
     // this option is for debugging the
     if (listWatchedDirectories) {
@@ -241,11 +200,8 @@ int main(int argc, char* argv[]) {
         auto* timer = new QTimer(&app);
         timer->setInterval(UPDATE_WATCHED_DIRECTORIES_INTERVAL);
         QTimer::connect(
-            timer, &QTimer::timeout, &app,
-            [&watcher, monitorMountedFilesystems, &configProvidedDirectories]() {
-                watcher.updateWatchedDirectories(
-                    daemonDirectoriesToWatch(monitorMountedFilesystems, configProvidedDirectories)
-                );
+            timer, &QTimer::timeout, &app,[&watcher]() {
+                watcher.updateWatchedDirectories(daemonDirectoriesToWatch());
             }
         );
         timer->start();
