@@ -136,7 +136,9 @@ void SettingsDialog::saveSettings() {
 
         static constexpr auto oldKey = "appimagelauncherd/monitor_mounted_filesystems";
 
-        if (oldSettings->contains(oldKey)) {
+        // getConfig might return a null pointer if the config file doesn't exist
+        // we have to handle this, obviously
+        if (oldSettings != nullptr && oldSettings->contains(oldKey)) {
             const auto oldValue = oldSettings->value(oldKey).toBool();
             monitorMountedFilesystems = oldValue ? 1 : 0;
         }
