@@ -104,17 +104,12 @@ int main(int argc, char* argv[]) {
         )
     );
 
-    QCommandLineOption monitorMountedFilesystemsOption(
-        "monitor-mounted-filesystems",
-        QObject::tr("Search for AppImages in /Applications directories in suitable mounted filesystems")
-    );
-
     QCommandLineOption listWatchedDirectoriesOption(
         "list-watched-directories",
         QObject::tr("Lists directories watched by this daemon and exit")
     );
 
-    if (!parser.addOption(listWatchedDirectoriesOption) || !parser.addOption(monitorMountedFilesystemsOption)) {
+    if (!parser.addOption(listWatchedDirectoriesOption)) {
         throw std::runtime_error("could not add Qt command line option for some reason");
     }
 
