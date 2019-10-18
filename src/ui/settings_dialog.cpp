@@ -100,9 +100,18 @@ void SettingsDialog::addDirectoryToWatchToListView(const QString& dirPath) {
 void SettingsDialog::loadSettings() {
     settingsFile = getConfig();
 
+    // make sure settingsFile is populated, even if it's just an empty settings object
+    // this prevents segfaults when querying data from it
+    if (settingsFile == nullptr) {
+        settingsFile.reset(new QSettings{});
+    }
+
+    const auto daemonIsEnabled = settingsFile->value("AppImageLauncher/enable_daemon", "true").toBool();
+    const auto askMoveChecked = settingsFile->value("AppImageLauncher/ask_to_move", "true").toBool();
+
     if (settingsFile) {
-        ui->daemonIsEnabledCheckBox->setChecked(settingsFile->value("AppImageLauncher/enable_daemon", "true").toBool());
-        ui->askMoveCheckBox->setChecked(settingsFile->value("AppImageLauncher/ask_to_move", "true").toBool());
+        ui->daemonIsEnabledCheckBox->setChecked(daemonIsEnabled);
+        ui->askMoveCheckBox->setChecked(askMoveChecked);
         ui->applicationsDirLineEdit->setText(settingsFile->value("AppImageLauncher/destination").toString());
 
         const auto additionalDirsPath = settingsFile->value("appimagelauncherd/additional_directories_to_watch", "").toString();
@@ -150,7 +159,8 @@ void SettingsDialog::saveSettings() {
                      additionalDirsToWatch,
                      monitorMountedFilesystems);
 
-    settingsFile = getConfig();
+    // reload settings
+    loadSettings();
 }
 
 void SettingsDialog::toggleDaemon() {
