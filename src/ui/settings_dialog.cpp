@@ -101,8 +101,8 @@ void SettingsDialog::loadSettings() {
     settingsFile = getConfig();
 
     if (settingsFile) {
-        ui->daemonIsEnabledCheckBox->setChecked(settingsFile->value("AppImageLauncher/enable_daemon", true).toBool());
-        ui->askMoveCheckBox->setChecked(settingsFile->value("AppImageLauncher/ask_to_move", true).toBool());
+        ui->daemonIsEnabledCheckBox->setChecked(settingsFile->value("AppImageLauncher/enable_daemon", "true").toBool());
+        ui->askMoveCheckBox->setChecked(settingsFile->value("AppImageLauncher/ask_to_move", "true").toBool());
         ui->applicationsDirLineEdit->setText(settingsFile->value("AppImageLauncher/destination").toString());
 
         const auto additionalDirsPath = settingsFile->value("appimagelauncherd/additional_directories_to_watch", "").toString();
@@ -156,7 +156,7 @@ void SettingsDialog::saveSettings() {
 void SettingsDialog::toggleDaemon() {
     // assumes defaults if config doesn't exist or lacks the related key(s)
     if (settingsFile) {
-        if (settingsFile->value("AppImageLauncher/enable_daemon", true).toBool()) {
+        if (settingsFile->value("AppImageLauncher/enable_daemon", "true").toBool()) {
             system("systemctl --user enable  appimagelauncherd.service");
             // we want to actually restart the service to apply the new configuration
             system("systemctl --user restart appimagelauncherd.service");
