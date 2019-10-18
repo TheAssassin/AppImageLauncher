@@ -424,7 +424,26 @@ int main(int argc, char** argv) {
             return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
         };
 
-        bool needToAskAboutMoving = !isInDirectory(pathToAppImage, integratedAppImagesDestination().path());
+        // assume we have to ask
+        // prove me wrong!
+        bool needToAskAboutMoving = true;
+
+        // okay, I'll try to prove you wrong
+        {
+            auto directoriesNotToAskAboutMovingFor = daemonDirectoriesToWatch();
+
+            // normally the main integration destination should be contained
+            // but bugs happen, and we want to be sure not to create a weird situation where you'd be asked about
+            // moving files into yet the directory you want to move them into
+            directoriesNotToAskAboutMovingFor.insert(integratedAppImagesDestination());
+
+            for (const auto& dir : directoriesNotToAskAboutMovingFor) {
+                if (isInDirectory(pathToAppImage, dir)) {
+                    needToAskAboutMoving = false;
+                    break;
+                }
+            }
+        }
 
         // not so fast: even if it's not in the main integration directory, there's more viable locations where
         // AppImages may reside just fine
