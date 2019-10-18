@@ -177,8 +177,6 @@ int main(int argc, char* argv[]) {
     // read additional directories from the config file
     const auto configProvidedDirectories = getAdditionalDirectoriesFromConfig(config);
 
-    // watchers are kind of value objects, the watched directories may not change over the lifetime of the object
-    // therefore we need to create a set beforehand, containing all directories we want to have watched
     QDirSet watchedDirectories = daemonDirectoriesToWatch(monitorMountedFilesystems, configProvidedDirectories);
 
     // this option is for debugging the
