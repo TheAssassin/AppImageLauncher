@@ -950,7 +950,28 @@ QString getAppImageDigestMd5(const QString& path) {
             return "";
 
         file.close();
-    } else {
+    }
+
+    bool needToCalculateDigest;
+
+    // there seem to be some AppImages out there who actually have the required section embedded, but it's empty
+    // therefore we make the assumption that a hash value of zeroes is probably incorrect and recalculate
+    // in the extremely rare case in which the AppImage's digest would *really* be that value, we'd waste a bit of
+    // computation time, but the chances are so low... who cares, right?
+    {
+        auto nonZeroCharacterFound = false;
+
+        for (const char i : buffer) {
+            if (i != '\0') {
+                nonZeroCharacterFound = true;
+                break;
+            }
+        }
+
+        needToCalculateDigest = !nonZeroCharacterFound;
+    }
+
+    if (needToCalculateDigest) {
         // calculate digest
         if (!appimage_type2_digest_md5(path.toStdString().c_str(), buffer.data()))
             return "";
