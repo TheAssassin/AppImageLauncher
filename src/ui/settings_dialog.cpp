@@ -2,7 +2,7 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QFileIconProvider>
-#include <QStringListModel>
+#include <QStandardPaths>
 
 // local
 #include "settings_dialog.h"
@@ -199,7 +199,7 @@ void SettingsDialog::onAddDirectoryToWatchButtonClicked() {
 
     fileDialog.setFileMode(QFileDialog::DirectoryOnly);
     fileDialog.setWindowTitle(tr("Select additional directory to watch"));
-    fileDialog.setDirectory(integratedAppImagesDestination().absolutePath());
+    fileDialog.setDirectory(QStandardPaths::locate(QStandardPaths::HomeLocation, ".", QStandardPaths::LocateDirectory));
 
     // Gtk+ >= 3 segfaults when trying to use the native dialog, therefore we need to enforce the Qt one
     // See #218 for more information
