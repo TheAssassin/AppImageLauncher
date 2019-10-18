@@ -168,7 +168,7 @@ int main(int argc, char* argv[]) {
     const auto monitorMountedFilesystems = (
         parser.isSet(monitorMountedFilesystemsOption) || (
             config != nullptr &&
-            config->value("appimagelauncherd/monitor_mounted_filesystems", false).toBool()
+            config->value("appimagelauncherd/monitor_mounted_filesystems", "false").toBool()
         )
     );
 
