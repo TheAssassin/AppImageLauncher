@@ -113,8 +113,7 @@ QDirSet getDirectoriesToWatch(const bool monitorMountedFilesystems, const QDirSe
     return watchedDirectories;
 }
 
-QDirSet getAdditionalDirectoriesFromConfig() {
-    const auto config = getConfig();
+QDirSet getAdditionalDirectoriesFromConfig(const std::shared_ptr<QSettings>& config) {
     constexpr auto configKey = "appimagelauncherd/additional_directories_to_watch";
 
     QDirSet additionalDirs{};
@@ -178,17 +177,22 @@ int main(int argc, char* argv[]) {
     // parse arguments
     parser.process(app);
 
+    // load config file
+    const auto config = getConfig();
+
     // one can either switch on this mode from the command line (convenient for debugging), or via a config file
     // option
     const auto monitorMountedFilesystems = (
-        parser.isSet(monitorMountedFilesystemsOption) ||
-            getConfig()->value("appimagelauncherd/monitor_mounted_filesystems", false).toBool()
+        parser.isSet(monitorMountedFilesystemsOption) || (
+            config != nullptr &&
+            config->value("appimagelauncherd/monitor_mounted_filesystems", false).toBool()
+        )
     );
 
     const auto listWatchedDirectories = parser.isSet(listWatchedDirectoriesOption);
 
     // read additional directories from the config file
-    const auto configProvidedDirectories = getAdditionalDirectoriesFromConfig();
+    const auto configProvidedDirectories = getAdditionalDirectoriesFromConfig(config);
 
     // watchers are kind of value objects, the watched directories may not change over the lifetime of the object
     // therefore we need to create a set beforehand, containing all directories we want to have watched
