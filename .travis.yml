@@ -16,6 +16,14 @@ matrix:
       name: Native packages for Ubuntu xenial, Debian stable etc., x86_64
     - env: DIST=xenial ARCH=i386
       name: Native packages for Ubuntu xenial, Debian stable etc., i386
+    - env: DIST=disco ARCH=x86_64
+      name: Native packages for Ubuntu disco, x86_64
+    - env: DIST=disco ARCH=i386
+      name: Native packages for Ubuntu disco, i386
+    - env: DIST=eoan ARCH=x86_64
+      name: Native packages for Ubuntu eoan, x86_64
+    - env: DIST=eoan ARCH=i386
+      name: Native packages for Ubuntu eoan, i386
     - env: DIST=bionic ARCH=x86_64 BUILD_LITE=1
       name: AppImageLauncher Lite AppImage x86_64
     - env: DIST=bionic ARCH=i386 BUILD_LITE=1
