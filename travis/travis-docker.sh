@@ -20,7 +20,7 @@ esac
 
 cd $(readlink -f $(dirname "$0"))
 
-IMAGE=appimagelauncher-build:"$DOCKER_DIST"
+IMAGE=quay.io/appimagelauncher-build/"$DOCKER_DIST"
 DOCKERFILE=Dockerfile.build-"$DOCKER_DIST"
 
 if [ ! -f "$DOCKERFILE" ]; then
@@ -29,11 +29,15 @@ if [ ! -f "$DOCKERFILE" ]; then
 fi
 
 if [ "$ARCH" == "i386" ]; then
-    IMAGE=appimagelauncher-build:"$DOCKER_DIST"-i386-cross
+    IMAGE="$IMAGE"-i386-cross
     DOCKERFILE=Dockerfile.build-"$DOCKER_DIST"-i386-cross
 fi
 
-docker build -t "$IMAGE" -f "$DOCKERFILE" .
+# speed up build by pulling last built image from quay.io and building the docker file using the old image as a base
+docker pull "$IMAGE" || true
+# if the image hasn't changed, this should be a no-op
+IMAGE="$IMAGE":latest
+docker build --cache-from "$IMAGE" -t "$IMAGE" -f "$DOCKERFILE" .
 
 if [[ "$BUILD_LITE" == "" ]]; then
     build_script=travis-build.sh
@@ -49,3 +53,10 @@ fi
 
 docker run -e ARCH -e TRAVIS_BUILD_NUMBER --rm -it "${DOCKER_OPTS[@]}" -v $(readlink -f ..):/ws "$IMAGE" \
     bash -xc "export CI=1 && export DEBIAN_DIST=\"$DOCKER_DIST\" && cd /ws && source travis/$build_script"
+
+# push built image as cache for future builds to registry
+# credentials shall only be available on (protected) master branch
+if [[ "$DOCKER_USERNAME" != "" ]]; then
+    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin quay.io
+    docker push "$IMAGE"
+fi
