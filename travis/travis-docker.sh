@@ -11,7 +11,7 @@ set -e
 export DOCKER_DIST="$1"
 
 case "$DOCKER_DIST" in
-    xenial|bionic)
+    xenial|bionic|disco|eoan)
         ;;
     *)
         echo "Error: invalid/unsupported distro: $DOCKER_DIST"
@@ -41,5 +41,11 @@ else
     build_script=build-lite.sh
 fi
 
-docker run -e ARCH -e TRAVIS_BUILD_NUMBER --rm -it -v $(readlink -f ..):/ws "$IMAGE" \
+DOCKER_OPTS=()
+# fix for https://stackoverflow.com/questions/51195528/rcc-error-in-resource-qrc-cannot-find-file-png
+if [ "$TRAVIS" != "" ]; then
+    DOCKER_OPTS+=("--security-opt" "seccomp:unconfined")
+fi
+
+docker run -e ARCH -e TRAVIS_BUILD_NUMBER --rm -it "${DOCKER_OPTS[@]}" -v $(readlink -f ..):/ws "$IMAGE" \
     bash -xc "export CI=1 && export DEBIAN_DIST=\"$DOCKER_DIST\" && cd /ws && source travis/$build_script"
