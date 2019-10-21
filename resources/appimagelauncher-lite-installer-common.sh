@@ -50,7 +50,7 @@ ail_lite_install() {
     mkdir -p "$install_dir"/systemd
 
     # copy ourselves to install dir
-    cp "$APPIMAGE" "$installed_appimage_path"
+    install -D "$APPIMAGE" "$installed_appimage_path"
 
     # set up appimagelauncherd
     cat > "$install_dir"/systemd/"$appimagelauncherd_systemd_service_name" <<EOF
@@ -75,6 +75,7 @@ EOF
     systemctl --user restart "$appimagelauncherd_systemd_service_name"
 
     # set up desktop file for AppImageLauncherSettings
+    install -d $(dirname "$settings_desktop_file_path")
     cat > "$settings_desktop_file_path" <<EOF
 [Desktop Entry]
 Version=1.0
@@ -90,7 +91,7 @@ EOF
 
     # copy icon for AppImageLauncherSettings
     # TODO: copy PNG icons, too
-    install "$APPDIR"/usr/share/icons/hicolor/scalable/apps/AppImageLauncher.svg "$integrated_icon_path"
+    install -D "$APPDIR"/usr/share/icons/hicolor/scalable/apps/AppImageLauncher.svg "$integrated_icon_path"
 
     # notify desktop of changes
     ail_lite_notify_desktop_integration
