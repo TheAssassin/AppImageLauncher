@@ -10,14 +10,6 @@ set -e
 
 export DOCKER_DIST="$1"
 
-case "$DOCKER_DIST" in
-    xenial|bionic|disco|eoan)
-        ;;
-    *)
-        echo "Error: invalid/unsupported distro: $DOCKER_DIST"
-        exit 1
-esac
-
 cd $(readlink -f $(dirname "$0"))
 
 IMAGE=quay.io/appimagelauncher-build/"$DOCKER_DIST"
