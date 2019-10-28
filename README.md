@@ -81,7 +81,7 @@ Compatibility table (likely incomplete, please feel free to send PRs to add dist
 | `appimagelauncher-<version>.bionic_(amd64,i386).deb` | Ubuntu bionic | Ubuntu bionic (18.04) |
 | `appimagelauncher-<version>.disco_(amd64,i386).deb`  | Ubuntu disco  | Ubuntu disco (19.04) |
 | `appimagelauncher-<version>.eoan_(amd64,i386).deb`   | Ubuntu eoan   | Ubuntu eoan (19.10) and newer |
-| `appimagelauncher-<version>.buster_(amd64,i386).deb` | Debian buster | Debian buster (10) and newer |
+| `appimagelauncher-<version>.buster_(amd64,i386).deb` | Debian buster | Debian buster (10) and newer, Netrunner 19.01 and 19.08 |
 | `appimagelauncher-<version>.(i386,x86_64).rpm`       | Ubuntu xenial | openSUSE Leap 42 and newer, possibly openSUSE Tumbleweed, SUSE Enterprise Linux, RHEL 7, CentOS 7 |
 
   - Ubuntu trusty (14.04) and newer
