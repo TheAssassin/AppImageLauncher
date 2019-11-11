@@ -1,17 +1,10 @@
 #pragma once
 
 // system headers
-#include <unordered_set>
+#include <set>
 
 // library headers
 #include <QDir>
-
-struct QDirHash {
-public:
-    size_t operator()(const QDir& dir) const {
-        return qt_hash(dir.absolutePath());
-    }
-};
 
 struct QDirComparator {
 public:
@@ -20,4 +13,4 @@ public:
     }
 };
 
-typedef std::unordered_set<QDir, QDirHash, QDirComparator> QDirSet;
+typedef std::set<QDir, QDirComparator> QDirSet;
