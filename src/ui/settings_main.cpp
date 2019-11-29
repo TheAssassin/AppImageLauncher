@@ -7,6 +7,8 @@
 
 int main(int argc, char** argv) {
     QApplication app(argc, argv);
+    QApplication::setApplicationDisplayName("AppImageLauncher Settings");
+    QApplication::setWindowIcon(QIcon(":/AppImageLauncher.svg"));
 
     TranslationManager mgr(app);
 

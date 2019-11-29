@@ -17,7 +17,7 @@ if(NOT BUILD_LITE)
 endif()
 
 # AppImageLauncherSettings application
-add_executable(AppImageLauncherSettings settings_main.cpp settings_dialog.ui settings_dialog.cpp)
+add_executable(AppImageLauncherSettings settings_main.cpp resources.qrc settings_dialog.ui settings_dialog.cpp)
 target_link_libraries(AppImageLauncherSettings shared)
 
 # set binary runtime rpath to make sure the libappimage.so built and installed by this project is going to be used
