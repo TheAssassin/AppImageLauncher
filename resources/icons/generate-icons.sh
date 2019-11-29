@@ -9,9 +9,11 @@ fi
 
 cd $(dirname "$0")
 
+in_file=$(readlink -f $(dirname "$0"))/appimagelauncher.inkscape.svg
+
 # create directory structure
 mkdir -p hicolor/scalable/apps
-inkscape --export-plain-svg=hicolor/scalable/apps/AppImageLauncher.svg AppImageLauncher_inkscape.svg
+inkscape --export-plain-svg=hicolor/scalable/apps/AppImageLauncher.svg "$in_file"
 
 for res in 16 32 64 128 160 192 256 384 512; do
     fullres="${res}x${res}"
@@ -19,6 +21,6 @@ for res in 16 32 64 128 160 192 256 384 512; do
 
     mkdir -p hicolor/"$fullres"/apps
 
-    inkscape -w "$res" -h "$res" -e hicolor/"$fullres"/apps/AppImageLauncher.png AppImageLauncher_inkscape.svg
-#    rsvg-convert -w "$res" -h "$res" AppImageLauncher_inkscape.svg > hicolor/"$fullres"/apps/AppImageLauncher.png
+    inkscape -w "$res" -h "$res" -e hicolor/"$fullres"/apps/AppImageLauncher.png "$in_file"
+#    rsvg-convert -w "$res" -h "$res" "$in_file" > hicolor/"$fullres"/apps/AppImageLauncher.png
 done
