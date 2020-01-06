@@ -13,11 +13,17 @@ if(_lsb_release_output MATCHES bionic)
 elseif(_lsb_release_output MATCHES cosmic)
     message(STATUS "platform is cosmic, enabling compatibility mode for CPack Debian packaging")
     set(_compatibility_level cosmic)
+elseif(_lsb_release_output MATCHES disco)
+    message(STATUS "platform is disco, enabling compatibility mode for CPack Debian packaging")
+    set(_compatibility_level disco)
+elseif(_lsb_release_output MATCHES eoan)
+    message(STATUS "platform is eoan, enabling compatibility mode for CPack Debian packaging")
+    set(_compatibility_level eoan)
 else()
     set(_compatibility_level "")
 endif()
 
-set(CPACK_DEBIAN_COMPATIBILITY_LEVEL ${_compatibility_level} CACHE STRING "Available values: bionic (Ubuntu 18.04 LTS), cosmic (Ubuntu 18.10)")
+set(CPACK_DEBIAN_COMPATIBILITY_LEVEL ${_compatibility_level} CACHE STRING "Available values: bionic (Ubuntu 18.04 LTS), cosmic (Ubuntu 18.10), disco (Ubuntu 19.04), eoan (Ubuntu 19.10)")
 
 unset(_lsb_release_output)
 unset(_compatibility_level)
@@ -65,10 +71,10 @@ set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_NAME "appimagelauncher")
 # TODO: packagers watch out: you should set this to depend on a libappimage package, and avoid installing the library
 # to a custom location in install.cmake
 
-if(CPACK_DEBIAN_COMPATIBILITY_LEVEL STREQUAL "bionic" OR CPACK_DEBIAN_COMPATIBILITY_LEVEL STREQUAL "cosmic")
-    set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_DEPENDS "libqt5widgets5 (>= 5.2.1), libqt5gui5 (>= 5.2.1), libqt5core5a (>= 5.2.1), binfmt-support (>= 2.0), libcurl4")
+if(CPACK_DEBIAN_COMPATIBILITY_LEVEL STREQUAL "bionic" OR CPACK_DEBIAN_COMPATIBILITY_LEVEL STREQUAL "cosmic" OR CPACK_DEBIAN_COMPATIBILITY_LEVEL STREQUAL "disco" OR CPACK_DEBIAN_COMPATIBILITY_LEVEL STREQUAL "eoan")
+    set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_DEPENDS "libqt5widgets5 (>= 5.2.1), libqt5gui5 (>= 5.2.1), libqt5core5a (>= 5.2.1), binfmt-support (>= 2.0), systemd, libcurl4")
 else()
-    set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_DEPENDS "libqt5widgets5 (>= 5.2.1), libqt5gui5 (>= 5.2.1), libqt5core5a (>= 5.2.1), binfmt-support (>= 2.0), libcurl3")
+    set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_DEPENDS "libqt5widgets5 (>= 5.2.1), libqt5gui5 (>= 5.2.1), libqt5core5a (>= 5.2.1), binfmt-support (>= 2.0), systemd, libcurl3")
 endif()
 
 # improve dependency list
