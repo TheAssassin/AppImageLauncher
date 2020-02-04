@@ -51,6 +51,11 @@ namespace appimagelauncher {
 
                     auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
 
+                    // make sure integration directory exists
+                    // (important for new installations)
+                    // pretty ugly, but well, one taketh what the Qt API giveth
+                    QDir().mkdir(integratedAppImagesDestination().path());
+
                     // check if it's already in the right place
                     if (QFileInfo(pathToAppImage).absoluteFilePath() != QFileInfo(pathToIntegratedAppImage).absoluteFilePath()) {
                         qout() << "Moving AppImage to integration directory" << endl;
