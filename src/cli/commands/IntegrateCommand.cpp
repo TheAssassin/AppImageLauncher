@@ -76,7 +76,7 @@ namespace appimagelauncher {
                         qout() << "AppImage already in integration directory" << endl;
                     }
 
-                    installDesktopFileAndIcons(pathToAppImage);
+                    installDesktopFileAndIcons(pathToIntegratedAppImage);
                 }
             }
         }
