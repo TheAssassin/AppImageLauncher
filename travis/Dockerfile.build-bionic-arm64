@@ -19,7 +19,6 @@ RUN apt-get update && \
         \
         gcc \
         g++ \
-        cmake \
         make \
         git \
         automake \
@@ -33,3 +32,11 @@ RUN apt-get update && \
         libarchive-dev \
         libboost-filesystem-dev \
         librsvg2-dev
+
+RUN wget -O- https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4.tar.gz | tar xz && \
+    pushd cmake-3.16.4/ && \
+    ./configure --prefix=/usr && \
+    make -j$(nproc) && \
+    make install && \
+    popd && \
+    rm -rf cmake-3.16.4/
