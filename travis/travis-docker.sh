@@ -15,14 +15,17 @@ cd $(readlink -f $(dirname "$0"))
 IMAGE=quay.io/appimagelauncher-build/"$DOCKER_DIST"
 DOCKERFILE=Dockerfile.build-"$DOCKER_DIST"
 
-if [ ! -f "$DOCKERFILE" ]; then
-    echo "Error: $DOCKERFILE could not be found"
-    exit 1
-fi
-
 if [ "$ARCH" == "i386" ]; then
     IMAGE="$IMAGE"-i386-cross
     DOCKERFILE=Dockerfile.build-"$DOCKER_DIST"-i386-cross
+elif [ "$ARCH" == "arm64" ]; then
+    IMAGE=arm64v8/"$IMAGE"
+    DOCKERFILE=Dockerfile.build-"$DOCKER_DIST"-arm64
+fi
+
+if [ ! -f "$DOCKERFILE" ]; then
+    echo "Error: $DOCKERFILE could not be found"
+    exit 1
 fi
 
 # speed up build by pulling last built image from quay.io and building the docker file using the old image as a base
