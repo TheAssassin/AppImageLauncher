@@ -1,0 +1,42 @@
+# used to cache installed dependencies for bionic builds
+# this speeds up builds during development, as the dependencies are just installed _once_
+
+FROM arm64v8/ubuntu:bionic
+
+RUN apt-get update && \
+    apt-get -y --no-install-recommends install qt5-default \
+        qtbase5-dev \
+        qt5-qmake \
+        libcurl4-openssl-dev \
+        libfuse-dev \
+        desktop-file-utils \
+        libglib2.0-dev \
+        libcairo2-dev \
+        libssl-dev \
+        ca-certificates \
+        libbsd-dev \
+        qttools5-dev-tools \
+        \
+        gcc \
+        g++ \
+        make \
+        git \
+        automake \
+        autoconf \
+        libtool \
+        patch \
+        wget \
+        vim-common \
+        desktop-file-utils \
+        pkg-config \
+        libarchive-dev \
+        libboost-filesystem-dev \
+        librsvg2-dev
+
+RUN wget -O- https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4.tar.gz | tar xz && \
+    cd cmake-3.16.4/ && \
+    ./configure --prefix=/usr && \
+    make -j$(nproc) && \
+    make install && \
+    cd - && \
+    rm -rf cmake-3.16.4/

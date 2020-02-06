@@ -32,10 +32,13 @@ pushd "$BUILD_DIR"
 # install more recent CMake version which fixes some linking issue in CMake < 3.10
 # Fixes https://github.com/TheAssassin/AppImageLauncher/issues/106
 # Upstream bug: https://gitlab.kitware.com/cmake/cmake/issues/17389
-wget https://cmake.org/files/v3.13/cmake-3.13.2-Linux-x86_64.tar.gz -qO- | tar xz --strip-components=1
-export PATH=$(readlink -f bin/):"$PATH"
-which cmake
-cmake --version
+# unfortunately, there's only AMD64 packges, so we skip this step for ARM64 builds
+if [ "$ARCH" != "arm64" ]; then
+    wget https://cmake.org/files/v3.13/cmake-3.13.2-Linux-x86_64.tar.gz -qO- | tar xz --strip-components=1
+    export PATH=$(readlink -f bin/):"$PATH"
+    which cmake
+    cmake --version
+fi
 
 if [ "$DEBIAN_DIST" != "" ]; then
     EXTRA_CMAKE_FLAGS=-DCPACK_DEBIAN_COMPATIBILITY_LEVEL="$DEBIAN_DIST"

@@ -15,14 +15,17 @@ cd $(readlink -f $(dirname "$0"))
 IMAGE=quay.io/appimagelauncher-build/"$DOCKER_DIST"
 DOCKERFILE=Dockerfile.build-"$DOCKER_DIST"
 
-if [ ! -f "$DOCKERFILE" ]; then
-    echo "Error: $DOCKERFILE could not be found"
-    exit 1
-fi
-
 if [ "$ARCH" == "i386" ]; then
     IMAGE="$IMAGE"-i386-cross
     DOCKERFILE=Dockerfile.build-"$DOCKER_DIST"-i386-cross
+elif [ "$ARCH" == "arm64" ]; then
+    IMAGE="$IMAGE"-arm64
+    DOCKERFILE=Dockerfile.build-"$DOCKER_DIST"-arm64
+fi
+
+if [ ! -f "$DOCKERFILE" ]; then
+    echo "Error: $DOCKERFILE could not be found"
+    exit 1
 fi
 
 # speed up build by pulling last built image from quay.io and building the docker file using the old image as a base
@@ -43,7 +46,7 @@ if [ "$TRAVIS" != "" ]; then
     DOCKER_OPTS+=("--security-opt" "seccomp:unconfined")
 fi
 
-docker run -e ARCH -e TRAVIS_BUILD_NUMBER --rm -it "${DOCKER_OPTS[@]}" -v $(readlink -f ..):/ws "$IMAGE" \
+docker run -e ARCH -e TRAVIS_BUILD_NUMBER --rm -i "${DOCKER_OPTS[@]}" -v $(readlink -f ..):/ws "$IMAGE" \
     bash -xc "export CI=1 && export DEBIAN_DIST=\"$DOCKER_DIST\" && cd /ws && source travis/$build_script"
 
 # push built image as cache for future builds to registry
