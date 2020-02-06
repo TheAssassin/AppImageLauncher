@@ -33,11 +33,14 @@ pushd "$BUILD_DIR"
 # Fixes https://github.com/TheAssassin/AppImageLauncher/issues/106
 # Upstream bug: https://gitlab.kitware.com/cmake/cmake/issues/17389
 # unfortunately, there's only AMD64 packges, so we skip this step for ARM64 builds
-if [ "$ARCH" != "arm64" ]; then
+if [[ "$ARCH" != "arm"* ]]; then
+    echo "Downloading up to date CMake"
     wget https://cmake.org/files/v3.13/cmake-3.13.2-Linux-x86_64.tar.gz -qO- | tar xz --strip-components=1
     export PATH=$(readlink -f bin/):"$PATH"
     which cmake
     cmake --version
+else
+    echo "NOT downloading up to date CMake for arch $ARCH"
 fi
 
 if [ "$DEBIAN_DIST" != "" ]; then
