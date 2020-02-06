@@ -302,7 +302,8 @@ int main(int argc, char** argv) {
     }
 
     // if the users wishes to disable AppImageLauncher, we just run the AppImage as-ish
-    if (getenv("APPIMAGELAUNCHER_DISABLE") != nullptr) {
+    // also we don't ever want to integrate symlinks (see #290 for more information)
+    if (getenv("APPIMAGELAUNCHER_DISABLE") != nullptr || QFileInfo(pathToAppImage).isSymLink()) {
         return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
     }
 
