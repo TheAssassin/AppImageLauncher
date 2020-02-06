@@ -19,7 +19,7 @@ if [ "$ARCH" == "i386" ]; then
     IMAGE="$IMAGE"-i386-cross
     DOCKERFILE=Dockerfile.build-"$DOCKER_DIST"-i386-cross
 elif [ "$ARCH" == "arm64" ]; then
-    IMAGE=arm64v8/"$IMAGE"
+    IMAGE="$IMAGE"-arm64
     DOCKERFILE=Dockerfile.build-"$DOCKER_DIST"-arm64
 fi
 
