@@ -15,12 +15,21 @@ cd $(readlink -f $(dirname "$0"))
 IMAGE=quay.io/appimagelauncher-build/"$DOCKER_DIST"
 DOCKERFILE=Dockerfile.build-"$DOCKER_DIST"
 
-if [ "$ARCH" == "i386" ]; then
+if [ "$ARCH" == "x86_64" ]; then
+    # no action required
+    true
+elif [ "$ARCH" == "i386" ]; then
     IMAGE="$IMAGE"-i386-cross
     DOCKERFILE=Dockerfile.build-"$DOCKER_DIST"-i386-cross
 elif [ "$ARCH" == "arm64" ]; then
     IMAGE="$IMAGE"-arm64
     DOCKERFILE=Dockerfile.build-"$DOCKER_DIST"-arm64
+elif [ "$ARCH" == "armhf" ]; then
+    IMAGE="$IMAGE"-armhf-cross
+    DOCKERFILE=Dockerfile.build-"$DOCKER_DIST"-armhf-cross
+else
+    echo "Unknown architecture: $ARCH"
+    exit 1
 fi
 
 if [ ! -f "$DOCKERFILE" ]; then

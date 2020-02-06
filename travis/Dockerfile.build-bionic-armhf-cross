@@ -1,0 +1,58 @@
+# used to cache installed dependencies for bionic builds
+# this speeds up builds during development, as the dependencies are just installed _once_
+
+FROM arm32v7/ubuntu:bionic
+
+RUN dpkg --add-architecture armhf && \
+    apt-get update && \
+    apt-get -y --no-install-recommends install \
+        libfuse2:armhf \
+        qtbase5-dev:armhf \
+        qt5-qmake:armhf \
+        qtbase5-dev-tools:armhf \
+        libqt5core5a:armhf \
+        libqt5gui5:armhf \
+        libcurl4-openssl-dev:armhf \
+        libssl-dev:armhf \
+        libqt5widgets5:armhf \
+        librsvg2-bin:armhf \
+        libfuse-dev:armhf \
+        libcurl4:armhf \
+        libcurl4 \
+        libbsd-dev:armhf \
+        libglib2.0-dev:armhf \
+        liblzma-dev:armhf \
+        libgtest-dev \
+        libcairo-dev:armhf \
+        libgl1-mesa-dev:armhf \
+        libglu1-mesa-dev:armhf \
+        \
+        rpm \
+        gcc-multilib \
+        g++-multilib \
+        cmake \
+        make \
+        git \
+        ca-certificates \
+        automake \
+        autoconf \
+        libtool \
+        patch \
+        wget \
+        vim-common \
+        desktop-file-utils \
+        pkg-config \
+        qttools5-dev-tools:armhf \
+        qt5-qmake-bin:armhf \
+        libarchive-dev:armhf \
+        libboost-filesystem-dev:armhf \
+        zlib1g:armhf \
+        librsvg2-dev:armhf
+
+RUN wget -O- https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4.tar.gz | tar xz && \
+    cd cmake-3.16.4/ && \
+    ./configure --prefix=/usr && \
+    make -j$(nproc) && \
+    make install && \
+    cd - && \
+    rm -rf cmake-3.16.4/
