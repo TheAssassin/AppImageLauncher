@@ -58,6 +58,10 @@ if [ "$ARCH" == "i386" ]; then
     fi
 fi
 
+if [ "$ARCH" == "armhf" ]; then
+    export QT_SELECT=qt5-armhf-linux-gnu
+fi
+
 cmake "$REPO_ROOT" -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RelWithDebInfo $EXTRA_CMAKE_FLAGS -DTRAVIS_BUILD=ON -DBUILD_TESTING=OFF
 
 # now, compile
