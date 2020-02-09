@@ -52,7 +52,7 @@ RUN dpkg --add-architecture armhf && \
 RUN wget -O- https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4.tar.gz | tar xz && \
     cd cmake-3.16.4/ && \
     ./configure --prefix=/usr && \
-    make -j$(nproc) && \
+    make && \
     make install && \
     cd - && \
     rm -rf cmake-3.16.4/
