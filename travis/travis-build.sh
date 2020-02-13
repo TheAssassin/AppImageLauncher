@@ -43,6 +43,15 @@ else
     echo "NOT downloading up to date CMake for arch $ARCH"
 fi
 
+# list available versions of Qt to be able to choose the right one for the build
+cat <<\EOF
+##########################
+# Available Qt versions: #
+##########################
+EOF
+qtchooser -list-versions
+echo
+
 if [ "$DEBIAN_DIST" != "" ]; then
     EXTRA_CMAKE_FLAGS=-DCPACK_DEBIAN_COMPATIBILITY_LEVEL="$DEBIAN_DIST"
 else
@@ -59,7 +68,7 @@ if [ "$ARCH" == "i386" ]; then
 fi
 
 if [ "$ARCH" == "armhf" ]; then
-    export QT_SELECT=qt5-armhf-linux-gnu
+    export QT_SELECT=qt5-arm-linux-gnueabihf
 fi
 
 cmake "$REPO_ROOT" -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RelWithDebInfo $EXTRA_CMAKE_FLAGS -DTRAVIS_BUILD=ON -DBUILD_TESTING=OFF
