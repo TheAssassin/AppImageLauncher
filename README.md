@@ -40,7 +40,7 @@ For automation, AppImageLauncher provides a CLI tool called `ail-cli` that provi
 
 Starting with version 1.4.0, there's an edition of AppImageLauncher called *Lite*. AppImageLauncher Lite is pretty much the best of AppImageLauncher you can get without having root access to your computer. AppImageLauncher Lite is shipped as an AppImage that can be installed by a user from the command line, e.g. by calling `./appimagelauncher-lite...AppImage install`. The AppImage integrates itself in the users' home directory then.
 
-**Please note that AppImageLauncher Lite is relatively new and isn't as well tested as the regular packages. Also it is highly recommended to go with the traditional packages *if possible*, as they provide many more features and provide a much better overall experience.**
+**It is highly recommended to go with the traditional packages *if possible*, as they provide many more features and provide a much better overall experience.**
 
 
 ## About the project
