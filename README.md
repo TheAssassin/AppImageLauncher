@@ -14,6 +14,8 @@ Due to its simple but efficient way to integrate into your system, it plays well
 
 Install AppImageLauncher today for your distribution and enjoy using AppImages as easy as never before!
 
+> ### :exclamation: Please also check the [Wiki](https://github.com/TheAssassin/AppImageLauncher/wiki) for information how to install and use AppImageLauncher
+
 
 ## Features
 
