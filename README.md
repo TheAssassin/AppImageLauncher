@@ -31,6 +31,10 @@ AppImageLauncher provides a simple to use update mechanism. After desktop integr
 
 Removing integrated AppImages is pretty simple, too. Similar to updating AppImages, you will find an entry in the context menu in the application launcher that triggers a removal tool. You will be asked to confirm the removal. If you choose to do so, the desktop integration is undone, and the file is removed from your system.
 
+### CLI
+
+For automation, AppImageLauncher provides a CLI tool called `ail-cli` that provides the most basic operations and can be used in scripts or generally from the terminal in headless environments. As of February 2020, only integration and unintegration are supported. More features planned!
+
 
 ## Differences between regular and Lite version
 
