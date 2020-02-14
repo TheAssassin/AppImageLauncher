@@ -50,7 +50,22 @@ A new solution for native AppImage support has been developed: AppImageLauncher.
 Being the launcher for AppImages, AppImageLauncher can control how the system treats AppImages. It can perform the desktop integration, AppImage removal (also called "uninstallation" sometimes, but as AppImages are not really installed, this term doesn't fit very well), and could be used for many other tasks in the future, like update checks and alike.
 
 
-## Articles about AppImageLauncher
+## Media and publications
+
+### :movie_camera: :vhs: Videos & Podcasts
+
+Tutorials:
+
+- https://invidio.us/watch?v=D2WA2zdLvVk
+
+
+Podcasts:
+
+- https://dlnxtend.com/11
+  - also: https://invidio.us/watch?v=yaZygqyN_KE
+
+
+### :page_facing_up: Articles
 
 A few articles have been written about AppImageLauncher already:
 
@@ -65,6 +80,15 @@ A few articles have been written about AppImageLauncher already:
   - https://www.freeyourdesktop.com/2018/07/install-manage-appimages-with-appimagelauncher/ (English)
     - please note that AppImageLauncher could *not* be "installed" via AppImage at that time, only recently we added a Lite version that now can be installed from an AppImage (more information will follow soon!)
   - https://forum.pardus.org.tr/t/appimagelauncher-tek-tiklama-ile-appimage-sisteminizle-butunlestiriniz/11275 (Turkish)
+  - https://linuxteamvietnam.us/cach-chay-ung-dung-dinh-dang-appimage-tren-linux/ (Vietnamese)
+    - contains a few wrong assumptions: as soon as AppImageLauncher is installed, you do not have to make AppImages executable, you can just double-click tem (or otherwise open them, e.g., from your browsers' downloads)
+  - https://www.reallinuxuser.com/15-best-things-to-do-after-installing-zorin-os-15/ (English)
+  - https://manjaro.site/how-to-install-appimage-launcher-on-ubuntu-19-04/ (English)
+  - https://cubiclenate.com/2020/01/09/appimagelauncher-appimage-manager-on-opensuse/ (English)
+    - see also: https://cubiclenate.com/2020/01/10/noodlings-lighting-the-emby-server-with-kdenlive/
+  - https://chrisrmiller.com/2019/05/29/integrate-appimages-into-your-linux-distro/ (English)
+  - https://medium.com/@freeyourdesktopblog/install-manage-appimages-with-appimagelauncher-2a2078c55f37 (English)
+  - https://dolys.fr/forums/topic/gerer-les-appimage-sous-linux/ (French)
 
 
 ## Installation
