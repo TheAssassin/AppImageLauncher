@@ -43,7 +43,7 @@ diseñado para mejorar tu experiencia de AppImage en tu computadora.&lt;/p&gt;&l
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+442"/>
+        <location filename="../src/ui/main.cpp" line="+466"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
     </message>
@@ -65,7 +65,7 @@ Elegir No ejecutará AppImage una vez, y dejará la AppImage en su directorio ac
 </translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+1139"/>
+        <location filename="../src/shared/shared.cpp" line="+1244"/>
         <location line="+8"/>
         <source>Error</source>
         <translation>Error</translation>
@@ -76,7 +76,7 @@ Elegir No ejecutará AppImage una vez, y dejará la AppImage en su directorio ac
         <translation>Error al eliminar el registro de AppImage antes de volver a integrarlo</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="-525"/>
+        <location filename="../src/shared/shared.cpp" line="-546"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -98,7 +98,7 @@ Sintaxis inválida:
 %1</translation>
     </message>
     <message>
-        <location line="+449"/>
+        <location line="+470"/>
         <source>File %1 is owned by another user: %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -131,8 +131,8 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
 <context>
     <name>QObject</name>
     <message>
-        <location line="-914"/>
-        <location line="+582"/>
+        <location line="-1000"/>
+        <location line="+647"/>
         <location filename="../src/ui/remove_main.cpp" line="+102"/>
         <location line="+12"/>
         <location line="+12"/>
@@ -142,7 +142,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-419"/>
+        <location filename="../src/ui/main.cpp" line="-443"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher aun no soporta AppImages tipo %1.</translation>
     </message>
@@ -181,7 +181,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation type="vanished">tiempo de ejecución no encontrado: no hay tal archivo o directorio: %1</translation>
     </message>
     <message>
-        <location line="+120"/>
+        <location line="+124"/>
         <source>execv() failed: %1</source>
         <translation>Execv () falló: %1</translation>
     </message>
@@ -226,12 +226,12 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>Error al limpiar los viejos archivos de escritorio</translation>
     </message>
     <message>
-        <location line="-159"/>
+        <location line="-163"/>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
         <translation>Error al registrar AppImage en AppImageLauncherFS: error al intentar iniciar appimagelauncherfs.service</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+72"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
         <translation>Error al registrar AppImage en AppImageLauncherFS: no se pudo registrar la ruta de AppImage %1</translation>
     </message>
@@ -269,13 +269,13 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>Error: no hay tal archivo o directorio: %1</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <location filename="../src/ui/update_main.cpp" line="+7"/>
         <source>Not an AppImage: %1</source>
         <translation>No es una AppImage: %1</translation>
     </message>
     <message>
-        <location line="+140"/>
+        <location line="+159"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
         <translation>Las AppImages integradas en el sistema son guardadas en: %1</translation>
@@ -412,8 +412,8 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>Elegir No ejecutará AppImage una vez y dejará el sistema en su estado actual.</translation>
     </message>
     <message>
-        <location line="-554"/>
-        <location line="+558"/>
+        <location line="-619"/>
+        <location line="+623"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
     </message>
@@ -454,7 +454,7 @@ Try to copy AppImage instead?</source>
 Intenta copiar AppImage en su lugar?</translation>
     </message>
     <message>
-        <location line="+160"/>
+        <location line="+181"/>
         <source>Failed to call stat() on path:
 
 %1</source>
@@ -579,17 +579,12 @@ AppImage no admite la actualización. Solicite a los autores que configuren info
         <translation type="vanished">No se pudo comprobar la existencia de actualizaciones. Para más detalles consulte los mensajes en la linea de comandos .</translation>
     </message>
     <message>
-        <location filename="../src/daemon/main.cpp" line="+148"/>
+        <location filename="../src/daemon/main.cpp" line="+101"/>
         <source>Tracks AppImages in applications directories (user&apos;s, system and other ones). Automatically integrates AppImages moved into those directories and unintegrates ones removed from them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
-        <source>Search for AppImages in /Applications directories in suitable mounted filesystems</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
         <source>Lists directories watched by this daemon and exit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -718,7 +713,7 @@ AppImage no admite la actualización. Solicite a los autores que configuren info
         <translation>&lt;strong&gt;Nota: esta es una compilación de AppImageLauncher Lite, solo admite un conjunto limitado de características&lt;/strong&gt;&lt;br /&gt;Instale la versión completa a través de los paquetes nativos provistos para disfrutar de la experiencia completa de AppImageLauncher</translation>
     </message>
     <message>
-        <location line="+109"/>
+        <location line="+137"/>
         <source>Select Applications directory</source>
         <translation>Seleccione el directorio de aplicaciones</translation>
     </message>

@@ -42,7 +42,7 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+442"/>
+        <location filename="../src/ui/main.cpp" line="+466"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
@@ -74,7 +74,7 @@ Sollten Sie Nein wählen, wird das AppImage einmalig ausgeführt, und es wird im
 </translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+1139"/>
+        <location filename="../src/shared/shared.cpp" line="+1244"/>
         <location line="+8"/>
         <source>Error</source>
         <translation>Fehler</translation>
@@ -85,7 +85,7 @@ Sollten Sie Nein wählen, wird das AppImage einmalig ausgeführt, und es wird im
         <translation>Fehler beim Deregistrieren des AppImages vor der Reintegration</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="-525"/>
+        <location filename="../src/shared/shared.cpp" line="-546"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -107,7 +107,7 @@ Kaputte Syntax:
 %1</translation>
     </message>
     <message>
-        <location line="+449"/>
+        <location line="+470"/>
         <source>File %1 is owned by another user: %2</source>
         <translation>Datei %1 gehört einem anderen Benutzer: %2</translation>
     </message>
@@ -138,8 +138,8 @@ Neu starten mit deren Rechten?</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location line="-914"/>
-        <location line="+582"/>
+        <location line="-1000"/>
+        <location line="+647"/>
         <location filename="../src/ui/remove_main.cpp" line="+102"/>
         <location line="+12"/>
         <location line="+12"/>
@@ -149,7 +149,7 @@ Neu starten mit deren Rechten?</translation>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-419"/>
+        <location filename="../src/ui/main.cpp" line="-443"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher unterstützt zur Zeit keine AppImages vom Typ %1.</translation>
     </message>
@@ -188,7 +188,7 @@ Neu starten mit deren Rechten?</translation>
         <translation type="vanished">runtime nicht gefunden: Datei oder Verzeichnis nicht vorhanden: %1</translation>
     </message>
     <message>
-        <location line="+120"/>
+        <location line="+124"/>
         <source>execv() failed: %1</source>
         <translation>execv() fehlgeschlagen: %1</translation>
     </message>
@@ -233,12 +233,12 @@ Neu starten mit deren Rechten?</translation>
         <translation>Fehler beim Aufräumen der alten Desktop-Dateien</translation>
     </message>
     <message>
-        <location line="-159"/>
+        <location line="-163"/>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
         <translation>Fehler beim Registrieren des AppImages in AppImageLauncherFS: Fehler beim Starten von appimagelauncherfs.service</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+72"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
         <translation>Fehler beim Registrieren des AppImages in AppImageLauncherFS: Registrieren des AppImage-Pfades %1 fehlgeschlagen</translation>
     </message>
@@ -276,13 +276,13 @@ Neu starten mit deren Rechten?</translation>
         <translation>Fehler: Datei oder Verzeichnis nicht gefunden: %1</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <location filename="../src/ui/update_main.cpp" line="+7"/>
         <source>Not an AppImage: %1</source>
         <translation>Datei ist kein AppImage: %1</translation>
     </message>
     <message>
-        <location line="+140"/>
+        <location line="+159"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
         <translation>Das Verzeichnis zum Speichern der integrierten AppImages ist derzeit:
@@ -420,8 +420,8 @@ Neu starten mit deren Rechten?</translation>
         <translation>Bei Klick auf Nein wird das AppImage einmalig ausgeführt, und das System in seinem derzeitigen Zustand belassen.</translation>
     </message>
     <message>
-        <location line="-554"/>
-        <location line="+558"/>
+        <location line="-619"/>
+        <location line="+623"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
@@ -462,7 +462,7 @@ Try to copy AppImage instead?</source>
 Stattdessen versuchen, das AppImage zu kopieren?</translation>
     </message>
     <message>
-        <location line="+160"/>
+        <location line="+181"/>
         <source>Failed to call stat() on path:
 
 %1</source>
@@ -587,17 +587,16 @@ Das AppImage unterstützt keine Updates. Bitten Sie die Autoren, die Update-Info
         <translation>Fehler beim Entfernen des alten AppImages</translation>
     </message>
     <message>
-        <location filename="../src/daemon/main.cpp" line="+148"/>
+        <location filename="../src/daemon/main.cpp" line="+101"/>
         <source>Tracks AppImages in applications directories (user&apos;s, system and other ones). Automatically integrates AppImages moved into those directories and unintegrates ones removed from them.</source>
         <translation>Überwacht AppImages in Applikations-Verzeichnissen (dem des Benutzers, des Systems und anderen). Integriert AppImages, die in diese Verzeichnisse verschoben werden, und entfernt die Integration derer, die von dort entfernt werden, automatisch.</translation>
     </message>
     <message>
-        <location line="+8"/>
         <source>Search for AppImages in /Applications directories in suitable mounted filesystems</source>
-        <translation>Suche nach AppImages in /Applications-Verzeichnis auf geeigneten, eingehängten Dateisystemen</translation>
+        <translation type="vanished">Suche nach AppImages in /Applications-Verzeichnis auf geeigneten, eingehängten Dateisystemen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+8"/>
         <source>Lists directories watched by this daemon and exit</source>
         <translation>Listet Verzeichnisse auf, welche von diesem Dienst überwacht werden, und beendet sich</translation>
     </message>
@@ -726,7 +725,7 @@ Das AppImage unterstützt keine Updates. Bitten Sie die Autoren, die Update-Info
         <translation>&lt;strong&gt;Anmerkung: dies ist ein AppImageLauncher-Lite-Build, welcher nur ein begrenztes Spektrum an Funktionen bietet&lt;/strong&gt;&lt;br /&gt;Bitte installieren Sie die Vollversion mittels der bereitgestellten nativen Pakete, um in den Genuss der vollständigen AppImageLauncher-Erfahrung kommen zu können</translation>
     </message>
     <message>
-        <location line="+109"/>
+        <location line="+137"/>
         <source>Select Applications directory</source>
         <translation>Wähle Applications-Verzeichnis</translation>
     </message>

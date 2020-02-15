@@ -42,7 +42,7 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+442"/>
+        <location filename="../src/ui/main.cpp" line="+466"/>
         <source>Warning</source>
         <translation>Avviso</translation>
     </message>
@@ -74,7 +74,7 @@ Scegliendo No verrà eseguito l&apos;AppImage una volta e lascerà l&apos;AppIma
 </translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+1139"/>
+        <location filename="../src/shared/shared.cpp" line="+1244"/>
         <location line="+8"/>
         <source>Error</source>
         <translation>Errore</translation>
@@ -85,7 +85,7 @@ Scegliendo No verrà eseguito l&apos;AppImage una volta e lascerà l&apos;AppIma
         <translation>Impossibile annullare la registrazione di AppImage prima di reintegrarlo</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="-525"/>
+        <location filename="../src/shared/shared.cpp" line="-546"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -107,7 +107,7 @@ Sintassi non valida:
 %1</translation>
     </message>
     <message>
-        <location line="+449"/>
+        <location line="+470"/>
         <source>File %1 is owned by another user: %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -138,8 +138,8 @@ Rilanciare con i loro permessi?</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location line="-914"/>
-        <location line="+582"/>
+        <location line="-1000"/>
+        <location line="+647"/>
         <location filename="../src/ui/remove_main.cpp" line="+102"/>
         <location line="+12"/>
         <location line="+12"/>
@@ -149,7 +149,7 @@ Rilanciare con i loro permessi?</translation>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-419"/>
+        <location filename="../src/ui/main.cpp" line="-443"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher non supporta il tipo %1 AppImages al momento.</translation>
     </message>
@@ -188,7 +188,7 @@ Rilanciare con i loro permessi?</translation>
         <translation type="vanished">runtime non trovato: nessun file o directory:% 1</translation>
     </message>
     <message>
-        <location line="+120"/>
+        <location line="+124"/>
         <source>execv() failed: %1</source>
         <translation>execv() fallito: %1</translation>
     </message>
@@ -233,12 +233,12 @@ Rilanciare con i loro permessi?</translation>
         <translation>Impossibile ripulire i vecchi file desktop</translation>
     </message>
     <message>
-        <location line="-159"/>
+        <location line="-163"/>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
         <translation>Impossibile registrare AppImage in AppImageLauncherFS: errore durante il tentativo di avviare appimagelauncherfs.service</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+72"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
         <translation>Impossibile registrare AppImage in AppImageLauncherFS: impossibile registrare il percorso AppImage %1</translation>
     </message>
@@ -276,13 +276,13 @@ Rilanciare con i loro permessi?</translation>
         <translation>Errore: nessun file o directory: %1</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <location filename="../src/ui/update_main.cpp" line="+7"/>
         <source>Not an AppImage: %1</source>
         <translation>Non un&apos;AppImage: %1</translation>
     </message>
     <message>
-        <location line="+140"/>
+        <location line="+159"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
         <translation>La directory in cui sono archiviati gli AppImages integrati è attualmente impostata su:
@@ -420,8 +420,8 @@ Rilanciare con i loro permessi?</translation>
         <translation>Se si sceglie No, AppImage verrà eseguito una volta e il sistema verrà lasciato nello stato corrente.</translation>
     </message>
     <message>
-        <location line="-554"/>
-        <location line="+558"/>
+        <location line="-619"/>
+        <location line="+623"/>
         <source>Warning</source>
         <translation>Avvertimento</translation>
     </message>
@@ -462,7 +462,7 @@ Try to copy AppImage instead?</source>
 Prova invece a copiare AppImage?</translation>
     </message>
     <message>
-        <location line="+160"/>
+        <location line="+181"/>
         <source>Failed to call stat() on path:
 
 %1</source>
@@ -587,17 +587,12 @@ AppImage non supporta l&apos;aggiornamento. Si prega di chiedere agli autori di 
         <translation>Impossibile rimuovere la vecchia AppImage</translation>
     </message>
     <message>
-        <location filename="../src/daemon/main.cpp" line="+148"/>
+        <location filename="../src/daemon/main.cpp" line="+101"/>
         <source>Tracks AppImages in applications directories (user&apos;s, system and other ones). Automatically integrates AppImages moved into those directories and unintegrates ones removed from them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
-        <source>Search for AppImages in /Applications directories in suitable mounted filesystems</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
         <source>Lists directories watched by this daemon and exit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -726,7 +721,7 @@ AppImage non supporta l&apos;aggiornamento. Si prega di chiedere agli autori di 
         <translation>&lt;strong&gt;Nota: questa è una build di AppImageLauncher Lite, supporta solo un set limitato di funzionalità&lt;/strong&gt;&lt;br /&gt;Installa la versione completa tramite i pacchetti nativi forniti per goderti l&apos;esperienza AppImageLauncher completa</translation>
     </message>
     <message>
-        <location line="+109"/>
+        <location line="+137"/>
         <source>Select Applications directory</source>
         <translation>Seleziona la directory Applicazioni</translation>
     </message>

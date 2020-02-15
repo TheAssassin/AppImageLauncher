@@ -42,7 +42,7 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+442"/>
+        <location filename="../src/ui/main.cpp" line="+466"/>
         <source>Warning</source>
         <translation>Aviso</translation>
     </message>
@@ -74,7 +74,7 @@ Escolher Não, irá executar a AppImage uma vez e mantê-la na directória em qu
 </translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+1139"/>
+        <location filename="../src/shared/shared.cpp" line="+1244"/>
         <location line="+8"/>
         <source>Error</source>
         <translation>Erro</translation>
@@ -85,7 +85,7 @@ Escolher Não, irá executar a AppImage uma vez e mantê-la na directória em qu
         <translation>Falha ao desregistrar a AppImage antes de a reintegrar</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="-525"/>
+        <location filename="../src/shared/shared.cpp" line="-546"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -107,7 +107,7 @@ Sintaxe inválida:
 %1</translation>
     </message>
     <message>
-        <location line="+449"/>
+        <location line="+470"/>
         <source>File %1 is owned by another user: %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -130,8 +130,8 @@ Sintaxe inválida:
 <context>
     <name>QObject</name>
     <message>
-        <location line="-914"/>
-        <location line="+582"/>
+        <location line="-1000"/>
+        <location line="+647"/>
         <location filename="../src/ui/remove_main.cpp" line="+102"/>
         <location line="+12"/>
         <location line="+12"/>
@@ -141,7 +141,7 @@ Sintaxe inválida:
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-419"/>
+        <location filename="../src/ui/main.cpp" line="-443"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher não suporta o tipo %1 AppImages de momento.</translation>
     </message>
@@ -180,7 +180,7 @@ Sintaxe inválida:
         <translation type="vanished">runtime não encontrado: não existe o ficheiro ou directoria: %1</translation>
     </message>
     <message>
-        <location line="+120"/>
+        <location line="+124"/>
         <source>execv() failed: %1</source>
         <translation>execv() falhou: %1</translation>
     </message>
@@ -225,12 +225,12 @@ Sintaxe inválida:
         <translation>Falha ao limpar ficheiros de ambiente de trabalho antigos</translation>
     </message>
     <message>
-        <location line="-159"/>
+        <location line="-163"/>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+72"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -268,13 +268,13 @@ Sintaxe inválida:
         <translation>Erro: ficheiro ou directória não existe: %1</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <location filename="../src/ui/update_main.cpp" line="+7"/>
         <source>Not an AppImage: %1</source>
         <translation>Não é uma AppImage: %1</translation>
     </message>
     <message>
-        <location line="+140"/>
+        <location line="+159"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
         <translation>A directória das AppImages integradas está definida como:
@@ -402,8 +402,8 @@ Sintaxe inválida:
         <translation>Escolher Não irá executar a AppImage uma vez e deixar o sistema no seu estado actual.</translation>
     </message>
     <message>
-        <location line="-554"/>
-        <location line="+558"/>
+        <location line="-619"/>
+        <location line="+623"/>
         <source>Warning</source>
         <translation>Aviso</translation>
     </message>
@@ -444,7 +444,7 @@ Try to copy AppImage instead?</source>
 Tentar copiar a AppImage em vez disso?</translation>
     </message>
     <message>
-        <location line="+160"/>
+        <location line="+181"/>
         <source>Failed to call stat() on path:
 
 %1</source>
@@ -564,17 +564,12 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
         <translation>Falha ao remover a AppImage antiga</translation>
     </message>
     <message>
-        <location filename="../src/daemon/main.cpp" line="+148"/>
+        <location filename="../src/daemon/main.cpp" line="+101"/>
         <source>Tracks AppImages in applications directories (user&apos;s, system and other ones). Automatically integrates AppImages moved into those directories and unintegrates ones removed from them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
-        <source>Search for AppImages in /Applications directories in suitable mounted filesystems</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
         <source>Lists directories watched by this daemon and exit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -679,7 +674,7 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+109"/>
+        <location line="+137"/>
         <source>Select Applications directory</source>
         <translation type="unfinished"></translation>
     </message>
