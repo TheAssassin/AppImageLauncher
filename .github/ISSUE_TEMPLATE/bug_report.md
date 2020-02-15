@@ -34,5 +34,5 @@ Your distribution and desktop environment (including version numbers): [...]
 
 AppImageLauncher version installed: [...] (also include where you got it from, e.g., our release page, your distribution, ...)
 
-List of AppImages you tried:
+**List of AppImages you tried:**
 - [...]
