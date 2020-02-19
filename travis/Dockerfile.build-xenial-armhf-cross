@@ -17,8 +17,8 @@ RUN dpkg --add-architecture armhf && \
         libqt5widgets5:armhf \
         librsvg2-bin:armhf \
         libfuse-dev:armhf \
-        libcurl4:armhf \
-        libcurl4 \
+        libcurl3:armhf \
+        libcurl3 \
         libbsd-dev:armhf \
         libglib2.0-dev:armhf \
         liblzma-dev:armhf \
@@ -43,7 +43,7 @@ RUN dpkg --add-architecture armhf && \
         desktop-file-utils \
         pkg-config \
         qttools5-dev-tools:armhf \
-        qt5-qmake-bin:armhf \
+        qt5-qmake:armhf \
         libarchive-dev:armhf \
         libboost-filesystem-dev:armhf \
         zlib1g:armhf \
