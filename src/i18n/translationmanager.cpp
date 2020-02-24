@@ -51,5 +51,11 @@ QString TranslationManager::getTranslationDir() {
         translationDir = binaryDirPath + "/../share/appimagelauncher/l10n";
     }
 
+    // give the user (and dev) some feedback whether the translations could actually be found or not
+    if (!QDir(translationDir).exists()) {
+        qWarning() << "[AppImageLauncher] Warning:"
+                   << "Translation directory could not be found, translations are likely not available";
+    }
+
     return translationDir;
 }
