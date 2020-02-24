@@ -1,4 +1,5 @@
 // library headers
+#include <QDebug>
 #include <QDir>
 #include <QLibraryInfo>
 #include <QString>
