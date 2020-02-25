@@ -55,14 +55,14 @@ QString TranslationManager::getTranslationDir() {
     // when the application is installed, we need to look for the files in the private data directory
     if (!QDir(translationDir).exists()) {
         auto privateDataDir = pathToPrivateDataDirectory();
-        if (privateDataDir != "") {
+        if (!privateDataDir.isEmpty()) {
             translationDir = +"/l10n";
         }
     }
 
     // give the user (and dev) some feedback whether the translations could actually be found or not
     if (!QDir(translationDir).exists()) {
-        std::cerr << "[AppImageLauncher] Warning:"
+        std::cerr << "[AppImageLauncher] Warning: "
                   << "Translation directory could not be found, translations are likely not available" << std::endl;
     }
 
