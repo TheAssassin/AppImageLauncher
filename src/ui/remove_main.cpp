@@ -84,8 +84,12 @@ int main(int argc, char** argv) {
 
     QDialog dialog;
     Ui::RemoveDialog ui;
+
     ui.setupUi(&dialog);
     ui.pathLabel->setText(pathToAppImage);
+
+    // must be done *after* loading the UI into the dialog
+    setUpFallbackIconPaths(&dialog);
 
     auto rv = dialog.exec();
 
