@@ -56,7 +56,7 @@ QString TranslationManager::getTranslationDir() {
     if (!QDir(translationDir).exists()) {
         auto privateDataDir = pathToPrivateDataDirectory();
         if (!privateDataDir.isEmpty()) {
-            translationDir = +"/l10n";
+            translationDir = privateDataDir + "/l10n";
         }
     }
 
