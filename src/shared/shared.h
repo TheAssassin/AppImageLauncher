@@ -121,3 +121,11 @@ QString pathToPrivateDataDirectory();
 
 // clean up desktop integration files installed while originally integrating the AppImage
 bool unregisterAppImage(const QString& pathToAppImage);
+
+// try to load icon with provided name from AppImageLauncher's fallback icons directory
+// returns empty QIcon if such an icon cannot be found
+// you can check for errors by calling QIcon::isNull()
+QIcon loadIconWithFallback(const QString& iconName);
+
+// sets up paths to fallback icons bundled with AppImageLauncher
+void setUpFallbackIconPaths(QWidget*);

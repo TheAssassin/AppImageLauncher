@@ -30,6 +30,8 @@ extern "C" {
 #include <QSet>
 #include <QSettings>
 #include <QStandardPaths>
+#include <QWindow>
+#include <QPushButton>
 #ifdef ENABLE_UPDATE_HELPER
 #include <appimage/update.h>
 #endif
@@ -1290,4 +1292,75 @@ bool unregisterAppImage(const QString& pathToAppImage) {
         return false;
 
     return true;
+}
+
+QIcon loadIconWithFallback(const QString& iconName) {
+    const QString subdirName("fallback-icons");
+    const auto binaryDir = QApplication::applicationDirPath();
+
+    // first we check the directory that would be expected with in the build environment
+    QDir fallbackIconDirectory = QDir(binaryDir + "/../../resources/" + subdirName);
+
+    // if that doesn't work, we check the private data directory, which should work when AppImageLauncher is installed
+    // through the packages or in Lite's AppImage
+    if (!fallbackIconDirectory.exists()) {
+        auto privateDataDir = pathToPrivateDataDirectory();
+
+        if (privateDataDir.length() > 0 && QDir(privateDataDir).exists()) {
+            fallbackIconDirectory = QDir(pathToPrivateDataDirectory() + "/" + subdirName);
+        }
+    }
+
+    // fallback icons aren't critical enough to exit the application if they can't be found
+    // after all, the theme icons may work just as well
+    if (!fallbackIconDirectory.exists()) {
+        qWarning() << "[AppImageLauncher] Warning:"
+                   << "fallback icons could not be loaded: directory could not be found";
+        return QIcon{};
+    }
+
+    qDebug() << "Loading fallback for icon" << iconName;
+
+    const auto iconFilename = iconName + ".svg";
+    const auto iconPath = fallbackIconDirectory.filePath(iconFilename);
+
+    if (!QFileInfo(iconPath).isFile()) {
+        qWarning() << "[AppImageLauncher] Warning: can't find fallback icon for name" << iconName;
+        return QIcon{};
+    }
+
+    const auto fallbackIcon = QIcon(iconPath);
+    qDebug() << fallbackIcon;
+
+    return fallbackIcon;
+}
+
+void setUpFallbackIconPaths(QWidget* parent) {
+    /**
+     * Qt 5.12 adds a feature to add fallback paths for icons. This is a very simple way to automatically load custom
+     * icons when the icon theme doesn't provide a suitable alternative.
+     * However, we need to support a much older Qt version. Therefore we cannot use this very very handy feature.
+     * We basically iterate over all buttons which carry an icon and (re)load it, but this time provide a fallback
+     * loaded from our private data directory.
+     */
+
+    // for now we only support buttons
+    // we could always add more widgets which provide an icon property
+    const auto buttons = parent->findChildren<QAbstractButton*>();
+
+    for (const auto& button : buttons) {
+        const auto iconName = button->icon().name();
+
+        // sort out buttons without an icon
+        if (iconName.length() <= 0)
+            continue;
+
+        // load icon from theme, providing the bundled icon as a fallback
+        // loading an "empty" (i.e., isNull() returns true) icon as fallback, as returned by loadIconWithFallback(...),
+        // works just fine
+        const auto themeIcon = QIcon::fromTheme(iconName, loadIconWithFallback(iconName));
+
+        // now replace the button's actual icon with the fallback-enabled one
+        button->setIcon(themeIcon);
+    }
 }
