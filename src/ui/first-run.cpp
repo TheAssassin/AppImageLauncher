@@ -145,6 +145,8 @@ public:
 void showFirstRunDialog() {
     auto dialog = new FirstRunDialog;
 
+    setUpFallbackIconPaths(dialog);
+
     auto rv = dialog->exec();
 
     if (rv <= 0) {

@@ -115,5 +115,17 @@ bool isAppImage(const QString& path);
 // the second argument is the question that will be asked in the dialog displayed in case a relaunch is necessary
 void checkAuthorizationAndShowDialogIfNecessary(const QString& path, const QString& question);
 
+// searchs for path to private data directory relative to the current binary's location
+// returns empty string if the path cannot be found
+QString pathToPrivateDataDirectory();
+
 // clean up desktop integration files installed while originally integrating the AppImage
 bool unregisterAppImage(const QString& pathToAppImage);
+
+// try to load icon with provided name from AppImageLauncher's fallback icons directory
+// returns empty QIcon if such an icon cannot be found
+// you can check for errors by calling QIcon::isNull()
+QIcon loadIconWithFallback(const QString& iconName);
+
+// sets up paths to fallback icons bundled with AppImageLauncher
+void setUpFallbackIconPaths(QWidget*);

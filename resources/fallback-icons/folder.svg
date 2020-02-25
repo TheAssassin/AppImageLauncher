@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 4.2333331 4.2333332"
+   height="16"
+   width="16">
+  <defs
+     id="defs2" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(-40.435481,-42.357438)"
+     id="layer1">
+    <g
+       id="text817"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.23638821px;line-height:148.43304443px;font-family:Montserrat;-inkscape-font-specification:Montserrat;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#0055d4;fill-opacity:1;stroke:none;stroke-width:0.21818285px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       aria-label="🖿">
+      <path
+         id="path814"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.07274675px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Bold';fill:#0055d4;stroke-width:0.21818285px"
+         d="m 40.939339,45.934185 q -0.0896,0 -0.154764,-0.06516 -0.06109,-0.06516 -0.06109,-0.154764 v -2.468085 q 0,-0.09367 0.06516,-0.16291 0.06924,-0.06924 0.162909,-0.06924 h 1.132224 q 0.09367,0 0.158837,0.06924 0.06924,0.06924 0.06924,0.16291 v 0.126255 h 1.849027 q 0.09367,0 0.154764,0.06516 0.06516,0.06109 0.06516,0.154765 v 2.121901 q 0,0.0896 -0.06516,0.154764 -0.06109,0.06516 -0.154764,0.06516 z" />
+    </g>
+  </g>
+</svg>
