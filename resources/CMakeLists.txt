@@ -21,7 +21,7 @@ install(
 
 install(
     DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/fallback-icons
-    DESTINATION ${CMAKE_INSTALL_DATADIR}/appimagelauncher
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/appimagelauncher COMPONENT APPIMAGELAUNCHER
 )
 # we also need to copy the files into the binary dir to make their path predictable relative to the binary's location
 file(
