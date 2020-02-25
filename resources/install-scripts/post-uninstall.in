@@ -18,3 +18,12 @@ if [ "$UPDATE_BINFMTS" != "" ]; then
 else
     (set -x; systemctl restart systemd-binfmt)
 fi
+
+cat <<EOF
+#####################################################
+#                                                   #
+#  NOTE: you need to reboot your computer in order  #
+#  to complete the uninstallation                   #
+#                                                   #
+#####################################################
+EOF
