@@ -19,6 +19,11 @@ else
     (set -x; systemctl restart systemd-binfmt)
 fi
 
+update_notifier="/usr/share/update-notifier/notify-reboot-required"
+if [ -x "$update_notifier" ]; then
+    "$update_notifier"
+fi
+
 cat <<EOF
 #####################################################
 #                                                   #
