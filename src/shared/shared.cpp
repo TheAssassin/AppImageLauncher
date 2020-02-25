@@ -1279,6 +1279,8 @@ QString pathToPrivateDataDirectory() {
     }
 
     if (!QDir(dataDir).exists()) {
+        std::cerr << "[AppImageLauncher] Warning: "
+                  << "Path to private data directory could not be found" << std::endl;
         return "";
     }
 
