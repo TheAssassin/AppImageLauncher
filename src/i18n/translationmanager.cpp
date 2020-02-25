@@ -1,3 +1,6 @@
+// system headers
+#include <iostream>
+
 // library headers
 #include <QDebug>
 #include <QDir>
@@ -59,8 +62,8 @@ QString TranslationManager::getTranslationDir() {
 
     // give the user (and dev) some feedback whether the translations could actually be found or not
     if (!QDir(translationDir).exists()) {
-        qWarning() << "[AppImageLauncher] Warning:"
-                   << "Translation directory could not be found, translations are likely not available";
+        std::cerr << "[AppImageLauncher] Warning:"
+                  << "Translation directory could not be found, translations are likely not available" << std::endl;
     }
 
     return translationDir;

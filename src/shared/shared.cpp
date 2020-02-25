@@ -1314,8 +1314,8 @@ QIcon loadIconWithFallback(const QString& iconName) {
     // fallback icons aren't critical enough to exit the application if they can't be found
     // after all, the theme icons may work just as well
     if (!fallbackIconDirectory.exists()) {
-        qWarning() << "[AppImageLauncher] Warning:"
-                   << "fallback icons could not be loaded: directory could not be found";
+        std::cerr << "[AppImageLauncher] Warning:"
+                  << "fallback icons could not be loaded: directory could not be found" << std::endl;
         return QIcon{};
     }
 
@@ -1325,7 +1325,8 @@ QIcon loadIconWithFallback(const QString& iconName) {
     const auto iconPath = fallbackIconDirectory.filePath(iconFilename);
 
     if (!QFileInfo(iconPath).isFile()) {
-        qWarning() << "[AppImageLauncher] Warning: can't find fallback icon for name" << iconName;
+        std::cerr << "[AppImageLauncher] Warning: can't find fallback icon for name"
+                  << iconName.toStdString() << std::endl;
         return QIcon{};
     }
 
