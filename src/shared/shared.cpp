@@ -32,6 +32,7 @@ extern "C" {
 #include <QStandardPaths>
 #include <QWindow>
 #include <QPushButton>
+#include <QPixmap>
 #ifdef ENABLE_UPDATE_HELPER
 #include <appimage/update.h>
 #endif
@@ -1361,9 +1362,13 @@ void setUpFallbackIconPaths(QWidget* parent) {
         // load icon from theme, providing the bundled icon as a fallback
         // loading an "empty" (i.e., isNull() returns true) icon as fallback, as returned by loadIconWithFallback(...),
         // works just fine
-        const auto themeIcon = QIcon::fromTheme(iconName, loadIconWithFallback(iconName));
+        auto fallbackIcon = loadIconWithFallback(iconName);
+        auto newIcon = QIcon::fromTheme(iconName, fallbackIcon);
+
+        if (newIcon.isNull() || newIcon.pixmap(16, 16).isNull())
+            newIcon = fallbackIcon;
 
         // now replace the button's actual icon with the fallback-enabled one
-        button->setIcon(themeIcon);
+        button->setIcon(newIcon);
     }
 }
