@@ -115,5 +115,9 @@ bool isAppImage(const QString& path);
 // the second argument is the question that will be asked in the dialog displayed in case a relaunch is necessary
 void checkAuthorizationAndShowDialogIfNecessary(const QString& path, const QString& question);
 
+// searchs for path to private data directory relative to the current binary's location
+// returns empty string if the path cannot be found
+QString pathToPrivateDataDirectory();
+
 // clean up desktop integration files installed while originally integrating the AppImage
 bool unregisterAppImage(const QString& pathToAppImage);

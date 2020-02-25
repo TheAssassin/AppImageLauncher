@@ -1256,6 +1256,33 @@ void checkAuthorizationAndShowDialogIfNecessary(const QString& path, const QStri
     }
 }
 
+QString pathToPrivateDataDirectory() {
+    // first we need to find the translation directory
+    // if this is run from the build tree, we try a path that can only work within the build directory
+    // then, we try the expected install location relative to the main binary
+    const auto binaryDirPath = QApplication::applicationDirPath();
+
+    // our helper tools are not shipped in usr/bin but usr/lib/<arch>-linux-gnu/appimagelauncher
+    // therefore we need to check for the translations directory relative to this directory as well
+    // as <arch-linux-gnu> may not be used in the path, we also check for its parent directory
+    QString dataDir = binaryDirPath + "/../../share/appimagelauncher/";
+
+    if (!QDir(dataDir).exists()) {
+        dataDir = binaryDirPath + "/../../../share/appimagelauncher/";
+    }
+
+    // this directory should work for the main application in usr/bin
+    if (!QDir(dataDir).exists()) {
+        dataDir = binaryDirPath + "/../share/appimagelauncher/";
+    }
+
+    if (!QDir(dataDir).exists()) {
+        return "";
+    }
+
+    return dataDir;
+}
+
 bool unregisterAppImage(const QString& pathToAppImage) {
     auto rv = appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false);
 
