@@ -19,6 +19,16 @@ install(
     DESTINATION ${CMAKE_INSTALL_DATADIR}/applications COMPONENT APPIMAGELAUNCHER
 )
 
+install(
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/fallback-icons
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/appimagelauncher
+)
+# we also need to copy the files into the binary dir to make their path predictable relative to the binary's location
+file(
+    COPY "${CMAKE_CURRENT_SOURCE_DIR}/fallback-icons"
+    DESTINATION "${CMAKE_CURRENT_BINARY_DIR}"
+)
+
 set(INSTALL_MAINTAINER_SCRIPTS OFF CACHE BOOL "")
 
 # install maintainer scripts that distro packagers might find useful
