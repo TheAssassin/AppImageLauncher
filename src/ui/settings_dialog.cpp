@@ -73,7 +73,7 @@ void SettingsDialog::addDirectoryToWatchToListView(const QString& dirPath) {
 
     auto findIcon = [](const std::initializer_list<QString>& names) {
         for (const auto& i : names) {
-            auto icon = QIcon::fromTheme(i);
+            auto icon = QIcon::fromTheme(i, loadIconWithFallback(i));
 
             if (!icon.isNull())
                 return icon;
