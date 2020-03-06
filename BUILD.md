@@ -13,7 +13,7 @@ You may customize the `BRANCH`. Select `stable` to download the current stable s
 
 ```
 export BRANCH="stable"
-git clone https://github.com/TheAssassin/AppImageLauncher.git -b $BRANCH
+git clone https://github.com/TheAssassin/AppImageLauncher.git -b stable
 cd AppImageLauncher
 git submodule update --init --recursive
 ```
