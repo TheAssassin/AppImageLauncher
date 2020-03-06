@@ -7,8 +7,13 @@ If there are no pre-build binaries for your platform you may consider to build A
 
 This step is only required if you would like to build the source from GitHub. If you have a local copy, please skip this section.
 
+You can download the source either using Git or by mannually downloading a tarball on the [Releases page](https://github.com/TheAssassin/AppImageLauncher/releases).
+
+You may customize the `BRANCH`. Select `stable` to download the current stable source or use `maser` to get the most current unstable source containing the latest features.
+
 ```
-git clone https://github.com/TheAssassin/AppImageLauncher.git
+export BRANCH="stable"
+git clone https://github.com/TheAssassin/AppImageLauncher.git -b $BRANCH
 cd AppImageLauncher
 git submodule update --init --recursive
 ```
