@@ -9,7 +9,7 @@ This step is only required if you would like to build the source from GitHub. If
 
 You can download the source either using Git or by mannually downloading a tarball on the [Releases page](https://github.com/TheAssassin/AppImageLauncher/releases).
 
-You may customize the `BRANCH`. Select `stable` to download the current stable source or use `maser` to get the most current unstable source containing the latest features.
+You may customize the `BRANCH`. Select `stable` to download the current stable source or use `master` to get the most current unstable source containing the latest features.
 
 ```
 export BRANCH="stable"
