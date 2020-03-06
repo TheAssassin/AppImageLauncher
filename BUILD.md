@@ -5,13 +5,13 @@ If there are no pre-build binaries for your platform you may consider to build A
 
 ## Download source
 
-This step is only required if you would like to build the source from GitHub. If you have a local copy, please skip this section.
+This step is only required if you would like to build the source from GitHub. *If you have a local copy, please skip this section.*
 
 You can download the source either using Git or by mannually downloading a tarball on the [Releases page](https://github.com/TheAssassin/AppImageLauncher/releases).
 
-You may customize the `BRANCH`. Select `stable` to download the current stable source or use `master` to get the most current unstable source containing the latest features.
+The branch can be customized by setting the `-b` or `--branch` argument. Select `stable` to download the current stable source or use `master` to get the most current unstable source containing the latest features.
 
-```
+```shell
 git clone https://github.com/TheAssassin/AppImageLauncher.git -b stable
 cd AppImageLauncher
 git submodule update --init --recursive
@@ -43,14 +43,13 @@ Please update the `PREFIX` if you want. The prefix is the location the final app
 export PREFIX="/usr/local/"
 mkdir build
 cd build
-cmake .. \
-    -DCMAKE_INSTALL_PREFIX="$PREFIX" \
-    -DCMAKE_INSTALL_LIBDIR=lib \
-    -DUSE_SYSTEM_GTEST=ON \
-    -DUSE_SYSTEM_XZ=ON \
-    -DUSE_SYSTEM_LIBARCHIVE=ON \
+
+cmake .. -DCMAKE_INSTALL_PREFIX="$PREFIX"
+
+# See https://github.com/TheAssassin/AppImageLauncher/issues/251 for more details why this is required
 make libappimage libappimageupdate libappimageupdate-qt
 cmake .
+
 make
 ```
 
