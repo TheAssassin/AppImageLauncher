@@ -12,7 +12,6 @@ You can download the source either using Git or by mannually downloading a tarba
 You may customize the `BRANCH`. Select `stable` to download the current stable source or use `master` to get the most current unstable source containing the latest features.
 
 ```
-export BRANCH="stable"
 git clone https://github.com/TheAssassin/AppImageLauncher.git -b stable
 cd AppImageLauncher
 git submodule update --init --recursive
