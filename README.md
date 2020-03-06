@@ -136,6 +136,10 @@ Other systems derived from the listed ones, such as for instance Linux Mint (Ubu
 
 **Note:** If your system is not listed above as supported, please feel free to request support in an issue on GitHub. We can then discuss adding support.   
 
+### Build from source
+
+Build instructions can be found in [BUILD.md](BUILD.md).
+
 
 ## How it works
 
