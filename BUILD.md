@@ -1,17 +1,22 @@
 # How to build AppImageLauncher
 
-If there are no pre-build binaries for your platform you may consider to build AppImageLauncher yourself. Pleas follow these instructions.
+If there are no pre-build binaries for your platform you may consider to build AppImageLauncher yourself. Please follow these instructions.
+
 
 ## Download source
+
+This step is only required if you would like to build the source from GitHub. If you have a local copy, please skip this section.
+
 ```
 git clone https://github.com/TheAssassin/AppImageLauncher.git
 cd AppImageLauncher
 git submodule update --init --recursive
 ```
 
+
 ## Dependencies
 
-All dependencies need to be installed as development versions. In most distributions, you just need to append `-dev` or `-devel` to the listed names. Some names may differ on your system.
+All dependencies need to be installed as development libraries. Some names may differ on your system.
 
  - make
  - cmake
@@ -25,9 +30,10 @@ All dependencies need to be installed as development versions. In most distribut
  - libcurl
  - boost
 
+
 ## Build
 
-Please update the `PREFIX` if you want.
+Please update the `PREFIX` if you want. The prefix is the location the final application will be installed to. Usual locations may be `/usr/local` (default), `/usr`, `~/.local` or `/opt`.
 
 ```shell
 export PREFIX="/usr/local/"
@@ -39,9 +45,15 @@ cmake .. \
     -DUSE_SYSTEM_GTEST=ON \
     -DUSE_SYSTEM_XZ=ON \
     -DUSE_SYSTEM_LIBARCHIVE=ON \
-    -DBUILD_TESTING=OFF
 make libappimage libappimageupdate libappimageupdate-qt
 cmake .
 make
+```
+
+Now you may create a distribution package or alternatively install the source for testing purpose.
+
+*Note: This may harm your system. It's highly recommended to build and install distribution packages instead.*
+
+```shell
 sudo make install
 ```
