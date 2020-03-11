@@ -123,7 +123,7 @@ Compatibility table (likely incomplete, please feel free to send PRs to add dist
 
 The installation of packages on systems with a set of packages similar to one of the listed ones (e.g., Linux Mint, Fedora, etc.) should work as well.
 
-**Note:** For Ubuntu and derivatives, there's two PPAs (personal package archives) available providing a simple way to install and update AppImageLauncher (thanks [Peter Jonas](https://github.com/shoogle) for creating and maintaining them):
+**Note:** For Ubuntu 19.04 and newer as well as derivatives, there's two PPAs (personal package archives) available providing a simple way to install and update AppImageLauncher (thanks [Peter Jonas](https://github.com/shoogle) for creating and maintaining them):
 
   - stable (provides all releases): https://launchpad.net/~appimagelauncher-team/+archive/ubuntu/stable
   - daily (latest and greatest but possibly unstable): https://launchpad.net/~appimagelauncher-team/+archive/ubuntu/daily
