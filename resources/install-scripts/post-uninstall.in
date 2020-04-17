@@ -30,5 +30,9 @@ cat <<EOF
 #  NOTE: you need to reboot your computer in order  #
 #  to complete the uninstallation                   #
 #                                                   #
+#  (If you see this message during an upgrade:      #
+#  don't worry, you do not have to take any         #
+#  action, no reboot required!)                     #
+#                                                   #
 #####################################################
 EOF
