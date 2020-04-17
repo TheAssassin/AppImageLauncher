@@ -87,7 +87,7 @@ configure_file(
     @ONLY
 )
 configure_file(
-    ${PROJECT_SOURCE_DIR}//resources/install-scripts/post-uninstall.in
+    ${PROJECT_SOURCE_DIR}/resources/install-scripts/post-uninstall.in
     ${PROJECT_BINARY_DIR}/cmake/debian/postrm
     @ONLY
 )
