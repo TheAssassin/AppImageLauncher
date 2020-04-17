@@ -1,6 +1,9 @@
-# define private libraries install destionation
+# define private libraries install destination
 include(GNUInstallDirs)
-message(${CMAKE_INSTALL_LIBDIR})
+
+# debugging: libdir should be lib/<triplet>
+message(STATUS "CMAKE_INSTALL_LIBDIR: ${CMAKE_INSTALL_LIBDIR}")
+
 if(NOT IS_ABSOLUTE ${CMAKE_INSTALL_LIBDIR})
     set(_libdir ${CMAKE_INSTALL_LIBDIR})
 else()
