@@ -547,6 +547,7 @@ bool updateDesktopDatabaseAndIconCaches() {
         {"gtk-update-icon-cache", dataLocation.toStdString() + "/icons/hicolor/ -t"},
         {"xdg-desktop-menu", "forceupdate"},
         {"update-mime-database", dataLocation.toStdString() + "/mime "},
+        {"update-icon-caches", dataLocation.toStdString() + "/icons/"},
     };
 
     for (const auto& command : commands) {
