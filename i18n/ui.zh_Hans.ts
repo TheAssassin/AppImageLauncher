@@ -108,22 +108,22 @@ Invalid syntax:
     <message>
         <location line="+470"/>
         <source>File %1 is owned by another user: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>文件 %1 所有者：%2</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Permissions problem</source>
-        <translation type="unfinished"></translation>
+        <translation>权限问题</translation>
     </message>
     <message>
         <location line="+52"/>
         <source>Failed to run permissions helper, exited with return code %1</source>
-        <translation type="unfinished"></translation>
+        <translation>运行权限助手失败，退出代码 %1</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Could not find suitable permissions helper, aborting</source>
-        <translation type="unfinished"></translation>
+        <translation>未找到合适的权限助手，正在退出</translation>
     </message>
 </context>
 <context>
@@ -196,7 +196,7 @@ Invalid syntax:
     <message>
         <location line="+2"/>
         <source>Options:</source>
-        <translation></translation>
+        <translation>选项：</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -226,7 +226,7 @@ Invalid syntax:
     <message>
         <location line="-163"/>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
-        <translation type="unfinished"></translation>
+        <translation>在 AppImageLauncherFS 中注册 AppImage 失败：启动 appimagelauncherfs.service 时出错</translation>
     </message>
     <message>
         <location line="+72"/>
@@ -335,7 +335,7 @@ Invalid syntax:
     <message>
         <location filename="../src/ui/remove_main.cpp" line="-28"/>
         <source>Helper to delete integrated AppImages easily, e.g., from the application launcher&apos;s context menu</source>
-        <translation type="unfinished"></translation>
+        <translation>用于轻松删除集成的 AppImage 的助手，例如，从应用启动器上下文菜单中删除</translation>
     </message>
     <message>
         <location line="+19"/>
@@ -345,12 +345,12 @@ Invalid syntax:
     <message>
         <location line="+0"/>
         <source>&lt;path&gt;</source>
-        <translation></translation>
+        <translation>&lt;路径&gt;</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>AppImage delete helper error</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImage 删除助手错误</translation>
     </message>
     <message>
         <source>AppImage remove helper error</source>
@@ -519,7 +519,10 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set update
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法在 AppImage 中找到更新信息：
+%1
+
+此 AppImage 不支持更新。请向作者请求设置更新信息以允许轻松更新。</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -577,12 +580,12 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location filename="../src/daemon/main.cpp" line="+101"/>
         <source>Tracks AppImages in applications directories (user&apos;s, system and other ones). Automatically integrates AppImages moved into those directories and unintegrates ones removed from them.</source>
-        <translation type="unfinished"></translation>
+        <translation>在应用程序文件夹（用户，系统和其他目录）中跟踪 AppImage。 自动集成移动到这些文件夹中的 AppImage，并取消集成从其中删除的 AppImage。</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Lists directories watched by this daemon and exit</source>
-        <translation type="unfinished"></translation>
+        <translation>列出此守护程序监视的文件夹并退出</translation>
     </message>
 </context>
 <context>
@@ -598,12 +601,12 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location filename="../src/ui/remove.ui" line="+17"/>
         <source>Delete AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>删除 AppImage</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to delete this AppImage?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;您确定要删除此 AppImage 吗?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -624,87 +627,87 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location filename="../src/ui/settings_dialog.ui" line="+14"/>
         <source>AppImageLauncher Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImageLauncher 设置</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Launcher Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>启动器对话框</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Ask whether to move AppImage files into the applications directory</source>
-        <translation type="unfinished"></translation>
+        <translation>询问是否将 AppImage 文件移动到应用程序文件夹中</translation>
     </message>
     <message>
         <location line="+119"/>
         <source>General settings</source>
-        <translation type="unfinished"></translation>
+        <translation>通用设置</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When this box is checked, AppImageLauncher automatically starts a daemon called appimagelauncherd.&lt;/p&gt;&lt;p&gt;This daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot; and the additional directories you configured. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;选中此框后，AppImageLauncher 会自动启动一个名为 appimagelauncherd 的守护程序。&lt;/p&gt;&lt;p&gt;此守护程序自动集成复制到 &amp;quot;Applications 文件夹&amp;quot;及其它您配置的文件夹中的 AppImage。删除文件后，守护程序将清除集成数据。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Auto start auto-integration daemon</source>
-        <translation type="unfinished"></translation>
+        <translation>自动启动自动集成守护程序</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Additional directories to watch</source>
-        <translation type="unfinished"></translation>
+        <translation>要监视的其文件夹</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Add new directory to list</source>
-        <translation type="unfinished"></translation>
+        <translation>向列表中添加新的文件夹</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Remove selected directory from list</source>
-        <translation type="unfinished"></translation>
+        <translation>从列表中删除选定的文件夹</translation>
     </message>
     <message>
         <location line="-144"/>
         <source>Applications directory path</source>
-        <translation type="unfinished"></translation>
+        <translation>应用程序文件夹路径</translation>
     </message>
     <message>
         <location line="-11"/>
         <source>Location where to store your AppImage files to ease their management</source>
-        <translation type="unfinished"></translation>
+        <translation>存储 AppImage 文件以简化其管理的位置</translation>
     </message>
     <message>
         <location line="+49"/>
         <source>Available Features</source>
-        <translation type="unfinished"></translation>
+        <translation>可用功能</translation>
     </message>
     <message>
         <location filename="../src/ui/settings_dialog.cpp" line="+40"/>
         <source>updater available for AppImages supporting AppImageUpdate</source>
-        <translation type="unfinished"></translation>
+        <translation>可用于支持 AppImageUpdate 的 AppImage 的更新程序</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>updater unavailable</source>
-        <translation type="unfinished"></translation>
+        <translation>有可用更新</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>&lt;strong&gt;Note: this is an AppImageLauncher Lite build, only supports a limited set of features&lt;/strong&gt;&lt;br /&gt;Please install the full version via the provided native packages to enjoy the full AppImageLauncher experience</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;strong&gt;注意：这是一个 AppImageLauncher Lite 版本，仅支持有限的功能集&lt;/strong&gt;&lt;br /&gt;请通过提供的原生软件包安装完整版，以享受完整的 AppImageLauncher 体验</translation>
     </message>
     <message>
         <location line="+137"/>
         <source>Select Applications directory</source>
-        <translation type="unfinished"></translation>
+        <translation>选择应用程序文件夹</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Select additional directory to watch</source>
-        <translation type="unfinished"></translation>
+        <translation>选择监视的其他文件夹</translation>
     </message>
 </context>
 </TS>
