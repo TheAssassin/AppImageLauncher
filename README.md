@@ -96,6 +96,7 @@ A few articles have been written about AppImageLauncher already:
   - https://chrisrmiller.com/2019/05/29/integrate-appimages-into-your-linux-distro/ (English)
   - https://medium.com/@freeyourdesktopblog/install-manage-appimages-with-appimagelauncher-2a2078c55f37 (English)
   - https://dolys.fr/forums/topic/gerer-les-appimage-sous-linux/ (French)
+  - https://linux-user.gr/t/eykolh-chrhsh-efarmogwn-appimage/2066 (Greek)
 
 
 ## Installation
