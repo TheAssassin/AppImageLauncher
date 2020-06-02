@@ -16,27 +16,27 @@
     <message>
         <location line="+22"/>
         <source>Ask me whether to move new AppImages into a central location</source>
-        <translation type="unfinished"></translation>
+        <translation>Pergunte-me se devo mudar as novas AppImages para uma localização central</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Integration target destination directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasta de destino para as AppImages integradas:</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>Customize</source>
-        <translation type="unfinished"></translation>
+        <translation>Personalizar</translation>
     </message>
     <message>
         <location filename="../src/ui/first-run.cpp" line="+86"/>
         <source>Choose integration destination dir</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolher pasta de destino para integração</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>(default)</source>
-        <translation type="unfinished"></translation>
+        <translation>(padrão)</translation>
     </message>
 </context>
 <context>
@@ -109,22 +109,22 @@ Sintaxe inválida:
     <message>
         <location line="+470"/>
         <source>File %1 is owned by another user: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ficheiro %1 é propriedade de outro utilizador: %2</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Permissions problem</source>
-        <translation type="unfinished"></translation>
+        <translation>Problema das permissões</translation>
     </message>
     <message>
         <location line="+52"/>
         <source>Failed to run permissions helper, exited with return code %1</source>
-        <translation type="unfinished"></translation>
+        <translation>A execução do ajudante de permissões falhou com o código de saída %1</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Could not find suitable permissions helper, aborting</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi encontrado um ajudante de permissões adequado, abortando</translation>
     </message>
 </context>
 <context>
@@ -227,22 +227,22 @@ Sintaxe inválida:
     <message>
         <location line="-163"/>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha ao registar AppImage no AppImageLauncherFS: erro no inicio do appimagelauncherfs.service</translation>
     </message>
     <message>
         <location line="+72"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha ao registar a AppImage no AppImageLauncherFS: não registou a AppImage caminho %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not open map file</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha ao registar o AppImage no AppImageLauncherFS: não pôde abrir o ficheiro do mapa</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha ao registar o AppImage no AppImageLauncherFS: não foi encontrado um ficheiro virtual para o AppImage</translation>
     </message>
     <message>
         <location line="+3"/>
