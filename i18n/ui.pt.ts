@@ -247,7 +247,7 @@ Sintaxe inválida:
     <message>
         <location line="+3"/>
         <source>Failed to register AppImage in AppImageLauncherFS: unknown failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha ao registar AppImage no AppImageLauncherFS: falha desconhecida</translation>
     </message>
     <message>
         <location line="+92"/>
@@ -297,7 +297,7 @@ Sintaxe inválida:
     <message>
         <location line="+3"/>
         <source>The directory the integrated AppImages are stored in is currently set to:</source>
-        <translation>A directória onde as AppImages integradas são guardadas está actualmente definido como:</translation>
+        <translation>A pasta em que as AppImages integradas são armazenadas está configurada actualmente:</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -336,7 +336,7 @@ Sintaxe inválida:
     <message>
         <location filename="../src/ui/remove_main.cpp" line="-28"/>
         <source>Helper to delete integrated AppImages easily, e.g., from the application launcher&apos;s context menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajudante para eliminar facilmente os AppImages integrados, por exemplo, do menu de contexto do iniciador de aplicações</translation>
     </message>
     <message>
         <location line="+19"/>
@@ -351,7 +351,7 @@ Sintaxe inválida:
     <message>
         <location line="+20"/>
         <source>AppImage delete helper error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro do ajudante de eliminação de AppImage</translation>
     </message>
     <message>
         <source>AppImage remove helper error</source>
@@ -362,7 +362,9 @@ Sintaxe inválida:
         <source>Not an AppImage:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Não é um AppImage:
+
+%1</translation>
     </message>
     <message>
         <source>Please confirm</source>
@@ -448,7 +450,9 @@ Tentar copiar a AppImage em vez disso?</translation>
         <source>Failed to call stat() on path:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha em ligar stat() no caminho:
+
+%1</translation>
     </message>
     <message>
         <source>Failed to copy AppImage to target location</source>
@@ -508,7 +512,10 @@ Esta AppImage não suporta actualização. Por favor, peça aos autores para adi
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation type="unfinished"></translation>
+        <translation>As informações de atualização não estão disponíveis no AppImage:
+%1
+
+Este AppImage não suporta atualização. Por favor, solicitar aos desenvolvedores que adicionem suporte para atualizações automáticas em um próximo lançamento.</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -566,12 +573,12 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location filename="../src/daemon/main.cpp" line="+101"/>
         <source>Tracks AppImages in applications directories (user&apos;s, system and other ones). Automatically integrates AppImages moved into those directories and unintegrates ones removed from them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rastreia AppImages em pastas de aplicações (de usuário, sistema e outras). Integra automaticamente as AppImages transferidas para essas pastas e desintegra as removidas delas.</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Lists directories watched by this daemon and exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Listar pastas observadas por este daemon e sair</translation>
     </message>
 </context>
 <context>
@@ -583,17 +590,17 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location filename="../src/ui/remove.ui" line="+17"/>
         <source>Delete AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Apagar AppImage</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to delete this AppImage?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tem a certeza que querem apagar este AppImage?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>%1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1</translation>
     </message>
 </context>
 <context>
@@ -601,87 +608,87 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location filename="../src/ui/settings_dialog.ui" line="+14"/>
         <source>AppImageLauncher Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurações do AppImageLauncher</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Launcher Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Guia de iniciação</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Ask whether to move AppImage files into the applications directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Perguntar se quer deslocar os ficheiros AppImage para a pasta de integração</translation>
     </message>
     <message>
         <location line="+119"/>
         <source>General settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurações gerais</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When this box is checked, AppImageLauncher automatically starts a daemon called appimagelauncherd.&lt;/p&gt;&lt;p&gt;This daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot; and the additional directories you configured. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Quando esta caixa é marcada, o AppImageLauncher inicia automaticamente um daemon chamado appimagelauncherd.&lt;/p&gt;&lt;p&gt;Este daemon integra automaticamente AppImages que você copia na &amp;quot;pasta de aplicações&amp;quot; e as pastas adicionais que você configurou. Quando as AppImages são apagadas, o daemon vai limpar os dados de integração.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Auto start auto-integration daemon</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar automaticamente o daemon de integração</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Additional directories to watch</source>
-        <translation type="unfinished"></translation>
+        <translation>Pastas adicionais para observar</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Add new directory to list</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar nova pasta à lista</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Remove selected directory from list</source>
-        <translation type="unfinished"></translation>
+        <translation>Retirar a pasta seleccionada da lista</translation>
     </message>
     <message>
         <location line="-144"/>
         <source>Applications directory path</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho da pasta de aplicações</translation>
     </message>
     <message>
         <location line="-11"/>
         <source>Location where to store your AppImage files to ease their management</source>
-        <translation type="unfinished"></translation>
+        <translation>Localização para armazenar as suas AppImages para facilitar a sua gestão</translation>
     </message>
     <message>
         <location line="+49"/>
         <source>Available Features</source>
-        <translation type="unfinished"></translation>
+        <translation>Funcionalidades disponíveis</translation>
     </message>
     <message>
         <location filename="../src/ui/settings_dialog.cpp" line="+40"/>
         <source>updater available for AppImages supporting AppImageUpdate</source>
-        <translation type="unfinished"></translation>
+        <translation>actualizador disponível para AppImages que suporta AppImageUpdate</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>updater unavailable</source>
-        <translation type="unfinished"></translation>
+        <translation>actualizador indisponível</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>&lt;strong&gt;Note: this is an AppImageLauncher Lite build, only supports a limited set of features&lt;/strong&gt;&lt;br /&gt;Please install the full version via the provided native packages to enjoy the full AppImageLauncher experience</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;strong&gt;Nota: esta é uma versão do AppImageLauncher Lite, que oferece um limitado conjunto de funcionalidades&lt;/strong&gt;&lt;br /&gt;Por favor, instalar a versão completa através do gestor de pacotes do seu sistema para beneficiar da experiência completa do AppImageLauncher</translation>
     </message>
     <message>
         <location line="+137"/>
         <source>Select Applications directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar pasta de Aplicações</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Select additional directory to watch</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar pasta adicional para observar</translation>
     </message>
 </context>
 </TS>
