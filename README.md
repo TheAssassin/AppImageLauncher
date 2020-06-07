@@ -110,7 +110,7 @@ Compatibility table (likely incomplete, please feel free to send PRs to add dist
 | Release filename | Build system | Compatible distributions (incomplete) |
 | ---------------- | ------------ | ------------------------------------- |
 | `appimagelauncher-<version>.xenial_(amd64,i386).deb` | Ubuntu xenial | Ubuntu xenial (16.04), Debian stretch (9), Netrunner 17.01 |
-| `appimagelauncher-<version>.bionic_(amd64,i386).deb` | Ubuntu bionic | Ubuntu bionic (18.04), Ubuntu disco (19.04), Ubuntu eoan (19.10) and newer, Debian buster (1) and newer, Netrunner 19.01, 19.08 and newer |
+| `appimagelauncher-<version>.bionic_(amd64,i386).deb` | Ubuntu bionic | Ubuntu bionic (18.04), Ubuntu disco (19.04), Ubuntu eoan (19.10) and newer, Debian buster (10) and newer, Netrunner 19.01, 19.08 and newer |
 | ~~`appimagelauncher-<version>.disco_(amd64,i386).deb`~~  | ~~Ubuntu disco~~  | ~~Ubuntu disco (19.04)~~ |
 | ~~`appimagelauncher-<version>.eoan_(amd64,i386).deb`~~   | ~~Ubuntu eoan~~   | ~~Ubuntu eoan (19.10) and newer~~ |
 | ~~`appimagelauncher-<version>.buster_(amd64,i386).deb`~~ | ~~Debian buster~~ | ~~Debian buster (10) and newer, Netrunner 19.01 and 19.08~~ |
