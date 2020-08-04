@@ -773,7 +773,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
     {
         const auto removeSectionName = "Desktop Action Remove";
 
-        g_key_file_set_string(desktopFile.get(), removeSectionName, "Name", "Remove AppImage from system");
+        g_key_file_set_string(desktopFile.get(), removeSectionName, "Name", "Remove application from system");
         g_key_file_set_string(desktopFile.get(), removeSectionName, "Icon", helperIconName);
 
         std::ostringstream removeExecPath;
@@ -796,7 +796,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
         }
     }
 
-#ifdef ENABLE_UPDATE_HELPER
+#ifdef ENABLE_+_HELPER
     // add Update action
     {
         appimage::update::Updater updater(pathToAppImage.toStdString());
@@ -808,7 +808,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
 
             const auto updateSectionName = "Desktop Action Update";
 
-            g_key_file_set_string(desktopFile.get(), updateSectionName, "Name", "Update AppImage");
+            g_key_file_set_string(desktopFile.get(), updateSectionName, "Name", "Update application");
             g_key_file_set_string(desktopFile.get(), updateSectionName, "Icon", helperIconName);
 
             std::ostringstream updateExecPath;
