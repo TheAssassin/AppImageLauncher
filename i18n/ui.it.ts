@@ -483,7 +483,7 @@ Prova invece a copiare AppImage?</translation>
         <location line="+3"/>
         <source>AppImageLauncher update</source>
         <comment>update helper app name</comment>
-        <translation>AppImageLauncher update</translation>
+        <translation>Aggiornare AppImageLauncher</translation>
     </message>
     <message>
         <source>The AppImage hasn&apos;t been integrated before. This tool will, however, integrate the updated AppImage.</source>
