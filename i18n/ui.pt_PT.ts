@@ -6,37 +6,37 @@
     <message>
         <location filename="../src/ui/first-run.ui" line="+20"/>
         <source>First run</source>
-        <translation type="unfinished"></translation>
+        <translation>Primeira execução</translation>
     </message>
     <message>
         <location line="+55"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Bem-vindo à AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Este mini-ajudante foi desenhado para melhorar a sua experiência do AppImage no seu computador.&lt;/p&gt;&lt;p&gt;Parece que nunca tinha utilizado o AppImageLauncher anteriormente. Por favor, tome um minuto e configure as suas preferências. Pode sempre alterá-las mais tarde, com o painel de controle.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Ask me whether to move new AppImages into a central location</source>
-        <translation type="unfinished"></translation>
+        <translation>Pedir-me se devo mudar as novas AppImages para uma pasta dedicada a elas</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Integration target destination directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasta para armazenar as suas AppImages:</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>Customize</source>
-        <translation type="unfinished"></translation>
+        <translation>Personalizar</translation>
     </message>
     <message>
         <location filename="../src/ui/first-run.cpp" line="+86"/>
         <source>Choose integration destination dir</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolha a pasta de armazenamento as AppImages</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>(default)</source>
-        <translation type="unfinished"></translation>
+        <translation>(padrão)</translation>
     </message>
 </context>
 <context>
@@ -44,7 +44,7 @@
     <message>
         <location filename="../src/ui/main.cpp" line="+466"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Aviso</translation>
     </message>
     <message>
         <source>AppImage has already been integrated, but it is not in the current integration destination directory.
@@ -65,18 +65,24 @@ Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>AppImage %1 já foi integrado com o seu ambiente de trabalho, mas não está situado na pasta de armazenamento definida.
+
+Quer que se mude para o lugar correcto?
+
+Escolhendo &quot;Não&quot;, o AppImage será executado e deixado na sua localização atual.
+
+</translation>
     </message>
     <message>
         <location filename="../src/shared/shared.cpp" line="+1244"/>
         <location line="+8"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha</translation>
     </message>
     <message>
         <location filename="../src/ui/main.cpp" line="+23"/>
         <source>Failed to unregister AppImage before re-integrating it</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha em eliminar todas as partes da integração anterior antes de a reintegrar</translation>
     </message>
     <message>
         <location filename="../src/shared/shared.cpp" line="-546"/>
@@ -84,7 +90,10 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
 Could not open file for reading:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível analisar as traduções de ficheiro no ambiente de trabalho:
+Não pôde abrir o ficheiro para leitura:
+
+%1</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -92,17 +101,20 @@ Could not open file for reading:
 Invalid syntax:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível analisar as traduções de ficheiro no ambiente de trabalho:
+Sintaxe inválida:
+
+%1</translation>
     </message>
     <message>
         <location line="+470"/>
         <source>File %1 is owned by another user: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ficheiro %1 é propriedade de outro utilizador: %2</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Permissions problem</source>
-        <translation type="unfinished"></translation>
+        <translation>Problema das permissões</translation>
     </message>
     <message>
         <source>File %1 is owned by another user: %2
@@ -115,12 +127,12 @@ Relaunch with their permissions?</translation>
     <message>
         <location line="+52"/>
         <source>Failed to run permissions helper, exited with return code %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha em executar o ajudante de permissões; sair com o código de retorno %1</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Could not find suitable permissions helper, aborting</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi encontrado um ajudante de permissões adequado, abortando</translation>
     </message>
 </context>
 <context>
@@ -134,17 +146,17 @@ Relaunch with their permissions?</translation>
         <location filename="../src/ui/update_main.cpp" line="+119"/>
         <location line="+42"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha</translation>
     </message>
     <message>
         <location filename="../src/ui/main.cpp" line="-443"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImageLauncher não suporta atualmente AppImages do tipo %1.</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Could not make AppImage executable: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Não pôde definir a permissão de execução do AppImage: %1</translation>
     </message>
     <message>
         <source>Failed to open AppImage for reading: %1</source>
@@ -178,83 +190,83 @@ Relaunch with their permissions?</translation>
     <message>
         <location line="+124"/>
         <source>execv() failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>execv() falhou: %1</translation>
     </message>
     <message>
         <location line="+70"/>
         <source>Usage: %1 [options] &lt;path&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilização: %1 [opções] &lt;caminho&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Desktop integration helper for AppImages, for use by Linux distributions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajudante de integração de sistemas para AppImages, para utilização por distribuições do Linux.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Options:</source>
-        <translation type="unfinished"></translation>
+        <translation>Opções:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Display this help and exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar esta ajuda e sair</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Display version and exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar versão e sair</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Arguments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Argumentos:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Path to AppImage (mandatory)</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho para AppImage (necessário)</translation>
     </message>
     <message>
         <location line="-21"/>
         <source>Failed to clean up old desktop files</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha na eliminação de ficheiros do ambiente de trabalho antigos</translation>
     </message>
     <message>
         <location line="-163"/>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha ao registar o AppImage no AppImageLauncherFS: erro ao iniciar o serviço systemd de utilizador do appimagelauncherfs</translation>
     </message>
     <message>
         <location line="+72"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha ao registar o AppImage no AppImageLauncherFS: incapaz de registar o caminho do AppImage %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not open map file</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha ao registar o AppImage no AppImageLauncherFS: não pôde abrir o ficheiro de mapa</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha ao registar o AppImage no AppImageLauncherFS:não foi encontrado o ficheiro virtual para AppImage</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Failed to register AppImage in AppImageLauncherFS: unknown failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha ao registar o AppImage no AppImageLauncherFS: falha desconhecida</translation>
     </message>
     <message>
         <location line="+92"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha em esvaziar o contentor de reciclagem das AppImages: %1</translation>
     </message>
     <message>
         <location line="+48"/>
         <source>Unknown AppImageLauncher option: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Opção de AppImageLauncher desconhecida: %1</translation>
     </message>
     <message>
         <location line="+12"/>
