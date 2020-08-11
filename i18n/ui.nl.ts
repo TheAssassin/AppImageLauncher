@@ -750,7 +750,7 @@ Deze AppImage heeft geen update-ondersteuning. Vraag de makers om update-informa
     <message>
         <location line="+5"/>
         <source>&lt;strong&gt;Note: this is an AppImageLauncher Lite build, only supports a limited set of features&lt;/strong&gt;&lt;br /&gt;Please install the full version via the provided native packages to enjoy the full AppImageLauncher experience</source>
-        <translation>&lt;strong&gt;Let op: dit is de AppImageLauncher Lite-versie. Deze ondersteunt slechts een beperkt aantal functies.&lt;/strong&gt;&lt;br /&gt;Installeer de volledige versie om AppImageLauncher volledig te benutten.</translation>
+        <translation>&lt;strong&gt;Let op: dit is de AppImageLauncher Lite-versie. Deze ondersteunt slechts een beperkt aantal functies.&lt;/strong&gt;&lt;br /&gt;Installeer de volledige versie om AppImageLauncher volledig te benutten</translation>
     </message>
     <message>
         <location line="+137"/>
