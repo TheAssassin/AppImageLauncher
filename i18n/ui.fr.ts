@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/ui/first-run.ui" line="+20"/>
         <source>First run</source>
-        <translation>Premier Lancement</translation>
+        <translation>Premier lancement</translation>
     </message>
     <message>
         <location line="+55"/>
@@ -16,7 +16,8 @@
     <message>
         <location line="+22"/>
         <source>Ask me whether to move new AppImages into a central location</source>
-        <translation>Demandez-moi si je veux déplacer le nouvel AppImage dans un dossier centralisé</translation>
+        <translation>
+Demandez-moi si je veux déplacer le nouvel AppImage dans un répertoire centralisé</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -26,17 +27,17 @@
     <message>
         <location line="+36"/>
         <source>Customize</source>
-        <translation type="unfinished"></translation>
+        <translation>Personnalisez</translation>
     </message>
     <message>
         <location filename="../src/ui/first-run.cpp" line="+86"/>
         <source>Choose integration destination dir</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisissez le dossier de destination des AppImages</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>(default)</source>
-        <translation type="unfinished"></translation>
+        <translation>(par défaut)</translation>
     </message>
 </context>
 <context>
