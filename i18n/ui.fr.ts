@@ -110,22 +110,22 @@ Syntaxe invalide :
     <message>
         <location line="+470"/>
         <source>File %1 is owned by another user: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Le fichier %1 appartient à un autre utilisateur : %2</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Permissions problem</source>
-        <translation type="unfinished"></translation>
+        <translation>Problèmes de permissions</translation>
     </message>
     <message>
         <location line="+52"/>
         <source>Failed to run permissions helper, exited with return code %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Echec de l&apos;exécution de l&apos;aide aux autorisations, quitté avec le code de retour %1</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Could not find suitable permissions helper, aborting</source>
-        <translation type="unfinished"></translation>
+        <translation>N&apos;a pas trouvé les aides de permissions appropriées, abandon</translation>
     </message>
 </context>
 <context>
@@ -213,7 +213,7 @@ Syntaxe invalide :
     <message>
         <location line="+2"/>
         <source>Arguments:</source>
-        <translation>Paramètres:</translation>
+        <translation>Paramètres :</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -228,27 +228,27 @@ Syntaxe invalide :
     <message>
         <location line="-163"/>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
-        <translation type="unfinished"></translation>
+        <translation>Echec de l&apos;enregistrement de l&apos;AppImage dans AppImageLauncherFS : erreur lors de l&apos;essai de lancement de appimagelauncherfs.service</translation>
     </message>
     <message>
         <location line="+72"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Echec de l&apos;enregistrement de l&apos;AppImage dans AppImageLauncherFS : echec de l&apos;enregistrement dans le dossier AppImage 1%</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not open map file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;enregistrer l&apos;AppImage dans AppImageLauncherFS : impossible d&apos;ouvrir le fichier de la carte</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;enregistrer &apos;AppImage dans AppImageLauncherFS : impossible de trouver un fichier virtuel pour AppImage</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Failed to register AppImage in AppImageLauncherFS: unknown failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;enregistrer l&apos;AppImage dans AppImageLauncherFS : impossible de trouver un fichier virtuel pour AppImage</translation>
     </message>
     <message>
         <location line="+92"/>
@@ -337,7 +337,7 @@ Syntaxe invalide :
     <message>
         <location filename="../src/ui/remove_main.cpp" line="-28"/>
         <source>Helper to delete integrated AppImages easily, e.g., from the application launcher&apos;s context menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Aide pour supprimer facilement les AppImages intégrées, par exemple dans le menu contextuel du lanceur d&apos;application</translation>
     </message>
     <message>
         <location line="+19"/>
@@ -352,7 +352,7 @@ Syntaxe invalide :
     <message>
         <location line="+20"/>
         <source>AppImage delete helper error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur de l&apos;aide à la suppression de l&apos;AppImage</translation>
     </message>
     <message>
         <source>AppImage remove helper error</source>
@@ -363,7 +363,9 @@ Syntaxe invalide :
         <source>Not an AppImage:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>N&apos;est pas une AppImage
+
+%1</translation>
     </message>
     <message>
         <source>Please confirm</source>
@@ -449,7 +451,9 @@ Essayer plutôt de la copier ?</translation>
         <source>Failed to call stat() on path:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;appeler stat() sur le chemin :
+
+%1</translation>
     </message>
     <message>
         <source>Failed to copy AppImage to target location</source>
@@ -509,7 +513,10 @@ Cette AppImage ne prend pas en charge les mises à jour. Veuillez contacter les 
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver des informations de mises à jours dans AppImage :
+%1
+
+L&apos;AppImage ne prend pas en charge la mise à jour. Veuillez demander aux auteurs de configurer les informations de mise à jour pour permettre une mise à jour facile.</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -567,12 +574,12 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location filename="../src/daemon/main.cpp" line="+101"/>
         <source>Tracks AppImages in applications directories (user&apos;s, system and other ones). Automatically integrates AppImages moved into those directories and unintegrates ones removed from them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Suit les AppImages dans les répertoires d&apos;applications (utilisateur, système et autres). Intègre automatiquement les AppImages déplacées dans ces répertoires et désintégre celles qui en ont été retirées.</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Lists directories watched by this daemon and exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Liste les répertoires surveillés par ce démon et quitter</translation>
     </message>
 </context>
 <context>
@@ -584,17 +591,17 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location filename="../src/ui/remove.ui" line="+17"/>
         <source>Delete AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer l&apos;AppImage</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to delete this AppImage?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Etes vous sur de vouloir supprimer cette AppImage ?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>%1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1</translation>
     </message>
 </context>
 <context>
@@ -602,7 +609,7 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location filename="../src/ui/settings_dialog.ui" line="+14"/>
         <source>AppImageLauncher Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres de AppImageLauncher</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -612,12 +619,12 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="+6"/>
         <source>Ask whether to move AppImage files into the applications directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Demandez s&apos;il faut déplacer les fichiers AppImage dans le répertoire des applications</translation>
     </message>
     <message>
         <location line="+119"/>
         <source>General settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres généraux</translation>
     </message>
     <message>
         <location line="+6"/>
