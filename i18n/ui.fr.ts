@@ -16,12 +16,12 @@
     <message>
         <location line="+22"/>
         <source>Ask me whether to move new AppImages into a central location</source>
-        <translation type="unfinished"></translation>
+        <translation>Demandez-moi si je veux déplacer le nouvel AppImage dans un dossier centralisé</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Integration target destination directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Répertoire de destination des AppImages :</translation>
     </message>
     <message>
         <location line="+36"/>
