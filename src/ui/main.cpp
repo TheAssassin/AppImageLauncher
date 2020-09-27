@@ -55,110 +55,30 @@ int runAppImage(const QString& pathToAppImage, unsigned long argc, char** argv) 
         return 1;
     }
 
-    // make sure to restart service in case AppImageLauncher has been updated
-//    if (!fsDaemonHasBeenRestartedSinceLastUpdate()) {
-//        auto rv = system("systemctl --user restart appimagelauncherfs 2>&1 1>/dev/null");
-//        if (rv != 0) {
-//            displayError(QObject::tr("Failed to register AppImage in AppImageLauncherFS: error while trying to restart appimagelauncherfs.service after update"));
-//            return 1;
-//        }
-//    }
-
-    // make sure appimagelauncherfs service is running
-    auto rv = system("systemctl --user enable appimagelauncherfs 2>&1 1>/dev/null");
-    rv += system("systemctl --user start appimagelauncherfs 2>&1 1>/dev/null");
-
-    if (rv != 0) {
-        displayError(QObject::tr("Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service"));
-        return 1;
-    }
-
     // suppress desktop integration script etc.
     setenv("DESKTOPINTEGRATION", "AppImageLauncher", true);
 
-    // build path to AppImageLauncherFS endpoint
-    QString pathToFSEndpoint = "/run/user/" + QString::number(getuid()) + "/appimagelauncherfs/";
+    auto makeVectorBuffer = [](const std::string& str) {
+        std::vector<char> strBuffer(str.size() + 1, '\0');
+        strncpy(strBuffer.data(), str.c_str(), str.size());
+        return strBuffer;
+    };
 
-    // resolve path to virtual file in map
-    QString pathToVirtualAppImage;
+    // calculate buffer to bypass binary
+    std::string pathToBinfmtBypassLauncher = privateLibDirPath("binfmt-bypass").toStdString() + "/binfmt-bypass";
 
-    bool registrationWorked = false, pathResolvingWorked = false, openingMapFileWorked = false;
-
-    // try to fetch ID of registered AppImage up to 10 times, with increasing timeouts
-    for (useconds_t i = 1; i < 10; i++) {
-        usleep(i * 100000);
-
-        // register current AppImage
-        if (!registrationWorked){
-            QFile registerFile(pathToFSEndpoint + "/register");
-
-            if (registerFile.open(QIODevice::Append)) {
-                QTextStream stream(&registerFile);
-                stream << pathToAppImage << endl;
-            }
-
-            registrationWorked = true;
-
-            registerFile.close();
-        }
-
-        // reading line wise properly is [hard, impossible[ in Qt
-        // using good ol' C++
-        std::string mapFilePath = (pathToFSEndpoint + "/map").toStdString();
-
-        std::ifstream mapFile(mapFilePath);
-
-        if (!mapFile) {
-            openingMapFileWorked = false;
-            continue;
-        }
-
-        openingMapFileWorked = true;
-
-        std::string currentLine;
-        while (std::getline(mapFile, currentLine)) {
-            if (currentLine.find(pathToAppImage.toStdString()) != std::string::npos) {
-                auto virtualFileName = currentLine.substr(0, currentLine.find(" -> "));
-                pathToVirtualAppImage = pathToFSEndpoint + "/" + QString::fromStdString(virtualFileName);
-                break;
-            }
-        }
-
-        mapFile.close();
-
-        if (!pathToVirtualAppImage.isEmpty()) {
-            pathResolvingWorked = true;
-            break;
-        }
-    }
-
-    // error message handling
-    if (pathToVirtualAppImage.isEmpty()) {
-        QString errorMessage;
-
-        if (!registrationWorked) {
-            errorMessage = QObject::tr("Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1").arg(pathToAppImage);
-        } else if (!openingMapFileWorked) {
-            errorMessage = QObject::tr("Failed to register AppImage in AppImageLauncherFS: could not open map file");
-        } else if (!pathResolvingWorked) {
-            errorMessage = QObject::tr("Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage");
-        } else {
-            // this should _never_ be reachable
-            errorMessage = QObject::tr("Failed to register AppImage in AppImageLauncherFS: unknown failure");
-        }
-
-        displayError(errorMessage);
-
-        return 1;
-    }
-
-    // need a char pointer instead of a const one, therefore can't use .c_str()
-    std::vector<char> argv0Buffer(pathToAppImage.toStdString().size() + 1, '\0');
-    strcpy(argv0Buffer.data(), pathToAppImage.toStdString().c_str());
-
+    // create new args array for exec()d process
     std::vector<char*> args;
 
-    args.push_back(argv0Buffer.data());
+    // first argument is the path to our launcher
+    auto pathToBinfmtBypassLauncherBuffer = makeVectorBuffer(pathToBinfmtBypassLauncher);
+    args.push_back(pathToBinfmtBypassLauncherBuffer.data());
+
+    // first argument is consumed by the bypass launcher
+    // the reason we launch the bypass launcher as a new process to save RAM (we have to launch the actual AppImage
+    // as a subprocess, and the launcher executable has a much lower memory footprint)
+    auto pathToAppImageBuffer = makeVectorBuffer(pathToAppImage.toStdString());
+    args.push_back(pathToAppImageBuffer.data());
 
     // copy arguments
     for (unsigned long i = 1; i < argc; i++) {
@@ -168,7 +88,7 @@ int runAppImage(const QString& pathToAppImage, unsigned long argc, char** argv) 
     // args need to be null terminated
     args.push_back(nullptr);
 
-    execv(pathToVirtualAppImage.toStdString().c_str(), args.data());
+    execv(pathToBinfmtBypassLauncher.c_str(), args.data());
 
     const auto& error = errno;
     std::cerr << QObject::tr("execv() failed: %1").arg(strerror(error)).toStdString() << std::endl;
