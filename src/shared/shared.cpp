@@ -570,6 +570,36 @@ std::shared_ptr<char> getOwnBinaryPath() {
     return path;
 }
 
+#ifndef BUILD_LITE
+QString privateLibDirPath(const QString& srcSubdirName) {
+    // PRIVATE_LIBDIR will be a relative path most likely
+    // therefore, we need to detect the install prefix based on our own binary path, and then calculate the path to
+    // the helper tools based on that
+    const QString ownBinaryDirPath = QFileInfo(getOwnBinaryPath().get()).dir().absolutePath();
+    const QString installPrefixPath = QFileInfo(ownBinaryDirPath).dir().absolutePath();
+    QString privateLibDirPath = installPrefixPath + "/" + PRIVATE_LIBDIR;
+
+    // the following lines make things work during development: here, the build dir path is inserted instead, which
+    // allows for testing with the latest changes
+    if (!QDir(privateLibDirPath).exists()) {
+        // this makes sure that when we're running from a local dev build, we end up in the right directory
+        // very important when running this code from the daemon, since it's not in the same directory as the helpers
+        privateLibDirPath = ownBinaryDirPath + "/../" + srcSubdirName;
+    }
+
+    // if there is no such directory like <prefix>/bin/../lib/... or the binary is not found there, there is a chance
+    // the binary is just next to this one (this is the case in the update/remove helpers)
+    // therefore we compare the binary directory path with PRIVATE_LIBDIR
+    if (!QDir(privateLibDirPath).exists()) {
+        if (privateLibDirPath.contains(PRIVATE_LIBDIR)) {
+            privateLibDirPath = ownBinaryDirPath;
+        }
+    }
+
+    return privateLibDirPath;
+}
+#endif
+
 bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveCollisions) {
     if (appimage_register_in_system(pathToAppImage.toStdString().c_str(), false) != 0) {
         displayError(QObject::tr("Failed to register AppImage in system via libappimage"));
@@ -740,34 +770,12 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
 #endif
 
 #ifndef BUILD_LITE
-    // PRIVATE_LIBDIR will be a relative path most likely
-    // therefore, we need to detect the install prefix based on our own binary path, and then calculate the path to
-    // the helper tools based on that
-    const QString ownBinaryDirPath = QFileInfo(getOwnBinaryPath().get()).dir().absolutePath();
-    const QString installPrefixPath = QFileInfo(ownBinaryDirPath).dir().absolutePath();
-    QString privateLibDirPath = installPrefixPath + "/" + PRIVATE_LIBDIR;
-
-    // if there is no such directory like <prefix>/bin/../lib/... or the binary is not found there, there is a chance
-    // the binary is just next to this one (this is the case in the update/remove helpers)
-    // therefore we compare the binary directory path with PRIVATE_LIBDIR
-    if (!QDir(privateLibDirPath).exists()) {
-        if (privateLibDirPath.contains(PRIVATE_LIBDIR)) {
-            privateLibDirPath = ownBinaryDirPath;
-        }
-    }
-
-    // the following lines make things work during development: here, the build dir path is inserted instead, which
-    // allows for testing with the latest changes
-    if (!QDir(privateLibDirPath).exists()) {
-        // this makes sure that when we're running from a local dev build, we end up in the right directory
-        // very important when running this code from the daemon, since it's not in the same directory as the helpers
-        privateLibDirPath = ownBinaryDirPath + "/../ui";
-    }
-
     const char helperIconName[] = "AppImageLauncher";
 #else
     const char helperIconName[] = "AppImageLauncher-Lite";
 #endif
+
+    auto privateLibDir = privateLibDirPath("ui");
 
     // add Remove action
     {
@@ -779,7 +787,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
         std::ostringstream removeExecPath;
 
 #ifndef BUILD_LITE
-        removeExecPath << privateLibDirPath.toStdString() << "/remove";
+        removeExecPath << privateLibDir.toStdString() << "/remove";
 #else
         removeExecPath << getenv("HOME") << "/.local/lib/appimagelauncher-lite/appimagelauncher-lite.AppImage remove";
 #endif
@@ -814,7 +822,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
             std::ostringstream updateExecPath;
 
 #ifndef BUILD_LITE
-            updateExecPath << privateLibDirPath.toStdString() << "/update";
+            updateExecPath << privateLibDir.toStdString() << "/update";
 #else
             updateExecPath << getenv("HOME") << "/.local/lib/appimagelauncher-lite/appimagelauncher-lite.AppImage update";
 #endif

@@ -39,6 +39,11 @@ bool makeExecutable(const QString& path);
 // removes executable bits from file's permissions
 bool makeNonExecutable(const QString& path);
 
+#ifndef BUILD_LITE
+// calculate path to private libdir, containing tools and libraries specific to and used by AppImageLauncher
+QString privateLibDirPath(const QString& srcSubdirName);
+#endif
+
 // installs desktop file for given AppImage, including AppImageLauncher specific modifications
 // set resolveCollisions to false in order to leave the Name entries as-is
 bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveCollisions = true);
