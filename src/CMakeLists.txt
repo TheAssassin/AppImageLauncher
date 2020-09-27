@@ -4,6 +4,9 @@ cmake_minimum_required(VERSION 3.6)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed
@@ -54,6 +57,11 @@ add_subdirectory(ui)
 # FUSE filesystem AppImageLauncherFS
 if(NOT BUILD_LITE)
     add_subdirectory(fusefs)
+endif()
+
+# no need to include bypass launcher in lite builds
+if(NOT BUILD_LITE)
+    add_subdirectory(binfmt-bypass)
 endif()
 
 # CLI helper allowing other tools to utilize AppImageLauncher's code for e.g., integrating AppImages
