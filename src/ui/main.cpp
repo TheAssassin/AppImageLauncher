@@ -39,7 +39,6 @@ int runAppImage(const QString& pathToAppImage, unsigned long argc, char** argv) 
     // needs to be converted to std::string to be able to use c_str()
     // when using QString and then .toStdString().c_str(), the std::string instance will be an rvalue, and the
     // pointer returned by c_str() will be invalid
-    auto x = pathToAppImage.toStdString();
     auto fullPathToAppImage = QFileInfo(pathToAppImage).absoluteFilePath();
 
     auto type = appimage_get_type(fullPathToAppImage.toStdString().c_str(), false);
