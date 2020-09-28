@@ -35,6 +35,11 @@ bool copy_and_patch_runtime(int fd, const char* const appimage_filename, const s
     return true;
 }
 
+#ifdef HAVE_MEMFD_CREATE
+
+// if memfd_create is available, we should use it as it has a few important advantages over older solutions like
+// shm_open or classic tempfiles
+
 int create_memfd_with_patched_runtime(const char* const appimage_filename, const ssize_t elf_size) {
     // as we call exec() after fork() to create a child process (the parent keeps it alive, the child doesn't require
     // access anyway), we enable close-on-exec
@@ -53,6 +58,62 @@ int create_memfd_with_patched_runtime(const char* const appimage_filename, const
 
     return memfd;
 }
+
+#else
+
+// in case memfd_create is *not* available, we fall back to shm_open
+// it requires a few more lines of code (e.g., changing permissions to limit access to the created file)
+// also, we can't just
+
+int create_shm_fd_with_patched_runtime(const char* const appimage_filename, const ssize_t elf_size) {
+    // let's hope that mktemp returns a unique filename; if not, shm_open returns an error, thanks to O_EXCL
+    // the file exists only for a fraction of a second normally, so the chances are not too bad
+    char mktemp_template[] = "runtime-XXXXXX";
+    const char* runtime_filename = mktemp(mktemp_template);
+
+    if (runtime_filename[0] == '\0') {
+        log_error("failed to create temporary filename\n");
+        return -1;
+    }
+
+    // shm_open doesn't survive over exec(), so we _have to_ keep this process alive and create a child for the runtime
+    // the good news is: we don't have to worry about setting flags to close-on-exec
+    int writable_fd = shm_open(runtime_filename, O_RDWR | O_CREAT, 0700);
+
+    if (writable_fd < 0) {
+        log_error("shm_open failed (writable): %s\n", strerror(errno));
+        return -1;
+    }
+
+    // open file read-only before unlinking the file, this is the fd we return later
+    // otherwise we'll end up with ETXTBSY when trying to exec() it
+    int readable_fd = shm_open(runtime_filename, O_RDONLY, 0);
+
+    if (readable_fd < 0) {
+        log_error("shm_open failed (read-only): %s\n", strerror(errno));
+        return -1;
+    }
+
+    // let's make sure the file goes away when it's closed
+    // as long as we don't close the fd, it won't go away, but if we do, the OS takes care of freeing the memory
+    if (shm_unlink(runtime_filename) != 0) {
+        log_error("shm_unlink failed: %s\n", strerror(errno));
+        close(writable_fd);
+        return -1;
+    }
+
+    if (!copy_and_patch_runtime(writable_fd, appimage_filename, elf_size)) {
+        log_error("failed to copy and patch runtime\n");
+        close(writable_fd);
+        return -1;
+    }
+
+    // close writable fd and return readable one
+    close(writable_fd);
+    return readable_fd;
+}
+
+#endif
 
 char* find_preload_library() {
     // we expect the library to be placed next to this binary
@@ -91,11 +152,15 @@ int main(int argc, char** argv) {
         return EXIT_CODE_FAILURE;
     }
 
+#ifdef HAVE_MEMFD_CREATE
     // create "file" in memory, copy runtime there and patch out magic bytes
-    int memfd = create_memfd_with_patched_runtime(appimage_filename, size);
+    int runtime_fd = create_memfd_with_patched_runtime(appimage_filename, size);
+#else
+    int runtime_fd = create_shm_fd_with_patched_runtime(appimage_filename, size);
+#endif
 
-    if (memfd < 0) {
-        log_error("failed to create memfd with patched runtime\n");
+    if (runtime_fd < 0) {
+        log_error("failed to set up in-memory file with patched runtime\n");
         return EXIT_CODE_FAILURE;
     }
 
@@ -142,7 +207,7 @@ int main(int argc, char** argv) {
     wait(&status);
 
     // clean up
-    close(memfd);
+    close(runtime_fd);
 
     return WEXITSTATUS(status);
 }
