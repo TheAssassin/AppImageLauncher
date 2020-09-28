@@ -15,30 +15,41 @@
 
 #define EXIT_CODE_FAILURE 0xff
 
-int create_memfd_with_patched_runtime(const char* const appimage_filename, const ssize_t elf_size) {
-    // as we call exec() after fork() to create a child process (the parent keeps it alive, the child doesn't require
-    // access anyway), we enable close-on-exec
-    const auto memfd = memfd_create("runtime", MFD_CLOEXEC);
-
-    if (memfd < 0) {
-        std::cerr << "memfd_create failed" << std::endl;
-        return EXIT_CODE_FAILURE;
-    }
-
+bool copy_and_patch_runtime(int fd, const char* const appimage_filename, const ssize_t elf_size) {
     // copy runtime header into memfd "file"
     {
         const auto realfd = open(appimage_filename, O_RDONLY);
         std::vector<char> buffer(elf_size);
         // TODO: check for errors
         read(realfd, buffer.data(), elf_size);
-        write(memfd, buffer.data(), elf_size);
+        write(fd, buffer.data(), elf_size);
         close(realfd);
     }
 
     // erase magic bytes
-    lseek(memfd, 8, SEEK_SET);
+    lseek(fd, 8, SEEK_SET);
     char null_buf[]{0, 0, 0};
-    write(memfd, null_buf, 3);
+    write(fd, null_buf, 3);
+
+    // TODO: handle errors properly
+    return true;
+}
+
+int create_memfd_with_patched_runtime(const char* const appimage_filename, const ssize_t elf_size) {
+    // as we call exec() after fork() to create a child process (the parent keeps it alive, the child doesn't require
+    // access anyway), we enable close-on-exec
+    const auto memfd = memfd_create("runtime", MFD_CLOEXEC);
+
+    if (memfd < 0) {
+        log_error("memfd_create failed\n");
+        return -1;
+    }
+
+    if (!copy_and_patch_runtime(memfd, appimage_filename, elf_size)) {
+        log_error("failed to copy and patch runtime\n");
+        close(memfd);
+        return -1;
+    }
 
     return memfd;
 }
@@ -82,6 +93,11 @@ int main(int argc, char** argv) {
 
     // create "file" in memory, copy runtime there and patch out magic bytes
     int memfd = create_memfd_with_patched_runtime(appimage_filename, size);
+
+    if (memfd < 0) {
+        log_error("failed to create memfd with patched runtime\n");
+        return EXIT_CODE_FAILURE;
+    }
 
     // to keep alive the memfd, we launch the AppImage as a subprocess
     if (fork() == 0) {
