@@ -770,12 +770,12 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
 #endif
 
 #ifndef BUILD_LITE
+    auto privateLibDir = privateLibDirPath("ui");
+
     const char helperIconName[] = "AppImageLauncher";
 #else
     const char helperIconName[] = "AppImageLauncher-Lite";
 #endif
-
-    auto privateLibDir = privateLibDirPath("ui");
 
     // add Remove action
     {
