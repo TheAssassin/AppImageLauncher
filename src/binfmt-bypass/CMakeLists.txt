@@ -39,3 +39,12 @@ endif()
 
 # the binary uses the library, so let's make sure it's up to date before we build the bypass binary
 add_dependencies(${bypass_bin} ${preload_lib})
+
+# no need to set rpath on bypass binary, it doesn't depend on any private libraries
+# the preload lib is used via its absolute path anyway
+
+install(
+    TARGETS ${bypass_bin} ${preload_lib}
+    RUNTIME DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
+    LIBRARY DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
+)
