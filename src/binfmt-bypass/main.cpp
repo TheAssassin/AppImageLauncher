@@ -41,7 +41,7 @@ int create_memfd_with_patched_runtime(const char* const appimage_filename, const
     const auto memfd = memfd_create("runtime", MFD_CLOEXEC);
 
     if (memfd < 0) {
-        log_error("memfd_create failed\n");
+        log_error("memfd_create failed: %s\n", strerror(errno));
         return -1;
     }
 
@@ -131,8 +131,9 @@ int main(int argc, char** argv) {
 
         // launch memfd directly, no path needed
         log_debug("fexecve(...)\n");
-        fexecve(memfd, new_argv.data(), environ);
+        fexecve(runtime_fd, new_argv.data(), environ);
 
+        log_error("failed to execute patched runtime: %s\n", strerror(errno));
         return EXIT_CODE_FAILURE;
     }
 
