@@ -1122,54 +1122,6 @@ bool desktopFileHasBeenUpdatedSinceLastUpdate(const QString& pathToAppImage) {
     return desktopFileMTime > ownBinaryMTime;
 }
 
-bool fsDaemonHasBeenRestartedSinceLastUpdate() {
-    const auto ownBinaryPath = getOwnBinaryPath();
-
-    auto ownBinaryMTime = getMTime(ownBinaryPath.get());
-
-    auto getServiceStartTime = []() -> long long {
-        auto fp = popen("systemctl --user show appimagelauncherfs.service --property=ActiveEnterTimestampMonotonic", "r");
-
-        if (fp == nullptr) {
-            return -1;
-        }
-
-        std::vector<char> buffer(512);
-
-        if (fread(buffer.data(), sizeof(char), buffer.size(), fp) < 0)
-            return 1;
-
-        std::string strbuf(buffer.data());
-
-        auto equalsPos = strbuf.find('=');
-        auto lfPos = strbuf.find('\n');
-        if (lfPos == std::string::npos)
-            lfPos = strbuf.size();
-
-        auto timestamp = strbuf.substr(equalsPos + 1, lfPos - equalsPos - 1);
-
-        auto monotonicRuntime = static_cast<long long>(std::stoll(timestamp) / 1e6);
-
-        timespec currentMonotonicTime{};
-        timespec currentRealTime{};
-
-        clock_gettime(CLOCK_MONOTONIC, &currentMonotonicTime);
-        clock_gettime(CLOCK_REALTIME, &currentRealTime);
-
-        auto offset = currentRealTime.tv_sec - currentMonotonicTime.tv_sec;
-
-        return monotonicRuntime + offset;
-    };
-
-    auto serviceStartTime = getServiceStartTime();
-
-    // check if something has failed horribly
-    if (serviceStartTime < 0 || ownBinaryMTime < 0)
-        return false;
-
-    return serviceStartTime > ownBinaryMTime;
-}
-
 bool isAppImage(const QString& path) {
     const auto type = appimage_get_type(path.toUtf8(), false);
     return type > 0 && type <= 2;

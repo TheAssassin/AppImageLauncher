@@ -3,11 +3,8 @@
 set(PROJECT_VERSION ${APPIMAGELAUNCHER_VERSION})
 set(CPACK_GENERATOR "DEB")
 
-# make sure to only package APPIMAGELAUNCHER and APPIMAGELAUNCHERFS components
+# make sure to only package APPIMAGELAUNCHER component
 set(CPACK_COMPONENTS_ALL APPIMAGELAUNCHER APPIMAGELAUNCHER_CLI)
-if(NOT USE_SYSTEM_APPIMAGELAUNCHERFS)
-    list(APPEND CPACK_COMPONENTS_ALL APPIMAGELAUNCHERFS)
-endif()
 # package them all in a single package, otherwise cpack would generate one package per component by default
 # https://cmake.org/cmake/help/v3.0/module/CPackComponent.html#variable:CPACK_COMPONENTS_GROUPING
 set(CPACK_COMPONENTS_GROUPING ALL_COMPONENTS_IN_ONE)

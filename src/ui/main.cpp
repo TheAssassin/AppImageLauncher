@@ -48,7 +48,6 @@ int runAppImage(const QString& pathToAppImage, unsigned long argc, char** argv) 
     }
 
     // first of all, chmod +x the AppImage registerFile
-    // not strictly necessary for AppImageLauncherFS, but if AppImageLauncher is going to be removed, the user will
     // be happy the registerFile is executable already
     if (!makeExecutable(fullPathToAppImage)) {
         displayError(QObject::tr("Could not make AppImage executable: %1").arg(fullPathToAppImage));

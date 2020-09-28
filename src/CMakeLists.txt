@@ -54,11 +54,6 @@ add_subdirectory(daemon)
 # main application and helper tools
 add_subdirectory(ui)
 
-# FUSE filesystem AppImageLauncherFS
-if(NOT BUILD_LITE)
-    add_subdirectory(fusefs)
-endif()
-
 # no need to include bypass launcher in lite builds
 if(NOT BUILD_LITE)
     add_subdirectory(binfmt-bypass)
