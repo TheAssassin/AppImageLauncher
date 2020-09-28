@@ -16,7 +16,9 @@
 #define EXIT_CODE_FAILURE 0xff
 
 int create_memfd_with_patched_runtime(const char* const appimage_filename, const ssize_t elf_size) {
-    const auto memfd = memfd_create("runtime", 0);
+    // as we call exec() after fork() to create a child process (the parent keeps it alive, the child doesn't require
+    // access anyway), we enable close-on-exec
+    const auto memfd = memfd_create("runtime", MFD_CLOEXEC);
 
     if (memfd < 0) {
         std::cerr << "memfd_create failed" << std::endl;
@@ -67,7 +69,7 @@ int main(int argc, char** argv) {
         return EXIT_CODE_FAILURE;
     }
 
-    const char* const appimage_filename = argv[1];
+    const auto* appimage_filename = argv[1];
     log_debug("AppImage filename: %s\n", appimage_filename);
 
     // read size of AppImage runtime (i.e., detect size of ELF binary)
@@ -121,6 +123,9 @@ int main(int argc, char** argv) {
     // wait for child process to exit, and exit with its return code
     int status;
     wait(&status);
+
+    // clean up
+    close(memfd);
 
     return WEXITSTATUS(status);
 }
