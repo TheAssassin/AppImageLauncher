@@ -11,18 +11,17 @@
     <message>
         <location line="+55"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Bienvenido a AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Este pequeño ayudante esta
-diseñado para mejorar tu experiencia de AppImage en tu computadora.&lt;/p&gt;&lt;p&gt;Parece que nunca has ejecutado AppImageLauncher antes. Por favor tome un minuto y configura tus preferencias. Siempre puedes cambiarlos más adelante, usando el panel de control.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Le damos la bienvenida al AppImageLauncher.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Este auxiliar se ha diseñado para mejorar la experiencia con AppImage en su equipo.&lt;/p&gt;&lt;p&gt;Parece que no ha ejecutado AppImageLauncher antes. Tómese un momento para configurarlo. Siempre podrá modificar sus preferencias mediante el panel de control.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Ask me whether to move new AppImages into a central location</source>
-        <translation>Pregúntame si debo mover las nuevas AppImages a una ubicación central</translation>
+        <translation>Preguntarme si deben moverse las AppImages nuevas a una ubicación central</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Integration target destination directory:</source>
-        <translation>Directorio destino de la integración del objetivo:</translation>
+        <translation>Directorio de destino para imágenes integradas:</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -32,12 +31,12 @@ diseñado para mejorar tu experiencia de AppImage en tu computadora.&lt;/p&gt;&l
     <message>
         <location filename="../src/ui/first-run.cpp" line="+86"/>
         <source>Choose integration destination dir</source>
-        <translation>Elija la dirección del destino de integración</translation>
+        <translation>Elija el directorio de destino de integración</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>(default)</source>
-        <translation>(por defecto)</translation>
+        <translation>(predeterminado)</translation>
     </message>
 </context>
 <context>
@@ -45,7 +44,7 @@ diseñado para mejorar tu experiencia de AppImage en tu computadora.&lt;/p&gt;&l
     <message>
         <location filename="../src/ui/main.cpp" line="+466"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>Atención</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -56,11 +55,11 @@ Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.
 
 </source>
-        <translation>AppImage %1 ya se ha integrado, pero no está en el directorio de destino de integración actual.
+        <translation>La AppImage %1 ya se ha integrado pero no se encuentra en el directorio de destino de integración actual.
 
-Quieres moverlo al nuevo destino?
+¿Quiere trasladarlo al destino nuevo?
 
-Elegir No ejecutará AppImage una vez, y dejará la AppImage en su directorio actual.
+Si elige «No» se ejecutará la AppImage una vez y se dejará en el directorio donde se encuentra ahora.
 
 </translation>
     </message>
@@ -73,7 +72,7 @@ Elegir No ejecutará AppImage una vez, y dejará la AppImage en su directorio ac
     <message>
         <location filename="../src/ui/main.cpp" line="+23"/>
         <source>Failed to unregister AppImage before re-integrating it</source>
-        <translation>Error al eliminar el registro de AppImage antes de volver a integrarlo</translation>
+        <translation>No se pudo cancelar el registro de la AppImage antes de reintegrarla</translation>
     </message>
     <message>
         <location filename="../src/shared/shared.cpp" line="-546"/>
@@ -93,29 +92,29 @@ Invalid syntax:
 
 %1</source>
         <translation>No se pudieron analizar las traducciones de archivos de escritorio:
-Sintaxis inválida:
+La sintaxis no es válida:
 
 %1</translation>
     </message>
     <message>
         <location line="+470"/>
         <source>File %1 is owned by another user: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>El archivo «%1» es propiedad de otro usuario: %2</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Permissions problem</source>
-        <translation type="unfinished"></translation>
+        <translation>Problema de permisos</translation>
     </message>
     <message>
         <location line="+52"/>
         <source>Failed to run permissions helper, exited with return code %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo ejecutar el auxiliar de permisos; se salió con el código %1</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Could not find suitable permissions helper, aborting</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo encontrar un auxiliar de permisos adecuado; se interrumpe la operación</translation>
     </message>
     <message>
         <source>AppImage has already been integrated, but it is not in the current integration destination directory.
@@ -144,12 +143,12 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
     <message>
         <location filename="../src/ui/main.cpp" line="-443"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
-        <translation>AppImageLauncher aun no soporta AppImages tipo %1.</translation>
+        <translation>Por ahora, AppImageLauncher no admite AppImages de tipo %1.</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Could not make AppImage executable: %1</source>
-        <translation>No se pudo hacer que AppImage sea ejecutable: %1</translation>
+        <translation>No se pudo hacer que la AppImage sea ejecutable: %1</translation>
     </message>
     <message>
         <source>Failed to open AppImage for reading: %1</source>
@@ -183,7 +182,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
     <message>
         <location line="+124"/>
         <source>execv() failed: %1</source>
-        <translation>Execv () falló: %1</translation>
+        <translation>execv() falló: %1</translation>
     </message>
     <message>
         <location line="+70"/>
@@ -193,7 +192,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
     <message>
         <location line="+1"/>
         <source>Desktop integration helper for AppImages, for use by Linux distributions.</source>
-        <translation>Ayudante de integración de escritorio para AppImages, para ser utilizado por las distribuciones de Linux.</translation>
+        <translation>Auxiliar de integración con el escritorio para AppImages destinado a distribuciones Linux.</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -203,12 +202,12 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
     <message>
         <location line="+1"/>
         <source>Display this help and exit</source>
-        <translation>Muestre esta ayuda y salga</translation>
+        <translation>Mostrar esta ayuda y salir</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Display version and exit</source>
-        <translation>Mostrar versión y salir</translation>
+        <translation>Mostrar la versión y salir</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -218,12 +217,12 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
     <message>
         <location line="+1"/>
         <source>Path to AppImage (mandatory)</source>
-        <translation>Ruta hacia AppImage (Obligatorio)</translation>
+        <translation>Ruta a la AppImage (obligatoria)</translation>
     </message>
     <message>
         <location line="-21"/>
         <source>Failed to clean up old desktop files</source>
-        <translation>Error al limpiar los viejos archivos de escritorio</translation>
+        <translation>No se pudieron quitar los archivos .desktop antiguos</translation>
     </message>
     <message>
         <location line="-163"/>
@@ -351,7 +350,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
     <message>
         <location line="+20"/>
         <source>AppImage delete helper error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error en el auxiliar de eliminación de AppImages</translation>
     </message>
     <message>
         <source>AppImage remove helper error</source>
@@ -602,12 +601,12 @@ AppImage no admite la actualización. Solicite a los autores que configuren info
     <message>
         <location filename="../src/ui/remove.ui" line="+17"/>
         <source>Delete AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar AppImage</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to delete this AppImage?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;¿Confirma que quiere eliminar esta AppImage?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -633,7 +632,7 @@ AppImage no admite la actualización. Solicite a los autores que configuren info
     <message>
         <location line="+16"/>
         <source>Launcher Dialog</source>
-        <translation>Diálogo de lanzador</translation>
+        <translation>Diálogo de iniciador</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -643,7 +642,7 @@ AppImage no admite la actualización. Solicite a los autores que configuren info
     <message>
         <location line="+119"/>
         <source>General settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración general</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -653,7 +652,7 @@ AppImage no admite la actualización. Solicite a los autores que configuren info
     <message>
         <location line="+3"/>
         <source>Auto start auto-integration daemon</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar automáticamente demonio de integración autom.</translation>
     </message>
     <message>
         <location line="+13"/>
