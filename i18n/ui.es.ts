@@ -42,7 +42,7 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+466"/>
+        <location filename="../src/ui/main.cpp" line="+380"/>
         <source>Warning</source>
         <translation>Atención</translation>
     </message>
@@ -64,7 +64,7 @@ Si elige «No» se ejecutará la AppImage una vez y se dejará en el directorio 
 </translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+1244"/>
+        <location filename="../src/shared/shared.cpp" line="+1217"/>
         <location line="+8"/>
         <source>Error</source>
         <translation>Error</translation>
@@ -75,7 +75,7 @@ Si elige «No» se ejecutará la AppImage una vez y se dejará en el directorio 
         <translation>No se pudo cancelar el registro de la AppImage antes de reintegrarla</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="-546"/>
+        <location filename="../src/shared/shared.cpp" line="-485"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -97,7 +97,7 @@ La sintaxis no es válida:
 %1</translation>
     </message>
     <message>
-        <location line="+470"/>
+        <location line="+409"/>
         <source>File %1 is owned by another user: %2</source>
         <translation>El archivo «%1» es propiedad de otro usuario: %2</translation>
     </message>
@@ -130,9 +130,9 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
 <context>
     <name>QObject</name>
     <message>
-        <location line="-1000"/>
-        <location line="+647"/>
-        <location filename="../src/ui/remove_main.cpp" line="+102"/>
+        <location line="-970"/>
+        <location line="+665"/>
+        <location filename="../src/ui/remove_main.cpp" line="+106"/>
         <location line="+12"/>
         <location line="+12"/>
         <location filename="../src/ui/update_main.cpp" line="+119"/>
@@ -141,12 +141,12 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-443"/>
+        <location filename="../src/ui/main.cpp" line="-358"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>Por ahora, AppImageLauncher no admite AppImages de tipo %1.</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
         <source>Could not make AppImage executable: %1</source>
         <translation>No se pudo hacer que la AppImage sea ejecutable: %1</translation>
     </message>
@@ -180,7 +180,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation type="vanished">tiempo de ejecución no encontrado: no hay tal archivo o directorio: %1</translation>
     </message>
     <message>
-        <location line="+124"/>
+        <location line="+40"/>
         <source>execv() failed: %1</source>
         <translation>execv() falló: %1</translation>
     </message>
@@ -225,32 +225,27 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>No se pudieron quitar los archivos .desktop antiguos</translation>
     </message>
     <message>
-        <location line="-163"/>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
-        <translation>Error al registrar AppImage en AppImageLauncherFS: error al intentar iniciar appimagelauncherfs.service</translation>
+        <translation type="vanished">Error al registrar AppImage en AppImageLauncherFS: error al intentar iniciar appimagelauncherfs.service</translation>
     </message>
     <message>
-        <location line="+72"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
-        <translation>Error al registrar AppImage en AppImageLauncherFS: no se pudo registrar la ruta de AppImage %1</translation>
+        <translation type="vanished">Error al registrar AppImage en AppImageLauncherFS: no se pudo registrar la ruta de AppImage %1</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not open map file</source>
-        <translation>Error al registrar AppImage en AppImageLauncherFS: no se pudo abrir el archivo de mapa</translation>
+        <translation type="vanished">Error al registrar AppImage en AppImageLauncherFS: no se pudo abrir el archivo de mapa</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</source>
-        <translation>Error al registrar AppImage en AppImageLauncherFS: no se pudo encontrar el archivo virtual para AppImage</translation>
+        <translation type="vanished">Error al registrar AppImage en AppImageLauncherFS: no se pudo encontrar el archivo virtual para AppImage</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Failed to register AppImage in AppImageLauncherFS: unknown failure</source>
-        <translation>Error al registrar AppImage en AppImageLauncherFS: error desconocido</translation>
+        <translation type="vanished">Error al registrar AppImage en AppImageLauncherFS: error desconocido</translation>
     </message>
     <message>
-        <location line="+92"/>
+        <location line="+8"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
         <translation>Fallo al limpiar la papelera de AppImage: %1</translation>
@@ -262,7 +257,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/ui/remove_main.cpp" line="-70"/>
+        <location filename="../src/ui/remove_main.cpp" line="-74"/>
         <location filename="../src/ui/update_main.cpp" line="-99"/>
         <source>Error: no such file or directory: %1</source>
         <translation>Error: no hay tal archivo o directorio: %1</translation>
@@ -382,7 +377,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation type="vanished">Seguro que desea eliminar esta AppImage?</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+38"/>
         <source>Failed to unregister AppImage: %1</source>
         <translation>Error al anular el registro de AppImage: %1</translation>
     </message>
@@ -411,8 +406,8 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>Elegir No ejecutará AppImage una vez y dejará el sistema en su estado actual.</translation>
     </message>
     <message>
-        <location line="-619"/>
-        <location line="+623"/>
+        <location line="-637"/>
+        <location line="+641"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
     </message>
@@ -421,7 +416,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation type="vanished">Error al mover AppImage a la ubicación de destino</translation>
     </message>
     <message>
-        <location line="-309"/>
+        <location line="-296"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Error al registrar AppImage en el sistema a través de libappimage</translation>
     </message>
@@ -446,7 +441,7 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <translation>AppImage tiene un archivo de escritorio no válido</translation>
     </message>
     <message>
-        <location line="+284"/>
+        <location line="+271"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Error al mover AppImage a la ubicación de destino.

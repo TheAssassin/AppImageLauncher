@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<TS language="cs" version="2.1">
+<!DOCTYPE TS>
+<TS version="2.1" language="cs">
 <context>
     <name>FirstRunDialog</name>
     <message>
@@ -42,7 +42,7 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+466"/>
+        <location filename="../src/ui/main.cpp" line="+380"/>
         <source>Warning</source>
         <translation>Varování</translation>
     </message>
@@ -74,7 +74,7 @@ Vybráním Ne bude tento AppImage spuštěn jednou a ponechán ve svém aktuáln
 </translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+1244"/>
+        <location filename="../src/shared/shared.cpp" line="+1217"/>
         <location line="+8"/>
         <source>Error</source>
         <translation>Chyba</translation>
@@ -85,7 +85,7 @@ Vybráním Ne bude tento AppImage spuštěn jednou a ponechán ve svém aktuáln
         <translation>Selhalo zrušení registrace AppImage před opětovnou integrací</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="-546"/>
+        <location filename="../src/shared/shared.cpp" line="-485"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -107,7 +107,7 @@ Neplatná syntaxe:
 %1</translation>
     </message>
     <message>
-        <location line="+470"/>
+        <location line="+409"/>
         <source>File %1 is owned by another user: %2</source>
         <translation>Soubor %1 je vlastněn jiným uživatelem: %2</translation>
     </message>
@@ -138,9 +138,9 @@ Relaunch with their permissions?</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location line="-1000"/>
-        <location line="+647"/>
-        <location filename="../src/ui/remove_main.cpp" line="+102"/>
+        <location line="-970"/>
+        <location line="+665"/>
+        <location filename="../src/ui/remove_main.cpp" line="+106"/>
         <location line="+12"/>
         <location line="+12"/>
         <location filename="../src/ui/update_main.cpp" line="+119"/>
@@ -149,12 +149,12 @@ Relaunch with their permissions?</translation>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-443"/>
+        <location filename="../src/ui/main.cpp" line="-358"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher momentálně nepodporuje AppImage soubory typu %1.</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
         <source>Could not make AppImage executable: %1</source>
         <translation>Nelze nastavit soubor AppImage jako spustitelný: %1</translation>
     </message>
@@ -188,7 +188,7 @@ Relaunch with their permissions?</translation>
         <translation type="vanished">runtime not found: no such file or directory: %1</translation>
     </message>
     <message>
-        <location line="+124"/>
+        <location line="+40"/>
         <source>execv() failed: %1</source>
         <translation>execv() selhalo: %1</translation>
     </message>
@@ -233,32 +233,27 @@ Relaunch with their permissions?</translation>
         <translation>Selhalo vyčištění starých desktop souborů</translation>
     </message>
     <message>
-        <location line="-163"/>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
-        <translation>Selhala registrace souboru AppImage v AppImageLauncherFS: chyba během pokusu o spuštění appimagelauncherfs.service</translation>
+        <translation type="vanished">Selhala registrace souboru AppImage v AppImageLauncherFS: chyba během pokusu o spuštění appimagelauncherfs.service</translation>
     </message>
     <message>
-        <location line="+72"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
-        <translation>Selhala registrace souboru AppImage v AppImageLauncherFS: selhala registrace AppImage cesty %1</translation>
+        <translation type="vanished">Selhala registrace souboru AppImage v AppImageLauncherFS: selhala registrace AppImage cesty %1</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not open map file</source>
-        <translation>Selhala registrace souboru AppImage v AppImageLauncherFS: nelze otevřít map soubor</translation>
+        <translation type="vanished">Selhala registrace souboru AppImage v AppImageLauncherFS: nelze otevřít map soubor</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</source>
-        <translation>Selhala registrace souboru AppImage v AppImageLauncherFS: nelze nalézt virtuální soubor pro AppImage</translation>
+        <translation type="vanished">Selhala registrace souboru AppImage v AppImageLauncherFS: nelze nalézt virtuální soubor pro AppImage</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Failed to register AppImage in AppImageLauncherFS: unknown failure</source>
-        <translation>Selhala registrace souboru AppImage v AppImageLauncherFS: neznámá chyba</translation>
+        <translation type="vanished">Selhala registrace souboru AppImage v AppImageLauncherFS: neznámá chyba</translation>
     </message>
     <message>
-        <location line="+92"/>
+        <location line="+8"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
         <translation>Selhalo vyčištění koše souborů AppImage: %1</translation>
@@ -270,7 +265,7 @@ Relaunch with their permissions?</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/ui/remove_main.cpp" line="-70"/>
+        <location filename="../src/ui/remove_main.cpp" line="-74"/>
         <location filename="../src/ui/update_main.cpp" line="-99"/>
         <source>Error: no such file or directory: %1</source>
         <translation>Chyba: neexistující soubor nebo adresář: %1</translation>
@@ -395,7 +390,7 @@ Relaunch with their permissions?</translation>
         <translation type="vanished">Are you sure you want to remove this AppImage?</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+38"/>
         <source>Failed to unregister AppImage: %1</source>
         <translation>Selhalo zrušení registrace AppImage: %1</translation>
     </message>
@@ -424,8 +419,8 @@ Relaunch with their permissions?</translation>
         <translation>Vybráním Ne bude tento AppImage spuštěn jednou a systém bude ponechán ve svém aktuálním stavu.</translation>
     </message>
     <message>
-        <location line="-619"/>
-        <location line="+623"/>
+        <location line="-637"/>
+        <location line="+641"/>
         <source>Warning</source>
         <translation>Varování</translation>
     </message>
@@ -434,7 +429,7 @@ Relaunch with their permissions?</translation>
         <translation type="vanished">Failed to move AppImage to target location</translation>
     </message>
     <message>
-        <location line="-309"/>
+        <location line="-296"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Selhala registrace AppImage v systému pomocí libappimage</translation>
     </message>
@@ -459,7 +454,7 @@ Relaunch with their permissions?</translation>
         <translation>AppImage má neplatný desktop soubor</translation>
     </message>
     <message>
-        <location line="+284"/>
+        <location line="+271"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Selhalo přesunutí souboru AppImage do cílového umístění.

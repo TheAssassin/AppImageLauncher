@@ -42,7 +42,7 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+466"/>
+        <location filename="../src/ui/main.cpp" line="+380"/>
         <source>Warning</source>
         <translation>Aviso</translation>
     </message>
@@ -74,7 +74,7 @@ Escolher Não, irá executar a AppImage uma vez e mantê-la na directória em qu
 </translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+1244"/>
+        <location filename="../src/shared/shared.cpp" line="+1217"/>
         <location line="+8"/>
         <source>Error</source>
         <translation>Erro</translation>
@@ -85,7 +85,7 @@ Escolher Não, irá executar a AppImage uma vez e mantê-la na directória em qu
         <translation>Falha ao desregistrar a AppImage antes de a reintegrar</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="-546"/>
+        <location filename="../src/shared/shared.cpp" line="-485"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -107,7 +107,7 @@ Sintaxe inválida:
 %1</translation>
     </message>
     <message>
-        <location line="+470"/>
+        <location line="+409"/>
         <source>File %1 is owned by another user: %2</source>
         <translation>Ficheiro %1 é propriedade de outro utilizador: %2</translation>
     </message>
@@ -130,9 +130,9 @@ Sintaxe inválida:
 <context>
     <name>QObject</name>
     <message>
-        <location line="-1000"/>
-        <location line="+647"/>
-        <location filename="../src/ui/remove_main.cpp" line="+102"/>
+        <location line="-970"/>
+        <location line="+665"/>
+        <location filename="../src/ui/remove_main.cpp" line="+106"/>
         <location line="+12"/>
         <location line="+12"/>
         <location filename="../src/ui/update_main.cpp" line="+119"/>
@@ -141,12 +141,12 @@ Sintaxe inválida:
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-443"/>
+        <location filename="../src/ui/main.cpp" line="-358"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher não suporta o tipo %1 AppImages de momento.</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
         <source>Could not make AppImage executable: %1</source>
         <translation>Não foi possível tornar a AppImage em um executável: %1</translation>
     </message>
@@ -180,7 +180,7 @@ Sintaxe inválida:
         <translation type="vanished">runtime não encontrado: não existe o ficheiro ou directoria: %1</translation>
     </message>
     <message>
-        <location line="+124"/>
+        <location line="+40"/>
         <source>execv() failed: %1</source>
         <translation>execv() falhou: %1</translation>
     </message>
@@ -225,32 +225,27 @@ Sintaxe inválida:
         <translation>Falha ao limpar ficheiros de ambiente de trabalho antigos</translation>
     </message>
     <message>
-        <location line="-163"/>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
-        <translation>Falha ao registar AppImage no AppImageLauncherFS: erro no inicio do appimagelauncherfs.service</translation>
+        <translation type="vanished">Falha ao registar AppImage no AppImageLauncherFS: erro no inicio do appimagelauncherfs.service</translation>
     </message>
     <message>
-        <location line="+72"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
-        <translation>Falha ao registar a AppImage no AppImageLauncherFS: não registou a AppImage caminho %1</translation>
+        <translation type="vanished">Falha ao registar a AppImage no AppImageLauncherFS: não registou a AppImage caminho %1</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not open map file</source>
-        <translation>Falha ao registar o AppImage no AppImageLauncherFS: não pôde abrir o ficheiro do mapa</translation>
+        <translation type="vanished">Falha ao registar o AppImage no AppImageLauncherFS: não pôde abrir o ficheiro do mapa</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</source>
-        <translation>Falha ao registar o AppImage no AppImageLauncherFS: não foi encontrado um ficheiro virtual para o AppImage</translation>
+        <translation type="vanished">Falha ao registar o AppImage no AppImageLauncherFS: não foi encontrado um ficheiro virtual para o AppImage</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Failed to register AppImage in AppImageLauncherFS: unknown failure</source>
-        <translation>Falha ao registar AppImage no AppImageLauncherFS: falha desconhecida</translation>
+        <translation type="vanished">Falha ao registar AppImage no AppImageLauncherFS: falha desconhecida</translation>
     </message>
     <message>
-        <location line="+92"/>
+        <location line="+8"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
         <translation>Falha ao limpar a lixeira AppImage: %1</translation>
@@ -262,7 +257,7 @@ Sintaxe inválida:
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/ui/remove_main.cpp" line="-70"/>
+        <location filename="../src/ui/remove_main.cpp" line="-74"/>
         <location filename="../src/ui/update_main.cpp" line="-99"/>
         <source>Error: no such file or directory: %1</source>
         <translation>Erro: ficheiro ou directória não existe: %1</translation>
@@ -375,7 +370,7 @@ Sintaxe inválida:
         <translation type="vanished">Tem a certeza que deseja remover esta AppImage?</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+38"/>
         <source>Failed to unregister AppImage: %1</source>
         <translation>Falha ao desregistrar AppImage: %1</translation>
     </message>
@@ -404,8 +399,8 @@ Sintaxe inválida:
         <translation>Escolher Não irá executar a AppImage uma vez e deixar o sistema no seu estado actual.</translation>
     </message>
     <message>
-        <location line="-619"/>
-        <location line="+623"/>
+        <location line="-637"/>
+        <location line="+641"/>
         <source>Warning</source>
         <translation>Aviso</translation>
     </message>
@@ -414,7 +409,7 @@ Sintaxe inválida:
         <translation type="vanished">Falha ao mover a AppImage para a localização de destino</translation>
     </message>
     <message>
-        <location line="-309"/>
+        <location line="-296"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Falha ao registar AppImage no sistema via libappimage</translation>
     </message>
@@ -439,7 +434,7 @@ Sintaxe inválida:
         <translation>AppImage tem um ficheiro de ambiente de trabalho inválido</translation>
     </message>
     <message>
-        <location line="+284"/>
+        <location line="+271"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Falha ao mover AppImage para a localização de destino.

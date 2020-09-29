@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<TS language="pl" version="2.1">
+<!DOCTYPE TS>
+<TS version="2.1" language="pl">
 <context>
     <name>FirstRunDialog</name>
     <message>
@@ -42,7 +42,7 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+466"/>
+        <location filename="../src/ui/main.cpp" line="+380"/>
         <source>Warning</source>
         <translation>Ostrzeżenie</translation>
     </message>
@@ -51,7 +51,7 @@
 
 Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.</source>
-        <translation>AppImage został już zintegrowany, ale nie ma go w bieżącym katalogu docelowym integracji.
+        <translation type="vanished">AppImage został już zintegrowany, ale nie ma go w bieżącym katalogu docelowym integracji.
 
 Czy chcesz przenieść go do nowego miejsca docelowego?
 Wybranie opcji Nie spowoduje uruchomienie AppImage jeden raz i pozostawienie AppImage w bieżącym katalogu.</translation>
@@ -74,7 +74,7 @@ Wybranie opcji Nie spowoduje uruchomienie AppImage jeden raz i pozostawienie App
 </translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+1244"/>
+        <location filename="../src/shared/shared.cpp" line="+1217"/>
         <location line="+8"/>
         <source>Error</source>
         <translation>Błąd</translation>
@@ -85,7 +85,7 @@ Wybranie opcji Nie spowoduje uruchomienie AppImage jeden raz i pozostawienie App
         <translation>Nie udało się wyrejestrować AppImage przed ponownym zintegrowaniem</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="-546"/>
+        <location filename="../src/shared/shared.cpp" line="-485"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -107,7 +107,7 @@ Niepoprawna składnia:
 %1</translation>
     </message>
     <message>
-        <location line="+470"/>
+        <location line="+409"/>
         <source>File %1 is owned by another user: %2</source>
         <translation>Plik %1 jest własnością innego użytkownika: %2</translation>
     </message>
@@ -120,7 +120,7 @@ Niepoprawna składnia:
         <source>File %1 is owned by another user: %2
 
 Relaunch with their permissions?</source>
-        <translation>Plik %1 jest własnością innego użytkownika: %2
+        <translation type="vanished">Plik %1 jest własnością innego użytkownika: %2
 
 Uruchomić ponownie z jego uprawnieniami?</translation>
     </message>
@@ -138,9 +138,9 @@ Uruchomić ponownie z jego uprawnieniami?</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location line="-1000"/>
-        <location line="+647"/>
-        <location filename="../src/ui/remove_main.cpp" line="+102"/>
+        <location line="-970"/>
+        <location line="+665"/>
+        <location filename="../src/ui/remove_main.cpp" line="+106"/>
         <location line="+12"/>
         <location line="+12"/>
         <location filename="../src/ui/update_main.cpp" line="+119"/>
@@ -149,46 +149,46 @@ Uruchomić ponownie z jego uprawnieniami?</translation>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-443"/>
+        <location filename="../src/ui/main.cpp" line="-358"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher obecnie nie obsługuje plików AppImage typu %1.</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
         <source>Could not make AppImage executable: %1</source>
         <translation>Nie udało się nadać plikowi AppImage: %1 uprawnień do wykonania</translation>
     </message>
     <message>
         <source>Failed to open AppImage for reading: %1</source>
-        <translation>Nie można otworzyć AppImage do odczytu: %1</translation>
+        <translation type="vanished">Nie można otworzyć AppImage do odczytu: %1</translation>
     </message>
     <message>
         <source>Failed to create temporary directory</source>
-        <translation>Nie udało się utworzyć katalogu tymczasowego</translation>
+        <translation type="vanished">Nie udało się utworzyć katalogu tymczasowego</translation>
     </message>
     <message>
         <source>Failed to create temporary copy of type 1 AppImage</source>
-        <translation>Nie udało się utworzyć tymczasowej kopii AppImage typu 1</translation>
+        <translation type="vanished">Nie udało się utworzyć tymczasowej kopii AppImage typu 1</translation>
     </message>
     <message>
         <source>Failed to open temporary AppImage copy for writing</source>
-        <translation>Nie udało się otworzyć tymczasowej kopii AppImage do zapisu</translation>
+        <translation type="vanished">Nie udało się otworzyć tymczasowej kopii AppImage do zapisu</translation>
     </message>
     <message>
         <source>Failed to remove magic bytes from temporary AppImage copy</source>
-        <translation>Nie udało się usunąć sygnatury z tymczasowej kopii AppImage</translation>
+        <translation type="vanished">Nie udało się usunąć sygnatury z tymczasowej kopii AppImage</translation>
     </message>
     <message>
         <source>execv() failed: %1</source>
         <comment>error message</comment>
-        <translation>execv() zakończył się błędem: %1</translation>
+        <translation type="vanished">execv() zakończył się błędem: %1</translation>
     </message>
     <message>
         <source>runtime not found: no such file or directory: %1</source>
-        <translation>nie znaleziono środowiska wykonawczego: brak takiego pliku albo katalogu: %1</translation>
+        <translation type="vanished">nie znaleziono środowiska wykonawczego: brak takiego pliku albo katalogu: %1</translation>
     </message>
     <message>
-        <location line="+124"/>
+        <location line="+40"/>
         <source>execv() failed: %1</source>
         <translation>execv() zakończył się błędem: %1</translation>
     </message>
@@ -233,32 +233,27 @@ Uruchomić ponownie z jego uprawnieniami?</translation>
         <translation>Nie udało się wykasować starych plików pulpitu</translation>
     </message>
     <message>
-        <location line="-163"/>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
-        <translation>Nie udało się zarejestrować AppImage w AppImageLauncherFS: błąd podczas próby uruchomienia appimagelauncherfs.service</translation>
+        <translation type="vanished">Nie udało się zarejestrować AppImage w AppImageLauncherFS: błąd podczas próby uruchomienia appimagelauncherfs.service</translation>
     </message>
     <message>
-        <location line="+72"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
-        <translation>Nie udało się zarejestrować AppImage w AppImageLauncherFS: rejestracja ścieżki AppImage %1 nie powiodła się</translation>
+        <translation type="vanished">Nie udało się zarejestrować AppImage w AppImageLauncherFS: rejestracja ścieżki AppImage %1 nie powiodła się</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not open map file</source>
-        <translation>Nie udało się zarejestrować AppImage w AppImageLauncherFS: nie można otworzyć pliku map</translation>
+        <translation type="vanished">Nie udało się zarejestrować AppImage w AppImageLauncherFS: nie można otworzyć pliku map</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</source>
-        <translation>Nie udało się zarejestrować AppImage w AppImageLauncherFS: nie można znaleźć pliku wirtualnego dla AppImage</translation>
+        <translation type="vanished">Nie udało się zarejestrować AppImage w AppImageLauncherFS: nie można znaleźć pliku wirtualnego dla AppImage</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Failed to register AppImage in AppImageLauncherFS: unknown failure</source>
-        <translation>Nie udało się zarejestrować AppImage w AppImageLauncherFS: nieznana przyczyna</translation>
+        <translation type="vanished">Nie udało się zarejestrować AppImage w AppImageLauncherFS: nieznana przyczyna</translation>
     </message>
     <message>
-        <location line="+92"/>
+        <location line="+8"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
         <translation>Nie udało się wyczyścić kosza aplikacji AppImage: %1</translation>
@@ -270,7 +265,7 @@ Uruchomić ponownie z jego uprawnieniami?</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/ui/remove_main.cpp" line="-70"/>
+        <location filename="../src/ui/remove_main.cpp" line="-74"/>
         <location filename="../src/ui/update_main.cpp" line="-99"/>
         <source>Error: no such file or directory: %1</source>
         <translation>Błąd: brak takiego pliku lub katalogu: %1</translation>
@@ -290,7 +285,7 @@ Uruchomić ponownie z jego uprawnieniami?</translation>
     </message>
     <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
-        <translation>Katalogiem, w którym przechowywane są zintegrowane pliki AppImage, jest obecnie: %1</translation>
+        <translation type="vanished">Katalogiem, w którym przechowywane są zintegrowane pliki AppImage, jest obecnie: %1</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -334,16 +329,16 @@ Uruchomić ponownie z jego uprawnieniami?</translation>
     </message>
     <message>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
-        <translation>Usuwa pliki AppImage po integracji z komputerem, do użytku w systemach Linuks</translation>
+        <translation type="vanished">Usuwa pliki AppImage po integracji z komputerem, do użytku w systemach Linuks</translation>
     </message>
     <message>
         <source>AppImageLauncher remove</source>
         <comment>remove helper app name</comment>
-        <translation>Usuń AppImageLauncher</translation>
+        <translation type="vanished">Usuń AppImageLauncher</translation>
     </message>
     <message>
         <source>Helper to delete integrated AppImages easily, e.g., from the application launcher&apos;s context menuz</source>
-        <translation>Program do łatwego usuwania zintegrowanych plików AppImage, np. z menu kontekstowego aplikacji</translation>
+        <translation type="vanished">Program do łatwego usuwania zintegrowanych plików AppImage, np. z menu kontekstowego aplikacji</translation>
     </message>
     <message>
         <location filename="../src/ui/remove_main.cpp" line="-28"/>
@@ -367,7 +362,7 @@ Uruchomić ponownie z jego uprawnieniami?</translation>
     </message>
     <message>
         <source>AppImage remove helper error</source>
-        <translation>Błąd programu usuwania AppImage</translation>
+        <translation type="vanished">Błąd programu usuwania AppImage</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -382,20 +377,20 @@ Uruchomić ponownie z jego uprawnieniami?</translation>
         <source>Refusing to work on non-integrated AppImage:
 
 %1</source>
-        <translation>Odmowa pracy z niezintegrowanym plikiem AppImage:
+        <translation type="vanished">Odmowa pracy z niezintegrowanym plikiem AppImage:
 
 %1</translation>
     </message>
     <message>
         <source>Please confirm</source>
-        <translation>Proszę potwierdzić</translation>
+        <translation type="vanished">Proszę potwierdzić</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this AppImage?</source>
-        <translation>Czy na pewno chcesz usunąć ten plik AppImage?</translation>
+        <translation type="vanished">Czy na pewno chcesz usunąć ten plik AppImage?</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+38"/>
         <source>Failed to unregister AppImage: %1</source>
         <translation>Nie udało się wyrejestrować AppImage: %1</translation>
     </message>
@@ -406,7 +401,7 @@ Uruchomić ponownie z jego uprawnieniami?</translation>
     </message>
     <message>
         <source>Failed to remove AppImage: %1</source>
-        <translation>Nie udało się usunąć pliku AppImage: %1</translation>
+        <translation type="vanished">Nie udało się usunąć pliku AppImage: %1</translation>
     </message>
     <message>
         <location filename="../src/shared/shared.cpp" line="-27"/>
@@ -424,17 +419,17 @@ Uruchomić ponownie z jego uprawnieniami?</translation>
         <translation>Wybranie opcji Nie spowoduje uruchomienie AppImage jeden raz i pozostawienie systemu bez zmian.</translation>
     </message>
     <message>
-        <location line="-619"/>
-        <location line="+623"/>
+        <location line="-637"/>
+        <location line="+641"/>
         <source>Warning</source>
         <translation>Ostrzeżenie</translation>
     </message>
     <message>
         <source>Failed to move AppImage to target location</source>
-        <translation>Nie udało się przenieść AppImage do lokalizacji docelowej</translation>
+        <translation type="vanished">Nie udało się przenieść AppImage do lokalizacji docelowej</translation>
     </message>
     <message>
-        <location line="-309"/>
+        <location line="-296"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Nie udało się zarejestrować AppImage w systemie via libappimage</translation>
     </message>
@@ -459,7 +454,7 @@ Uruchomić ponownie z jego uprawnieniami?</translation>
         <translation>AppImage plik pulpitu jest nieprawidłowy</translation>
     </message>
     <message>
-        <location line="+284"/>
+        <location line="+271"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Nie udało się przenieść AppImage do lokalizacji docelowej.
@@ -476,7 +471,7 @@ Czy zamiast tego spróbować skopiować AppImage?</translation>
     </message>
     <message>
         <source>Failed to copy AppImage to target location</source>
-        <translation>Nie udało się skopiować AppImage do lokalizacji docelowej</translation>
+        <translation type="vanished">Nie udało się skopiować AppImage do lokalizacji docelowej</translation>
     </message>
     <message>
         <location filename="../src/ui/update_main.cpp" line="-40"/>
@@ -491,11 +486,11 @@ Czy zamiast tego spróbować skopiować AppImage?</translation>
     </message>
     <message>
         <source>The AppImage hasn&apos;t been integrated before. This tool will, however, integrate the updated AppImage.</source>
-        <translation>AppImage nie był wcześniej zintegrowany. To narzędzie zintegruje zaktualizowany AppImage.</translation>
+        <translation type="vanished">AppImage nie był wcześniej zintegrowany. To narzędzie zintegruje zaktualizowany AppImage.</translation>
     </message>
     <message>
         <source>Do you wish to continue?</source>
-        <translation>Czy chcesz kontynuować?</translation>
+        <translation type="vanished">Czy chcesz kontynuować?</translation>
     </message>
     <message>
         <location line="+67"/>
@@ -509,7 +504,7 @@ Czy zamiast tego spróbować skopiować AppImage?</translation>
     </message>
     <message>
         <source>Failed to check for updates. Please check the command line output for details.</source>
-        <translation>Nie udało się sprawdzić aktualizacji. Szczegóły sprawdź w wierszu poleceń.</translation>
+        <translation type="vanished">Nie udało się sprawdzić aktualizacji. Szczegóły sprawdź w wierszu poleceń.</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -521,7 +516,7 @@ Czy zamiast tego spróbować skopiować AppImage?</translation>
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set update information to allow for easy updating.</source>
-        <translation>Nie można znaleźć informacji o aktualizacji w AppImage:
+        <translation type="vanished">Nie można znaleźć informacji o aktualizacji w AppImage:
 %1
 
 AppImage nie obsługuje aktualizacji. Poproś autorów o ich dodanie, aby umożliwić łatwą aktualizację.</translation>
@@ -597,11 +592,11 @@ AppImage nie obsługuje aktualizacji. Poproś autorów o ich dodanie, aby umożl
     </message>
     <message>
         <source>Search for AppImages in /Applications directories in suitable mounted filesystems</source>
-        <translation>Wyszukaj pliki AppImage w katalogach /Aplikacje w odpowiednio zamontowanych systemach plików</translation>
+        <translation type="vanished">Wyszukaj pliki AppImage w katalogach /Aplikacje w odpowiednio zamontowanych systemach plików</translation>
     </message>
     <message>
         <source>Search for AppImages in /Applications directories suitable mounted filesystems</source>
-        <translation>Wyszukaj pliki AppImage w katalogach /Aplikacje odpowiednio zamontowanych systemach plików</translation>
+        <translation type="vanished">Wyszukaj pliki AppImage w katalogach /Aplikacje odpowiednio zamontowanych systemach plików</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -613,11 +608,11 @@ AppImage nie obsługuje aktualizacji. Poproś autorów o ich dodanie, aby umożl
     <name>RemoveDialog</name>
     <message>
         <source>Please confirm</source>
-        <translation>Proszę potwierdzić</translation>
+        <translation type="vanished">Proszę potwierdzić</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove this AppImage?&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Czy na pewno chcesz usunąć ten AppImage?&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Czy na pewno chcesz usunąć ten AppImage?&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/remove.ui" line="+17"/>
@@ -636,11 +631,11 @@ AppImage nie obsługuje aktualizacji. Poproś autorów o ich dodanie, aby umożl
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uncheck to only remove the desktop integration, but leave the file on the system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Odznacz, aby usunąć tylko integrację pulpitu, ale pozostaw plik w systemie.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Odznacz, aby usunąć tylko integrację pulpitu, ale pozostaw plik w systemie.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Remove AppImage file from system</source>
-        <translation>Usuń plik AppImage z systemu</translation>
+        <translation type="vanished">Usuń plik AppImage z systemu</translation>
     </message>
 </context>
 <context>
@@ -652,7 +647,7 @@ AppImage nie obsługuje aktualizacji. Poproś autorów o ich dodanie, aby umożl
     </message>
     <message>
         <source>AppImageLauncher</source>
-        <translation>AppImageLauncher</translation>
+        <translation type="vanished">AppImageLauncher</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -666,7 +661,7 @@ AppImage nie obsługuje aktualizacji. Poproś autorów o ich dodanie, aby umożl
     </message>
     <message>
         <source>appimagelauncherd</source>
-        <translation>appimagelauncherd</translation>
+        <translation type="vanished">appimagelauncherd</translation>
     </message>
     <message>
         <location line="+119"/>
@@ -700,15 +695,15 @@ AppImage nie obsługuje aktualizacji. Poproś autorów o ich dodanie, aby umożl
     </message>
     <message>
         <source>-</source>
-        <translation>-</translation>
+        <translation type="vanished">-</translation>
     </message>
     <message>
         <source>Applications directory</source>
-        <translation>Katalog aplikacji</translation>
+        <translation type="vanished">Katalog aplikacji</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, the daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot;. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Po włączeniu procesu demona automatycznie integruje pliki AppImage, które kopiujesz do &amp;quot;katalogu aplikacji&amp;quot;. Po usunięciu plików demon wyczyści dane integracji.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Po włączeniu procesu demona automatycznie integruje pliki AppImage, które kopiujesz do &amp;quot;katalogu aplikacji&amp;quot;. Po usunięciu plików demon wyczyści dane integracji.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="-144"/>
@@ -722,15 +717,15 @@ AppImage nie obsługuje aktualizacji. Poproś autorów o ich dodanie, aby umożl
     </message>
     <message>
         <source>Location where to store your AppImage files to ease their management using the file manager.</source>
-        <translation>Miejsce przechowywania plików AppImage w celu ułatwienia zarządzania nimi za pomocą menedżera plików.</translation>
+        <translation type="vanished">Miejsce przechowywania plików AppImage w celu ułatwienia zarządzania nimi za pomocą menedżera plików.</translation>
     </message>
     <message>
         <source>/path</source>
-        <translation>/ścieżka</translation>
+        <translation type="vanished">/ścieżka</translation>
     </message>
     <message>
         <source>Enable auto-integration daemon</source>
-        <translation>Włącz proces demona automatycznej integracji</translation>
+        <translation type="vanished">Włącz proces demona automatycznej integracji</translation>
     </message>
     <message>
         <location line="+49"/>

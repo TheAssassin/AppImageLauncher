@@ -40,7 +40,7 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+466" />
+        <location filename="../src/ui/main.cpp" line="+380" />
         <source>Warning</source>
         <translation>Warning</translation>
     </message>
@@ -72,7 +72,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
 </translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+1244" />
+        <location filename="../src/shared/shared.cpp" line="+1217" />
         <location line="+8" />
         <source>Error</source>
         <translation>Error</translation>
@@ -83,7 +83,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
         <translation>Failed to unregister AppImage before re-integrating it</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="-546" />
+        <location filename="../src/shared/shared.cpp" line="-485" />
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -105,7 +105,7 @@ Invalid syntax:
 %1</translation>
     </message>
     <message>
-        <location line="+470" />
+        <location line="+409" />
         <source>File %1 is owned by another user: %2</source>
         <translation>File %1 is owned by another user: %2</translation>
     </message>
@@ -136,9 +136,9 @@ Relaunch with their permissions?</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location line="-1000" />
-        <location line="+647" />
-        <location filename="../src/ui/remove_main.cpp" line="+102" />
+        <location line="-970" />
+        <location line="+665" />
+        <location filename="../src/ui/remove_main.cpp" line="+106" />
         <location line="+12" />
         <location line="+12" />
         <location filename="../src/ui/update_main.cpp" line="+119" />
@@ -147,12 +147,12 @@ Relaunch with their permissions?</translation>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-443" />
+        <location filename="../src/ui/main.cpp" line="-358" />
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher does not support type %1 AppImages at the moment.</translation>
     </message>
     <message>
-        <location line="+8" />
+        <location line="+7" />
         <source>Could not make AppImage executable: %1</source>
         <translation>Could not make AppImage executable: %1</translation>
     </message>
@@ -186,7 +186,7 @@ Relaunch with their permissions?</translation>
         <translation type="vanished">runtime not found: no such file or directory: %1</translation>
     </message>
     <message>
-        <location line="+124" />
+        <location line="+40" />
         <source>execv() failed: %1</source>
         <translation>execv() failed: %1</translation>
     </message>
@@ -231,32 +231,27 @@ Relaunch with their permissions?</translation>
         <translation>Failed to clean up old desktop files</translation>
     </message>
     <message>
-        <location line="-163" />
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
-        <translation>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</translation>
+        <translation type="vanished">Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</translation>
     </message>
     <message>
-        <location line="+72" />
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
-        <translation>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</translation>
+        <translation type="vanished">Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</translation>
     </message>
     <message>
-        <location line="+2" />
         <source>Failed to register AppImage in AppImageLauncherFS: could not open map file</source>
-        <translation>Failed to register AppImage in AppImageLauncherFS: could not open map file</translation>
+        <translation type="vanished">Failed to register AppImage in AppImageLauncherFS: could not open map file</translation>
     </message>
     <message>
-        <location line="+2" />
         <source>Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</source>
-        <translation>Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</translation>
+        <translation type="vanished">Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</translation>
     </message>
     <message>
-        <location line="+3" />
         <source>Failed to register AppImage in AppImageLauncherFS: unknown failure</source>
-        <translation>Failed to register AppImage in AppImageLauncherFS: unknown failure</translation>
+        <translation type="vanished">Failed to register AppImage in AppImageLauncherFS: unknown failure</translation>
     </message>
     <message>
-        <location line="+92" />
+        <location line="+8" />
         <location filename="../src/ui/remove_main.cpp" line="+1" />
         <source>Failed to clean up AppImage trash bin: %1</source>
         <translation>Failed to clean up AppImage trash bin: %1</translation>
@@ -268,7 +263,7 @@ Relaunch with their permissions?</translation>
     </message>
     <message>
         <location line="+12" />
-        <location filename="../src/ui/remove_main.cpp" line="-70" />
+        <location filename="../src/ui/remove_main.cpp" line="-74" />
         <location filename="../src/ui/update_main.cpp" line="-99" />
         <source>Error: no such file or directory: %1</source>
         <translation>Error: no such file or directory: %1</translation>
@@ -393,7 +388,7 @@ Relaunch with their permissions?</translation>
         <translation type="vanished">Are you sure you want to remove this AppImage?</translation>
     </message>
     <message>
-        <location line="+34" />
+        <location line="+38" />
         <source>Failed to unregister AppImage: %1</source>
         <translation>Failed to unregister AppImage: %1</translation>
     </message>
@@ -422,8 +417,8 @@ Relaunch with their permissions?</translation>
         <translation>Choosing No will run the AppImage once, and leave the system in its current state.</translation>
     </message>
     <message>
-        <location line="-619" />
-        <location line="+623" />
+        <location line="-637" />
+        <location line="+641" />
         <source>Warning</source>
         <translation>Warning</translation>
     </message>
@@ -432,7 +427,7 @@ Relaunch with their permissions?</translation>
         <translation type="vanished">Failed to move AppImage to target location</translation>
     </message>
     <message>
-        <location line="-309" />
+        <location line="-296" />
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Failed to register AppImage in system via libappimage</translation>
     </message>
@@ -457,7 +452,7 @@ Relaunch with their permissions?</translation>
         <translation>AppImage has invalid desktop file</translation>
     </message>
     <message>
-        <location line="+284" />
+        <location line="+271" />
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Failed to move AppImage to target location.

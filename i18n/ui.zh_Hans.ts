@@ -42,7 +42,7 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+466"/>
+        <location filename="../src/ui/main.cpp" line="+380"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
@@ -73,7 +73,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
 </translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+1244"/>
+        <location filename="../src/shared/shared.cpp" line="+1217"/>
         <location line="+8"/>
         <source>Error</source>
         <translation>错误</translation>
@@ -84,7 +84,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
         <translation>未能在重新集成 AppImage 前注销它</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="-546"/>
+        <location filename="../src/shared/shared.cpp" line="-485"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -106,7 +106,7 @@ Invalid syntax:
 %1</translation>
     </message>
     <message>
-        <location line="+470"/>
+        <location line="+409"/>
         <source>File %1 is owned by another user: %2</source>
         <translation>文件 %1 所有者：%2</translation>
     </message>
@@ -129,9 +129,9 @@ Invalid syntax:
 <context>
     <name>QObject</name>
     <message>
-        <location line="-1000"/>
-        <location line="+647"/>
-        <location filename="../src/ui/remove_main.cpp" line="+102"/>
+        <location line="-970"/>
+        <location line="+665"/>
+        <location filename="../src/ui/remove_main.cpp" line="+106"/>
         <location line="+12"/>
         <location line="+12"/>
         <location filename="../src/ui/update_main.cpp" line="+119"/>
@@ -140,12 +140,12 @@ Invalid syntax:
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-443"/>
+        <location filename="../src/ui/main.cpp" line="-358"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher 目前不支持 %1 类型的 AppImage 。</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
         <source>Could not make AppImage executable: %1</source>
         <translation>无法设置 AppImage 为可执行： %1</translation>
     </message>
@@ -179,7 +179,7 @@ Invalid syntax:
         <translation type="vanished">未找到运行时：无此文件或文件夹： %1</translation>
     </message>
     <message>
-        <location line="+124"/>
+        <location line="+40"/>
         <source>execv() failed: %1</source>
         <translation>execv() 失败： %1</translation>
     </message>
@@ -224,32 +224,27 @@ Invalid syntax:
         <translation>清除旧桌面文件失败</translation>
     </message>
     <message>
-        <location line="-163"/>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
-        <translation>在 AppImageLauncherFS 中注册 AppImage 失败：启动 appimagelauncherfs.service 时出错</translation>
+        <translation type="vanished">在 AppImageLauncherFS 中注册 AppImage 失败：启动 appimagelauncherfs.service 时出错</translation>
     </message>
     <message>
-        <location line="+72"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
-        <translation>在 AppImageLauncherFSFailed 中注册 AppImage 失败：注册 AppImage 路径 %1 失败</translation>
+        <translation type="vanished">在 AppImageLauncherFSFailed 中注册 AppImage 失败：注册 AppImage 路径 %1 失败</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not open map file</source>
-        <translation>在 AppImageLauncherFSFailed 中注册 AppImage 失败：无法打开映射文件</translation>
+        <translation type="vanished">在 AppImageLauncherFSFailed 中注册 AppImage 失败：无法打开映射文件</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</source>
-        <translation>在 AppImageLauncherFSFailed 中注册 AppImage 失败：无法找到 AppImage 虚拟文件</translation>
+        <translation type="vanished">在 AppImageLauncherFSFailed 中注册 AppImage 失败：无法找到 AppImage 虚拟文件</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Failed to register AppImage in AppImageLauncherFS: unknown failure</source>
-        <translation>在 AppImageLauncherFSFailed 中注册 AppImage 失败：未知失败</translation>
+        <translation type="vanished">在 AppImageLauncherFSFailed 中注册 AppImage 失败：未知失败</translation>
     </message>
     <message>
-        <location line="+92"/>
+        <location line="+8"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
         <translation>清空 AppImage 垃圾箱失败： %1</translation>
@@ -261,7 +256,7 @@ Invalid syntax:
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/ui/remove_main.cpp" line="-70"/>
+        <location filename="../src/ui/remove_main.cpp" line="-74"/>
         <location filename="../src/ui/update_main.cpp" line="-99"/>
         <source>Error: no such file or directory: %1</source>
         <translation>错误：无此文件或文件夹： %1</translation>
@@ -382,7 +377,7 @@ Invalid syntax:
         <translation type="vanished">你确定要移除此 AppImage 吗？</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+38"/>
         <source>Failed to unregister AppImage: %1</source>
         <translation>未能注销 AppImage： %1</translation>
     </message>
@@ -411,8 +406,8 @@ Invalid syntax:
         <translation>选择否将运行一次 AppImage ，并保留当前系统状态。</translation>
     </message>
     <message>
-        <location line="-619"/>
-        <location line="+623"/>
+        <location line="-637"/>
+        <location line="+641"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
@@ -421,7 +416,7 @@ Invalid syntax:
         <translation type="vanished">未能将 AppImage 移动到目标位置</translation>
     </message>
     <message>
-        <location line="-309"/>
+        <location line="-296"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>未能通过 libappimage 在系统中注册 AppImage</translation>
     </message>
@@ -446,7 +441,7 @@ Invalid syntax:
         <translation>AppImage 有无效桌面文件</translation>
     </message>
     <message>
-        <location line="+284"/>
+        <location line="+271"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>未能移动 AppImage 到目标位置。

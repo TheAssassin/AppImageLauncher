@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<TS language="nl" version="2.1">
+<!DOCTYPE TS>
+<TS version="2.1" language="nl">
 <context>
     <name>FirstRunDialog</name>
     <message>
@@ -42,7 +42,7 @@
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+466"/>
+        <location filename="../src/ui/main.cpp" line="+380"/>
         <source>Warning</source>
         <translation>Waarschuwing</translation>
     </message>
@@ -51,7 +51,7 @@
 
 Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.</source>
-        <translation>AppImage is al geïntegreerd, maar staat nog niet in de integratiemap.
+        <translation type="vanished">AppImage is al geïntegreerd, maar staat nog niet in de integratiemap.
 
 Wil je het daarheen verplaatsen?
 Kies &apos;Nee&apos; om de AppImage eenmalig op te starten en in de huidige map te laten.</translation>
@@ -74,7 +74,7 @@ Kies &apos;Nee&apos; om de AppImage eenmalig op te starten en in de huidige map 
 </translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+1244"/>
+        <location filename="../src/shared/shared.cpp" line="+1217"/>
         <location line="+8"/>
         <source>Error</source>
         <translation>Foutmelding</translation>
@@ -85,7 +85,7 @@ Kies &apos;Nee&apos; om de AppImage eenmalig op te starten en in de huidige map 
         <translation>Kan AppImage niet weghalen alvorens opnieuw te integreren</translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="-546"/>
+        <location filename="../src/shared/shared.cpp" line="-485"/>
         <source>Could not parse desktop file translations:
 Could not open file for reading:
 
@@ -107,7 +107,7 @@ Ongeldige syntax:
 %1</translation>
     </message>
     <message>
-        <location line="+470"/>
+        <location line="+409"/>
         <source>File %1 is owned by another user: %2</source>
         <translation>Het bestand, %1, is eigendom van een andere gebruiker: %2</translation>
     </message>
@@ -120,7 +120,7 @@ Ongeldige syntax:
         <source>File %1 is owned by another user: %2
 
 Relaunch with their permissions?</source>
-        <translation>Het bestand, %1, is eigendom van een andere gebruiker: %2
+        <translation type="vanished">Het bestand, %1, is eigendom van een andere gebruiker: %2
 
 Wil je het openen met zijn/haar machtigingen?</translation>
     </message>
@@ -138,9 +138,9 @@ Wil je het openen met zijn/haar machtigingen?</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location line="-1000"/>
-        <location line="+647"/>
-        <location filename="../src/ui/remove_main.cpp" line="+102"/>
+        <location line="-970"/>
+        <location line="+665"/>
+        <location filename="../src/ui/remove_main.cpp" line="+106"/>
         <location line="+12"/>
         <location line="+12"/>
         <location filename="../src/ui/update_main.cpp" line="+119"/>
@@ -149,46 +149,46 @@ Wil je het openen met zijn/haar machtigingen?</translation>
         <translation>Foutmelding</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-443"/>
+        <location filename="../src/ui/main.cpp" line="-358"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher heeft momenteel geen ondersteuning voor %1.</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
         <source>Could not make AppImage executable: %1</source>
         <translation>Kan AppImage niet uitvoerbaar maken: %1</translation>
     </message>
     <message>
         <source>Failed to open AppImage for reading: %1</source>
-        <translation>Kan AppImage niet uitlezen: %1</translation>
+        <translation type="vanished">Kan AppImage niet uitlezen: %1</translation>
     </message>
     <message>
         <source>Failed to create temporary directory</source>
-        <translation>Kan geen tijdelijke werkmap maken</translation>
+        <translation type="vanished">Kan geen tijdelijke werkmap maken</translation>
     </message>
     <message>
         <source>Failed to create temporary copy of type 1 AppImage</source>
-        <translation>Kan geen tijdelijke kopie maken van AppImage type 1</translation>
+        <translation type="vanished">Kan geen tijdelijke kopie maken van AppImage type 1</translation>
     </message>
     <message>
         <source>Failed to open temporary AppImage copy for writing</source>
-        <translation>Kan geen tijdelijke AppImage-kopie wegschrijven</translation>
+        <translation type="vanished">Kan geen tijdelijke AppImage-kopie wegschrijven</translation>
     </message>
     <message>
         <source>Failed to remove magic bytes from temporary AppImage copy</source>
-        <translation>Kan de magische bytes niet weghalen uit de tijdelijke AppImage-kopie</translation>
+        <translation type="vanished">Kan de magische bytes niet weghalen uit de tijdelijke AppImage-kopie</translation>
     </message>
     <message>
         <source>execv() failed: %1</source>
         <comment>error message</comment>
-        <translation>execv() mislukt: %1</translation>
+        <translation type="vanished">execv() mislukt: %1</translation>
     </message>
     <message>
         <source>runtime not found: no such file or directory: %1</source>
-        <translation>runtime niet aangetroffen: bestand of map bestaat niet: %1</translation>
+        <translation type="vanished">runtime niet aangetroffen: bestand of map bestaat niet: %1</translation>
     </message>
     <message>
-        <location line="+124"/>
+        <location line="+40"/>
         <source>execv() failed: %1</source>
         <translation>execv() mislukt: %1</translation>
     </message>
@@ -233,32 +233,27 @@ Wil je het openen met zijn/haar machtigingen?</translation>
         <translation>Kan de oude .desktop-bestanden niet opruimen</translation>
     </message>
     <message>
-        <location line="-163"/>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
-        <translation>Kan AppImage niet vastleggen in AppImageLauncherFS: fout tijdens starten van appimagelauncherfs.service</translation>
+        <translation type="vanished">Kan AppImage niet vastleggen in AppImageLauncherFS: fout tijdens starten van appimagelauncherfs.service</translation>
     </message>
     <message>
-        <location line="+72"/>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
-        <translation>Fout tijdens vastleggen van AppImage in AppImageLauncherFS: kan AppImage-pad %1 niet vastleggen</translation>
+        <translation type="vanished">Fout tijdens vastleggen van AppImage in AppImageLauncherFS: kan AppImage-pad %1 niet vastleggen</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not open map file</source>
-        <translation>Kan AppImage niet vastleggen in AppImageLauncherFS: kan kaartbestand niet openen</translation>
+        <translation type="vanished">Kan AppImage niet vastleggen in AppImageLauncherFS: kan kaartbestand niet openen</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</source>
-        <translation>Kan AppImage niet vastleggen in AppImageLauncherFS: kan virtueel bestand van AppImage niet vinden</translation>
+        <translation type="vanished">Kan AppImage niet vastleggen in AppImageLauncherFS: kan virtueel bestand van AppImage niet vinden</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Failed to register AppImage in AppImageLauncherFS: unknown failure</source>
-        <translation>Kan AppImage niet vastleggen in AppImageLauncherFS: onbekende fout</translation>
+        <translation type="vanished">Kan AppImage niet vastleggen in AppImageLauncherFS: onbekende fout</translation>
     </message>
     <message>
-        <location line="+92"/>
+        <location line="+8"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
         <translation>Kan de AppImage-prullenbak niet legen: %1</translation>
@@ -270,7 +265,7 @@ Wil je het openen met zijn/haar machtigingen?</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/ui/remove_main.cpp" line="-70"/>
+        <location filename="../src/ui/remove_main.cpp" line="-74"/>
         <location filename="../src/ui/update_main.cpp" line="-99"/>
         <source>Error: no such file or directory: %1</source>
         <translation>Fout: bestand of map bestaat niet: %1</translation>
@@ -290,7 +285,7 @@ Wil je het openen met zijn/haar machtigingen?</translation>
     </message>
     <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
-        <translation>De map met de opgeslagen geïntegreerde AppImages is momenteel ingesteld op: %1</translation>
+        <translation type="vanished">De map met de opgeslagen geïntegreerde AppImages is momenteel ingesteld op: %1</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -334,16 +329,16 @@ Wil je het openen met zijn/haar machtigingen?</translation>
     </message>
     <message>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
-        <translation>Vewijdert AppImages nadat ze zijn geïntegreerd, voor gebruik door Linux-distributies</translation>
+        <translation type="vanished">Vewijdert AppImages nadat ze zijn geïntegreerd, voor gebruik door Linux-distributies</translation>
     </message>
     <message>
         <source>AppImageLauncher remove</source>
         <comment>remove helper app name</comment>
-        <translation>AppImageLauncher-verwijdering</translation>
+        <translation type="vanished">AppImageLauncher-verwijdering</translation>
     </message>
     <message>
         <source>Helper to delete integrated AppImages easily, e.g., from the application launcher&apos;s context menuz</source>
-        <translation>Hulpprogramma om geïntegreerde AppImages eenvoudig te verwijderen, bijv. uit rechtermuisknopmenu&apos;s</translation>
+        <translation type="vanished">Hulpprogramma om geïntegreerde AppImages eenvoudig te verwijderen, bijv. uit rechtermuisknopmenu&apos;s</translation>
     </message>
     <message>
         <location filename="../src/ui/remove_main.cpp" line="-28"/>
@@ -367,7 +362,7 @@ Wil je het openen met zijn/haar machtigingen?</translation>
     </message>
     <message>
         <source>AppImage remove helper error</source>
-        <translation>Fout tijdens verwijderen van AppImage</translation>
+        <translation type="vanished">Fout tijdens verwijderen van AppImage</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -382,20 +377,20 @@ Wil je het openen met zijn/haar machtigingen?</translation>
         <source>Refusing to work on non-integrated AppImage:
 
 %1</source>
-        <translation>Er kan niet worden gewerkt met niet-geïntegreerde AppImages:
+        <translation type="vanished">Er kan niet worden gewerkt met niet-geïntegreerde AppImages:
 
 %1</translation>
     </message>
     <message>
         <source>Please confirm</source>
-        <translation>Bevestig</translation>
+        <translation type="vanished">Bevestig</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this AppImage?</source>
-        <translation>Weet je zeker dat je deze AppImage wilt verwijderen?</translation>
+        <translation type="vanished">Weet je zeker dat je deze AppImage wilt verwijderen?</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+38"/>
         <source>Failed to unregister AppImage: %1</source>
         <translation>Kan AppImage niet weghalen: %1</translation>
     </message>
@@ -406,7 +401,7 @@ Wil je het openen met zijn/haar machtigingen?</translation>
     </message>
     <message>
         <source>Failed to remove AppImage: %1</source>
-        <translation>Kan AppImage niet verwijderen: %1</translation>
+        <translation type="vanished">Kan AppImage niet verwijderen: %1</translation>
     </message>
     <message>
         <location filename="../src/shared/shared.cpp" line="-27"/>
@@ -424,17 +419,17 @@ Wil je het openen met zijn/haar machtigingen?</translation>
         <translation>Kies &apos;Nee&apos; om de AppImage eenmaal te starten en het systeem verder onaangetast te laten.</translation>
     </message>
     <message>
-        <location line="-619"/>
-        <location line="+623"/>
+        <location line="-637"/>
+        <location line="+641"/>
         <source>Warning</source>
         <translation>Waarschuwing</translation>
     </message>
     <message>
         <source>Failed to move AppImage to target location</source>
-        <translation>Kan AppImage niet verplaatsen naar doellocatie</translation>
+        <translation type="vanished">Kan AppImage niet verplaatsen naar doellocatie</translation>
     </message>
     <message>
-        <location line="-309"/>
+        <location line="-296"/>
         <source>Failed to register AppImage in system via libappimage</source>
         <translation>Kan AppImage niet vastleggen in systeem middels libappimage</translation>
     </message>
@@ -459,7 +454,7 @@ Wil je het openen met zijn/haar machtigingen?</translation>
         <translation>AppImage bevat een ongeldig .desktop-bestand</translation>
     </message>
     <message>
-        <location line="+284"/>
+        <location line="+271"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Kan AppImage niet verplaatsen naar de doellocatie.
@@ -476,7 +471,7 @@ Wil je de AppImage proberen te kopiëren?</translation>
     </message>
     <message>
         <source>Failed to copy AppImage to target location</source>
-        <translation>Kan AppImage niet kopiëren naar doellocatie</translation>
+        <translation type="vanished">Kan AppImage niet kopiëren naar doellocatie</translation>
     </message>
     <message>
         <location filename="../src/ui/update_main.cpp" line="-40"/>
@@ -491,11 +486,11 @@ Wil je de AppImage proberen te kopiëren?</translation>
     </message>
     <message>
         <source>The AppImage hasn&apos;t been integrated before. This tool will, however, integrate the updated AppImage.</source>
-        <translation>De AppImage is nog niet geïntegreerd. Met dit hulpmiddel wordt de bijgewerkte AppImage geïntegreerd.</translation>
+        <translation type="vanished">De AppImage is nog niet geïntegreerd. Met dit hulpmiddel wordt de bijgewerkte AppImage geïntegreerd.</translation>
     </message>
     <message>
         <source>Do you wish to continue?</source>
-        <translation>Wil je doorgaan?</translation>
+        <translation type="vanished">Wil je doorgaan?</translation>
     </message>
     <message>
         <location line="+67"/>
@@ -509,7 +504,7 @@ Wil je de AppImage proberen te kopiëren?</translation>
     </message>
     <message>
         <source>Failed to check for updates. Please check the command line output for details.</source>
-        <translation>Kan niet controleren op updates. Bekijk de opdrachtregeluitvoer voor meer informatie.</translation>
+        <translation type="vanished">Kan niet controleren op updates. Bekijk de opdrachtregeluitvoer voor meer informatie.</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -521,7 +516,7 @@ Wil je de AppImage proberen te kopiëren?</translation>
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set update information to allow for easy updating.</source>
-        <translation>Geen update-informatie aangetroffen in AppImage:
+        <translation type="vanished">Geen update-informatie aangetroffen in AppImage:
 %1
 
 Deze AppImage heeft geen update-ondersteuning. Vraag de makers om update-informatie in te stellen zodat je makkelijk kunt updaten.</translation>
@@ -597,11 +592,11 @@ Deze AppImage heeft geen update-ondersteuning. Vraag de makers om update-informa
     </message>
     <message>
         <source>Search for AppImages in /Applications directories in suitable mounted filesystems</source>
-        <translation>Zoekt naar AppImages in de opgegeven /programmamappen op geschikte aangekoppelde bestandssystemen</translation>
+        <translation type="vanished">Zoekt naar AppImages in de opgegeven /programmamappen op geschikte aangekoppelde bestandssystemen</translation>
     </message>
     <message>
         <source>Search for AppImages in /Applications directories suitable mounted filesystems</source>
-        <translation>Zoekt naar AppImages in de opgegeven /programmamappen op geschikte aangekoppelde bestandssystemen</translation>
+        <translation type="vanished">Zoekt naar AppImages in de opgegeven /programmamappen op geschikte aangekoppelde bestandssystemen</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -613,11 +608,11 @@ Deze AppImage heeft geen update-ondersteuning. Vraag de makers om update-informa
     <name>RemoveDialog</name>
     <message>
         <source>Please confirm</source>
-        <translation>Bevestig</translation>
+        <translation type="vanished">Bevestig</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove this AppImage?&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Weet je zeker dat je deze AppImage wilt verwijderen?&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Weet je zeker dat je deze AppImage wilt verwijderen?&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/remove.ui" line="+17"/>
@@ -636,11 +631,11 @@ Deze AppImage heeft geen update-ondersteuning. Vraag de makers om update-informa
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uncheck to only remove the desktop integration, but leave the file on the system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vink uit om alleen de werkomgevingsintegratie te verwijderen, maar het bestand te bewaren.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vink uit om alleen de werkomgevingsintegratie te verwijderen, maar het bestand te bewaren.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Remove AppImage file from system</source>
-        <translation>AppImage-bestand verwijderen van systeem</translation>
+        <translation type="vanished">AppImage-bestand verwijderen van systeem</translation>
     </message>
 </context>
 <context>
@@ -652,7 +647,7 @@ Deze AppImage heeft geen update-ondersteuning. Vraag de makers om update-informa
     </message>
     <message>
         <source>AppImageLauncher</source>
-        <translation>AppImageLauncher</translation>
+        <translation type="vanished">AppImageLauncher</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -666,7 +661,7 @@ Deze AppImage heeft geen update-ondersteuning. Vraag de makers om update-informa
     </message>
     <message>
         <source>appimagelauncherd</source>
-        <translation>appimagelauncherd</translation>
+        <translation type="vanished">appimagelauncherd</translation>
     </message>
     <message>
         <location line="+119"/>
@@ -700,15 +695,15 @@ Deze AppImage heeft geen update-ondersteuning. Vraag de makers om update-informa
     </message>
     <message>
         <source>-</source>
-        <translation>-</translation>
+        <translation type="vanished">-</translation>
     </message>
     <message>
         <source>Applications directory</source>
-        <translation>Programmamap</translation>
+        <translation type="vanished">Programmamap</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, the daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot;. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kruis dit aan om de dienst automatisch AppImages te laten integreren die je kopieert naar de map &amp;quot;Programma&apos;s&amp;quot;. Als de bestanden worden verwijdert, dan schoont de dienst de integratiegegevens op.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kruis dit aan om de dienst automatisch AppImages te laten integreren die je kopieert naar de map &amp;quot;Programma&apos;s&amp;quot;. Als de bestanden worden verwijdert, dan schoont de dienst de integratiegegevens op.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="-144"/>
@@ -722,15 +717,15 @@ Deze AppImage heeft geen update-ondersteuning. Vraag de makers om update-informa
     </message>
     <message>
         <source>Location where to store your AppImage files to ease their management using the file manager.</source>
-        <translation>Locatie waar je de AppImage-bestanden kunt plaatsen middels de bestandsbeheerder.</translation>
+        <translation type="vanished">Locatie waar je de AppImage-bestanden kunt plaatsen middels de bestandsbeheerder.</translation>
     </message>
     <message>
         <source>/path</source>
-        <translation>/pad</translation>
+        <translation type="vanished">/pad</translation>
     </message>
     <message>
         <source>Enable auto-integration daemon</source>
-        <translation>Integratiedienst gebruiken</translation>
+        <translation type="vanished">Integratiedienst gebruiken</translation>
     </message>
     <message>
         <location line="+49"/>
