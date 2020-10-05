@@ -1,4 +1,4 @@
 {
-    "Desktop Action remove/Name": "Remove AppImage from system",
-    "Desktop Action update/Name": "Update AppImage"
+    "Desktop Action remove/Name": "Delete this AppImage",
+    "Desktop Action update/Name": "Update this AppImage"
 }
