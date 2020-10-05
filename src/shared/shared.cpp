@@ -415,20 +415,35 @@ QDirSet getAdditionalDirectoriesFromConfig(const std::shared_ptr<QSettings>& con
         return {};
 
     constexpr auto configKey = "appimagelauncherd/additional_directories_to_watch";
+    const auto configValue = config->value(configKey, "").toString();
+    qDebug() << configKey << "value:" << configValue;
 
     QDirSet additionalDirs{};
 
-    const auto configValue = config->value(configKey, "").toString();
-
     for (auto dirPath : configValue.split(":")) {
+        // empty values will, for some reason, be interpreted as "use the home directory"
+        // as we don't want to accidentally monitor the home directory, we need to skip those values
+        if (dirPath.isEmpty()) {
+            qDebug() << "skipping empty directory path";
+            continue;
+        }
+
         // make sure to have full path
+        qDebug() << "path before tilde expansion:" << dirPath;
         dirPath = expandTilde(dirPath);
+        qDebug() << "path after tilde expansion:" << dirPath;
+
+        // non-absolute paths which don't contain a tilde cannot be resolved safely, they likley depend on the cwd
+        // therefore, we need to ignore those
+        if (!QFileInfo(dirPath).isAbsolute()) {
+            std::cerr << "Warning: path " << dirPath.toStdString() << " can not be resolved, skipping" << std::endl;
+            continue;
+        }
 
         const QDir dir(dirPath);
 
         if (!dir.exists()) {
-            std::cerr << "Warning: could not find directory " << dirPath.toStdString()
-                      << ", skipping" << std::endl;
+            std::cerr << "Warning: could not find directory " << dirPath.toStdString() << ", skipping" << std::endl;
             continue;
         }
 
