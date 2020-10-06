@@ -11,17 +11,17 @@
     <message>
         <location line="+55"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Bem-vindo à AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Este mini-ajudante foi desenhado para melhorar a sua experiência do AppImage no seu computador.&lt;/p&gt;&lt;p&gt;Parece que nunca tinha utilizado o AppImageLauncher anteriormente. Por favor, tome um minuto e configure as suas preferências. Pode sempre alterá-las mais tarde, com o painel de controle.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Bem-vindo à AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Este mini-ajudante foi desenhado para melhorar a sua experiência da AppImage no seu computador.&lt;/p&gt;&lt;p&gt;Parece que nunca tinha utilizado a AppImageLauncher anteriormente. Por favor, tenha um minuto e configure as suas preferências. Pode sempre alterá-las mais tarde, com o painel de controle.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Ask me whether to move new AppImages into a central location</source>
-        <translation>Pedir-me se devo mudar as novas AppImages para uma pasta dedicada a elas</translation>
+        <translation>Preguntar se devo mudar as novas AppImages para uma directoria dedicada</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Integration target destination directory:</source>
-        <translation>Pasta para armazenar as suas AppImages:</translation>
+        <translation>Directoria para integração das suas AppImages:</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -31,7 +31,7 @@
     <message>
         <location filename="../src/ui/first-run.cpp" line="+86"/>
         <source>Choose integration destination dir</source>
-        <translation>Escolha a pasta de armazenamento as AppImages</translation>
+        <translation>Escolha a directoria de integração das AppImages</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -65,11 +65,11 @@ Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.
 
 </source>
-        <translation>AppImage %1 já foi integrado com o seu ambiente de trabalho, mas não está situado na pasta de armazenamento definida.
+        <translation>AppImage %1 já foi integrada com o seu ambiente de trabalho, mas não está situada na actual directoria de integração .
 
-Quer que se mude para o lugar correcto?
+Quer mudar para uma nova localização ?
 
-Escolhendo &quot;Não&quot;, o AppImage será executado e deixado na sua localização atual.
+Escolhendo &quot;Não&quot;, a AppImage será executada e deixada na sua localização atual.
 
 </translation>
     </message>
@@ -77,7 +77,7 @@ Escolhendo &quot;Não&quot;, o AppImage será executado e deixado na sua localiz
         <location filename="../src/shared/shared.cpp" line="+1217"/>
         <location line="+8"/>
         <source>Error</source>
-        <translation>Falha</translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../src/ui/main.cpp" line="+23"/>
@@ -90,8 +90,8 @@ Escolhendo &quot;Não&quot;, o AppImage será executado e deixado na sua localiz
 Could not open file for reading:
 
 %1</source>
-        <translation>Não foi possível analisar as traduções de ficheiro no ambiente de trabalho:
-Não pôde abrir o ficheiro para leitura:
+        <translation>Não foi possível analisar as traduções do ficheiro no ambiente de trabalho:
+Não é possível abrir o ficheiro para leitura:
 
 %1</translation>
     </message>
@@ -109,12 +109,12 @@ Sintaxe inválida:
     <message>
         <location line="+409"/>
         <source>File %1 is owned by another user: %2</source>
-        <translation>Ficheiro %1 é propriedade de outro utilizador: %2</translation>
+        <translation>Ficheiro %1 pertence a outro utilizador: %2</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Permissions problem</source>
-        <translation>Problema das permissões</translation>
+        <translation>Problema de permissões</translation>
     </message>
     <message>
         <source>File %1 is owned by another user: %2
@@ -132,7 +132,7 @@ Relaunch with their permissions?</translation>
     <message>
         <location line="+8"/>
         <source>Could not find suitable permissions helper, aborting</source>
-        <translation>Não foi encontrado um ajudante de permissões adequado, abortando</translation>
+        <translation>Não foi encontrado um ajudante de permissões adequado, cancelando</translation>
     </message>
 </context>
 <context>
@@ -156,7 +156,7 @@ Relaunch with their permissions?</translation>
     <message>
         <location line="+7"/>
         <source>Could not make AppImage executable: %1</source>
-        <translation>Não pôde definir a permissão de execução do AppImage: %1</translation>
+        <translation>Não foi possível tornar a AppImage executável: %1</translation>
     </message>
     <message>
         <source>Failed to open AppImage for reading: %1</source>
@@ -200,7 +200,7 @@ Relaunch with their permissions?</translation>
     <message>
         <location line="+1"/>
         <source>Desktop integration helper for AppImages, for use by Linux distributions.</source>
-        <translation>Ajudante de integração de sistemas para AppImages, para utilização por distribuições do Linux.</translation>
+        <translation>Ajudante de integração das AppImages, para ser utilizado nas distribuições do Linux.</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -230,7 +230,7 @@ Relaunch with their permissions?</translation>
     <message>
         <location line="-21"/>
         <source>Failed to clean up old desktop files</source>
-        <translation>Falha na eliminação de ficheiros do ambiente de trabalho antigos</translation>
+        <translation>Falha na eliminação de ficheiros antigos do ambiente de trabalho</translation>
     </message>
     <message>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
@@ -256,7 +256,7 @@ Relaunch with their permissions?</translation>
         <location line="+8"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
-        <translation>Falha em esvaziar o contentor de reciclagem das AppImages: %1</translation>
+        <translation>Falha em limpar a directoria de reciclagem das AppImages: %1</translation>
     </message>
     <message>
         <location line="+48"/>
@@ -268,19 +268,20 @@ Relaunch with their permissions?</translation>
         <location filename="../src/ui/remove_main.cpp" line="-74"/>
         <location filename="../src/ui/update_main.cpp" line="-99"/>
         <source>Error: no such file or directory: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro: ficheiro ou directoria inexistente :%1</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../src/ui/update_main.cpp" line="+7"/>
         <source>Not an AppImage: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Não é uma AppImage: %1</translation>
     </message>
     <message>
         <location line="+159"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>A directoria das AppImages integradas esta configurada na seguinte localização:
+%1</translation>
     </message>
     <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
@@ -289,42 +290,42 @@ Relaunch with their permissions?</translation>
     <message>
         <location line="+28"/>
         <source>Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</source>
-        <translation type="unfinished"></translation>
+        <translation>integrando ira mover a AppImage para uma localização predefinida, ira incluir no lançador de aplicações.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher.</source>
-        <translation type="unfinished"></translation>
+        <translation>Para remover ou actualizar a Appimage, devera utilizar o icone da sua aplicação no menu ou na barra de lançamento.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The directory the integrated AppImages are stored in is currently set to:</source>
-        <translation type="unfinished"></translation>
+        <translation>A directoria das AppImages integradas esta configurada para seguinte localização :</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>%1 has not been integrated into your system.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi integrado no seu sistema.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Desktop Integration</source>
-        <translation type="unfinished"></translation>
+        <translation>Integração no desktop</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Integrate and run</source>
-        <translation type="unfinished"></translation>
+        <translation>Integrar e executar</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Run once</source>
-        <translation type="unfinished"></translation>
+        <translation>Executar Uma Vez</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
@@ -342,22 +343,22 @@ Relaunch with their permissions?</translation>
     <message>
         <location filename="../src/ui/remove_main.cpp" line="-28"/>
         <source>Helper to delete integrated AppImages easily, e.g., from the application launcher&apos;s context menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajuda para apagar facilmente as AppImages integradas, p. ex., a partir do menu do lançador de aplicativos</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Path to AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho para AppImage</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>&lt;path&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;path&gt;</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>AppImage delete helper error</source>
-        <translation type="unfinished"></translation>
+        <translation>Apagar AppImage erro de ajuda</translation>
     </message>
     <message>
         <source>AppImage remove helper error</source>
@@ -368,7 +369,9 @@ Relaunch with their permissions?</translation>
         <source>Not an AppImage:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Não é uma AppImage:
+
+%1</translation>
     </message>
     <message>
         <source>Refusing to work on non-integrated AppImage:
@@ -389,12 +392,12 @@ Relaunch with their permissions?</translation>
     <message>
         <location line="+38"/>
         <source>Failed to unregister AppImage: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha ao cancelar registro AppImage:% 1</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Failed to move AppImage into trash bin directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha a mover AppImage para a directoria de reciclagem</translation>
     </message>
     <message>
         <source>Failed to remove AppImage: %1</source>
@@ -403,23 +406,23 @@ Relaunch with their permissions?</translation>
     <message>
         <location filename="../src/shared/shared.cpp" line="-27"/>
         <source>AppImage with same filename has already been integrated.</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImage com o mesmo nome já foi integrada.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Do you wish to overwrite the existing AppImage?</source>
-        <translation type="unfinished"></translation>
+        <translation>Deseja substituir a AppImage existente ?</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Choosing No will run the AppImage once, and leave the system in its current state.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se escolher &quot;Não&quot; executará a AppImage uma vez , e não ira fazer qualquer alteração no seu sistema.</translation>
     </message>
     <message>
         <location line="-637"/>
         <location line="+641"/>
         <source>Warning</source>
-        <translation type="unfinished">Aviso</translation>
+        <translation>Aviso</translation>
     </message>
     <message>
         <source>Failed to move AppImage to target location</source>
@@ -428,40 +431,43 @@ Relaunch with their permissions?</translation>
     <message>
         <location line="-296"/>
         <source>Failed to register AppImage in system via libappimage</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha ao registrar AppImage no sistema via libappimage</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Failed to find integrated desktop file</source>
-        <translation type="unfinished"></translation>
+        <translation>Falhou encontrar o ficheiro:integrated desktop</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Couldn&apos;t find integrated AppImage&apos;s desktop file</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi encontrado o ficheiro desktop de integração da Appimage</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Failed to load desktop file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Falhou a carregar o ficheiro desktop :</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>AppImage has invalid desktop file</source>
-        <translation type="unfinished"></translation>
+        <translation>O ficheiro desktop da AppImage não é valido</translation>
     </message>
     <message>
         <location line="+271"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha em mover a AppImage para localização alvo.
+Tentar copiar AppImage ?</translation>
     </message>
     <message>
         <location line="+181"/>
         <source>Failed to call stat() on path:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha em ligar stat() on path:
+
+%1</translation>
     </message>
     <message>
         <source>Failed to copy AppImage to target location</source>
@@ -470,13 +476,13 @@ Try to copy AppImage instead?</source>
     <message>
         <location filename="../src/ui/update_main.cpp" line="-40"/>
         <source>Updates AppImages after desktop integration, for use by Linux distributions</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualiza as AppImages depois da integração no ambiente de trabalho , para ser utilizado pelas distribuições Linux</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>AppImageLauncher update</source>
         <comment>update helper app name</comment>
-        <translation type="unfinished"></translation>
+        <translation>Actualizar o AppImageLauncher</translation>
     </message>
     <message>
         <source>The AppImage hasn&apos;t been integrated before. This tool will, however, integrate the updated AppImage.</source>
@@ -489,12 +495,12 @@ Try to copy AppImage instead?</source>
     <message>
         <location line="+67"/>
         <source>No updates found</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foram encontradas actualizações</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Could not find updates for AppImage %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível encontrar actualizações para esta AppImage %1</translation>
     </message>
     <message>
         <source>Failed to check for updates. Please check the command line output for details.</source>
@@ -503,7 +509,7 @@ Try to copy AppImage instead?</source>
     <message>
         <location line="+7"/>
         <source>No update information found</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi encontrada informação para actualização</translation>
     </message>
     <message>
         <source>Could not find update information in AppImage:
@@ -521,61 +527,68 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set update
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi encontrada na AppImage informação para actualização :
+%1
+
+Esta AppImage não suporta atualizações , solicite ao autor da AppImage o suporte de atualização para esta AppImage .</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Failed to check for updates:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Falhou a verificação para actualizações
+
+%1</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>An update has been found for the AppImage %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Uma actualização foi encontrada para esta AppImage %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Do you want to perform the update?</source>
-        <translation type="unfinished"></translation>
+        <translation>Deseja realizar a actualização ?</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Remove old AppImage after successful update</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover antiga AppImage depois da actualização bem sucedida</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Failed to update AppImage:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha na actualização da AppImage
+
+%1</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>File reported as updated does not exist: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ficheiro relatado como actualizado não existe: %1</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Failed to register updated AppImage in system</source>
-        <translation type="unfinished"></translation>
+        <translation>Falhou a registar actualização da AppImage no sistema</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Failed to unregister old AppImage in system</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha em remover o registro da atinga AppImage no sistema</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Failed to remove old AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha em remover a antiga AppImage</translation>
     </message>
     <message>
         <location filename="../src/daemon/main.cpp" line="+101"/>
         <source>Tracks AppImages in applications directories (user&apos;s, system and other ones). Automatically integrates AppImages moved into those directories and unintegrates ones removed from them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Procura AppImages em directorias de aplicações (de utilizador , sistema e outras). Integra automaticamente as AppImages transferidas para essas directorias e desintegra as removidas delas.</translation>
     </message>
     <message>
         <source>Search for AppImages in /Applications directories in suitable mounted filesystems</source>
@@ -588,7 +601,7 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="+8"/>
         <source>Lists directories watched by this daemon and exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista directorias observadas por este daemon e sai</translation>
     </message>
 </context>
 <context>
@@ -604,17 +617,17 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location filename="../src/ui/remove.ui" line="+17"/>
         <source>Delete AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Apagar AppImage</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to delete this AppImage?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tem a certeza que quer apagar esta AppImage ?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>%1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uncheck to only remove the desktop integration, but leave the file on the system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -630,7 +643,7 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location filename="../src/ui/settings_dialog.ui" line="+14"/>
         <source>AppImageLauncher Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurações do AppImageLauncher</translation>
     </message>
     <message>
         <source>AppImageLauncher</source>
@@ -639,12 +652,12 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="+16"/>
         <source>Launcher Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Guia de iniciação</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Ask whether to move AppImage files into the applications directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Perguntar se quer deslocar os ficheiros AppImage para a directoria de integração</translation>
     </message>
     <message>
         <source>appimagelauncherd</source>
@@ -653,32 +666,32 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="+119"/>
         <source>General settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurações gerais</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When this box is checked, AppImageLauncher automatically starts a daemon called appimagelauncherd.&lt;/p&gt;&lt;p&gt;This daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot; and the additional directories you configured. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Quando esta caixa é marcada, o AppImageLauncher inicia automaticamente um daemon chamado appimagelauncherd.&lt;/p&gt;&lt;p&gt;Este daemon integra automaticamente AppImages que você copia na &amp;quot;pasta de aplicações&amp;quot; e as pastas adicionais que você configurou. Quando as AppImages são apagadas, o daemon vai limpar os dados de integração.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Auto start auto-integration daemon</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar automaticamente o daemon de integração</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Additional directories to watch</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorias adicionais para observar</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Add new directory to list</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar nova directoria à lista</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Remove selected directory from list</source>
-        <translation type="unfinished"></translation>
+        <translation>Retirar a directoria seleccionada da lista</translation>
     </message>
     <message>
         <source>-</source>
@@ -695,12 +708,12 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="-144"/>
         <source>Applications directory path</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho da directoria de aplicações</translation>
     </message>
     <message>
         <location line="-11"/>
         <source>Location where to store your AppImage files to ease their management</source>
-        <translation type="unfinished"></translation>
+        <translation>Localização para alojar as suas AppImages para facilitar a sua gestão</translation>
     </message>
     <message>
         <source>Location where to store your AppImage files to ease their management using the file manager.</source>
@@ -717,32 +730,32 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
     <message>
         <location line="+49"/>
         <source>Available Features</source>
-        <translation type="unfinished"></translation>
+        <translation>Funcionalidades disponíveis</translation>
     </message>
     <message>
         <location filename="../src/ui/settings_dialog.cpp" line="+40"/>
         <source>updater available for AppImages supporting AppImageUpdate</source>
-        <translation type="unfinished"></translation>
+        <translation>actualizador disponível para AppImages que suporta AppImageUpdate</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>updater unavailable</source>
-        <translation type="unfinished"></translation>
+        <translation>actualizador indisponível</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>&lt;strong&gt;Note: this is an AppImageLauncher Lite build, only supports a limited set of features&lt;/strong&gt;&lt;br /&gt;Please install the full version via the provided native packages to enjoy the full AppImageLauncher experience</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;strong&gt;Nota: esta é uma versão do AppImageLauncher Lite, que oferece um limitado conjunto de funcionalidades&lt;/strong&gt;&lt;br /&gt;Por favor, instalar a versão completa através do gestor de pacotes do seu sistema para beneficiar da experiência completa do AppImageLauncher</translation>
     </message>
     <message>
         <location line="+137"/>
         <source>Select Applications directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar a directoria de Aplicações</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Select additional directory to watch</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar directoria adicional a observar</translation>
     </message>
 </context>
 </TS>
