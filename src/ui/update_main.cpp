@@ -108,7 +108,7 @@ int main(int argc, char** argv) {
                 QObject::tr("Could not find update information in AppImage:\n%1"
                             "\n"
                             "\n"
-                            "The AppImage doesn't support updating. Please ask the authors to set up"
+                            "The AppImage doesn't support updating. Please ask the authors to embed "
                             "update information to allow for easy updating.").arg(pathToAppImage)
             );
             return 0;

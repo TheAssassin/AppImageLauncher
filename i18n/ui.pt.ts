@@ -74,7 +74,7 @@ Escolhendo &quot;Não&quot;, o AppImage será executado e deixado na sua localiz
 </translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+1217"/>
+        <location filename="../src/shared/shared.cpp" line="+1232"/>
         <location line="+8"/>
         <source>Error</source>
         <translation>Falha</translation>
@@ -138,8 +138,8 @@ Relaunch with their permissions?</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location line="-970"/>
-        <location line="+665"/>
+        <location line="-985"/>
+        <location line="+680"/>
         <location filename="../src/ui/remove_main.cpp" line="+106"/>
         <location line="+12"/>
         <location line="+12"/>
@@ -416,8 +416,8 @@ Relaunch with their permissions?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-637"/>
-        <location line="+641"/>
+        <location line="-652"/>
+        <location line="+656"/>
         <source>Warning</source>
         <translation type="unfinished">Aviso</translation>
     </message>
@@ -520,7 +520,7 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set update
         <source>Could not find update information in AppImage:
 %1
 
-The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
+The AppImage doesn&apos;t support updating. Please ask the authors to embed update information to allow for easy updating.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

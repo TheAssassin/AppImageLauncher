@@ -74,7 +74,7 @@ Wybranie opcji Nie spowoduje uruchomienie AppImage jeden raz i pozostawienie App
 </translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+1217"/>
+        <location filename="../src/shared/shared.cpp" line="+1232"/>
         <location line="+8"/>
         <source>Error</source>
         <translation>Błąd</translation>
@@ -138,8 +138,8 @@ Uruchomić ponownie z jego uprawnieniami?</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location line="-970"/>
-        <location line="+665"/>
+        <location line="-985"/>
+        <location line="+680"/>
         <location filename="../src/ui/remove_main.cpp" line="+106"/>
         <location line="+12"/>
         <location line="+12"/>
@@ -419,8 +419,8 @@ Uruchomić ponownie z jego uprawnieniami?</translation>
         <translation>Wybranie opcji Nie spowoduje uruchomienie AppImage jeden raz i pozostawienie systemu bez zmian.</translation>
     </message>
     <message>
-        <location line="-637"/>
-        <location line="+641"/>
+        <location line="-652"/>
+        <location line="+656"/>
         <source>Warning</source>
         <translation>Ostrzeżenie</translation>
     </message>
@@ -522,15 +522,22 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set update
 AppImage nie obsługuje aktualizacji. Poproś autorów o ich dodanie, aby umożliwić łatwą aktualizację.</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Could not find update information in AppImage:
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation>Nie można znaleźć informacji o aktualizacji w AppImage:
+        <translation type="vanished">Nie można znaleźć informacji o aktualizacji w AppImage:
 %1
 
 AppImage nie obsługuje aktualizacji. Poproś autorów o ich dodanie, aby umożliwić łatwą aktualizację.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Could not find update information in AppImage:
+%1
+
+The AppImage doesn&apos;t support updating. Please ask the authors to embed update information to allow for easy updating.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+12"/>

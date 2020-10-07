@@ -74,7 +74,7 @@ Sollten Sie Nein wählen, wird das AppImage einmalig ausgeführt, und es wird im
 </translation>
     </message>
     <message>
-        <location filename="../src/shared/shared.cpp" line="+1217"/>
+        <location filename="../src/shared/shared.cpp" line="+1232"/>
         <location line="+8"/>
         <source>Error</source>
         <translation>Fehler</translation>
@@ -138,8 +138,8 @@ Neu starten mit deren Rechten?</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location line="-970"/>
-        <location line="+665"/>
+        <location line="-985"/>
+        <location line="+680"/>
         <location filename="../src/ui/remove_main.cpp" line="+106"/>
         <location line="+12"/>
         <location line="+12"/>
@@ -415,8 +415,8 @@ Neu starten mit deren Rechten?</translation>
         <translation>Bei Klick auf Nein wird das AppImage einmalig ausgeführt, und das System in seinem derzeitigen Zustand belassen.</translation>
     </message>
     <message>
-        <location line="-637"/>
-        <location line="+641"/>
+        <location line="-652"/>
+        <location line="+656"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
@@ -518,15 +518,22 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set update
 Das AppImage unterstützt keine Updates. Bitte fragen Sie die Autoren, die Update-Informationen zu setzen, um einfaches Aktualisieren zu ermöglichen.</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Could not find update information in AppImage:
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set upupdate information to allow for easy updating.</source>
-        <translation>Konnte keine Update-Informationen finden im AppImage:
+        <translation type="vanished">Konnte keine Update-Informationen finden im AppImage:
 %1
 
 Das AppImage unterstützt keine Updates. Bitten Sie die Autoren, die Update-Informationen zu setzen, um einfaches Aktualisieren zu ermöglichen.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Could not find update information in AppImage:
+%1
+
+The AppImage doesn&apos;t support updating. Please ask the authors to embed update information to allow for easy updating.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+12"/>
