@@ -8,14 +8,13 @@
 <img src="https://github.com/TheAssassin/AppImageLauncher/raw/master/resources/icons/hicolor/128x128/apps/AppImageLauncher.png"/>
 </p>
 
-Installation makes your Linux desktop AppImage ready™, and you can double-click AppImages again without making them executable first.
-You can integrate AppImages with a single mouse-click, and manage them from your application launcher.
-Updating and removing AppImages can also be done from there.
+Integrate AppImages to your application launcher with one click, wherefrom you can manage, update and remove them.
+Double-click AppImages to open them, without having to make them executable first.
 
 AppImageLauncher plays well with other applications managing AppImages, for example app stores.
 However, it doesn't depend on any of those, and can run completely standalone.
 
-> ### :exclamation: Please also check the [wiki](https://github.com/TheAssassin/AppImageLauncher/wiki) for info on how to install and use AppImageLauncher
+> ### :exclamation: Please also check the [wiki](https://github.com/TheAssassin/AppImageLauncher/wiki) for info on how to install and use AppImageLauncher.
 
 
 ## Features
@@ -50,17 +49,16 @@ From version 1.4.0, there's a *Lite* edition of AppImageLauncher. It has all the
 Currently, AppImages and Linux desktops don't work very well together. Since AppImages are normal executables, it'd suffice if desktop environments like Plasma, GNOME, Xfce, ... assisted users in making those files executable.
 Unfortunately, some desktop environments consider this a security risk, and would rather have users use the app stores they include.
 
-The ability to run isn't all that's needed to provide a good desktop experience. AppImages should be accessible from the application menus and launchers. This so-called "desktop integration" can't be provided by the AppImages themselves, even though some AppImages ship with a "desktop integration script" prompting the user to do so. There are too many impliciations requiring external software, especially regarding cleanup and removal of AppImages. If applications are simply made executable, they're still spread all over the users' personal files and folders.
-The average user doesn't necessarily like a Downloads directory full of AppImages with cryptic filenames.
+The ability to easily run them isn't all that's needed to provide a good AppImage desktop experience. Making them accessible from the application menus and launchers is a level of "desktop integration" that can't be provided by the AppImages themselves, even though some AppImages ship with a "desktop integration script" prompting the user to do so. There are too many impliciations requiring external software, especially regarding cleanup and removal of AppImages. If applications are simply made executable, they're still spread all over the users' personal files and folders. The average user will not find a "Downloads" directory full of AppImages with cryptic filenames to be friendly.
 
 Therefore, new, system-side solutions have been developed to perform the desktop integration.
-The oldest available solution is [appimaged](https://github.com/AppImage/AppImageKit), a daemon users can install that performs everything in the background, automagically, without notifying the user in any way.
-It scans a predefined set of directories including `~/Downloads` and `~/.bin`, makes AppImages which are found executable and performs the desktop integration. This is rather inefficient, as appimaged's operations and monitoring produce a lot of file I/O. Also, many users don't like the lack of control. (It has been deprecated in favour of go-appimage.)
+A historic solution is [appimaged](https://github.com/AppImage/AppImageKit), a daemon users could install to performs everything in the background, automagically, without notifying the user in any way.
+It would scan a predefined set of directories including `~/Downloads` and `~/.bin`, makes AppImages which are found executable and performs the desktop integration. This is rather inefficient, as appimaged's operations and monitoring produced a lot of file I/O. Also, many users don't like the lack of control. It might even be a security hazard.
 
-AppImageLauncher is a new solution that integrates deeply in the system and intercepts all attempts to open an AppImage, becoming the first instance to handle all AppImage invocations.
+AppImageLauncher is a new and the first solution integrating with the system to intercept all attempts to open an AppImage.
 
 Being the launcher for AppImages, AppImageLauncher can control how the system treats AppImages.
-It can perform the desktop integration, AppImage removal (also called "uninstallation" sometimes, but as AppImages are not really installed, this term doesn't fit very well), and could be used for many other tasks in the future, like update checks and the like.
+It can perform the desktop integration, AppImage removal (also called "uninstallation" sometimes, but as AppImages are not really installed, this term doesn't fit very well), and could be used for even more tasks in the future.
 
 
 ## Media and publications
@@ -115,7 +113,7 @@ English
 
 AppImageLauncher integrates deeply into the system. Therefore, an installation via native system packages is the preferred way to install AppImageLauncher. This way, AppImageLauncher's package can perform the necessary steps to have your system use it for all AppImage invocations.
 
-Compatibility table (likely incomplete, feel free to send PRs to add distributions)
+Compatibility table (likely incomplete.) Please, feel free to open PRs to add distributions.
 
 | Release filename | Build system | Compatible distributions (incomplete) |
 | ---------------- | ------------ | ------------------------------------- |
@@ -147,7 +145,7 @@ Arch Linux, Manjaro, Antergos and Netrunner Rolling users can use AUR to install
 Other systems derived from the listed ones, such as for instance Linux Mint (Ubuntu), should support AppImageLauncher as well.
 If they don't, please don't hesitate to create an issue.
 
-**Note:** If your system is not listed above as supported, feel free to request support in an issue to discuss adding support.
+**Note:** Feel free to request support for other distributions by [opening an issue](https://github.com/TheAssassin/AppImageLauncher/issues/new).
 
 ### Build from source
 
