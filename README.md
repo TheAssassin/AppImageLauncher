@@ -16,6 +16,14 @@ However, it doesn't depend on any of those, and can run completely standalone.
 
 > ### :smiley: Info on how to install and use AppImageLauncher on the [wiki](https://github.com/TheAssassin/AppImageLauncher/wiki).
 
+AppImageLauncher is a novel and unique solution of integrating with the system to intercept all attempts to open an AppImage.
+
+Being the launcher for AppImages, AppImageLauncher can control how the system treats AppImages by being responsible for the desktop integration. It can perform it through AppImage removal (also called "uninstallation" sometimes, but as AppImages are not really installed, this term doesn't fit very well), and could be used for even more tasks in the future.
+When the user launches an AppImage, the software checks whether it has been integrated already.
+
+If not, it displays a dialog prompting the user whether to run the AppImage once, or move it to a predefined location and adding it to the application menus, launchers, etc.
+
+
 ## Features
 
 ### AppImage desktop integration
@@ -43,22 +51,15 @@ From version 1.4.0, there's a *Lite* edition of AppImageLauncher. It has all the
 
 **Traditional packages are highly recommended *if possible*, as they provide many more features and provide a much better overall experience.**
 
-## About the project
+## About
 
-Currently, AppImages and Linux desktops don't work very well together. Since AppImages are normal executables, it'd suffice if desktop environments like Plasma, GNOME, Xfce, ... assisted users in making those files executable.
-Unfortunately, some desktop environments consider this a security risk, and would rather have users use the app stores they include.
+Currently, desktop environments consider exexutable AppImages a security risk, and would rather have users use the app stores they include.
 
-The ability to easily run them isn't all that's needed to provide a good AppImage desktop experience. Making them accessible from the application menus and launchers is a level of "desktop integration" that can't be provided by the AppImages themselves, even though some AppImages ship with a "desktop integration script" prompting the user to do so. There are too many impliciations requiring external software, especially regarding cleanup and removal of AppImages. If applications are simply made executable, they're still spread all over the users' personal files and folders. The average user will not find a "Downloads" directory full of AppImages with cryptic filenames to be friendly.
+The ability to easily run them isn't however all that's needed to provide a good AppImage desktop experience. Making them accessible from the application menus and launchers is a level of "desktop integration" that can't be provided by the AppImages themselves, (even though some AppImages ship with a "desktop integration script" prompting the user to do so). There are too many impliciations requiring external software, especially regarding cleanup and removal of AppImages. (If applications are simply made executable, they're still spread all over the users' personal files and folders.) The average user will not find a "Downloads" directory full of AppImages with cryptic filenames friendly.
 
-Therefore, new, system-side solutions have been developed to perform the desktop integration.
-A historic solution is [appimaged](https://github.com/AppImage/AppImageKit), a daemon users could install to performs everything in the background, automagically, without notifying the user in any way.
-It would scan a predefined set of directories including `~/Downloads` and `~/.bin`, makes AppImages which are found executable and performs the desktop integration. This is rather inefficient, as appimaged's operations and monitoring produced a lot of file I/O. Also, many users don't like the lack of control. It might even be a security hazard.
-
-AppImageLauncher is a new and the first solution integrating with the system to intercept all attempts to open an AppImage.
-
-Being the launcher for AppImages, AppImageLauncher can control how the system treats AppImages.
-It can perform the desktop integration, AppImage removal (also called "uninstallation" sometimes, but as AppImages are not really installed, this term doesn't fit very well), and could be used for even more tasks in the future.
-
+Therefore, system-side ways have been developed to perform the desktop integration.
+A historic solution is [appimaged](https://github.com/AppImage/AppImageKit), a daemon users could install to perform everything automagically in the background, without notifying the user in any way.
+It would scan a predefined set of directories including `~/Downloads` and `~/.bin`, making recognized AppImages executable and then performing the desktop integration. Those operations and monitoring produced a lot of file I/O, so were rather inefficent. Also, many users don't like the lack of control. It might even be a security hazard.
 
 ## As seen in
 
@@ -140,14 +141,6 @@ If they don't, please don't hesitate to create an issue.
 
 Build instructions in [BUILD.md](BUILD.md).
 
+## Background
 
-## How it works
-
-AppImageLauncher is responsible for the desktop integration.
-When the user launches an AppImage, the software checks whether it has been integrated already.
-If not, it displays a dialog prompting the user whether to run the AppImage once, or move it to a predefined location and adding it to the application menus, launchers, etc.
-
-
-## Technical background information
-
-Details about how AppImageLauncher registers itself on [this wiki page](https://github.com/TheAssassin/AppImageLauncher/wiki/Idea).
+Technical details about how AppImageLauncher registers itself on [this wiki page](https://github.com/TheAssassin/AppImageLauncher/wiki/Idea).
