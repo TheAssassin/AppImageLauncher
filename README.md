@@ -81,31 +81,27 @@ Podcasts:
 
 A few articles have been written about AppImageLauncher already:
 
-English
-  - https://www.linuxuprising.com/2018/04/easily-run-and-integrate-appimage-files.html
-  - https://www.freeyourdesktop.com/2018/07/install-manage-appimages-with-appimagelauncher/
-    - same article also available here: https://medium.com/@freeyourdesktopblog/install-manage-appimages-with-appimagelauncher-2a2078c55f37
+  - https://www.linuxuprising.com/2018/04/easily-run-and-integrate-appimage-files.html (English)
   - https://www.freeyourdesktop.com/2018/07/install-manage-appimages-with-appimagelauncher/ (English)
-  - please note that AppImageLauncher could *not* be "installed" via AppImage at that time, only recently we added a Lite version that now can be installed from an AppImage (more information will follow soon!)
+    - same article also available here: https://medium.com/@freeyourdesktopblog/install-manage-appimages-with-appimagelauncher-2a2078c55f37
+  - http://linux-os.net/appimagelauncher-ejecuta-e-integra-facilmente-aplicaciones-en-appimage/ (Spanish)
+    - same article also available here: https://blog.desdelinux.net/appimagelauncher-ejecuta-e-integra-facilmente-aplicaciones-en-appimage/
+  - http://www.edivaldobrito.com.br/integrador-appimagelauncher-no-linux/ (Portuguese)
+  - https://404.g-net.pl/2018/08/appimagelauncher/ (Polish)
+  - https://linuxmint.hu/blog/2018/12/appimage (Hungarian)
+  - https://www.freeyourdesktop.com/2018/07/install-manage-appimages-with-appimagelauncher/ (English)
+    - please note that AppImageLauncher could *not* be "installed" via AppImage at that time, only recently was a Lite version added, that now can be installed from an AppImage (more info to follow.)
+  - https://forum.pardus.org.tr/t/appimagelauncher-tek-tiklama-ile-appimage-sisteminizle-butunlestiriniz/11275 (Turkish)
+  - https://linuxteamvietnam.us/cach-chay-ung-dung-dinh-dang-appimage-tren-linux/ (Vietnamese)
+    - Contains a few wrong assumptions: as soon as AppImageLauncher is installed, you do not have to make AppImages executable, you can just double-click them (or otherwise open them, e.g., from your file- or web-browsers' downloads)
   - https://www.reallinuxuser.com/15-best-things-to-do-after-installing-zorin-os-15/ (English)
   - https://manjaro.site/how-to-install-appimage-launcher-on-ubuntu-19-04/ (English)
   - https://cubiclenate.com/2020/01/09/appimagelauncher-appimage-manager-on-opensuse/ (English)
     - see also: https://cubiclenate.com/2020/01/10/noodlings-lighting-the-emby-server-with-kdenlive/
   - https://chrisrmiller.com/2019/05/29/integrate-appimages-into-your-linux-distro/ (English)
   - https://medium.com/@freeyourdesktopblog/install-manage-appimages-with-appimagelauncher-2a2078c55f37 (English)
-  
   - https://dolys.fr/forums/topic/gerer-les-appimage-sous-linux/ (French)
   - https://linux-user.gr/t/eykolh-chrhsh-efarmogwn-appimage/2066 (Greek)
-  - https://linuxmint.hu/blog/2018/12/appimage (Hungarian)
-  - https://404.g-net.pl/2018/08/appimagelauncher/ (Polish)
-  - http://www.edivaldobrito.com.br/integrador-appimagelauncher-no-linux/ (Portuguese)
-  - http://linux-os.net/appimagelauncher-ejecuta-e-integra-facilmente-aplicaciones-en-appimage/ (Spanish)
-    - same article also available here: https://blog.desdelinux.net/appimagelauncher-ejecuta-e-integra-facilmente-aplicaciones-en-appimage/
-  - https://forum.pardus.org.tr/t/appimagelauncher-tek-tiklama-ile-appimage-sisteminizle-butunlestiriniz/11275 (Turkish)
-  - https://linuxteamvietnam.us/cach-chay-ung-dung-dinh-dang-appimage-tren-linux/ (Vietnamese)
-    - contains a few wrong assumptions: as soon as AppImageLauncher is installed, you do not have to make AppImages executable, you can just double-click them (or otherwise open them, e.g., from your browsers' downloads)
-
-
 
 ## Installation
 
