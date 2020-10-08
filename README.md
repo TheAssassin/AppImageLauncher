@@ -4,7 +4,7 @@ makes your Linux desktop AppImage ready™
 <img src="https://github.com/TheAssassin/AppImageLauncher/raw/master/resources/icons/hicolor/128x128/apps/AppImageLauncher.png"/>
 </p>
 
-Integrate AppImages to your application launcher with one click, wherefrom you can manage, update and remove them.
+Integrate AppImages to your application launcher with one click, and manage, update and remove them from there.
 Double-click AppImages to open them, without having to make them executable first.
 
 AppImageLauncher plays well with other applications managing AppImages, for example app stores.
