@@ -527,7 +527,10 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set update
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to embed update information to allow for easy updating.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi encontrada informação de atualização dentro da AppImage
+%1
+
+Esta AppImage não suporta actualização.Peça aos autores para incorporar informações de actualização para permitir uma actualização fácil.</translation>
     </message>
     <message>
         <location line="+12"/>
