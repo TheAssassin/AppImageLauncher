@@ -64,37 +64,37 @@ It can perform the desktop integration, AppImage removal (also called "uninstall
 
 ### :movie_camera: Tutorials:
 
-* [https://invidio.us/watch?v=D2WA2zdLvVk](Eric Adams]
+* [Eric Adams](https://invidio.us/watch?v=D2WA2zdLvVk)
 
 
 ### :sound: Podcasts:
 
-* [https://dlnxtend.com/11](DLN Xtend 11)
-  + [https://invidio.us/watch?v=yaZygqyN_KE](Invidious)
-* [https://dlnxtend.com/14](DLN Xtend 14)
-  + [https://invidio.us/watch?v=QCkJ74kOlGQ](Invidious)
+* [DLN Xtend 11h](ttps://dlnxtend.com/11)
+  + [Invidious](https://invidio.us/watch?v=yaZygqyN_KE)
+* [DLN Xtend 14](https://dlnxtend.com/14)
+  + [Invidious](https://invidio.us/watch?v=QCkJ74kOlGQ)
 
 
 ### :page_facing_up: Articles
 
-  * [https://www.linuxuprising.com/2018/04/easily-run-and-integrate-appimage-files.html](Linux Uprising) (English)
-  * [https://linux-os.net/appimagelauncher-ejecuta-e-integra-facilmente-aplicaciones-en-appimage/](Linux-OS.net) (Spanish)
-    + same article also available [https://blog.desdelinux.net/appimagelauncher-ejecuta-e-integra-facilmente-aplicaciones-en-appimage/](here).
-  * [https://www.edivaldobrito.com.br/integrador-appimagelauncher-no-linux/](Edvaldo Brito) (Portuguese)
-  * [https://404.g-net.pl/2018/08/appimagelauncher/](przystajnik) (Polish)
-  * [https://linuxmint.hu/blog/2018/12/appimage](Linux Mint Magyar Közösség) (Hungarian)
-  * [https://medium.com/@freeyourdesktopblog/install-manage-appimages-with-appimagelauncher-2a2078c55f37](FreeYourDesktop) (English)
+  * [Linux Uprising](https://www.linuxuprising.com/2018/04/easily-run-and-integrate-appimage-files.html) (English)
+  * [Linux-OS.net](https://linux-os.net/appimagelauncher-ejecuta-e-integra-facilmente-aplicaciones-en-appimage/) (Spanish)
+    + Same article also available (here)[https://blog.desdelinux.net/appimagelauncher-ejecuta-e-integra-facilmente-aplicaciones-en-appimage/].
+  * [Edvaldo Brito](https://www.edivaldobrito.com.br/integrador-appimagelauncher-no-linux/) (Portuguese)
+  * [przystajnik](https://404.g-net.pl/2018/08/appimagelauncher/) (Polish)
+  * [Linux Mint Magyar Közösség](https://linuxmint.hu/blog/2018/12/appimage) (Hungarian)
+  * [FreeYourDesktop](https://medium.com/@freeyourdesktopblog/install-manage-appimages-with-appimagelauncher-2a2078c55f37) (English)
     + Please note that AppImageLauncher could *not* be "installed" via AppImage at that time, only recently was a Lite version added, that now can be installed from an AppImage (more info to follow.)
-  * [https://forum.pardus.org.tr/t/appimagelauncher-tek-tiklama-ile-appimage-sisteminizle-butunlestiriniz/11275](Pardus forum) (Turkish)
-  * [https://linuxteamvietnam.us/cach-chay-ung-dung-dinh-dang-appimage-tren-linux/](Linux Team Vietnam) (Vietnamese)
-    + Contains a few wrong assumptions: as soon as AppImageLauncher is installed, you do not have to make AppImages executable, you can just double-click them (or otherwise open them, e.g., from your file- or web-browsers' downloads)
-  * [https://www.reallinuxuser.com/15-best-things-to-do-after-installing-zorin-os-15/](RealLinuxUser) (English)
-  * [https://manjaro.site/how-to-install-appimage-launcher-on-ubuntu-19-04/](manjaro.site) (English)
-  * [https://cubiclenate.com/2020/01/09/appimagelauncher-appimage-manager-on-opensuse/](CubicleNate's Techpad) (English)
-    + see also: [https://cubiclenate.com/2020/01/10/noodlings-lighting-the-emby-server-with-kdenlive/](CubicleNate's Techpad)
-  * [https://chrisrmiller.com/2019/05/29/integrate-appimages-into-your-linux-distro/](CHRIS R MILLER) (English)
-  * [https://dolys.fr/forums/topic/gerer-les-appimage-sous-linux/](doLys Forum) (French)
-  * [https://linux-user.gr/t/eykolh-chrhsh-efarmogwn-appimage/2066](LINUXUSER) (Greek)
+  * [Pardus forum](https://forum.pardus.org.tr/t/appimagelauncher-tek-tiklama-ile-appimage-sisteminizle-butunlestiriniz/11275) (Turkish)
+  * [Linux Team Vietnam](https://linuxteamvietnam.us/cach-chay-ung-dung-dinh-dang-appimage-tren-linux/) (Vietnamese)
+    + Contains a few wrong assumptions: as soon as AppImageLauncher is installed, you do not have to make AppImages executable, you can just double-click them (or otherwise open them, e.g., from your file- or web-browsers' downloads).
+  * [RealLinuxUser](https://www.reallinuxuser.com/15-best-things-to-do-after-installing-zorin-os-15/) (English)
+  * [manjaro.site](https://manjaro.site/how-to-install-appimage-launcher-on-ubuntu-19-04/) (English)
+  * [CubicleNate's Techpad](https://cubiclenate.com/2020/01/09/appimagelauncher-appimage-manager-on-opensuse/) (English)
+    + See also: [CubicleNate's Techpad](https://cubiclenate.com/2020/01/10/noodlings-lighting-the-emby-server-with-kdenlive/)
+  * [CHRIS R MILLER](https://chrisrmiller.com/2019/05/29/integrate-appimages-into-your-linux-distro/) (English)
+  * [doLys Forum](https://dolys.fr/forums/topic/gerer-les-appimage-sous-linux/) (French)
+  * [LINUXUSER](https://linux-user.gr/t/eykolh-chrhsh-efarmogwn-appimage/2066) (Greek)
 
 ## Installation
 
