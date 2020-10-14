@@ -10,8 +10,18 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 # library to be preloaded when launching the patched runtime binary
 # we need to build with -fPIC, otherwise we can't use it with $LD_PRELOAD
 add_library(${preload_lib} SHARED preload.c logging.h)
-target_compile_options(${preload_lib} PRIVATE -fPIC -DCOMPONENT_NAME="lib")
 target_link_libraries(${preload_lib} PRIVATE dl)
+target_compile_options(${preload_lib} PRIVATE
+    -fPIC
+    -DCOMPONENT_NAME="lib"
+    # hide all symbols by default
+    -fvisibility=hidden
+)
+# compatibility with CMake < 3.13
+set_target_properties(${preload_lib} PROPERTIES LINK_OPTIONS
+    # hide all symbols by default
+    -fvisibility=hidden
+)
 
 # binary that extracts the runtime, patches it and launches it, preloading the library
 add_executable(${bypass_bin} main.cpp elf.cpp logging.h elf.h)
