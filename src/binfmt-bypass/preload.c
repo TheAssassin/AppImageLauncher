@@ -87,7 +87,8 @@ char* __abs_appimage_path() {
     return strdup(appimage_var);
 }
 
-ssize_t readlink(const char* path, char* buf, size_t len) {
+__attribute__((visibility ("default")))
+extern ssize_t readlink(const char* path, char* buf, size_t len) {
     __init();
 
     log_debug("readlink %s, len %ld\n", path, len);
@@ -110,7 +111,8 @@ ssize_t readlink(const char* path, char* buf, size_t len) {
     return __libc_readlink(path, buf, len);
 }
 
-char* realpath(const char* name, char* resolved) {
+__attribute__((visibility ("default")))
+extern char* realpath(const char* name, char* resolved) {
     __init();
 
     log_debug("realpath %s, %s\n", name, resolved);
@@ -138,7 +140,8 @@ char* realpath(const char* name, char* resolved) {
 }
 
 // used by squashfuse, specifically util.c/sqfs_fd_open
-int open(const char* file, int flags, ...) {
+__attribute__((visibility ("default")))
+extern int open(const char* file, int flags, ...) {
     __init();
 
     log_debug("open(%s, %d)\n", file, flags);
