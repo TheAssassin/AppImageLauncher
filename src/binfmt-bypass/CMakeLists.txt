@@ -26,7 +26,11 @@ set_target_properties(${preload_lib} PROPERTIES LINK_OPTIONS
 # binary that extracts the runtime, patches it and launches it, preloading the library
 add_executable(${bypass_bin} main.cpp elf.cpp logging.h elf.h)
 target_link_libraries(${bypass_bin} PRIVATE dl)
-target_compile_options(${bypass_bin} PRIVATE -DPRELOAD_LIB_NAME="$<TARGET_FILE_NAME:${preload_lib}>" -DCOMPONENT_NAME="bin" -D_GNU_SOURCE)
+target_compile_options(${bypass_bin} PRIVATE
+    -DPRELOAD_LIB_NAME="$<TARGET_FILE_NAME:${preload_lib}>"
+    -DCOMPONENT_NAME="bin"
+    -D_GNU_SOURCE
+)
 
 include(CheckCSourceCompiles)
 message(STATUS "Checking whether memfd_create(...) is available")
