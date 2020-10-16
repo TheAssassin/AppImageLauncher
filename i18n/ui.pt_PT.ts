@@ -6,37 +6,37 @@
     <message>
         <location filename="../src/ui/first-run.ui" line="+20"/>
         <source>First run</source>
-        <translation type="unfinished"></translation>
+        <translation>Primeira execução</translation>
     </message>
     <message>
         <location line="+55"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;O AppImageLauncher agora está ativo no seu sistema!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Esperamos que melhore a experiência AppImage no seu computador, ao armazenar as AppImages que instalar numa única pasta e ao adicionar entradas correspondentes ao seu lançador de aplicações.&lt;/p&gt;&lt;p&gt;Não foi possível encontrar um ficheiro de configuração; será criado um automaticamente com as suas selecções a seguir. Pode sempre alterar estas configurações mais tarde, ao lançar AppImageLauncher Settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Ask me whether to move new AppImages into a central location</source>
-        <translation type="unfinished"></translation>
+        <translation>Pedir para mudar as AppImages detectados novamente para a pasta de gestão</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Integration target destination directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasta para armazenar AppImages geridos:</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>Customize</source>
-        <translation type="unfinished"></translation>
+        <translation>Personalizar</translation>
     </message>
     <message>
         <location filename="../src/ui/first-run.cpp" line="+86"/>
         <source>Choose integration destination dir</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolher uma pasta para armazenar AppImages geridas</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>(default)</source>
-        <translation type="unfinished"></translation>
+        <translation>(padrão)</translation>
     </message>
 </context>
 <context>
@@ -44,7 +44,7 @@
     <message>
         <location filename="../src/ui/main.cpp" line="+380"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Aviso</translation>
     </message>
     <message>
         <source>AppImage has already been integrated, but it is not in the current integration destination directory.
@@ -65,18 +65,24 @@ Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>O AppImage %1 já foi integrado, mas não se encontra na pasta de armazenamento para AppImages geridos.
+
+Quer movê-la para lá agora?
+
+Clique Não para evitar AppImageLauncher e iniciar o AppImage diretamente da sua localização atual.
+
+</translation>
     </message>
     <message>
         <location filename="../src/shared/shared.cpp" line="+1232"/>
         <location line="+8"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../src/ui/main.cpp" line="+23"/>
         <source>Failed to unregister AppImage before re-integrating it</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha ao eliminar a integração do sistema para o AppImage antes de o reintegrar</translation>
     </message>
     <message>
         <location filename="../src/shared/shared.cpp" line="-485"/>
@@ -84,7 +90,10 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
 Could not open file for reading:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Incapaz de analisar as traduções no ficheiro de ambiente de trabalho.
+Não foi possível abrir o ficheiro:
+
+%1</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -92,17 +101,20 @@ Could not open file for reading:
 Invalid syntax:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Incapaz de analisar as traduções em ficheiro do ambiente de trabalho.
+Sintaxe inválida:
+
+%1</translation>
     </message>
     <message>
         <location line="+409"/>
         <source>File %1 is owned by another user: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>O ficheiro %1 pertence a outro utilizador: %2</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Permissions problem</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro: Não há permissões necessárias do sistema de ficheiros</translation>
     </message>
     <message>
         <source>File %1 is owned by another user: %2
