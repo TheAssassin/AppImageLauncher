@@ -16,12 +16,11 @@ However, it doesn't depend on any of those, and can run completely standalone.
 
 > ### :smiley: Info on how to install and use AppImageLauncher on the [wiki](https://github.com/TheAssassin/AppImageLauncher/wiki).
 
-AppImageLauncher is a novel and unique solution of integrating with the system to intercept all attempts to open an AppImage.
+AppImageLauncher is a novel and unique solution of integrating with the system. It intercepts all attempts to open an AppImage to provide its integration features.
 
-Being the launcher for AppImages, AppImageLauncher can control how the system treats AppImages by being responsible for the desktop integration. It can perform it through AppImage removal (also called "uninstallation" sometimes, but as AppImages are not really installed, this term doesn't fit very well), and could be used for even more tasks in the future.
-When the user launches an AppImage, the software checks whether it has been integrated already.
+Being the launcher for AppImages, AppImageLauncher can control how the system treats AppImages. It integrates them into the system, provides helpers for updating or removing AppImages, and a lot more.
 
-If not, it displays a dialog prompting the user whether to run the AppImage once, or move it to a predefined location and adding it to the application menus, launchers, etc.
+On their first execution (i.e., if they have not been integrated yet), it displays a dialog prompting the user whether to run the AppImage once, or move it to a predefined location and adding it to the application menus, launchers, etc.
 
 
 ## Features
@@ -31,35 +30,46 @@ If not, it displays a dialog prompting the user whether to run the AppImage once
 This core feature allows you to integrate AppImages you download into your application menu or launcher, to make it easier for you to launch them. It also takes care of moving them into a central location, where you can find them later.
 Furthermore, it sets up the update and removal entries in the launcher for you.
 
+AppImages use the term "desktop integration", as they're not "installed" in the traditional sense. They remain single, self-contained executable files. AppImageLauncher and other tools extract and patch the [desktop entry](https://specifications.freedesktop.org/desktop-entry-spec/latest/) as well as the related [icons](https://specifications.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html) into the relevant locations.
+More information on desktop integration can be found in the [AppImage docs](https://docs.appimage.org/reference/desktop-integration.html).
+
+
 ### Update management
 
-After desktop integration, the context menu of the AppImage's entry in the application launcher will have a clickable update entry that launches a little helper tool to apply updates.
+After desktop integration, the context menu of the AppImage's entry in the application launcher will have an "Update" entry that launches a little helper tool to apply updates.
+
 
 ### Remove AppImages from system
 
-Click the entry in the context menu in the application launcher and the removal tool will ask you to confirm.
+Click the "Remove" entry in the context menu in the application launcher and the removal tool will ask you to confirm.
 If you choose to do so, the desktop integration is undone, and the file is removed from your system.
+
 
 ### CLI
 
-A CLI tool called `ail-cli` for automation, which provides basic operations, and can be used in scripts or generally from the terminal in headless environments. As of February 2020, only integration and unintegration are supported. More features planned!
+The packages ship with a CLI tool called `ail-cli`, providing basic operations in the terminal, for automation in scripts etc. As of February 2020, only integration and unintegration are supported. More features planned!
 
 
 ## Differences between regular and Lite version
 
-From version 1.4.0, there's a *Lite* edition of AppImageLauncher. It has all the AppImageLauncher you can get without having root access to your computer. AppImageLauncher Lite is shipped as an AppImage installable by a user from the command-line. Enter `./appimagelauncher-lite...AppImage install`. in a terminal, and it integrates itself in the users' home directory.
+From version 1.4.0, there's a *Lite* edition of AppImageLauncher.
+It provides all of AppImageLauncher you can get without having root access to your computer. AppImageLauncher Lite is shipped as an AppImage, which can be installed by users from the command-line.
+Enter `./appimagelauncher-lite...AppImage install`. in a terminal, and it integrates itself in the users' home directory.
 
 **Traditional packages are highly recommended *if possible*, as they provide many more features and provide a much better overall experience.**
 
+*Note: if you're interested in a GUI installer, please consider sending a pull request. More information in [#243](https://github.com/TheAssassin/AppImageLauncher/issues/243).*
+
 ## About
 
-Currently, desktop environments consider exexutable AppImages a security risk, and would rather have users use the app stores they include.
+Currently, desktop environments consider exexutables a security risk, and would rather have users use the app stores they include.
 
-The ability to easily run them isn't however all that's needed to provide a good AppImage desktop experience. Making them accessible from the application menus and launchers is a level of "desktop integration" that can't be provided by the AppImages themselves, (even though some AppImages ship with a "desktop integration script" prompting the user to do so). There are too many impliciations requiring external software, especially regarding cleanup and removal of AppImages. (If applications are simply made executable, they're still spread all over the users' personal files and folders.) The average user will not find a "Downloads" directory full of AppImages with cryptic filenames friendly.
+The ability to easily run them, however, isn't all that's needed to provide a good AppImage desktop experience. Making them accessible from the application menus and launchers is a level of "desktop integration" that can't be provided by the AppImages themselves properly (even though some AppImages ship with a "desktop integration script" prompting the user to do so). There are too many impliciations requiring external software, especially regarding cleanup and removal of AppImages. (If applications are simply made executable, they're still spread all over the users' personal files and folders.) The average user will not find a "Downloads" directory full of AppImages with cryptic filenames friendly.
 
 Therefore, system-side ways have been developed to perform the desktop integration.
-A historic solution is [appimaged](https://github.com/AppImage/AppImageKit), a daemon users could install to perform everything automagically in the background, without notifying the user in any way.
-It would scan a predefined set of directories including `~/Downloads` and `~/.bin`, making recognized AppImages executable and then performing the desktop integration. Those operations and monitoring produced a lot of file I/O, so were rather inefficent. Also, many users don't like the lack of control. It might even be a security hazard.
+One of the first solutions was[appimaged](https://github.com/AppImage/appimaged), a daemon users could install to perform everything automagically in the background, without notifying the user in any way.
+It scans a predefined set of directories including `~/Downloads` and `~/.bin`, making recognized AppImages executable and then performing the desktop integration. Those operations and monitoring produced a lot of file I/O, so were rather inefficent. Also, many users don't like the lack of control. The approach also opens attack vectors and thus can be considered a security hazard, as a vulnerability discovered in appimaged recently has shown.
+
 
 ## As seen in
 
@@ -80,7 +90,7 @@ It would scan a predefined set of directories including `~/Downloads` and `~/.bi
 
   * [Linux Uprising](https://www.linuxuprising.com/2018/04/easily-run-and-integrate-appimage-files.html) (English)
   * [Linux-OS.net](https://linux-os.net/appimagelauncher-ejecuta-e-integra-facilmente-aplicaciones-en-appimage/) (Spanish)
-    + Same article also available (here)[https://blog.desdelinux.net/appimagelauncher-ejecuta-e-integra-facilmente-aplicaciones-en-appimage/].
+    + Same article also available [here](https://blog.desdelinux.net/appimagelauncher-ejecuta-e-integra-facilmente-aplicaciones-en-appimage/).
   * [Edvaldo Brito](https://www.edivaldobrito.com.br/integrador-appimagelauncher-no-linux/) (Portuguese)
   * [przystajnik](https://404.g-net.pl/2018/08/appimagelauncher/) (Polish)
   * [Linux Mint Magyar Közösség](https://linuxmint.hu/blog/2018/12/appimage) (Hungarian)
@@ -96,6 +106,7 @@ It would scan a predefined set of directories including `~/Downloads` and `~/.bi
   * [CHRIS R MILLER](https://chrisrmiller.com/2019/05/29/integrate-appimages-into-your-linux-distro/) (English)
   * [doLys Forum](https://dolys.fr/forums/topic/gerer-les-appimage-sous-linux/) (French)
   * [LINUXUSER](https://linux-user.gr/t/eykolh-chrhsh-efarmogwn-appimage/2066) (Greek)
+
 
 ## Installation
 
@@ -137,9 +148,11 @@ If they don't, please don't hesitate to create an issue.
 
 **Note:** Feel free to request support for other distributions by [opening an issue](https://github.com/TheAssassin/AppImageLauncher/issues/new).
 
+
 ### Build from source
 
 Build instructions in [BUILD.md](BUILD.md).
+
 
 ## Background
 
