@@ -6,37 +6,37 @@
     <message>
         <location filename="../src/ui/first-run.ui" line="+20"/>
         <source>First run</source>
-        <translation type="unfinished"></translation>
+        <translation>İlk çalıştırma</translation>
     </message>
     <message>
         <location line="+55"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;AppImageLauncher uygulamasına hoş geldiniz!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Bu küçük yardımcı, bilgisayarınızdaki AppImage deneyiminizi iyileştirmek için tasarlanmıştır.&lt;/p&gt;&lt;p&gt;Görünüşe göre AppImageLauncher uygulamasını ilk defa çalıştırıyorsunuz. Lütfen bir dakikanızı ayırın ve tercihlerinizi yapılandırın. Bunları daha sonra kontrol panelini kullanarak istediğiniz zaman değiştirebilirsiniz.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Ask me whether to move new AppImages into a central location</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni AppImages uygulamasının merkezi bir konuma taşınıp taşınmayacağını sor</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Integration target destination directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Entegrasyon hedef dizini:</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>Customize</source>
-        <translation type="unfinished"></translation>
+        <translation>Özelleştir</translation>
     </message>
     <message>
         <location filename="../src/ui/first-run.cpp" line="+86"/>
         <source>Choose integration destination dir</source>
-        <translation type="unfinished"></translation>
+        <translation>Entegrasyon hedef dizinini seçin</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>(default)</source>
-        <translation type="unfinished"></translation>
+        <translation>(varsayılan)</translation>
     </message>
 </context>
 <context>
@@ -44,7 +44,7 @@
     <message>
         <location filename="../src/ui/main.cpp" line="+380"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Uyarı</translation>
     </message>
     <message>
         <source>AppImage has already been integrated, but it is not in the current integration destination directory.
@@ -71,7 +71,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
         <location filename="../src/shared/shared.cpp" line="+1232"/>
         <location line="+8"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../src/ui/main.cpp" line="+23"/>
@@ -102,7 +102,7 @@ Invalid syntax:
     <message>
         <location line="+6"/>
         <source>Permissions problem</source>
-        <translation type="unfinished"></translation>
+        <translation>İzin sorunu</translation>
     </message>
     <message>
         <source>File %1 is owned by another user: %2
@@ -134,7 +134,7 @@ Relaunch with their permissions?</translation>
         <location filename="../src/ui/update_main.cpp" line="+119"/>
         <location line="+42"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../src/ui/main.cpp" line="-358"/>
