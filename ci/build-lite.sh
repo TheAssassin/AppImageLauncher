@@ -31,23 +31,19 @@ OLD_CWD=$(readlink -f .)
 
 pushd "$BUILD_DIR"
 
-# install more recent CMake version which fixes some linking issue in CMake < 3.10
-# Fixes https://github.com/TheAssassin/AppImageLauncher/issues/106
-# Upstream bug: https://gitlab.kitware.com/cmake/cmake/issues/17389
-wget https://cmake.org/files/v3.13/cmake-3.13.2-Linux-x86_64.tar.gz -qO- | tar xz --strip-components=1
-export PATH=$(readlink -f bin/):"$PATH"
-which cmake
-cmake --version
-
-EXTRA_CMAKE_FLAGS=
+EXTRA_CMAKE_FLAGS=()
+export QT_SELECT=qt5
 
 if [ "$ARCH" == "i386" ]; then
-    EXTRA_CMAKE_FLAGS="$EXTRA_CMAKE_FLAGS -DCMAKE_TOOLCHAIN_FILE=$REPO_ROOT/cmake/toolchains/i386-linux-gnu.cmake -DUSE_SYSTEM_XZ=ON -DUSE_SYSTEM_LIBARCHIVE=ON"
+    EXTRA_CMAKE_FLAGS+=(
+        "-DCMAKE_TOOLCHAIN_FILE=$REPO_ROOT/cmake/toolchains/i386-linux-gnu.cmake"
+        "-DUSE_SYSTEM_XZ=ON"
+        "-DUSE_SYSTEM_LIBARCHIVE=ON"
+    )
+
     # TODO check if this can be removed
-    if [ "$DEBIAN_DIST" != "bionic" ] && [ "$DEBIAN_DIST" != "cosmic" ]; then
+    if [ "$DIST" == "xenial" ]; then
         export QT_SELECT=qt5-i386-linux-gnu
-    else
-        export QT_SELECT=qt5
     fi
 fi
 
