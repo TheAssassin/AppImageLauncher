@@ -8,3 +8,5 @@ squashfs-root/
 *.qm
 resources/l10n/*
 *.html
+*.swp
+*.rpm*
