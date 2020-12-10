@@ -15,7 +15,12 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 # on 64-bit systems such as x86_64 or aarch64/arm64v8, we need to provide a 32-bit preload library to allow the users
 # to execute compatible 32-bit binaries, as the regular preload library cannot be preloaded due to the architecture
 # being incompatible
-if(CMAKE_SYSTEM_PROCESSOR MATCHES x86_64 OR CMAKE_SYSTEM_PROCESSOR MATCHES aarch64)
+# unfortunately, compiling on ARM is significantly harder than just adding a compiler flag, as gcc-multilib is missing
+# it's likely easier with clang, but that remains to be verified
+# TODO: make this work on aarch64
+if(CMAKE_SYSTEM_PROCESSOR MATCHES x86_64
+    #OR CMAKE_SYSTEM_PROCESSOR MATCHES aarch64
+)
     message(WARNING "64-bit target detected (${CMAKE_SYSTEM_PROCESSOR}), building 32-bit library as well")
     set(build_32bit_preload_library true)
 endif()
