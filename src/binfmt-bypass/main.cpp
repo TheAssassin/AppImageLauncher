@@ -115,7 +115,7 @@ int create_shm_fd_with_patched_runtime(const char* const appimage_filename, cons
 
 #endif
 
-char* find_preload_library() {
+char* find_preload_library(bool is_32bit) {
     // we expect the library to be placed next to this binary
     char* own_binary_path = realpath("/proc/self/exe", nullptr);
 
@@ -130,8 +130,25 @@ char* find_preload_library() {
         log_error("could not detect own binary's directory path");
     }
 
-    char* result = static_cast<char*>(malloc(strlen(dir_path) + 1 + strlen(PRELOAD_LIB_NAME) + 1));
-    sprintf(result, "%s/%s", dir_path, PRELOAD_LIB_NAME);
+    auto path_size = strlen(dir_path) + 1 + strlen(PRELOAD_LIB_NAME) + 1;
+
+#ifdef PRELOAD_LIB_NAME_32BIT
+    path_size += strlen(PRELOAD_LIB_NAME_32BIT);
+#endif
+
+    char* result = static_cast<char*>(malloc(path_size));
+    sprintf(result, "%s/", dir_path);
+
+#ifdef PRELOAD_LIB_NAME_32BIT
+    if (is_32bit) {
+        strcat(result, PRELOAD_LIB_NAME_32BIT);
+    } else {
+        strcat(result, PRELOAD_LIB_NAME);
+    }
+#else
+    strcat(result, PRELOAD_LIB_NAME);
+#endif
+
     return result;
 }
 
@@ -180,12 +197,14 @@ int main(int argc, char** argv) {
         new_argv.push_back(nullptr);
 
         // preload our library
-        char* preload_lib_path = find_preload_library();
+        char* preload_lib_path = find_preload_library(is_32bit_elf(appimage_filename));
 
         if (preload_lib_path == nullptr) {
             log_error("could not find preload library path");
             return EXIT_CODE_FAILURE;
         }
+
+        log_debug("library to preload: %s\n", preload_lib_path);
 
         setenv("LD_PRELOAD", preload_lib_path, true);
 

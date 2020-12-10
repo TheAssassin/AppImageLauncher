@@ -7,6 +7,7 @@
 #include <byteswap.h>
 #include <fstream>
 #include <iostream>
+#include <stdexcept>
 
 // own headers
 #include "elf.h"
@@ -91,11 +92,9 @@ off_t get_elf_size(std::ifstream& ifs)
     return sht_end > last_section_end ? sht_end : last_section_end;
 }
 
-ssize_t elf_binary_size(const char* filename) {
-    std::ifstream ifs(filename);
-
+bool is_32bit_elf(std::ifstream& ifs) {
     if (!ifs) {
-        log_error("could not open file\n");
+        log_error("failed to read e_ident from ELF file\n");
         return -1;
     }
 
@@ -106,21 +105,40 @@ ssize_t elf_binary_size(const char* filename) {
 
     ifs.read(reinterpret_cast<char*>(&ehdr.e_ident), EI_NIDENT);
 
+    switch (ehdr.e_ident[EI_CLASS]) {
+        case ELFCLASS32: {
+            return true;
+        }
+        case ELFCLASS64: {
+            return false;
+        }
+    }
+
+    throw std::logic_error{"ELF binary is neither 32-bit nor 64-bit"};
+}
+
+bool is_32bit_elf(const char* filename) {
+    std::ifstream ifs(filename);
+
     if (!ifs) {
-        log_error("failed to read e_ident from ELF file\n");
+        log_error("could not open file\n");
         return -1;
     }
 
-    switch (ehdr.e_ident[EI_CLASS]) {
-        case ELFCLASS32: {
-            return get_elf_size<Elf32_Ehdr, Elf32_Shdr>(ifs);
-        }
-        case ELFCLASS64: {
-            return get_elf_size<Elf64_Ehdr, Elf64_Shdr>(ifs);
-        }
-        default: {
-            log_error("unknown ELF class\n");
-            return -1;
-        }
+    return is_32bit_elf(ifs);
+}
+
+ssize_t elf_binary_size(const char* filename) {
+    std::ifstream ifs(filename);
+
+    if (!ifs) {
+        log_error("could not open file\n");
+        return -1;
+    }
+
+    if (is_32bit_elf(ifs)) {
+        return get_elf_size<Elf32_Ehdr, Elf32_Shdr>(ifs);
+    } else {
+        return get_elf_size<Elf64_Ehdr, Elf64_Shdr>(ifs);
     }
 }
