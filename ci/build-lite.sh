@@ -47,7 +47,7 @@ if [ "$ARCH" == "i386" ]; then
     fi
 fi
 
-cmake "$REPO_ROOT" -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RelWithDebInfo $EXTRA_CMAKE_FLAGS -DTRAVIS_BUILD=ON -DBUILD_TESTING=OFF -DBUILD_LITE=ON
+cmake "$REPO_ROOT" -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RelWithDebInfo $EXTRA_CMAKE_FLAGS -DCI_BUILD=ON -DBUILD_TESTING=OFF -DBUILD_LITE=ON
 
 # compile dependencies
 make -j $(nproc) libappimage libappimageupdate libappimageupdate-qt
@@ -69,7 +69,7 @@ chmod -v +x linuxdeploy*-"$ARCH".AppImage
 
 VERSION=$(src/cli/ail-cli --version | awk '{print $3}')
 
-travis_build="$TRAVIS_BUILD_NUMBER"
+travis_build="$GITHUB_RUN_NUMBER"
 
 if [[ "$travis_build" != "" ]]; then
     VERSION="${VERSION}-travis${travis_build}"

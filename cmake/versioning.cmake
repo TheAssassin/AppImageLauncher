@@ -51,11 +51,11 @@ endif()
 message(STATUS "Git commit: ${APPIMAGELAUNCHER_GIT_COMMIT}")
 mark_as_advanced(FORCE APPIMAGELAUNCHER_GIT_COMMIT)
 
-# add build number based on Travis build number if possible
-if("$ENV{TRAVIS_BUILD_NUMBER}" STREQUAL "")
+# add build number based on GitHub actions build number if possible
+if("$ENV{GITHUB_RUN_NUMBER}" STREQUAL "")
     set(APPIMAGELAUNCHER_BUILD_NUMBER "<local dev build>")
 else()
-    set(APPIMAGELAUNCHER_BUILD_NUMBER "$ENV{TRAVIS_BUILD_NUMBER}")
+    set(APPIMAGELAUNCHER_BUILD_NUMBER "$ENV{GITHUB_RUN_NUMBER}")
 endif()
 
 # get current date

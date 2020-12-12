@@ -81,7 +81,7 @@ if [ "$ARCH" == "arm64" ]; then
     )
 fi
 
-cmake "$REPO_ROOT" -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RelWithDebInfo "${extra_cmake_args[@]}" -DTRAVIS_BUILD=ON -DBUILD_TESTING=OFF
+cmake "$REPO_ROOT" -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RelWithDebInfo "${extra_cmake_args[@]}" -DCI_BUILD=ON -DBUILD_TESTING=OFF
 
 # now, compile
 if [[ "$CI" == "" ]]; then
