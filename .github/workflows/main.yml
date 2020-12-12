@@ -26,6 +26,9 @@ jobs:
           - NAME: Ubuntu bionic, Debian testing and newer, armhf
             ARCH: armhf
             DIST: bionic
+          - NAME: Ubuntu xenial, Debian stable etc., arm64
+            ARCH: arm64
+            DIST: xenial
           - NAME: Ubuntu xenial, Debian stable etc., armhf
             ARCH: armhf
             DIST: xenial
