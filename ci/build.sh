@@ -20,8 +20,10 @@ set -x
 set -e
 
 # use RAM disk if possible
-if [ "$CI" == "" ] && [ -d /dev/shm ]; then
+if [ -d /dev/shm ] && mount | grep /dev/shm | grep -v -q noexec; then
     TEMP_BASE=/dev/shm
+elif [ -d /docker-ramdisk ]; then
+    TEMP_BASE=/docker-ramdisk
 else
     TEMP_BASE=/tmp
 fi

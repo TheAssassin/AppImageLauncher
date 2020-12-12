@@ -52,7 +52,16 @@ if [ "$CI" != "" ]; then
     DOCKER_OPTS+=("--security-opt" "seccomp:unconfined")
 fi
 
+# only if there's more than 3G of free space in RAM, we can build in a RAM disk
+if [[ "$(free -m  | grep "Mem:" | awk '{print $4}')" -gt 3072 ]]; then
+    echo "Host system has enough free memory -> building in RAM disk"
+    DOCKER_OPTS+=("--tmpfs /docker-ramdisk:exec,mode=777")
+else
+    echo "Host system does not have enough free memory -> building on regular disk"
+fi
+
 # run build
-docker run -e DIST -e ARCH -e GITHUB_RUN_NUMBER -e GITHUB_RUN_ID --rm -i "${DOCKER_OPTS[@]}" -v "$(readlink -f ..):/ws" "$image" \
+docker run -e DIST -e ARCH -e GITHUB_RUN_NUMBER -e GITHUB_RUN_ID --rm -i "${DOCKER_OPTS[@]}" -v "$(readlink -f ..):/ws" \
+     "$image" \
      bash -xc "export CI=1 && cd /ws && source ci/$build_script"
 
