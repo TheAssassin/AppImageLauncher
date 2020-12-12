@@ -102,6 +102,16 @@ fi
 apt-get update
 apt-get -y --no-install-recommends install "${packages[@]}"
 
+if [[ "$ARCH" == "arm64"* ]]; then
+  # g{cc,++}-multilib usually install these dependencies for us
+  # however, as the multilib stuff is not available for ARM, we have to install these dev packages ourselves
+  # we can't really predict the names of the packages (they differ on different distros/releases)
+  # therefore, we have to install the other dependencies first to be able to query them with dpkg -l
+  apt-get install -y \
+      "$(dpkg -l | grep libgcc | grep dev | awk '{print $2}' | cut -d: -f1 | uniq)":armhf \
+      "$(dpkg -l | grep libstdc++ | grep dev | awk '{print $2}' | cut -d: -f1 | uniq)":armhf
+fi
+
 # install more recent CMake version which fixes some linking issue in CMake < 3.10
 # Fixes https://github.com/TheAssassin/AppImageLauncher/issues/106
 # Upstream bug: https://gitlab.kitware.com/cmake/cmake/issues/17389
