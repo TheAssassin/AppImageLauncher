@@ -39,6 +39,7 @@ docker build --cache-from "$image" -t "$image" -f "$dockerfile" --build-arg UID=
 # we can do that immediately once the image has been built successfully; if its definition ever changes it will be
 # rebuilt anyway
 # credentials shall only be available on (protected) master branch
+set +x
 if [[ "$DOCKER_USERNAME" != "" ]]; then
     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin quay.io
     docker push "$image"
