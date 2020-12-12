@@ -1,41 +1,58 @@
 name: Continuous builds
 
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  bionic-x86_64:
-    name: Native packages for Ubuntu bionic, Debian testing and newer, x86_64
-    env:
-      DIST: bionic
-      ARCH: x86_64
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: 'recursive'
-      - name: Build in Docker
-        run: bash -ex ci/build-in-docker.sh "$DIST"
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: bionic x86_64
-          path: appimagelauncher*.deb*
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - NAME: Ubuntu bionic, Debian testing and newer, x86_64
+            ARCH: x86_64
+            DIST: bionic
+          - NAME: Ubuntu bionic, Debian testing and newer, i386
+            ARCH: i386
+            DIST: bionic
+          - NAME: Ubuntu xenial, Debian stable etc., x86_64
+            ARCH: x86_64
+            DIST: xenial
+          - NAME: Ubuntu xenial, Debian stable etc., i386
+            ARCH: i386
+            DIST: xenial
+          - NAME: Ubuntu bionic, Debian testing and newer, arm64
+            ARCH: arm64
+            DIST: bionic
+          - NAME: Ubuntu bionic, Debian testing and newer, armhf
+            ARCH: armhf
+            DIST: bionic
+          - NAME: Ubuntu xenial, Debian stable etc., armhf
+            ARCH: armhf
+            DIST: xenial
+          - NAME: Lite AppImage x86_64
+            ARCH: x86_64
+            DIST: bionic
+            BUILD_LITE: 1
+          - NAME: Lite AppImage i386
+            ARCH: i386
+            DIST: bionic
+            BUILD_LITE: 1
 
-  bionic-i386:
-    name: Native packages for Ubuntu bionic, Debian testing and newer, i386
+
+    name: ${{ matrix.NAME }}
     env:
-      DIST: bionic
-      ARCH: i386
-    runs-on: ubuntu-18.04
+      ARCH: ${{ matrix.ARCH }}
+      DIST: ${{ matrix.DIST }}
+      BUILD_LITE: ${{ matrix.BUILD_LITE }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           submodules: 'recursive'
+      - name: Set up QEMU integration for Docker
+        run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Build in Docker
-        run: bash -ex ci/build-in-docker.sh "$DIST"
+        run: bash -ex ci/build-in-docker.sh
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -43,182 +60,17 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: bionic i386
-          path: appimagelauncher*.deb*
-
-  xenial-x86_64:
-    name: Native packages for Ubuntu xenial, Debian stable etc., x86_64
-    env:
-      DIST: xenial
-      ARCH: x86_64
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: 'recursive'
-      - name: Build in Docker
-        run: bash -ex ci/build-in-docker.sh "$DIST"
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: xenial x86_64
           path: |
-            appimagelauncher*.deb*
-            appimagelauncher*.rpm*
-            appimagelauncher*.tar*
-
-  xenial-i386:
-    name: Native packages for Ubuntu xenial, Debian stable etc., i386
-    env:
-      DIST: xenial
-      ARCH: i386
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: 'recursive'
-      - name: Build in Docker
-        run: bash -ex ci/build-in-docker.sh "$DIST"
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: xenial i386
-          path: |
-            appimagelauncher*.deb*
-            appimagelauncher*.rpm*
-            appimagelauncher*.tar*
-
-  bionic-arm64:
-    name: Native packages for Ubuntu bionic, Debian testing and newer, arm64
-    env:
-      DIST: bionic
-      ARCH: arm64
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: 'recursive'
-      - name: Set up QEMU integration for Docker
-        run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-      - name: Build in Docker
-        run: bash -ex ci/build-in-docker.sh "$DIST"
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: bionic arm64
-          path: appimagelauncher*.deb*
-
-  bionic-armhf:
-    name: Native packages for Ubuntu bionic, Debian testing and newer, armhf
-    env:
-      DIST: bionic
-      ARCH: armhf
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: 'recursive'
-      - name: Set up QEMU integration for Docker
-        run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-      - name: Build in Docker
-        run: bash -ex ci/build-in-docker.sh "$DIST"
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: bionic armhf
-          path: appimagelauncher*.deb*
-
-  xenial-armhf:
-    name: Native packages for Ubuntu xenial, Debian stable etc., armhf
-    env:
-      DIST: xenial
-      ARCH: armhf
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: 'recursive'
-      - name: Set up QEMU integration for Docker
-        run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-      - name: Build in Docker
-        run: bash -ex ci/build-in-docker.sh "$DIST"
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: xenial armhf
-          path: appimagelauncher*.deb*
-
-  lite-x86_64:
-    name: AppImageLauncher Lite AppImage x86_64
-    env:
-      DIST: bionic
-      ARCH: x86_64
-      BUILD_LITE: 1
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: 'recursive'
-      - name: Build in Docker
-        run: bash -ex ci/build-in-docker.sh "$DIST"
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: bionic x86_64
-          path: appimagelauncher-lite-*.AppImage*
-
-  lite-i386:
-    name: AppImageLauncher Lite AppImage i386
-    env:
-      DIST: bionic
-      ARCH: i386
-      BUILD_LITE: 1
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: 'recursive'
-      - name: Build in Docker
-        run: bash -ex ci/build-in-docker.sh "$DIST"
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: bionic i386
-          path: appimagelauncher-lite-*.AppImage*
+              appimagelauncher*.deb*
+              appimagelauncher*.rpm*
+              appimagelauncher*.tar*
+              appimagelauncher-lite-*.AppImage*
 
   upload:
     name: Create release and upload artifacts
     needs:
-      - bionic-x86_64
-      - bionic-i386
-      - xenial-x86_64
-      - xenial-i386
-      - bionic-arm64
-      - bionic-armhf
-      - xenial-armhf
-      - lite-x86_64
-      - lite-i386
-    runs-on: ubuntu-18.04
+      - build
+    runs-on: ubuntu-latest
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v2
