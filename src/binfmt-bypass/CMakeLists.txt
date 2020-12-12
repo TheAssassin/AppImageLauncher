@@ -17,14 +17,18 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 # being incompatible
 # unfortunately, compiling on ARM is significantly harder than just adding a compiler flag, as gcc-multilib is missing
 # it's likely easier with clang, but that remains to be verified
-# TODO: make this work on aarch64
-if(CMAKE_SYSTEM_PROCESSOR MATCHES x86_64
-    #OR CMAKE_SYSTEM_PROCESSOR MATCHES aarch64
-)
-    message(WARNING "64-bit target detected (${CMAKE_SYSTEM_PROCESSOR}), building 32-bit library as well")
+if(CMAKE_SYSTEM_PROCESSOR MATCHES x86_64)
+    message(STATUS "64-bit target detected (${CMAKE_SYSTEM_PROCESSOR}), building 32-bit preload library as well")
     set(build_32bit_preload_library true)
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES arm64 OR CMAKE_SYSTEM_PROCESSOR MATCHES aarch64)
+    string(TOLOWER ${CMAKE_C_COMPILER_ID} preload_lib_compiler_id)
+    if(preload_lib_compiler_id MATCHES clang)
+        message(STATUS "64-bit target detected (${CMAKE_SYSTEM_PROCESSOR}), building 32-bit preload library as well")
+        set(build_32bit_preload_library true)
+    else()
+        message(WARNING "64-bit target detected (${CMAKE_SYSTEM_PROCESSOR}), but compiling with ${preload_lib_compiler_id}, cannot build 32-bit preload library")
+    endif()
 endif()
-
 
 function(make_preload_lib_target target_name)
     # library to be preloaded when launching the patched runtime binary
@@ -45,10 +49,19 @@ function(make_preload_lib_target target_name)
 endfunction()
 
 make_preload_lib_target(${preload_lib})
+
 if(build_32bit_preload_library)
     make_preload_lib_target(${preload_lib_32bit})
-    target_compile_options(${preload_lib_32bit} PRIVATE "-m32")
-    target_link_options(${preload_lib_32bit} PRIVATE "-m32")
+
+    if(CMAKE_SYSTEM_PROCESSOR MATCHES x86_64)
+        target_compile_options(${preload_lib_32bit} PRIVATE "-m32")
+        target_link_options(${preload_lib_32bit} PRIVATE "-m32")
+    elseif(CMAKE_SYSTEM_PROCESSOR MATCHES arm64 OR CMAKE_SYSTEM_PROCESSOR MATCHES aarch64)
+        target_compile_options(${preload_lib_32bit} PRIVATE "--target=arm-linux-gnueabihf")
+        target_link_options(${preload_lib_32bit} PRIVATE "--target=arm-linux-gnueabihf")
+    else()
+        message(FATAL_ERROR "unknown processor architecture: ${CMAKE_SYSTEM_PROCESSOR}")
+    endif()
 endif()
 
 
