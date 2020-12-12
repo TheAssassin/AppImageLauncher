@@ -83,6 +83,7 @@ jobs:
           WEBDAV_USER: ${{ secrets.WEBDAV_USER }}
           WEBDAV_PASSWORD: ${{ secrets.WEBDAV_PASSWORD }}
         run: |
+            env | grep GITHUB_ | grep -v GITHUB_TOKEN
             wget -q https://github.com/TheAssassin/pyuploadtool/releases/download/continuous/pyuploadtool-x86_64.AppImage
             chmod +x pyuploadtool-x86_64.AppImage
             ./pyuploadtool-x86_64.AppImage **/appimagelauncher*.{deb,rpm,tar*,AppImage*}
