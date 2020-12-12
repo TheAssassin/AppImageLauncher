@@ -77,7 +77,7 @@ if [ "$ARCH" == "arm64" ]; then
     # only clang allows for easy cross-compilation of a 32-bit version of the binfmt-bypass preload lib
     extra_cmake_args+=(
         "-DCMAKE_C_COMPILER=clang"
-        "-DCMAKE_CXX_COMPILER=clang"
+        "-DCMAKE_CXX_COMPILER=clang++"
     )
 fi
 
