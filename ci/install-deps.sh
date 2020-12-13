@@ -103,14 +103,23 @@ fi
 apt-get update
 apt-get -y --no-install-recommends install "${packages[@]}"
 
-if [[ "$ARCH" == "arm64"* ]]; then
   # g{cc,++}-multilib usually install these dependencies for us
   # however, as the multilib stuff is not available for ARM, we have to install these dev packages ourselves
   # we can't really predict the names of the packages (they differ on different distros/releases)
   # therefore, we have to install the other dependencies first to be able to query them with dpkg -l
-  apt-get install -y \
-      "$(dpkg -l | grep libgcc | grep dev | awk '{print $2}' | cut -d: -f1 | uniq)":armhf \
-      "$(dpkg -l | grep libstdc++ | grep dev | awk '{print $2}' | cut -d: -f1 | uniq)":armhf
+if [[ "$ARCH" == "arm64"* ]] || [[ "$ARCH" == "x86_64" ]]; then
+    if [[ "$ARCH" == "x86_64" ]]; then
+        ARCH_32BIT=i386
+    elif [[ "$ARCH" == "arm64"* ]]; then
+        ARCH_32BIT=armhf
+    else
+        echo "Cannot determine 32-bit architecture matching 64-bit architecture $ARCH"
+        exit 6
+    fi
+
+    apt-get install -y \
+        "$(dpkg -l | grep libgcc | grep dev | awk '{print $2}' | cut -d: -f1 | uniq)":"$ARCH_32BIT" \
+        "$(dpkg -l | grep libstdc++ | grep dev | awk '{print $2}' | cut -d: -f1 | uniq)":"$ARCH_32BIT"
 fi
 
 # install more recent CMake version which fixes some linking issue in CMake < 3.10
