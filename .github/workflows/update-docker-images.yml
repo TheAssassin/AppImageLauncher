@@ -1,0 +1,62 @@
+name: Update Docker images
+
+on:
+  workflow_dispatch
+  schedule:
+    # update Docker images every week
+    - cron: '0 12 * * 0'
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - NAME: bionic x86_64
+            ARCH: x86_64
+            DIST: bionic
+          - NAME: bionic i386
+            ARCH: i386
+            DIST: bionic
+          - NAME: xenial x86_64
+            ARCH: x86_64
+            DIST: xenial
+          - NAME: xenial i386
+            ARCH: i386
+            DIST: xenial
+          - NAME: bionic arm64
+            ARCH: arm64
+            DIST: bionic
+          - NAME: bionic armhf
+            ARCH: armhf
+            DIST: bionic
+          - NAME: xenial arm64
+            ARCH: arm64
+            DIST: xenial
+          - NAME: xenial armhf
+            ARCH: armhf
+            DIST: xenial
+          - NAME: Lite AppImage bionic x86_64
+            ARCH: x86_64
+            DIST: bionic
+            BUILD_LITE: 1
+          - NAME: Lite AppImage bionic i386
+            ARCH: i386
+            DIST: bionic
+            BUILD_LITE: 1
+
+    name: ${{ matrix.NAME }}
+    env:
+      ARCH: ${{ matrix.ARCH }}
+      DIST: ${{ matrix.DIST }}
+      BUILD_LITE: ${{ matrix.BUILD_LITE }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up QEMU integration for Docker
+        run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+      - name: Build and upload Docker image
+        run: bash -ex ci/build-docker-image.sh
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
