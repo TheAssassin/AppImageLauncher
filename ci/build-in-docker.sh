@@ -36,8 +36,13 @@ else
     echo "Host system does not have enough free memory -> building on regular disk"
 fi
 
+# run the build with the current user to
+#   a) make sure root is not required for builds
+#   b) allow the build scripts to "mv" the binaries into the /out directory
+uid="$(id -u)"
 # run build
-docker run -e DIST -e ARCH -e GITHUB_RUN_NUMBER -e GITHUB_RUN_ID --rm -i "${DOCKER_OPTS[@]}" -v "$(readlink -f ..):/ws" \
+docker run -e DIST -e ARCH -e GITHUB_RUN_NUMBER -e GITHUB_RUN_ID --rm -i --user "$uid" \
+     "${DOCKER_OPTS[@]}" -v "$(readlink -f ..):/ws" \
      "$image" \
      bash -xc "export CI=1 && cd /ws && source ci/$build_script"
 

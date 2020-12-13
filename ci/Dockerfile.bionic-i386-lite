@@ -6,7 +6,3 @@ COPY ./install-deps.sh /
 RUN bash -xe install-deps.sh
 
 ENTRYPOINT ["/bin/bash", "-c", "set -x && source /opt/qt*/bin/qt*env.sh || true && export QT_SELECT=5 && exec \"$0\" \"$@\""]
-
-ARG UID
-RUN adduser --system --group --uid "$UID" build
-USER build

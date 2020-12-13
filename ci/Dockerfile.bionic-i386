@@ -4,7 +4,3 @@ ENV ARCH=i386 DIST=bionic CI=1
 
 COPY ./install-deps.sh /
 RUN bash -xe install-deps.sh
-
-ARG UID
-RUN adduser --system --group --uid "$UID" build
-USER build
