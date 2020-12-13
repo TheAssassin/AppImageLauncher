@@ -65,6 +65,12 @@ packages=(
     rpm
     rpm2cpio
     liblzma-dev
+
+    # cross-compiling for 32-bit is only really easy with clang, where we can specify the target as a compiler option
+    # clang -target arm-linux-gnueabihf ...
+    # we must use clang > 3.8.0, and newer versions should work as drop-in replacement, so we can just use the newest
+    # clang available on xenial on all platforms
+    clang-8
 )
 
 if [[ "$BUILD_LITE" == "" ]]; then
@@ -86,18 +92,11 @@ if [[ "$ARCH" == "x86_64" ]]; then
     dpkg --add-architecture i386
     packages+=(
         libc6-dev:i386
-        gcc-multilib
-        g++-multilib
     )
 elif [[ "$ARCH" == "arm64"* ]]; then
-    # cross-compiling for armhf is only really easy with clang, where we can specify the target as a compiler option
-    # clang -target arm-linux-gnueabihf ...
-    # we must use clang > 3.8.0, and newer versions should work as drop-in replacement, so we can just use the newest
-    # clang available on xenial on all platforms
     dpkg --add-architecture armhf
     packages+=(
         libc6-dev:armhf
-        clang-8
     )
 fi
 

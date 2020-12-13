@@ -53,12 +53,20 @@ EOF
 qtchooser -list-versions
 echo
 
-extra_cmake_args=("-DCPACK_DEBIAN_COMPATIBILITY_LEVEL=$DIST")
+cmake_args=(
+    "-DCMAKE_C_COMPILER=clang-8"
+    "-DCMAKE_CXX_COMPILER=clang++-8"
+    "-DCMAKE_INSTALL_PREFIX=/usr"
+    "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
+    "-DCPACK_DEBIAN_COMPATIBILITY_LEVEL=$DIST"
+    "-DCI_BUILD=ON"
+    "-DBUILD_TESTING=OFF"
+)
 
 export QT_SELECT=qt5
 
 if [ "$ARCH" == "i386" ]; then
-    extra_cmake_args+=(
+    cmake_args+=(
         "-DCMAKE_TOOLCHAIN_FILE=$REPO_ROOT/cmake/toolchains/i386-linux-gnu.cmake"
         "-DUSE_SYSTEM_XZ=ON"
         "-DUSE_SYSTEM_LIBARCHIVE=ON"
@@ -75,13 +83,13 @@ fi
 
 if [ "$ARCH" == "arm64" ]; then
     # only clang allows for easy cross-compilation of a 32-bit version of the binfmt-bypass preload lib
-    extra_cmake_args+=(
+    cmake_args+=(
         "-DCMAKE_C_COMPILER=clang-8"
         "-DCMAKE_CXX_COMPILER=clang++-8"
     )
 fi
 
-cmake "$REPO_ROOT" -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RelWithDebInfo "${extra_cmake_args[@]}" -DCI_BUILD=ON -DBUILD_TESTING=OFF
+cmake "$REPO_ROOT" "${cmake_args[@]}" 
 
 # now, compile
 if [[ "$CI" == "" ]]; then
