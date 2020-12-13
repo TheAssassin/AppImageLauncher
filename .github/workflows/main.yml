@@ -8,39 +8,38 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - NAME: Ubuntu bionic, Debian testing and newer, x86_64
+          - NAME: bionic x86_64
             ARCH: x86_64
             DIST: bionic
-          - NAME: Ubuntu bionic, Debian testing and newer, i386
+          - NAME: bionic i386
             ARCH: i386
             DIST: bionic
-          - NAME: Ubuntu xenial, Debian stable etc., x86_64
+          - NAME: xenial x86_64
             ARCH: x86_64
             DIST: xenial
-          - NAME: Ubuntu xenial, Debian stable etc., i386
+          - NAME: xenial i386
             ARCH: i386
             DIST: xenial
-          - NAME: Ubuntu bionic, Debian testing and newer, arm64
+          - NAME: bionic arm64
             ARCH: arm64
             DIST: bionic
-          - NAME: Ubuntu bionic, Debian testing and newer, armhf
+          - NAME: bionic armhf
             ARCH: armhf
             DIST: bionic
-          - NAME: Ubuntu xenial, Debian stable etc., arm64
+          - NAME: xenial arm64
             ARCH: arm64
             DIST: xenial
-          - NAME: Ubuntu xenial, Debian stable etc., armhf
+          - NAME: xenial armhf
             ARCH: armhf
             DIST: xenial
-          - NAME: Lite AppImage x86_64
+          - NAME: Lite AppImage bionic x86_64
             ARCH: x86_64
             DIST: bionic
             BUILD_LITE: 1
-          - NAME: Lite AppImage i386
+          - NAME: Lite AppImage bionic i386
             ARCH: i386
             DIST: bionic
             BUILD_LITE: 1
-
 
     name: ${{ matrix.NAME }}
     env:
