@@ -22,7 +22,13 @@ if(CMAKE_SYSTEM_PROCESSOR MATCHES x86_64)
     set(build_32bit_preload_library true)
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES arm64 OR CMAKE_SYSTEM_PROCESSOR MATCHES aarch64)
     string(TOLOWER ${CMAKE_C_COMPILER_ID} preload_lib_compiler_id)
+
     if(preload_lib_compiler_id MATCHES clang)
+        # clang-3.8, the default clang on xenial, doesn't like the templates in elf.cpp with the varying return types
+        if(NOT ${CMAKE_CXX_COMPILER_VERSION} VERSION_GREATER 3.9.0)
+            message(FATAL_ERROR "clang too old, please upgrade to, e.g., clang-8")
+        endif()
+
         message(STATUS "64-bit target detected (${CMAKE_SYSTEM_PROCESSOR}), building 32-bit preload library as well")
         set(build_32bit_preload_library true)
     else()
