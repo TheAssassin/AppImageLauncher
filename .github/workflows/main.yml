@@ -62,7 +62,7 @@ jobs:
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: bionic i386
+          name: build
           path: |
               appimagelauncher*.deb*
               appimagelauncher*.rpm*
