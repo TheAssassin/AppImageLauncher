@@ -1,7 +1,7 @@
 name: Update Docker images
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
   schedule:
     # update Docker images every week
     - cron: '0 12 * * 0'
