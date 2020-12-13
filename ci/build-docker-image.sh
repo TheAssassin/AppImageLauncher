@@ -32,7 +32,7 @@ fi
 # speed up build by pulling last built image from quay.io and building the docker file using the old image as a base
 docker pull "$image" || true
 # if the image hasn't changed, this should be a no-op
-docker build --cache-from "$image" -t "$image" -f "$dockerfile" "$this_dir"
+docker build --pull --cache-from "$image" -t "$image" -f "$dockerfile" "$this_dir"
 
 # push built image as cache for future builds to registry
 # we can do that immediately once the image has been built successfully; if its definition ever changes it will be
