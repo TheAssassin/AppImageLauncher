@@ -9,8 +9,8 @@ set -x
 set -e
 
 # the other script sources this script, therefore we have to support that use case
-if [[ "$BASH_SOURCE" != "" ]]; then
-    this_dir="$(readlink -f "$(dirname "$BASH_SOURCE")")"
+if [[ "${BASH_SOURCE[*]}" != "" ]]; then
+    this_dir="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")"
 else
     this_dir="$(readlink -f "$(dirname "$0")")"
 fi
