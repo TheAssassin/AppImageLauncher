@@ -134,3 +134,9 @@ if [[ "$BUILD_LITE" != "" ]]; then
     make -j"$(nproc)"
     make install
 fi
+
+# provide clang/clang++ symlink to actual clang binaries
+# without this, boost (dep from libappimage) doesn't build properly, as it can't find the compiler binaries
+# since we have to install this symlink anyway, we're also using it when passing CMAKE_C{,XX}_COMPILER in the build script
+update-alternatives --install /usr/bin/clang clang /usr/bin/clang-8 100
+update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-8 100

@@ -53,9 +53,11 @@ EOF
 qtchooser -list-versions
 echo
 
+# the Docker images provide a clang/clang++ symlink to the actual clang[++] binaries
+# see install-deps.sh for more information
 cmake_args=(
-    "-DCMAKE_C_COMPILER=clang-8"
-    "-DCMAKE_CXX_COMPILER=clang++-8"
+    "-DCMAKE_C_COMPILER=clang"
+    "-DCMAKE_CXX_COMPILER=clang++"
     "-DCMAKE_INSTALL_PREFIX=/usr"
     "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
     "-DCPACK_DEBIAN_COMPATIBILITY_LEVEL=$DIST"
