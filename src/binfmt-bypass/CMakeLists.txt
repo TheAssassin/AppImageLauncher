@@ -12,6 +12,8 @@ set(preload_lib_32bit ${preload_lib}_32bit)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
+string(TOLOWER ${CMAKE_C_COMPILER_ID} lower_cmake_c_compiler_id)
+
 # on 64-bit systems such as x86_64 or aarch64/arm64v8, we need to provide a 32-bit preload library to allow the users
 # to execute compatible 32-bit binaries, as the regular preload library cannot be preloaded due to the architecture
 # being incompatible
@@ -21,9 +23,9 @@ if(CMAKE_SYSTEM_PROCESSOR MATCHES x86_64)
     message(STATUS "64-bit target detected (${CMAKE_SYSTEM_PROCESSOR}), building 32-bit preload library as well")
     set(build_32bit_preload_library true)
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES arm64 OR CMAKE_SYSTEM_PROCESSOR MATCHES aarch64)
-    string(TOLOWER ${CMAKE_C_COMPILER_ID} preload_lib_compiler_id)
+    string(TOLOWER ${CMAKE_C_COMPILER_ID} lower_cmake_c_compiler_id)
 
-    if(preload_lib_compiler_id MATCHES clang)
+    if(lower_cmake_c_compiler_id MATCHES clang)
         # clang-3.8, the default clang on xenial, doesn't like the templates in elf.cpp with the varying return types
         if(NOT ${CMAKE_CXX_COMPILER_VERSION} VERSION_GREATER 3.9.0)
             message(FATAL_ERROR "clang too old, please upgrade to, e.g., clang-8")
@@ -32,7 +34,7 @@ elseif(CMAKE_SYSTEM_PROCESSOR MATCHES arm64 OR CMAKE_SYSTEM_PROCESSOR MATCHES aa
         message(STATUS "64-bit target detected (${CMAKE_SYSTEM_PROCESSOR}), building 32-bit preload library as well")
         set(build_32bit_preload_library true)
     else()
-        message(WARNING "64-bit target detected (${CMAKE_SYSTEM_PROCESSOR}), but compiling with ${preload_lib_compiler_id}, cannot build 32-bit preload library")
+        message(WARNING "64-bit target detected (${CMAKE_SYSTEM_PROCESSOR}), but compiling with ${lower_cmake_c_compiler_id}, cannot build 32-bit preload library")
     endif()
 endif()
 
@@ -60,8 +62,14 @@ if(build_32bit_preload_library)
     make_preload_lib_target(${preload_lib_32bit})
 
     if(CMAKE_SYSTEM_PROCESSOR MATCHES x86_64)
-        target_compile_options(${preload_lib_32bit} PRIVATE "-m32")
-        target_link_options(${preload_lib_32bit} PRIVATE "-m32")
+        if(lower_cmake_c_compiler_id MATCHES clang)
+            target_compile_options(${preload_lib_32bit} PRIVATE "--target=i386-linux-gnu")
+            target_link_options(${preload_lib_32bit} PRIVATE "--target=i386-linux-gnu")
+        else()
+            # GCC style flags
+            target_compile_options(${preload_lib_32bit} PRIVATE "-m32")
+            target_link_options(${preload_lib_32bit} PRIVATE "-m32")
+        endif()
     elseif(CMAKE_SYSTEM_PROCESSOR MATCHES arm64 OR CMAKE_SYSTEM_PROCESSOR MATCHES aarch64)
         target_compile_options(${preload_lib_32bit} PRIVATE "--target=arm-linux-gnueabihf")
         target_link_options(${preload_lib_32bit} PRIVATE "--target=arm-linux-gnueabihf")
