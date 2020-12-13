@@ -30,6 +30,7 @@ if [ ! -f "$dockerfile" ]; then
 fi
 
 # speed up build by pulling last built image from quay.io and building the docker file using the old image as a base
+docker pull "$image" || true
 # if the image hasn't changed, this should be a no-op
 docker build --cache-from "$image" -t "$image" -f "$dockerfile" "$this_dir"
 
