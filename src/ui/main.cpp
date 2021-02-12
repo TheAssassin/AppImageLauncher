@@ -22,8 +22,6 @@ extern "C" {
 #include <QPushButton>
 #include <QRegularExpression>
 #include <QString>
-#include <QTemporaryDir>
-#include <QTextStream>
 extern "C" {
     #include <appimage/appimage.h>
 }
@@ -33,6 +31,7 @@ extern "C" {
 #include "trashbin.h"
 #include "translationmanager.h"
 #include "first-run.h"
+#include "integration_dialog.h"
 
 // Runs an AppImage. Returns suitable exit code for main application.
 int runAppImage(const QString& pathToAppImage, unsigned long argc, char** argv) {
@@ -414,53 +413,20 @@ int main(int argc, char** argv) {
         }
     }
 
-    std::ostringstream explanationStrm;
-    explanationStrm << QObject::tr("Integrating it will move the AppImage into a predefined location, "
-                       "and include it in your application launcher.").toStdString() << std::endl
-                    << std::endl
-                    << QObject::tr("To remove or update the AppImage, please use the context menu of the "
-                       "application icon in your task bar or launcher.").toStdString() << std::endl
-                    << std::endl
-                    << QObject::tr("The directory the integrated AppImages are stored in is currently "
-                                        "set to:").toStdString() << std::endl
-                    << integratedAppImagesDestination().path().toStdString() << std::endl;
-
-    auto explanation = explanationStrm.str();
-
-    std::ostringstream messageStrm;
-    messageStrm << QObject::tr("%1 has not been integrated into your system.").arg(pathToAppImage).toStdString() << "\n\n"
-                << QObject::tr(explanation.c_str()).toStdString();
-
-    auto* messageBox = new QMessageBox(
-        QMessageBox::Question,
-        QObject::tr("Desktop Integration"),
-        QString::fromStdString(messageStrm.str())
-    );
-
-    auto* okButton = messageBox->addButton(QObject::tr("Integrate and run"), QMessageBox::AcceptRole);
-    auto* runOnceButton = messageBox->addButton(QObject::tr("Run once"), QMessageBox::ApplyRole);
-
-    // *whyever* Qt somehow needs a button with "RejectRole" or the X button won't close the current window...
-    auto* cancelButton = messageBox->addButton(QObject::tr("Cancel"), QMessageBox::RejectRole);
-    // ... but it is fine to hide that button after creating it, so it's not displayed
-    cancelButton->hide();
-
-    messageBox->setDefaultButton(QMessageBox::Ok);
-
-    // cannot use messageBox.exec(), will produce SEGFAULTS as QCoreApplications can't show message boxes
-    messageBox->show();
+    QString integratedAppImagesDestinationPath = integratedAppImagesDestination().path();
+    auto integrationDialog = new IntegrationDialog(pathToAppImage, integratedAppImagesDestinationPath);
+    integrationDialog->show();
 
     // don't need to cast around, exec() is a static method anyway, and QApplication is a singleton
     QApplication::exec();
 
-    const auto* clickedButton = messageBox->clickedButton();
-
-    if (clickedButton == okButton) {
-        return integrateAndRunAppImage();
-    } else if (clickedButton == runOnceButton) {
-        return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
-    } else if (clickedButton == cancelButton) {
-        return 0;
+    switch (integrationDialog->result()) {
+        case IntegrationDialog::INTEGRATE_AND_RUN:
+            return integrateAndRunAppImage();
+        case IntegrationDialog::RUN_ONCE:
+            return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
+        default:
+            return 0;
     }
 
     // _should_ be unreachable
