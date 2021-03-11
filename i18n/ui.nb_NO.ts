@@ -343,7 +343,7 @@ Relaunch with their permissions?</translation>
     <message>
         <location filename="../src/ui/remove_main.cpp" line="-28"/>
         <source>Helper to delete integrated AppImages easily, e.g., from the application launcher&apos;s context menu</source>
-        <translation>Hjelper for å slette integrerte AppImage-filer enkelt, fra programoppstarterens bindeleddsmeny.</translation>
+        <translation>Hjelper for å slette integrerte AppImage-filer enkelt, fra programoppstarterens bindeleddsmeny</translation>
     </message>
     <message>
         <location line="+19"/>
