@@ -127,12 +127,12 @@ Relaunch with their permissions?</translation>
     <message>
         <location line="+52"/>
         <source>Failed to run permissions helper, exited with return code %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha em executar o ajudante de permissões, saído com o código de retorno %1</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Could not find suitable permissions helper, aborting</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi encontrado um ajudante de permissões adequado, a cancelar</translation>
     </message>
 </context>
 <context>
@@ -146,17 +146,17 @@ Relaunch with their permissions?</translation>
         <location filename="../src/ui/update_main.cpp" line="+119"/>
         <location line="+42"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha</translation>
     </message>
     <message>
         <location filename="../src/ui/main.cpp" line="-358"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImageLauncher não apoia AppImages do tipo %1 actualmente.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Could not make AppImage executable: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível definir permissão executável para AppImage: %1</translation>
     </message>
     <message>
         <source>Failed to open AppImage for reading: %1</source>
@@ -190,47 +190,47 @@ Relaunch with their permissions?</translation>
     <message>
         <location line="+40"/>
         <source>execv() failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>execv() falhou: %1</translation>
     </message>
     <message>
         <location line="+70"/>
         <source>Usage: %1 [options] &lt;path&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilização: %1 [opções] &lt;caminho&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Desktop integration helper for AppImages, for use by Linux distributions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajudante de integração de ambiente de trabalho para AppImages, para utilização por distribuições Linux.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Options:</source>
-        <translation type="unfinished"></translation>
+        <translation>Opções:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Display this help and exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar esta ajuda e sair</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Display version and exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar versão e sair</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Arguments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Argumentos:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Path to AppImage (mandatory)</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho para AppImage (necessário)</translation>
     </message>
     <message>
         <location line="-21"/>
         <source>Failed to clean up old desktop files</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha na limpeza de ficheiros de entrada no ambiente de trabalho antigos</translation>
     </message>
     <message>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
@@ -256,31 +256,32 @@ Relaunch with their permissions?</translation>
         <location line="+8"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha na limpeza do caixote do lixo AppImage: %1</translation>
     </message>
     <message>
         <location line="+48"/>
         <source>Unknown AppImageLauncher option: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Opção desconhecida do AppImageLauncher: %1</translation>
     </message>
     <message>
         <location line="+12"/>
         <location filename="../src/ui/remove_main.cpp" line="-74"/>
         <location filename="../src/ui/update_main.cpp" line="-99"/>
         <source>Error: no such file or directory: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro: nenhum ficheiro ou pasta: %1</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../src/ui/update_main.cpp" line="+7"/>
         <source>Not an AppImage: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Não é um AppImage: %1</translation>
     </message>
     <message>
         <location line="+159"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Atualmente, os AppImages integrados neste sistema são armazenados na pasta:
+%1</translation>
     </message>
     <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
