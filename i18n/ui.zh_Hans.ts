@@ -68,6 +68,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
         <translation>AppImage %1 已集成，但它不在当前已集成的文件夹内。
 
 你想要将它移至新位置吗？
+
 选择否将运行一次 AppImage ，并将 AppImage 留在当前文件夹。
 
 </translation>
