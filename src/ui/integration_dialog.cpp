@@ -11,17 +11,19 @@
 
 IntegrationDialog::IntegrationDialog(QString pathToAppImage, QString integratedAppImagesDestinationPath,
                                      QWidget* parent) :
-    QDialog(parent), ui(new Ui::IntegrationDialog) {
+    QDialog(parent), ui(new Ui::IntegrationDialog),
+    pathToAppImage(std::move(pathToAppImage)),
+    integratedAppImagesDestinationPath(std::move(integratedAppImagesDestinationPath)) {
     ui->setupUi(this);
 
-    this->pathToAppImage = std::move(pathToAppImage);
-    this->integratedAppImagesDestinationPath = std::move(integratedAppImagesDestinationPath);
     setIcon();
     setMessage();
 
     this->setResult(Options::DO_NOTHING);
-    QObject::connect(ui->pushButtonIntegrateAndRun, &QPushButton::released, this, &IntegrationDialog::onPushButtonIntegrateAndRunReleased);
-    QObject::connect(ui->pushButtonRunOnce, &QPushButton::released, this, &IntegrationDialog::onPushButtonRunOnceReleased);
+    QObject::connect(ui->pushButtonIntegrateAndRun, &QPushButton::released, this,
+                     &IntegrationDialog::onPushButtonIntegrateAndRunReleased);
+    QObject::connect(ui->pushButtonRunOnce, &QPushButton::released, this,
+                     &IntegrationDialog::onPushButtonRunOnceReleased);
 }
 
 void IntegrationDialog::setMessage() {
