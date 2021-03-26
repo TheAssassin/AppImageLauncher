@@ -45,7 +45,7 @@ jobs:
             DIST: bionic
             BUILD_LITE: 1
 
-    name: ${{ matrix.NAME }}
+    name: Build Docker image ${{ matrix.NAME }}
     env:
       ARCH: ${{ matrix.ARCH }}
       DIST: ${{ matrix.DIST }}
