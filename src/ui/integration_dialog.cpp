@@ -27,24 +27,9 @@ IntegrationDialog::IntegrationDialog(QString pathToAppImage, QString integratedA
 }
 
 void IntegrationDialog::setMessage() {
-    std::ostringstream explanationStrm;
-    explanationStrm << QObject::tr("Integrating it will move the AppImage into a predefined location, "
-                                   "and include it in your application launcher.").toStdString() << std::endl
-                    << std::endl
-                    << QObject::tr("To remove or update the AppImage, please use the context menu of the "
-                                   "application icon in your task bar or launcher.").toStdString() << std::endl
-                    << std::endl
-                    << QObject::tr("The directory the integrated AppImages are stored in is currently "
-                                   "set to:").toStdString() << std::endl
-                    << integratedAppImagesDestinationPath.toStdString() << std::endl;
-
-    auto explanation = explanationStrm.str();
-
-    std::ostringstream messageStrm;
-    messageStrm << QObject::tr("%1 has not been integrated into your system.").arg(pathToAppImage).toStdString()
-                << "\n\n"
-                << QObject::tr(explanation.c_str()).toStdString();
-    ui->message->setText(QString::fromStdString(messageStrm.str()));
+    QString message = ui->message->text();
+    message = message.arg(pathToAppImage, integratedAppImagesDestinationPath);
+    ui->message->setText(message);
 }
 
 void IntegrationDialog::setIcon() {
