@@ -48,7 +48,7 @@ void IntegrationDialog::setMessage() {
 }
 
 void IntegrationDialog::setIcon() {
-    QIcon icon = style()->standardIcon(QStyle::SP_MessageBoxQuestion);
+    QIcon icon = QIcon(":/AppImageLauncher.svg");
     QPixmap pixmap = icon.pixmap(QSize(64, 64));
     ui->icon->setPixmap(pixmap);
 }
