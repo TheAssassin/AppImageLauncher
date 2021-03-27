@@ -2,11 +2,12 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+
 extern "C" {
-    #include <sys/stat.h>
-    #include <libgen.h>
-    #include <unistd.h>
-    #include <glib.h>
+#include <sys/stat.h>
+#include <libgen.h>
+#include <unistd.h>
+#include <glib.h>
 }
 
 // library includes
@@ -22,8 +23,9 @@ extern "C" {
 #include <QPushButton>
 #include <QRegularExpression>
 #include <QString>
+
 extern "C" {
-    #include <appimage/appimage.h>
+#include <appimage/appimage.h>
 }
 
 // local headers
@@ -160,7 +162,8 @@ int main(int argc, char** argv) {
 
     std::ostringstream usage;
     usage << QObject::tr("Usage: %1 [options] <path>").arg(argv[0]).toStdString() << std::endl
-          << QObject::tr("Desktop integration helper for AppImages, for use by Linux distributions.").toStdString() << std::endl
+          << QObject::tr("Desktop integration helper for AppImages, for use by Linux distributions.").toStdString()
+          << std::endl
           << std::endl
           << QObject::tr("Options:").toStdString() << std::endl
           << "  --appimagelauncher-help     " << QObject::tr("Display this help and exit").toStdString() << std::endl
@@ -255,7 +258,8 @@ int main(int argc, char** argv) {
     auto config = getConfig();
 
     // assumes defaults if config doesn't exist or lacks the related key(s)
-    if (config == nullptr || !config->contains("AppImageLauncher/enable_daemon") || config->value("AppImageLauncher/enable_daemon").toBool()) {
+    if (config == nullptr || !config->contains("AppImageLauncher/enable_daemon") ||
+        config->value("AppImageLauncher/enable_daemon").toBool()) {
         system("systemctl --user enable appimagelauncherd.service");
         system("systemctl --user start  appimagelauncherd.service");
     } else {
@@ -287,7 +291,8 @@ int main(int argc, char** argv) {
     // check for X-AppImage-Integrate=false
     auto shallNotBeIntegrated = appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str());
     if (shallNotBeIntegrated < 0)
-        std::cerr << "AppImageLauncher error: appimage_shall_not_be_integrated() failed (returned " << shallNotBeIntegrated << ")" << std::endl;
+        std::cerr << "AppImageLauncher error: appimage_shall_not_be_integrated() failed (returned "
+                  << shallNotBeIntegrated << ")" << std::endl;
     else if (shallNotBeIntegrated > 0)
         return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
 
@@ -298,7 +303,8 @@ int main(int argc, char** argv) {
     // ignore terminal apps (fixes #2)
     auto isTerminalApp = appimage_is_terminal_app(pathToAppImage.toStdString().c_str());
     if (isTerminalApp < 0)
-        std::cerr << "AppImageLauncher error: appimage_is_terminal_app() failed (returned " << isTerminalApp << ")" << std::endl;
+        std::cerr << "AppImageLauncher error: appimage_is_terminal_app() failed (returned " << isTerminalApp << ")"
+                  << std::endl;
     else if (isTerminalApp > 0)
         return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
 
@@ -385,9 +391,9 @@ int main(int argc, char** argv) {
                                 "Choosing No will run the AppImage once, and leave the AppImage in its current "
                                 "directory."
                                 "\n\n").arg(pathToAppImage) +
-                                // translate separately to share string with the other dialog
-                                QObject::tr("The directory the integrated AppImages are stored in is currently set to:\n"
-                                            "%1").arg(integratedAppImagesDestination().path()) + "\n",
+                // translate separately to share string with the other dialog
+                QObject::tr("The directory the integrated AppImages are stored in is currently set to:\n"
+                            "%1").arg(integratedAppImagesDestination().path()) + "\n",
                 QMessageBox::Yes | QMessageBox::No
             );
 
@@ -417,19 +423,20 @@ int main(int argc, char** argv) {
     auto integrationDialog = new IntegrationDialog(pathToAppImage, integratedAppImagesDestinationPath);
     integrationDialog->show();
 
-    // don't need to cast around, exec() is a static method anyway, and QApplication is a singleton
-    QApplication::exec();
+    // As the integration dialog is the only window in our application we can safely use its exec method
+    integrationDialog->exec();
 
-    switch (integrationDialog->result()) {
-        case IntegrationDialog::INTEGRATE_AND_RUN:
+    if (integrationDialog->result() == QDialog::Rejected)
+        return 0;
+
+    switch (integrationDialog->getResultAction()) {
+        case IntegrationDialog::IntegrateAndRun:
             return integrateAndRunAppImage();
-        case IntegrationDialog::RUN_ONCE:
+        case IntegrationDialog::RunOnce:
             return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
         default:
-            return 0;
+            displayError(QObject::tr("Unexpected result from the integration dialog."));
+            return 1;
     }
-
-    // _should_ be unreachable
-    return 1;
 }
 

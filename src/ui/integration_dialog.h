@@ -12,10 +12,9 @@ class IntegrationDialog : public QDialog {
 Q_OBJECT
 
 public:
-    enum Options {
-        DO_NOTHING = QDialog::Rejected,
-        INTEGRATE_AND_RUN,
-        RUN_ONCE
+    enum ResultingAction {
+        IntegrateAndRun,
+        RunOnce
     };
 
     explicit IntegrationDialog(QString pathToAppImage, QString integratedAppImagesDestinationPath,
@@ -23,10 +22,14 @@ public:
 
     ~IntegrationDialog() override;
 
+    ResultingAction getResultAction() const;
+
 protected:
     Q_SLOT void onPushButtonIntegrateAndRunReleased();
 
     Q_SLOT void onPushButtonRunOnceReleased();
+
+    ResultingAction resultAction;
 
 private:
     Ui::IntegrationDialog* ui;

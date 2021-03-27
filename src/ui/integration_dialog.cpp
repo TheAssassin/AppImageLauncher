@@ -19,7 +19,6 @@ IntegrationDialog::IntegrationDialog(QString pathToAppImage, QString integratedA
     setIcon();
     setMessage();
 
-    this->setResult(Options::DO_NOTHING);
     QObject::connect(ui->pushButtonIntegrateAndRun, &QPushButton::released, this,
                      &IntegrationDialog::onPushButtonIntegrateAndRunReleased);
     QObject::connect(ui->pushButtonRunOnce, &QPushButton::released, this,
@@ -43,9 +42,15 @@ IntegrationDialog::~IntegrationDialog() {
 }
 
 void IntegrationDialog::onPushButtonIntegrateAndRunReleased() {
-    this->done(Options::INTEGRATE_AND_RUN);
+    this->resultAction = ResultingAction::IntegrateAndRun;
+    this->accept();
 }
 
 void IntegrationDialog::onPushButtonRunOnceReleased() {
-    this->done(Options::RUN_ONCE);
+    this->resultAction = ResultingAction::RunOnce;
+    this->accept();
+}
+
+IntegrationDialog::ResultingAction IntegrationDialog::getResultAction() const {
+    return resultAction;
 }
