@@ -235,7 +235,7 @@ int main(int argc, char** argv) {
         child_retcode = WTERMSIG(status);
         log_error("child exited with code %d\n", child_retcode);
     } else if (WIFEXITED(status) != 0) {
-        child_retcode = status;
+        child_retcode = WEXITSTATUS(status);
         log_debug("child exited normally with code %d\n", child_retcode);
     } else {
         log_error("unknown error: child didn't exit with signal or regular exit code\n");
