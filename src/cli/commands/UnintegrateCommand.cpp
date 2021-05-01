@@ -47,6 +47,8 @@ namespace appimagelauncher {
 
                     unregisterAppImage(pathToAppImage);
                 }
+
+                updateDesktopDatabaseAndIconCaches();
             }
         }
     }

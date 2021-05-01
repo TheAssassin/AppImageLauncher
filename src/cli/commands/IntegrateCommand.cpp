@@ -78,6 +78,8 @@ namespace appimagelauncher {
 
                     installDesktopFileAndIcons(pathToIntegratedAppImage);
                 }
+
+                updateDesktopDatabaseAndIconCaches();
             }
         }
     }
