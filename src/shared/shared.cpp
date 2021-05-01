@@ -554,22 +554,31 @@ std::map<std::string, std::string> findCollisions(const QString& currentNameEntr
 }
 
 bool updateDesktopDatabaseAndIconCaches() {
+    // should give us ~/.local/share
     const auto dataLocation = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
 
-    const std::map<std::string, std::string> commands = {
-        {"update-desktop-database", dataLocation.toStdString() + "/applications"},
-        {"gtk-update-icon-cache-3.0", dataLocation.toStdString() + "/icons/hicolor/ -t"},
-        {"gtk-update-icon-cache", dataLocation.toStdString() + "/icons/hicolor/ -t"},
-        {"xdg-desktop-menu", "forceupdate"},
-        {"update-mime-database", dataLocation.toStdString() + "/mime "},
-        {"update-icon-caches", dataLocation.toStdString() + "/icons/"},
+    // using an ordered container to make sure we run these commands in the right oder
+    const std::vector<std::pair<QString, QStringList>> commands = {
+        // update cache of MIME types handled by desktop files
+        // this should make AppImages available to be launched on supported file types
+        {"update-desktop-database", {dataLocation + "/applications"}},
+        // force-update hicolor icon cache (creates one if there is none yet)
+        // -n flag: update only if necessary
+        {"gtk-update-icon-cache", {"-f", "-t", "-q", dataLocation + "/icons/hicolor"}},
+        // inform desktop menu that there is a new entry (or that one has been removed)
+        {"xdg-desktop-menu", {"forceupdate"}},
+        // updating the MIME database can take very long, even minutes
+        // therefore we run it last, after setting up the menu items properly
+        {"update-mime-database", {"-n", dataLocation + "/mime"}},
     };
 
     for (const auto& command : commands) {
         // only call if the command exists
-        if (system(("which " + command.first + " 2>&1 1>/dev/null").c_str()) == 0) {
+        auto whichCmdString = ("which " + command.first + " 2>&1 1>/dev/null").toStdString();
+        if (system(whichCmdString.c_str()) == 0) {
             // exit codes are not evaluated intentionally
-            system((command.first + " " + command.second).c_str());
+            auto cmdString = (command.first + " " + command.second.join(" ")).toStdString();
+            system(cmdString.c_str());
         }
     }
 
