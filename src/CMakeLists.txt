@@ -42,6 +42,8 @@ if(BUILD_LITE)
     add_definitions(-DBUILD_LITE)
 endif()
 
+set(APPIMAGELAUNCHERD_DBUS_SERVICE_NAME com.github.TheAssassin.AppImageLauncher.appimagelauncherd)
+
 # utility libraries
 add_subdirectory(fswatcher)
 add_subdirectory(i18n)

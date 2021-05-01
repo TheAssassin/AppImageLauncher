@@ -1,7 +1,6 @@
 // system includes
 #include <deque>
 #include <iostream>
-#include <set>
 #include <sstream>
 #include <sys/stat.h>
 
@@ -12,13 +11,16 @@
 #include <QDirIterator>
 #include <QTimer>
 #include <appimage/appimage.h>
+#include <QDBusConnection>
 
 // local includes
 #include "shared.h"
 #include "filesystemwatcher.h"
 #include "worker.h"
 
+
 #define UPDATE_WATCHED_DIRECTORIES_INTERVAL 30 * 1000
+
 
 /**
  * Read the modification time of the file pointed by <filePath>
@@ -30,6 +32,7 @@ long readFileModificationTime(char* filePath) {
     stat(filePath, &attrib);
     return attrib.st_ctime;
 }
+
 
 /**
  * Monitors whether the application binary has changed since the process was started. In such case the application
@@ -56,6 +59,7 @@ QTimer* setupBinaryUpdatesMonitor(char* const* argv) {
     timer->setInterval(5 * 60 * 1000);
     return timer;
 }
+
 
 void initialSearchForAppImages(const QDirSet& dirsToSearch, Worker& worker) {
     // initial search for AppImages; if AppImages are found, they will be integrated, unless they already are
@@ -92,6 +96,44 @@ void initialSearchForAppImages(const QDirSet& dirsToSearch, Worker& worker) {
     }
 }
 
+
+class DBusListener : public QObject {
+    Q_OBJECT
+    Q_CLASSINFO("D-Bus Interface", APPIMAGELAUNCHERD_DBUS_SERVICE_NAME)
+
+public:
+    explicit DBusListener(QObject* parent = nullptr) : QObject(parent) {
+        auto bus = QDBusConnection::sessionBus();
+
+        if (!bus.registerService(APPIMAGELAUNCHERD_DBUS_SERVICE_NAME)) {
+            qDebug() << "[DBus] Failed to register service" << APPIMAGELAUNCHERD_DBUS_SERVICE_NAME;
+        }
+
+        if (!bus.registerObject("/", this, QDBusConnection::ExportAllSlots)) {
+            qDebug() << "[DBus] Failed to register object";
+        }
+
+        if (!bus.connect(
+            "",
+            "",
+            APPIMAGELAUNCHERD_DBUS_SERVICE_NAME,
+            "updateDesktopDatabaseAndIconCaches",
+            this,
+            SLOT(updateDesktopDatabaseAndIconCaches())
+        )) {
+            qDebug() << "[DBus] Failed to register interface";
+        }
+    }
+
+public slots:
+    static void updateDesktopDatabaseAndIconCaches() {
+        qDebug() << "[DBus] Call to updateDesktopDatabaseAndIconCaches received, processing";
+        ::updateDesktopDatabaseAndIconCaches();
+        qDebug() << "[DBus] Call to updateDesktopDatabaseAndIconCaches done";
+    };
+};
+
+
 int main(int argc, char* argv[]) {
     // make sure shared won't try to use the UI
     setenv("_FORCE_HEADLESS", "1", 1);
@@ -113,7 +155,7 @@ int main(int argc, char* argv[]) {
         throw std::runtime_error("could not add Qt command line option for some reason");
     }
 
-    QCoreApplication app(argc, argv);
+    auto* app = new QCoreApplication(argc, argv);
 
     {
         std::ostringstream version;
@@ -124,7 +166,13 @@ int main(int argc, char* argv[]) {
     }
 
     // parse arguments
-    parser.process(app);
+    parser.process(*app);
+
+    // set up DBus API
+    if (QDBusConnection::sessionBus().isConnected()) {
+        qDebug() << "DBus session bus connected, setting up DBus API";
+        new DBusListener(app);
+    }
 
     // load config file
     const auto config = getConfig();
@@ -150,8 +198,7 @@ int main(int argc, char* argv[]) {
 
     // we we update the watched directories, the file system watcher can calculate whether there's new directories
     // to watch
-    // these
-    QObject::connect(&watcher, &FileSystemWatcher::newDirectoriesToWatch, &app, [&worker](const QDirSet& newDirs) {
+    QObject::connect(&watcher, &FileSystemWatcher::newDirectoriesToWatch, app, [&worker](const QDirSet& newDirs) {
         if (newDirs.empty()) {
             qDebug() << "No new directories to watch detected";
         } else {
@@ -167,7 +214,7 @@ int main(int argc, char* argv[]) {
     // whenever a formerly watched directory disappears, we want to clean the menu from entries pointing to AppImages
     // in this directory
     // a good example for this situation is a removable drive that has been unplugged from the computer
-    QObject::connect(&watcher, &FileSystemWatcher::directoriesToWatchDisappeared, &app,
+    QObject::connect(&watcher, &FileSystemWatcher::directoriesToWatchDisappeared, app,
         [](const QDirSet& disappearedDirs) {
 
         if (disappearedDirs.empty()) {
@@ -192,10 +239,10 @@ int main(int argc, char* argv[]) {
 
     // we regularly want to update
     {
-        auto* timer = new QTimer(&app);
+        auto* timer = new QTimer(app);
         timer->setInterval(UPDATE_WATCHED_DIRECTORIES_INTERVAL);
         QTimer::connect(
-            timer, &QTimer::timeout, &app,[&watcher]() {
+            timer, &QTimer::timeout, app,[&watcher]() {
                 watcher.updateWatchedDirectories(daemonDirectoriesToWatch());
             }
         );
@@ -223,10 +270,14 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    QObject::connect(&app, &QCoreApplication::aboutToQuit, &watcher, &FileSystemWatcher::stopWatching);
+    QObject::connect(app, &QCoreApplication::aboutToQuit, &watcher, &FileSystemWatcher::stopWatching);
 
     auto* binaryUpdatesMonitor = setupBinaryUpdatesMonitor(argv);
     binaryUpdatesMonitor->start();
 
     return QCoreApplication::exec();
 }
+
+
+#include "main.moc"
+
