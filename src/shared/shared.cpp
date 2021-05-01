@@ -577,8 +577,7 @@ bool updateDesktopDatabaseAndIconCaches() {
         auto whichCmdString = ("which " + command.first + " 2>&1 1>/dev/null").toStdString();
         if (system(whichCmdString.c_str()) == 0) {
             // exit codes are not evaluated intentionally
-            auto cmdString = (command.first + " " + command.second.join(" ")).toStdString();
-            system(cmdString.c_str());
+            QProcess::execute(command.first, command.second);
         }
     }
 
