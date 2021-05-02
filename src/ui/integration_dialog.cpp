@@ -23,6 +23,9 @@ IntegrationDialog::IntegrationDialog(QString pathToAppImage, QString integratedA
                      &IntegrationDialog::onPushButtonIntegrateAndRunReleased);
     QObject::connect(ui->pushButtonRunOnce, &QPushButton::released, this,
                      &IntegrationDialog::onPushButtonRunOnceReleased);
+
+    // make translation fit by adjusting the minimum size of the message label to the size calculated by Qt
+    ui->message->setMinimumSize(ui->message->sizeHint());
 }
 
 void IntegrationDialog::setMessage() {
