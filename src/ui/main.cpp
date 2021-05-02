@@ -34,6 +34,8 @@ extern "C" {
 #include "translationmanager.h"
 #include "first-run.h"
 #include "integration_dialog.h"
+#include "DBusClient.h"
+
 
 // Runs an AppImage. Returns suitable exit code for main application.
 int runAppImage(const QString& pathToAppImage, unsigned long argc, char** argv) {
@@ -137,6 +139,7 @@ QCoreApplication* getApp(char** argv) {
 
     return app;
 }
+
 
 int main(int argc, char** argv) {
     // create a suitable application object (either graphical (QApplication) or headless (QCoreApplication))
@@ -314,13 +317,33 @@ int main(int argc, char** argv) {
 
     const auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
 
-    auto integrateAndRunAppImage = [&pathToAppImage, &pathToIntegratedAppImage, &appImageArgv]() {
+    auto runPostIntegrationTasks = [app]() -> bool {
+        try {
+            // try via appimagelauncherd/DBus first
+            DBusClient client(app);
+
+            if (!client.updateDesktopDatabaseAndIconCaches(DBusClient::NON_BLOCKING)) {
+                return false;
+            }
+        } catch (const DBusError& e) {
+            qDebug() << "Could not update desktop database and icon caches via appimagelauncherd/DBus, running locally:" << e.what();
+
+            if (!updateDesktopDatabaseAndIconCaches()) {
+                return false;
+            }
+        }
+
+        return true;
+    };
+
+    auto integrateAndRunAppImage = [&runPostIntegrationTasks, &pathToAppImage, &pathToIntegratedAppImage, &appImageArgv]() {
         // check whether integration was successful
         auto rv = integrateAppImage(pathToAppImage, pathToIntegratedAppImage);
 
         // make sure the icons in the launcher are refreshed
-        if (!updateDesktopDatabaseAndIconCaches())
+        if (!runPostIntegrationTasks()) {
             return 1;
+        }
 
         if (rv == INTEGRATION_FAILED) {
             return 1;
@@ -334,7 +357,7 @@ int main(int argc, char** argv) {
     // after checking whether the AppImage can/must be run without integrating it, we now check whether it actually
     // has been integrated already
     if (hasAlreadyBeenIntegrated(pathToAppImage)) {
-        auto updateAndRunAppImage = [&pathToAppImage, &appImageArgv]() {
+        auto updateAndRunAppImage = [&runPostIntegrationTasks, &pathToAppImage, &appImageArgv]() {
             // in case there was an update of AppImageLauncher, we should should also update the desktop database
             // and icon caches
             if (!desktopFileHasBeenUpdatedSinceLastUpdate(pathToAppImage)) {
@@ -342,7 +365,7 @@ int main(int argc, char** argv) {
                     return 1;
 
                 // make sure the icons in the launcher are refreshed after updating the desktop file
-                if (!updateDesktopDatabaseAndIconCaches())
+                if (!runPostIntegrationTasks())
                     return 1;
             }
             return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());

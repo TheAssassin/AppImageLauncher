@@ -19,3 +19,5 @@ endfunction()
 
 add_dbus_library(DBusServer)
 target_link_libraries(DBusServer PRIVATE shared PkgConfig::glib libappimage)
+
+add_dbus_library(DBusClient)

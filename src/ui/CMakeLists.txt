@@ -1,7 +1,7 @@
 if(NOT BUILD_LITE)
     # main AppImageLauncher application
     add_executable(AppImageLauncher main.cpp resources.qrc first-run.cpp first-run.h first-run.ui integration_dialog.cpp integration_dialog.h integration_dialog.ui)
-    target_link_libraries(AppImageLauncher shared PkgConfig::glib libappimage shared)
+    target_link_libraries(AppImageLauncher shared DBusClient)
 
     # set binary runtime rpath to make sure the libappimage.so built and installed by this project is going to be used
     # by the installed binaries (be it the .deb, the AppImage, or whatever)
