@@ -11,12 +11,12 @@
 #include <QDirIterator>
 #include <QTimer>
 #include <appimage/appimage.h>
-#include <QDBusConnection>
 
 // local includes
 #include "shared.h"
 #include "filesystemwatcher.h"
 #include "worker.h"
+#include "DBusServer.h"
 
 
 #define UPDATE_WATCHED_DIRECTORIES_INTERVAL 30 * 1000
@@ -97,43 +97,6 @@ void initialSearchForAppImages(const QDirSet& dirsToSearch, Worker& worker) {
 }
 
 
-class DBusListener : public QObject {
-    Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", APPIMAGELAUNCHERD_DBUS_SERVICE_NAME)
-
-public:
-    explicit DBusListener(QObject* parent = nullptr) : QObject(parent) {
-        auto bus = QDBusConnection::sessionBus();
-
-        if (!bus.registerService(APPIMAGELAUNCHERD_DBUS_SERVICE_NAME)) {
-            qDebug() << "[DBus] Failed to register service" << APPIMAGELAUNCHERD_DBUS_SERVICE_NAME;
-        }
-
-        if (!bus.registerObject("/", this, QDBusConnection::ExportAllSlots)) {
-            qDebug() << "[DBus] Failed to register object";
-        }
-
-        if (!bus.connect(
-            "",
-            "",
-            APPIMAGELAUNCHERD_DBUS_SERVICE_NAME,
-            "updateDesktopDatabaseAndIconCaches",
-            this,
-            SLOT(updateDesktopDatabaseAndIconCaches())
-        )) {
-            qDebug() << "[DBus] Failed to register interface";
-        }
-    }
-
-public slots:
-    static void updateDesktopDatabaseAndIconCaches() {
-        qDebug() << "[DBus] Call to updateDesktopDatabaseAndIconCaches received, processing";
-        ::updateDesktopDatabaseAndIconCaches();
-        qDebug() << "[DBus] Call to updateDesktopDatabaseAndIconCaches done";
-    };
-};
-
-
 int main(int argc, char* argv[]) {
     // make sure shared won't try to use the UI
     setenv("_FORCE_HEADLESS", "1", 1);
@@ -169,9 +132,11 @@ int main(int argc, char* argv[]) {
     parser.process(*app);
 
     // set up DBus API
-    if (QDBusConnection::sessionBus().isConnected()) {
-        qDebug() << "DBus session bus connected, setting up DBus API";
-        new DBusListener(app);
+    try {
+        new DBusServer(app);
+        qDebug() << "DBus server set up";
+    } catch (const DBusError& e) {
+        qDebug() << "Could not set up DBus server:" << e.what();
     }
 
     // load config file
@@ -229,13 +194,16 @@ int main(int argc, char* argv[]) {
         }
     });
 
-    // search directories to watch once initially
-    // we *have* to do this even though we connect this signal above, as the first update occurs in the constructor
-    // and we cannot connect signals before construction has finished for obvious reasons
-    initialSearchForAppImages(watcher.directories(), worker);
+    // provides an option for development to skip the forced reintegration of all AppImages on every new build
+    if (getenv("SKIP_INITIAL_SEARCH_FOR_APPIMAGES") == nullptr) {
+        // search directories to watch once initially
+        // we *have* to do this even though we connect this signal above, as the first update occurs in the constructor
+        // and we cannot connect signals before construction has finished for obvious reasons
+        initialSearchForAppImages(watcher.directories(), worker);
 
-    // (re-)integrate all AppImages at once
-    worker.executeDeferredOperations();
+        // (re-)integrate all AppImages at once
+        worker.executeDeferredOperations();
+    }
 
     // we regularly want to update
     {
@@ -277,7 +245,3 @@ int main(int argc, char* argv[]) {
 
     return QCoreApplication::exec();
 }
-
-
-#include "main.moc"
-
