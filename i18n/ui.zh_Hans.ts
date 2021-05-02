@@ -11,7 +11,7 @@
     <message>
         <location line="+55"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;欢迎使用 AppImageLauncher！&lt;/span&gt;&lt;/p&gt;&lt;p&gt;这个小助手旨在改善您的计算机上的 AppImage 体验。&lt;/p&gt;&lt;p&gt;看来您以前从未运行过 AppImageLauncher 。请花一点时间配置您的偏好。您随后可以使用控制面板更改这些内容。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;欢迎使用 AppImageLauncher！&lt;/span&gt;&lt;/p&gt;&lt;p&gt;这个小助手旨在改善您使用 AppImage 的体验。&lt;/p&gt;&lt;p&gt;看来您以前从未运行过 AppImageLauncher 。请花一点时间配置appimage launcher。您随后可以使用控制面板更改这些内容。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -21,7 +21,7 @@
     <message>
         <location line="+21"/>
         <source>Integration target destination directory:</source>
-        <translation>集成目标文件夹：</translation>
+        <translation>存放已集成的目标目录：</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -31,7 +31,7 @@
     <message>
         <location filename="../src/ui/first-run.cpp" line="+86"/>
         <source>Choose integration destination dir</source>
-        <translation>选择集成目的文件夹</translation>
+        <translation>选择集成后appimage的存放目录</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -65,9 +65,10 @@ Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.
 
 </source>
-        <translation>AppImage %1 已集成，但它不在当前集成目标文件夹。
+        <translation>AppImage %1 已集成，但它不在当前已集成的文件夹内。
 
 你想要将它移至新位置吗？
+
 选择否将运行一次 AppImage ，并将 AppImage 留在当前文件夹。
 
 </translation>
@@ -81,7 +82,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
     <message>
         <location filename="../src/ui/main.cpp" line="+23"/>
         <source>Failed to unregister AppImage before re-integrating it</source>
-        <translation>未能在重新集成 AppImage 前注销它</translation>
+        <translation>未能在重新集成 AppImage 前解除集成</translation>
     </message>
     <message>
         <location filename="../src/shared/shared.cpp" line="-485"/>
@@ -90,7 +91,7 @@ Could not open file for reading:
 
 %1</source>
         <translation>无法解析桌面文件翻译：
-无法打开文件以读取：
+无法读取此文件：
 
 %1</translation>
     </message>
@@ -108,7 +109,7 @@ Invalid syntax:
     <message>
         <location line="+409"/>
         <source>File %1 is owned by another user: %2</source>
-        <translation>文件 %1 所有者：%2</translation>
+        <translation>文件 %1 的所有者是：%2</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -524,7 +525,10 @@ The AppImage doesn&apos;t support updating. Please ask the authors to set upupda
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to embed update information to allow for easy updating.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法获取Appimage内的升级信息。
+%1
+
+此Appimage不支持升级。为了轻松升级，请联系作者在Appimage内添加升级信息。</translation>
     </message>
     <message>
         <location line="+12"/>

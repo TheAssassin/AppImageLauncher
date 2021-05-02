@@ -272,7 +272,8 @@ Si elije &quot;No&quot; se ejecutara la aplicación de manera normal y el archiv
         <location line="+159"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
-        <translation>Las AppImages integradas en el sistema son guardadas en: %1</translation>
+        <translation>Las AppImages integradas en el sistema son guardadas en:
+%1</translation>
     </message>
     <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
