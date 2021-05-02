@@ -44,12 +44,12 @@
     <message>
         <location filename="../src/ui/integration_dialog.ui" line="+23"/>
         <source>Desktop Integration</source>
-        <translation type="unfinished">Desktop-Integration</translation>
+        <translation>Desktop-Integration</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbol</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -63,17 +63,26 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher. &lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The directory where the integrated AppImages are stored in is currently set to: %2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;%1 wurde noch nicht in Ihr System integriert.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; &lt;br /&gt;Durch die Integration wird das AppImage in ein vordefiniertes Verzeichnis verschoben, und in das Anwendungsmenü aufgenommen.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Um das AppImage zu aktualisieren oder zu entfernen, benutzen Sie bitte das Kontextmenü des Anwendungs-Icons in Ihrer Anwendungsleiste oder im Anwendungsmenü. &lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Das Verzeichnis, in dem die integrierten AppImages gespeichert werden, ist derzeit: %2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Integrate and run</source>
-        <translation type="unfinished">Integrieren und ausführen</translation>
+        <translation>Integrieren und ausführen</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Run once</source>
-        <translation type="unfinished">Einmalig ausführen</translation>
+        <translation>Einmalig ausführen</translation>
     </message>
 </context>
 <context>
@@ -267,7 +276,7 @@ Neu starten mit deren Rechten?</translation>
     <message>
         <location line="+265"/>
         <source>Unexpected result from the integration dialog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Unerwartetes Ergebnis vom Integrations-Dialog.</translation>
     </message>
     <message>
         <location line="-287"/>
@@ -699,7 +708,7 @@ Das AppImage unterstützt keine Aktualisierungen. Bitten Sie die Autoren, Update
     <message>
         <location line="+6"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When this box is checked, AppImageLauncher automatically starts a daemon called appimagelauncherd.&lt;/p&gt;&lt;p&gt;This daemon automatically integrates AppImages you copy into the &amp;quot;Applications directory&amp;quot; and the additional directories you configured. When the files are deleted, the daemon will clean up the integration data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wenn das Kästchen angehakt wird, wird AppImageLauncher automatisch einen Dienst namens appimagelauncherd starten.&lt;/p&gt;&lt;p&gt;Dieser Dienst integriert AppImages, die Sie in ihr &amp;quot;Applications-Verzeichnis&amp;quot; und in die anderen überwachten Verzeichnisse kopieren, automatisch. Wenn die Dateien gelöscht werden, wird der Dienst die Integrations-Daten automatisch aufräumen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wird das Kästchen angehakt, wird AppImageLauncher automatisch einen Dienst namens appimagelauncherd starten.&lt;/p&gt;&lt;p&gt;Dieser Dienst integriert AppImages, die Sie in ihr &amp;quot; -Verzeichnis&amp;quot; und in die anderen überwachten Verzeichnisse kopieren, automatisch. Wenn die Dateien gelöscht werden, wird der Dienst die Integrations-Daten automatisch aufräumen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
