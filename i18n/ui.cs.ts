@@ -40,9 +40,46 @@
     </message>
 </context>
 <context>
+    <name>IntegrationDialog</name>
+    <message>
+        <location filename="../src/ui/integration_dialog.ui" line="+23"/>
+        <source>Desktop Integration</source>
+        <translation type="unfinished">Integrace pracovní plochy</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;%1 has not been integrated into your system.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; &lt;br /&gt;Integrating it will move the AppImage into a predefined location, and include it in your application launcher.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher. &lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The directory where the integrated AppImages are stored in is currently set to: %2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>Integrate and run</source>
+        <translation type="unfinished">Integrovat a spustit</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Run once</source>
+        <translation type="unfinished">Spustit jednou</translation>
+    </message>
+</context>
+<context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+380"/>
+        <location filename="../src/ui/main.cpp" line="+385"/>
         <source>Warning</source>
         <translation>Varování</translation>
     </message>
@@ -149,7 +186,7 @@ Relaunch with their permissions?</translation>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-358"/>
+        <location filename="../src/ui/main.cpp" line="-362"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher momentálně nepodporuje AppImage soubory typu %1.</translation>
     </message>
@@ -203,7 +240,7 @@ Relaunch with their permissions?</translation>
         <translation>Pomocník s integrací pracovní plochy pro soubory AppImage, pro použití v linuxových distribucích.</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Options:</source>
         <translation>Volby:</translation>
     </message>
@@ -228,7 +265,12 @@ Relaunch with their permissions?</translation>
         <translation>Cesta k AppImage (povinná)</translation>
     </message>
     <message>
-        <location line="-21"/>
+        <location line="+265"/>
+        <source>Unexpected result from the integration dialog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-287"/>
         <source>Failed to clean up old desktop files</source>
         <translation>Selhalo vyčištění starých desktop souborů</translation>
     </message>
@@ -259,7 +301,7 @@ Relaunch with their permissions?</translation>
         <translation>Selhalo vyčištění koše souborů AppImage: %1</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+49"/>
         <source>Unknown AppImageLauncher option: %1</source>
         <translation>Neznámá volba AppImageLauncher: %1</translation>
     </message>
@@ -277,7 +319,7 @@ Relaunch with their permissions?</translation>
         <translation>Není soubor AppImage: %1</translation>
     </message>
     <message>
-        <location line="+159"/>
+        <location line="+162"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
         <translation>Adresář pro uložení integrovaných souborů AppImage je aktuálně nastaven na:
@@ -288,44 +330,36 @@ Relaunch with their permissions?</translation>
         <translation type="vanished">The directory the integrated AppImages are stored in is currently set to: %1</translation>
     </message>
     <message>
-        <location line="+28"/>
         <source>Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</source>
-        <translation>Integrací bude soubor AppImage přesunut do předdefinovaného umístění a zahrnut ve vašem spouštěči aplikací.</translation>
+        <translation type="vanished">Integrací bude soubor AppImage přesunut do předdefinovaného umístění a zahrnut ve vašem spouštěči aplikací.</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher.</source>
-        <translation>Pro odebrání nebo aktualizaci AppImage prosím použijte kontextové menu ikony aplikace ve vašem panelu úloh nebo spouštěči.</translation>
+        <translation type="vanished">Pro odebrání nebo aktualizaci AppImage prosím použijte kontextové menu ikony aplikace ve vašem panelu úloh nebo spouštěči.</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>The directory the integrated AppImages are stored in is currently set to:</source>
-        <translation>Adresář pro uložení integrovaných souborů AppImage je aktuálně nastaven na:</translation>
+        <translation type="vanished">Adresář pro uložení integrovaných souborů AppImage je aktuálně nastaven na:</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>%1 has not been integrated into your system.</source>
-        <translation>%1 nebylo integrováno do vašeho systému.</translation>
+        <translation type="vanished">%1 nebylo integrováno do vašeho systému.</translation>
     </message>
     <message>
-        <location line="+5"/>
         <source>Desktop Integration</source>
-        <translation>Integrace pracovní plochy</translation>
+        <translation type="vanished">Integrace pracovní plochy</translation>
     </message>
     <message>
-        <location line="+4"/>
         <source>Integrate and run</source>
-        <translation>Integrovat a spustit</translation>
+        <translation type="vanished">Integrovat a spustit</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Run once</source>
-        <translation>Spustit jednou</translation>
+        <translation type="vanished">Spustit jednou</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Cancel</source>
-        <translation>Zrušit</translation>
+        <translation type="vanished">Zrušit</translation>
     </message>
     <message>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>

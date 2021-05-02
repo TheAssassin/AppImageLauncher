@@ -11,7 +11,7 @@
     <message>
         <location line="+55"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Welcome to AppImageLauncher!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;This little helper is designed to improve your AppImage experience on your computer.&lt;/p&gt;&lt;p&gt;It appears you have never run AppImageLauncher before. Please take a minute and configure your preferences. You can always change these later on, using the control panel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Bienvenue dans AppImageLauncher  !&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Cet outil est conçu pour améliorer votre expérience avec les applications AppImage.&lt;/p&gt;&lt;p&gt;Il semblerait que vous n&apos;ayez jamais lancé AppImageLauncher auparavant. Prenez une minute pour configurer vos préférences. Vous pourrez toujours les changer plus tard en utilisant le panneau de configuration.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Bienvenue dans AppImageLauncher&#x202f; !&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Cet outil est conçu pour améliorer votre expérience avec les applications AppImage.&lt;/p&gt;&lt;p&gt;Il semblerait que vous n&apos;ayez jamais lancé AppImageLauncher auparavant. Prenez une minute pour configurer vos préférences. Vous pourrez toujours les changer plus tard en utilisant le panneau de configuration.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -21,7 +21,7 @@
     <message>
         <location line="+21"/>
         <source>Integration target destination directory:</source>
-        <translation>Répertoire de destination des AppImages :</translation>
+        <translation>Répertoire de destination des AppImages&#x202f;:</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -40,9 +40,46 @@
     </message>
 </context>
 <context>
+    <name>IntegrationDialog</name>
+    <message>
+        <location filename="../src/ui/integration_dialog.ui" line="+23"/>
+        <source>Desktop Integration</source>
+        <translation type="unfinished">Intégration bureau</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;%1 has not been integrated into your system.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; &lt;br /&gt;Integrating it will move the AppImage into a predefined location, and include it in your application launcher.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher. &lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The directory where the integrated AppImages are stored in is currently set to: %2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>Integrate and run</source>
+        <translation type="unfinished">Intégrer et lancer</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Run once</source>
+        <translation type="unfinished">Lancer une fois</translation>
+    </message>
+</context>
+<context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+380"/>
+        <location filename="../src/ui/main.cpp" line="+385"/>
         <source>Warning</source>
         <translation>Avertissement</translation>
     </message>
@@ -53,8 +90,8 @@ Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.</source>
         <translation type="vanished">L&apos;AppImage a déjà été intégrée mais n&apos;est pas dans le répertoire d&apos;intégration actuel.
 
-Voulez-vous la déplacer vers le nouveau répertoire ?
-Sélectionner « Non » lancera l&apos;AppImage une fois et la laissera dans son répertoire actuel.</translation>
+Voulez-vous la déplacer vers le nouveau répertoire&#x202f;?
+Sélectionner «&#x202f;Non&#x202f;» lancera l&apos;AppImage une fois et la laissera dans son répertoire actuel.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -67,7 +104,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
 </source>
         <translation>L&apos;AppImage %1 a déjà été intégrée, mais elle n&apos;est pas dans le répertoire de destination des intégrations actuel.
 
-Voulez-vous la déplacer vers la nouvelle destination ?
+Voulez-vous la déplacer vers la nouvelle destination&#x202f;?
 
 Sélectionner Non lancera l&apos;AppImage une fois et laissera l&apos;AppImage dans son répertoire actuel.
 
@@ -90,8 +127,8 @@ Sélectionner Non lancera l&apos;AppImage une fois et laissera l&apos;AppImage d
 Could not open file for reading:
 
 %1</source>
-        <translation>Impossible d&apos;analyser les traductions contenues dans le fichier « desktop » :
-Impossible d&apos;ouvrir le fichier pour lecture :
+        <translation>Impossible d&apos;analyser les traductions contenues dans le fichier «&#x202f;desktop&#x202f;»&#x202f;:
+Impossible d&apos;ouvrir le fichier pour lecture&#x202f;:
 
 %1</translation>
     </message>
@@ -101,8 +138,8 @@ Impossible d&apos;ouvrir le fichier pour lecture :
 Invalid syntax:
 
 %1</source>
-        <translation>Impossible d&apos;analyser les traductions contenues dans le fichier « desktop » :
-Syntaxe invalide :
+        <translation>Impossible d&apos;analyser les traductions contenues dans le fichier «&#x202f;desktop&#x202f;»&#x202f;:
+Syntaxe invalide&#x202f;:
 
 %1</translation>
     </message>
@@ -141,18 +178,18 @@ Syntaxe invalide :
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-358"/>
+        <location filename="../src/ui/main.cpp" line="-362"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher ne prend pas en charge actuellement les AppImages de type %1.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Could not make AppImage executable: %1</source>
-        <translation>Impossible de rendre l&apos;AppImage exécutable : %1</translation>
+        <translation>Impossible de rendre l&apos;AppImage exécutable&#x202f;: %1</translation>
     </message>
     <message>
         <source>Failed to open AppImage for reading: %1</source>
-        <translation type="vanished">Impossible de lire l&apos;AppImage : %1</translation>
+        <translation type="vanished">Impossible de lire l&apos;AppImage&#x202f;: %1</translation>
     </message>
     <message>
         <source>Failed to create temporary directory</source>
@@ -173,21 +210,21 @@ Syntaxe invalide :
     <message>
         <source>execv() failed: %1</source>
         <comment>error message</comment>
-        <translation type="vanished">execv() a échoué : %1</translation>
+        <translation type="vanished">execv() a échoué&#x202f;: %1</translation>
     </message>
     <message>
         <source>runtime not found: no such file or directory: %1</source>
-        <translation type="vanished">runtime non trouvé : pas de tel fichier ou répertoire : %1</translation>
+        <translation type="vanished">runtime non trouvé&#x202f;: pas de tel fichier ou répertoire&#x202f;: %1</translation>
     </message>
     <message>
         <location line="+40"/>
         <source>execv() failed: %1</source>
-        <translation>execv() a échoué : %1</translation>
+        <translation>execv() a échoué&#x202f;: %1</translation>
     </message>
     <message>
         <location line="+70"/>
         <source>Usage: %1 [options] &lt;path&gt;</source>
-        <translation>Utilisation : %1 [options] &lt;chemin&gt;</translation>
+        <translation>Utilisation&#x202f;: %1 [options] &lt;chemin&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -195,9 +232,9 @@ Syntaxe invalide :
         <translation>Assistant d&apos;intégration au bureau d&apos;AppImages, destiné à être utilisé par les distributions Linux.</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Options:</source>
-        <translation>Options :</translation>
+        <translation>Options&#x202f;:</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -220,9 +257,14 @@ Syntaxe invalide :
         <translation>Chemin vers l&apos;AppImage (requis)</translation>
     </message>
     <message>
-        <location line="-21"/>
+        <location line="+265"/>
+        <source>Unexpected result from the integration dialog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-287"/>
         <source>Failed to clean up old desktop files</source>
-        <translation>Impossible de nettoyer les anciens fichiers « desktop »</translation>
+        <translation>Impossible de nettoyer les anciens fichiers «&#x202f;desktop&#x202f;»</translation>
     </message>
     <message>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
@@ -248,76 +290,68 @@ Syntaxe invalide :
         <location line="+8"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
-        <translation>Impossible de nettoyer la corbeille à AppImages : %1</translation>
+        <translation>Impossible de nettoyer la corbeille à AppImages&#x202f;: %1</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+49"/>
         <source>Unknown AppImageLauncher option: %1</source>
-        <translation>Option non reconnue par AppImageLauncher : %1</translation>
+        <translation>Option non reconnue par AppImageLauncher&#x202f;: %1</translation>
     </message>
     <message>
         <location line="+12"/>
         <location filename="../src/ui/remove_main.cpp" line="-74"/>
         <location filename="../src/ui/update_main.cpp" line="-99"/>
         <source>Error: no such file or directory: %1</source>
-        <translation>Erreur : pas de tel fichier ou répertoire : %1</translation>
+        <translation>Erreur&#x202f;: pas de tel fichier ou répertoire&#x202f;: %1</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../src/ui/update_main.cpp" line="+7"/>
         <source>Not an AppImage: %1</source>
-        <translation>Pas une AppImage : %1</translation>
+        <translation>Pas une AppImage&#x202f;: %1</translation>
     </message>
     <message>
-        <location line="+159"/>
+        <location line="+162"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
-        <translation>Le répertoire où sont stockées les AppImages intégrées est actuellement défini à :
+        <translation>Le répertoire où sont stockées les AppImages intégrées est actuellement défini à&#x202f;:
 %1</translation>
     </message>
     <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
-        <translation type="vanished">Le répertoire de destination des intégrations d&apos;AppImage est actuellement défini à : %1</translation>
+        <translation type="vanished">Le répertoire de destination des intégrations d&apos;AppImage est actuellement défini à&#x202f;: %1</translation>
     </message>
     <message>
-        <location line="+28"/>
         <source>Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</source>
-        <translation>L&apos;intégrer va déplacer l&apos;AppImage dans un endroit prédéterminé et l&apos;inclure dans votre lanceur d&apos;application.</translation>
+        <translation type="vanished">L&apos;intégrer va déplacer l&apos;AppImage dans un endroit prédéterminé et l&apos;inclure dans votre lanceur d&apos;application.</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher.</source>
-        <translation>Pour supprimer ou mettre à jour l&apos;AppImage, utilisez le menu contextuel de l&apos;icône d&apos;application dans votre barre de tâches ou lanceur d&apos;application.</translation>
+        <translation type="vanished">Pour supprimer ou mettre à jour l&apos;AppImage, utilisez le menu contextuel de l&apos;icône d&apos;application dans votre barre de tâches ou lanceur d&apos;application.</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>The directory the integrated AppImages are stored in is currently set to:</source>
-        <translation>Le répertoire où les AppImages intégrées sont stockées est actuellement :</translation>
+        <translation type="vanished">Le répertoire où les AppImages intégrées sont stockées est actuellement&#x202f;:</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>%1 has not been integrated into your system.</source>
-        <translation>%1 n&apos;a pas été intégré à votre système.</translation>
+        <translation type="vanished">%1 n&apos;a pas été intégré à votre système.</translation>
     </message>
     <message>
-        <location line="+5"/>
         <source>Desktop Integration</source>
-        <translation>Intégration bureau</translation>
+        <translation type="vanished">Intégration bureau</translation>
     </message>
     <message>
-        <location line="+4"/>
         <source>Integrate and run</source>
-        <translation>Intégrer et lancer</translation>
+        <translation type="vanished">Intégrer et lancer</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Run once</source>
-        <translation>Lancer une fois</translation>
+        <translation type="vanished">Lancer une fois</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation type="vanished">Annuler</translation>
     </message>
     <message>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
@@ -367,12 +401,12 @@ Syntaxe invalide :
     </message>
     <message>
         <source>Are you sure you want to remove this AppImage?</source>
-        <translation type="vanished">Voulez-vous vraiment supprimer cette AppImage ?</translation>
+        <translation type="vanished">Voulez-vous vraiment supprimer cette AppImage&#x202f;?</translation>
     </message>
     <message>
         <location line="+38"/>
         <source>Failed to unregister AppImage: %1</source>
-        <translation>Impossible de désenregistrer l&apos;AppImage : %1</translation>
+        <translation>Impossible de désenregistrer l&apos;AppImage&#x202f;: %1</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -381,7 +415,7 @@ Syntaxe invalide :
     </message>
     <message>
         <source>Failed to remove AppImage: %1</source>
-        <translation type="vanished">Impossible de supprimer l&apos;AppImage : %1</translation>
+        <translation type="vanished">Impossible de supprimer l&apos;AppImage&#x202f;: %1</translation>
     </message>
     <message>
         <location filename="../src/shared/shared.cpp" line="-27"/>
@@ -391,7 +425,7 @@ Syntaxe invalide :
     <message>
         <location line="+2"/>
         <source>Do you wish to overwrite the existing AppImage?</source>
-        <translation>Voulez-vous supprimer l&apos;AppImage déjà existante ?</translation>
+        <translation>Voulez-vous supprimer l&apos;AppImage déjà existante&#x202f;?</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -416,29 +450,29 @@ Syntaxe invalide :
     <message>
         <location line="+8"/>
         <source>Failed to find integrated desktop file</source>
-        <translation>Impossible de trouver le fichier « desktop » intégré</translation>
+        <translation>Impossible de trouver le fichier «&#x202f;desktop&#x202f;» intégré</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Couldn&apos;t find integrated AppImage&apos;s desktop file</source>
-        <translation>Impossible de trouver le fichier « desktop » de l&apos;AppImage intégrée</translation>
+        <translation>Impossible de trouver le fichier «&#x202f;desktop&#x202f;» de l&apos;AppImage intégrée</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Failed to load desktop file:</source>
-        <translation>Impossible de charger le fichier «desktop» :</translation>
+        <translation>Impossible de charger le fichier «desktop»&#x202f;:</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>AppImage has invalid desktop file</source>
-        <translation>L&apos;AppImage a un fichier « desktop » invalide</translation>
+        <translation>L&apos;AppImage a un fichier «&#x202f;desktop&#x202f;» invalide</translation>
     </message>
     <message>
         <location line="+271"/>
         <source>Failed to move AppImage to target location.
 Try to copy AppImage instead?</source>
         <translation>Impossible de déplacer l&apos;AppImage vers le répertoire cible.
-Essayer plutôt de la copier ?</translation>
+Essayer plutôt de la copier&#x202f;?</translation>
     </message>
     <message>
         <location line="+181"/>
@@ -470,7 +504,7 @@ Essayer plutôt de la copier ?</translation>
     </message>
     <message>
         <source>Do you wish to continue?</source>
-        <translation type="vanished">Voulez-vous continuer ?</translation>
+        <translation type="vanished">Voulez-vous continuer&#x202f;?</translation>
     </message>
     <message>
         <location line="+67"/>
@@ -496,7 +530,7 @@ Essayer plutôt de la copier ?</translation>
 %1
 
 The AppImage doesn&apos;t support updating. Please ask the authors to set update information to allow for easy updating.</source>
-        <translation type="vanished">Impossible de trouver des informations de mise à jour dans l&apos;AppImage :
+        <translation type="vanished">Impossible de trouver des informations de mise à jour dans l&apos;AppImage&#x202f;:
 %1
 
 Cette AppImage ne prend pas en charge les mises à jour. Veuillez contacter les auteurs pour qu&apos;ils définissent des informations de mise à jour, ce qui permet les mises à jour automatiques.</translation>
@@ -524,7 +558,7 @@ The AppImage doesn&apos;t support updating. Please ask the authors to embed upda
         <source>Failed to check for updates:
 
 %1</source>
-        <translation>Impossible de vérifier la disponibilité de mises à jour :
+        <translation>Impossible de vérifier la disponibilité de mises à jour&#x202f;:
 
 %1</translation>
     </message>
@@ -536,7 +570,7 @@ The AppImage doesn&apos;t support updating. Please ask the authors to embed upda
     <message>
         <location line="+2"/>
         <source>Do you want to perform the update?</source>
-        <translation>Voulez-vous effectuer la mise à jour ?</translation>
+        <translation>Voulez-vous effectuer la mise à jour&#x202f;?</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -548,14 +582,14 @@ The AppImage doesn&apos;t support updating. Please ask the authors to embed upda
         <source>Failed to update AppImage:
 
 %1</source>
-        <translation>La mise à jour de l&apos;AppImage a échoué :
+        <translation>La mise à jour de l&apos;AppImage a échoué&#x202f;:
 
 %1</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>File reported as updated does not exist: %1</source>
-        <translation>Le fichier signalé comme mis à jour n&apos;existe pas : %1</translation>
+        <translation>Le fichier signalé comme mis à jour n&apos;existe pas&#x202f;: %1</translation>
     </message>
     <message>
         <location line="+8"/>

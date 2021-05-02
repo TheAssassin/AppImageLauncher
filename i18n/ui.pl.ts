@@ -40,9 +40,46 @@
     </message>
 </context>
 <context>
+    <name>IntegrationDialog</name>
+    <message>
+        <location filename="../src/ui/integration_dialog.ui" line="+23"/>
+        <source>Desktop Integration</source>
+        <translation type="unfinished">Integracja z pulpitem</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;%1 has not been integrated into your system.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; &lt;br /&gt;Integrating it will move the AppImage into a predefined location, and include it in your application launcher.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher. &lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The directory where the integrated AppImages are stored in is currently set to: %2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>Integrate and run</source>
+        <translation type="unfinished">Zintegruj i uruchom</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Run once</source>
+        <translation type="unfinished">Uruchom jeden raz</translation>
+    </message>
+</context>
+<context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+380"/>
+        <location filename="../src/ui/main.cpp" line="+385"/>
         <source>Warning</source>
         <translation>Ostrzeżenie</translation>
     </message>
@@ -149,7 +186,7 @@ Uruchomić ponownie z jego uprawnieniami?</translation>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-358"/>
+        <location filename="../src/ui/main.cpp" line="-362"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher obecnie nie obsługuje plików AppImage typu %1.</translation>
     </message>
@@ -203,7 +240,7 @@ Uruchomić ponownie z jego uprawnieniami?</translation>
         <translation>Pomocnik integracji pulpitu dla plików AppImage dla dystrybucji Linuksa.</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Options:</source>
         <translation>Opcje:</translation>
     </message>
@@ -228,7 +265,12 @@ Uruchomić ponownie z jego uprawnieniami?</translation>
         <translation>Ścieżka do AppImage (obowiązkowa)</translation>
     </message>
     <message>
-        <location line="-21"/>
+        <location line="+265"/>
+        <source>Unexpected result from the integration dialog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-287"/>
         <source>Failed to clean up old desktop files</source>
         <translation>Nie udało się wykasować starych plików pulpitu</translation>
     </message>
@@ -259,7 +301,7 @@ Uruchomić ponownie z jego uprawnieniami?</translation>
         <translation>Nie udało się wyczyścić kosza aplikacji AppImage: %1</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+49"/>
         <source>Unknown AppImageLauncher option: %1</source>
         <translation>Nieznana opcja AppImageLauncher: %1</translation>
     </message>
@@ -277,7 +319,7 @@ Uruchomić ponownie z jego uprawnieniami?</translation>
         <translation>To nie jest AppImage: %1</translation>
     </message>
     <message>
-        <location line="+159"/>
+        <location line="+162"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
         <translation>Katalogiem, w którym przechowywane są zintegrowane pliki AppImage, jest obecnie:
@@ -288,44 +330,36 @@ Uruchomić ponownie z jego uprawnieniami?</translation>
         <translation type="vanished">Katalogiem, w którym przechowywane są zintegrowane pliki AppImage, jest obecnie: %1</translation>
     </message>
     <message>
-        <location line="+28"/>
         <source>Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</source>
-        <translation>Integracja tego pliku spowoduje przeniesienie AppImage do predefiniowanego katalogu i dodanie go do menu aplikacji.</translation>
+        <translation type="vanished">Integracja tego pliku spowoduje przeniesienie AppImage do predefiniowanego katalogu i dodanie go do menu aplikacji.</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher.</source>
-        <translation>Aby usunąć lub zaktualizować AppImage, użyj menu kontekstowego ikony aplikacji na pasku zadań lub w menu aplikacji.</translation>
+        <translation type="vanished">Aby usunąć lub zaktualizować AppImage, użyj menu kontekstowego ikony aplikacji na pasku zadań lub w menu aplikacji.</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>The directory the integrated AppImages are stored in is currently set to:</source>
-        <translation>Katalogiem, w którym przechowywane są zintegrowane pliki AppImage, jest obecnie:</translation>
+        <translation type="vanished">Katalogiem, w którym przechowywane są zintegrowane pliki AppImage, jest obecnie:</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>%1 has not been integrated into your system.</source>
-        <translation>%1 nie został zintegrowany z twoim systemem.</translation>
+        <translation type="vanished">%1 nie został zintegrowany z twoim systemem.</translation>
     </message>
     <message>
-        <location line="+5"/>
         <source>Desktop Integration</source>
-        <translation>Integracja z pulpitem</translation>
+        <translation type="vanished">Integracja z pulpitem</translation>
     </message>
     <message>
-        <location line="+4"/>
         <source>Integrate and run</source>
-        <translation>Zintegruj i uruchom</translation>
+        <translation type="vanished">Zintegruj i uruchom</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Run once</source>
-        <translation>Uruchom jeden raz</translation>
+        <translation type="vanished">Uruchom jeden raz</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Cancel</source>
-        <translation>Anuluj</translation>
+        <translation type="vanished">Anuluj</translation>
     </message>
     <message>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>

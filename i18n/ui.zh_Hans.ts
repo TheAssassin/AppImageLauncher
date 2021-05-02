@@ -40,9 +40,46 @@
     </message>
 </context>
 <context>
+    <name>IntegrationDialog</name>
+    <message>
+        <location filename="../src/ui/integration_dialog.ui" line="+23"/>
+        <source>Desktop Integration</source>
+        <translation type="unfinished">桌面集成</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;%1 has not been integrated into your system.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; &lt;br /&gt;Integrating it will move the AppImage into a predefined location, and include it in your application launcher.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher. &lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The directory where the integrated AppImages are stored in is currently set to: %2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>Integrate and run</source>
+        <translation type="unfinished">集成并运行</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Run once</source>
+        <translation type="unfinished">运行一次</translation>
+    </message>
+</context>
+<context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+380"/>
+        <location filename="../src/ui/main.cpp" line="+385"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
@@ -141,7 +178,7 @@ Invalid syntax:
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-358"/>
+        <location filename="../src/ui/main.cpp" line="-362"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher 目前不支持 %1 类型的 AppImage 。</translation>
     </message>
@@ -195,7 +232,7 @@ Invalid syntax:
         <translation>AppImage 桌面集成助手，供 Linux 发行版使用。</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Options:</source>
         <translation>选项：</translation>
     </message>
@@ -220,7 +257,12 @@ Invalid syntax:
         <translation>AppImage 路径（强制）</translation>
     </message>
     <message>
-        <location line="-21"/>
+        <location line="+265"/>
+        <source>Unexpected result from the integration dialog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-287"/>
         <source>Failed to clean up old desktop files</source>
         <translation>清除旧桌面文件失败</translation>
     </message>
@@ -251,7 +293,7 @@ Invalid syntax:
         <translation>清空 AppImage 垃圾箱失败： %1</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+49"/>
         <source>Unknown AppImageLauncher option: %1</source>
         <translation>未知 AppImageLauncher 选项： %1</translation>
     </message>
@@ -269,7 +311,7 @@ Invalid syntax:
         <translation>不是 AppImage： %1</translation>
     </message>
     <message>
-        <location line="+159"/>
+        <location line="+162"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
         <translation>存储集成的 AppImage 的文件夹现在被设为：
@@ -280,44 +322,36 @@ Invalid syntax:
         <translation type="vanished">存储集成的 AppImage 的文件夹现在被设为： %1</translation>
     </message>
     <message>
-        <location line="+28"/>
         <source>Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</source>
-        <translation>集成它将会将 AppImage 移动到预设位置，并将它包含进你的应用启动器。</translation>
+        <translation type="vanished">集成它将会将 AppImage 移动到预设位置，并将它包含进你的应用启动器。</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher.</source>
-        <translation>请使用任务栏或启动器中应用图标的上下文菜单移除或更新 AppImage 。</translation>
+        <translation type="vanished">请使用任务栏或启动器中应用图标的上下文菜单移除或更新 AppImage 。</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>The directory the integrated AppImages are stored in is currently set to:</source>
-        <translation>存储集成的 AppImage 的文件夹现在被设为：</translation>
+        <translation type="vanished">存储集成的 AppImage 的文件夹现在被设为：</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>%1 has not been integrated into your system.</source>
-        <translation>%1 尚未集成到你的系统。</translation>
+        <translation type="vanished">%1 尚未集成到你的系统。</translation>
     </message>
     <message>
-        <location line="+5"/>
         <source>Desktop Integration</source>
-        <translation>桌面集成</translation>
+        <translation type="vanished">桌面集成</translation>
     </message>
     <message>
-        <location line="+4"/>
         <source>Integrate and run</source>
-        <translation>集成并运行</translation>
+        <translation type="vanished">集成并运行</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Run once</source>
-        <translation>运行一次</translation>
+        <translation type="vanished">运行一次</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Cancel</source>
-        <translation>取消</translation>
+        <translation type="vanished">取消</translation>
     </message>
     <message>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>

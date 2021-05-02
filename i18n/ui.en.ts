@@ -1,4 +1,4 @@
-<TS language="en_US" version="2.1">
+<TS version="2.1" language="en_US">
 <context>
     <name>FirstRunDialog</name>
     <message>
@@ -38,9 +38,55 @@
     </message>
 </context>
 <context>
+    <name>IntegrationDialog</name>
+    <message>
+        <location filename="../src/ui/integration_dialog.ui" line="+23" />
+        <source>Desktop Integration</source>
+        <translation>Desktop Integration</translation>
+    </message>
+    <message>
+        <location line="+20" />
+        <source>Icon</source>
+        <translation>Icon</translation>
+    </message>
+    <message>
+        <location line="+21" />
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Noto Sans'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;%1 has not been integrated into your system.&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt; &lt;br /&gt;Integrating it will move the AppImage into a predefined location, and include it in your application launcher.&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher. &lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;The directory where the integrated AppImages are stored in is currently set to: %2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Noto Sans'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;%1 has not been integrated into your system.&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt; &lt;br /&gt;Integrating it will move the AppImage into a predefined location, and include it in your application launcher.&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher. &lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;The directory where the integrated AppImages are stored in is currently set to: %2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location line="+41" />
+        <source>Integrate and run</source>
+        <translation>Integrate and run</translation>
+    </message>
+    <message>
+        <location line="+10" />
+        <source>Run once</source>
+        <translation>Run once</translation>
+    </message>
+</context>
+<context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/main.cpp" line="+380" />
+        <location filename="../src/ui/main.cpp" line="+385" />
         <source>Warning</source>
         <translation>Warning</translation>
     </message>
@@ -147,7 +193,7 @@ Relaunch with their permissions?</translation>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../src/ui/main.cpp" line="-358" />
+        <location filename="../src/ui/main.cpp" line="-362" />
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
         <translation>AppImageLauncher does not support type %1 AppImages at the moment.</translation>
     </message>
@@ -201,7 +247,7 @@ Relaunch with their permissions?</translation>
         <translation>Desktop integration helper for AppImages, for use by Linux distributions.</translation>
     </message>
     <message>
-        <location line="+2" />
+        <location line="+3" />
         <source>Options:</source>
         <translation>Options:</translation>
     </message>
@@ -226,7 +272,12 @@ Relaunch with their permissions?</translation>
         <translation>Path to AppImage (mandatory)</translation>
     </message>
     <message>
-        <location line="-21" />
+        <location line="+265" />
+        <source>Unexpected result from the integration dialog.</source>
+        <translation>Unexpected result from the integration dialog.</translation>
+    </message>
+    <message>
+        <location line="-287" />
         <source>Failed to clean up old desktop files</source>
         <translation>Failed to clean up old desktop files</translation>
     </message>
@@ -257,7 +308,7 @@ Relaunch with their permissions?</translation>
         <translation>Failed to clean up AppImage trash bin: %1</translation>
     </message>
     <message>
-        <location line="+48" />
+        <location line="+49" />
         <source>Unknown AppImageLauncher option: %1</source>
         <translation>Unknown AppImageLauncher option: %1</translation>
     </message>
@@ -275,7 +326,7 @@ Relaunch with their permissions?</translation>
         <translation>Not an AppImage: %1</translation>
     </message>
     <message>
-        <location line="+159" />
+        <location line="+162" />
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
         <translation>The directory the integrated AppImages are stored in is currently set to:
@@ -286,44 +337,36 @@ Relaunch with their permissions?</translation>
         <translation type="vanished">The directory the integrated AppImages are stored in is currently set to: %1</translation>
     </message>
     <message>
-        <location line="+28" />
         <source>Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</source>
-        <translation>Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</translation>
+        <translation type="vanished">Integrating it will move the AppImage into a predefined location, and include it in your application launcher.</translation>
     </message>
     <message>
-        <location line="+3" />
         <source>To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher.</source>
-        <translation>To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher.</translation>
+        <translation type="vanished">To remove or update the AppImage, please use the context menu of the application icon in your task bar or launcher.</translation>
     </message>
     <message>
-        <location line="+3" />
         <source>The directory the integrated AppImages are stored in is currently set to:</source>
-        <translation>The directory the integrated AppImages are stored in is currently set to:</translation>
+        <translation type="vanished">The directory the integrated AppImages are stored in is currently set to:</translation>
     </message>
     <message>
-        <location line="+7" />
         <source>%1 has not been integrated into your system.</source>
-        <translation>%1 has not been integrated into your system.</translation>
+        <translation type="vanished">%1 has not been integrated into your system.</translation>
     </message>
     <message>
-        <location line="+5" />
         <source>Desktop Integration</source>
-        <translation>Desktop Integration</translation>
+        <translation type="vanished">Desktop Integration</translation>
     </message>
     <message>
-        <location line="+4" />
         <source>Integrate and run</source>
-        <translation>Integrate and run</translation>
+        <translation type="vanished">Integrate and run</translation>
     </message>
     <message>
-        <location line="+1" />
         <source>Run once</source>
-        <translation>Run once</translation>
+        <translation type="vanished">Run once</translation>
     </message>
     <message>
-        <location line="+3" />
         <source>Cancel</source>
-        <translation>Cancel</translation>
+        <translation type="vanished">Cancel</translation>
     </message>
     <message>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
