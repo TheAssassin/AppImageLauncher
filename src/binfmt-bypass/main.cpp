@@ -152,6 +152,23 @@ char* find_preload_library(bool is_32bit) {
     return result;
 }
 
+// need to keep track of the subprocess pid in a global variable, as signal handlers in C(++) are simple interrupt
+// handlers that are not aware of any state in main()
+// note that we only connect the signal handler once we have created a subprocess, i.e., we don't need to worry about
+// subprocess_pid not being set yet
+// it's best practice to implement a check anyway, though
+static pid_t subprocess_pid = 0;
+
+void forwardSignal(int signal) {
+    if (subprocess_pid != 0) {
+        log_debug("forwarding signal %d to subprocess %ld\n", signal, subprocess_pid);
+        kill(subprocess_pid, signal);
+    } else {
+        log_error("signal %d received but no subprocess created yet, shutting down\n", signal);
+        exit(signal);
+    }
+}
+
 int main(int argc, char** argv) {
     if (argc <= 1) {
         log_message("Usage: %s <AppImage file> [...]\n", argv[0]);
@@ -182,7 +199,7 @@ int main(int argc, char** argv) {
     }
 
     // to keep alive the memfd, we launch the AppImage as a subprocess
-    if (fork() == 0) {
+    if ((subprocess_pid = fork()) == 0) {
         // create new argv array, using passed filename as argv[0]
         std::vector<char*> new_argv;
 
@@ -219,6 +236,13 @@ int main(int argc, char** argv) {
 
         log_error("failed to execute patched runtime: %s\n", strerror(errno));
         return EXIT_CODE_FAILURE;
+    }
+
+    // now that we have a subprocess and know its process ID, it's time to set up signal forwarding
+    // note that from this point on, we don't handle signals ourselves any more, but rely on the subprocess to exit
+    // properly
+    for (int i = 0; i < 32; ++i) {
+        signal(i, forwardSignal);
     }
 
     // wait for child process to exit, and exit with its return code
