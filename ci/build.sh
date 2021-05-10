@@ -63,6 +63,9 @@ cmake_args=(
     "-DCPACK_DEBIAN_COMPATIBILITY_LEVEL=$DIST"
     "-DCI_BUILD=ON"
     "-DBUILD_TESTING=OFF"
+    "-DUSE_SYSTEM_BOOST=ON"
+    "-DUSE_SYSTEM_XZ=ON"
+    "-DUSE_SYSTEM_LIBARCHIVE=ON"
 )
 
 export QT_SELECT=qt5
@@ -70,8 +73,6 @@ export QT_SELECT=qt5
 if [ "$ARCH" == "i386" ]; then
     cmake_args+=(
         "-DCMAKE_TOOLCHAIN_FILE=$REPO_ROOT/cmake/toolchains/i386-linux-gnu.cmake"
-        "-DUSE_SYSTEM_XZ=ON"
-        "-DUSE_SYSTEM_LIBARCHIVE=ON"
     )
 
     if [ "$DIST" == "xenial" ]; then
@@ -91,7 +92,7 @@ if [ "$ARCH" == "arm64" ]; then
     )
 fi
 
-cmake "$REPO_ROOT" "${cmake_args[@]}" 
+cmake "$REPO_ROOT" "${cmake_args[@]}"
 
 # now, compile
 if [[ "$CI" == "" ]]; then

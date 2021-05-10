@@ -65,6 +65,7 @@ packages=(
     rpm
     rpm2cpio
     liblzma-dev
+    libboost-all-dev
 
     # cross-compiling for 32-bit is only really easy with clang, where we can specify the target as a compiler option
     # clang -target arm-linux-gnueabihf ...
@@ -118,8 +119,8 @@ if [[ "$ARCH" == "arm64"* ]] || [[ "$ARCH" == "x86_64" ]]; then
     fi
 
     apt-get install -y \
-        "$(dpkg -l | grep libgcc | grep dev | awk '{print $2}' | cut -d: -f1 | uniq)":"$ARCH_32BIT" \
-        "$(dpkg -l | grep libstdc++ | grep dev | awk '{print $2}' | cut -d: -f1 | uniq)":"$ARCH_32BIT"
+        "$(dpkg -l | grep libgcc | grep dev | awk '{print $2}' | cut -d: -f1 | uniq | sort | tail -n1 )":"$ARCH_32BIT" \
+        "$(dpkg -l | grep libstdc++ | grep dev | awk '{print $2}' | cut -d: -f1 | uniq | sort | tail -n1)":"$ARCH_32BIT"
 fi
 
 # install more recent CMake version which fixes some linking issue in CMake < 3.10
