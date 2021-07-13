@@ -72,9 +72,9 @@ set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_NAME "appimagelauncher")
 # to a custom location in install.cmake
 
 if(CPACK_DEBIAN_COMPATIBILITY_LEVEL STREQUAL "bionic" OR CPACK_DEBIAN_COMPATIBILITY_LEVEL STREQUAL "cosmic" OR CPACK_DEBIAN_COMPATIBILITY_LEVEL STREQUAL "disco" OR CPACK_DEBIAN_COMPATIBILITY_LEVEL STREQUAL "eoan")
-    set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_DEPENDS "libqt5widgets5 (>= 5.2.1), libqt5gui5 (>= 5.2.1), libqt5core5a (>= 5.2.1), binfmt-support (>= 2.0), systemd, libcurl4")
+    set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_DEPENDS "libqt5dbus5 (>= 5.9), libqt5widgets5 (>= 5.2.1), libqt5gui5 (>= 5.2.1), libqt5core5a (>= 5.2.1), binfmt-support (>= 2.0), systemd, libcurl4")
 else()
-    set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_DEPENDS "libqt5widgets5 (>= 5.2.1), libqt5gui5 (>= 5.2.1), libqt5core5a (>= 5.2.1), binfmt-support (>= 2.0), systemd, libcurl3")
+    set(CPACK_DEBIAN_APPIMAGELAUNCHER_PACKAGE_DEPENDS "libqt5dbus5 (>= 5.2.1), libqt5widgets5 (>= 5.2.1), libqt5gui5 (>= 5.2.1), libqt5core5a (>= 5.2.1), binfmt-support (>= 2.0), systemd, libcurl3")
 endif()
 
 # improve dependency list
