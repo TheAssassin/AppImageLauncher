@@ -721,7 +721,21 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
         return pointerList;
     };
 
-    std::vector<std::string> desktopActions = {"Remove"};
+    std::vector<std::string> desktopActions;
+
+    // we may not just overwrite the existing actions key, as then the actions cannot be used any more from the context menu
+    {
+        const auto* actionsEntry = g_key_file_get_string(desktopFile.get(), G_KEY_FILE_DESKTOP_GROUP, G_KEY_FILE_DESKTOP_KEY_ACTIONS, error.get());
+        for (const QString& action : QString(actionsEntry).split(";")) {
+            if (action.isEmpty()) {
+                continue;
+            }
+
+            desktopActions.emplace_back(action.toStdString());
+        }
+    }
+
+    desktopActions.emplace_back("Remove");
 
     // load translations from JSON file(s)
     QMap<QString, QString> removeActionNameTranslations;
