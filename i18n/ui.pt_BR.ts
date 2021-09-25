@@ -272,7 +272,7 @@ Sintaxe inválida:
     </message>
     <message>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
-        <translation type="vanished">Falha ao registar a AppImage no AppImageLauncherFS: não registou a AppImage caminho %1</translation>
+        <translation type="vanished">Falha ao registar o AppImage no AppImageLauncherFS: não registou a AppImage caminho %1</translation>
     </message>
     <message>
         <source>Failed to register AppImage in AppImageLauncherFS: could not open map file</source>
