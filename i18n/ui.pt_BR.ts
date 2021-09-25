@@ -411,7 +411,7 @@ Sintaxe inválida:
     <message>
         <location line="+12"/>
         <source>Failed to move AppImage into trash bin directory</source>
-        <translation>Falha ao mover AppImage parao diretório da lixeira</translation>
+        <translation>Falha ao mover AppImage para o diretório da lixeira</translation>
     </message>
     <message>
         <source>Failed to remove AppImage: %1</source>
