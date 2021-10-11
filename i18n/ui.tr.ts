@@ -313,7 +313,7 @@ Relaunch with their permissions?</source>
         <location line="+13"/>
         <location filename="../src/ui/update_main.cpp" line="+7"/>
         <source>Not an AppImage: %1</source>
-        <translatio>Uygulama AppImage değil: %1</translation>
+        <translation>Uygulama AppImage değil: %1</translation>
     </message>
     <message>
         <location line="+162"/>
@@ -324,16 +324,16 @@ Relaunch with their permissions?</source>
     </message>
     <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
-        <translation type="vanished">The directory the integrated AppImages are stored in is currently set to: %1</translation>
+        <translation>Entegre AppImages'ın depolandığı dizin şu anda şu şekilde ayarlandı: %1</translation>
     </message>
     <message>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
-        <translation type="vanished">Removes AppImages after desktop integration, for use by Linux distributions</translation>
+        <translation>Linux dağıtımları tarafından kullanılmak üzere masaüstü entegrasyonundan sonra AppImages'ı kaldırır</translation>
     </message>
     <message>
         <source>AppImageLauncher remove</source>
         <comment>remove helper app name</comment>
-        <translation type="vanished">AppImageLauncher remove</translation>
+        <translation>AppImageLauncher kaldır</translation>
     </message>
     <message>
         <source>Helper to delete integrated AppImages easily, e.g., from the application launcher&apos;s context menuz</source>
