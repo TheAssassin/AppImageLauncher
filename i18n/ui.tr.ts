@@ -154,7 +154,7 @@ Geçersiz söz dizimi:
         <source>File %1 is owned by another user: %2
 
 Relaunch with their permissions?</source>
-        <translation type="vanished">Dosya %1 diğer kullanıcıya ait: %2
+        <translation>Dosya %1 diğer kullanıcıya ait: %2
 
 İzinleriyle yeniden başlatılsın mı?</translation>
     </message>
@@ -190,71 +190,71 @@ Relaunch with their permissions?</source>
     <message>
         <location line="+7"/>
         <source>Could not make AppImage executable: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImage yürütülebilir yapılamadı: %1</translation>
     </message>
     <message>
         <source>Failed to open AppImage for reading: %1</source>
-        <translation type="vanished">Failed to open AppImage for reading: %1</translation>
+        <translation>AppImage'ı okumak için açılamadı: %1</translation>
     </message>
     <message>
         <source>Failed to create temporary directory</source>
-        <translation type="vanished">Failed to create temporary directory</translation>
+        <translation>Geçici dizin oluşturulamadı</translation>
     </message>
     <message>
         <source>Failed to create temporary copy of type 1 AppImage</source>
-        <translation type="vanished">Failed to create temporary copy of type 1 AppImage</translation>
+        <translation>AppImage 1 türünün geçici kopyası oluşturulamadı</translation>
     </message>
     <message>
         <source>Failed to open temporary AppImage copy for writing</source>
-        <translation type="vanished">Failed to open temporary AppImage copy for writing</translation>
+        <translation>Yazmak için geçici AppImage kopyası açılamadı</translation>
     </message>
     <message>
         <source>Failed to remove magic bytes from temporary AppImage copy</source>
-        <translation type="vanished">Failed to remove magic bytes from temporary AppImage copy</translation>
+        <translation>geçici AppImage kopyasından magic baytları kaldırmak için ailed</translation>
     </message>
     <message>
         <source>execv() failed: %1</source>
         <comment>error message</comment>
-        <translation type="vanished">execv() failed: %1</translation>
+        <translation>execv() başarısız: %1</translation>
     </message>
     <message>
         <source>runtime not found: no such file or directory: %1</source>
-        <translation type="vanished">runtime not found: no such file or directory: %1</translation>
+        <translation>runtime bulunamadı: böyle bir dosya veya dizin yok: %1</translation>
     </message>
     <message>
         <location line="+40"/>
         <source>execv() failed: %1</source>
-        <translation type="unfinished">execv() failed: %1</translation>
+        <translation>execv() hatası: %1</translation>
     </message>
     <message>
         <location line="+70"/>
         <source>Usage: %1 [options] &lt;path&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanım: %1 [seçenekler] &lt;path&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Desktop integration helper for AppImages, for use by Linux distributions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Linux dağıtımları tarafından kullanılmak üzere AppImages için masaüstü entegrasyon yardımcısı.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Options:</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçenekler:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Display this help and exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu yardımı göster ve çık</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Display version and exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Sürümü göster ve çık</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Arguments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Argümanlar:</translation>
     </message>
     <message>
         <location line="+1"/>
