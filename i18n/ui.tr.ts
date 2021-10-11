@@ -68,12 +68,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location line="+41"/>
         <source>Integrate and run</source>
-        <translation type="unfinished"></translation>
+        <translation>Entegre et ve çalıştır</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Run once</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir kere çalıştır</translation>
     </message>
 </context>
 <context>
