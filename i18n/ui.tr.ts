@@ -273,53 +273,54 @@ Relaunch with their permissions?</source>
     </message>
     <message>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
-        <translation type="vanished">Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</translation>
+        <translation>AppImage, AppImageLauncherFS'ye kaydedilemedi: appimagelauncherfs.service'i başlatmaya çalışırken hata oluştu </translation>
     </message>
     <message>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
-        <translation type="vanished">Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</translation>
+        <translation>AppImage, AppImageLauncherFS'ye kaydedilemedi: %1 AppImage yolu kaydedilemedi</translation>
     </message>
     <message>
         <source>Failed to register AppImage in AppImageLauncherFS: could not open map file</source>
-        <translation type="vanished">Failed to register AppImage in AppImageLauncherFS: could not open map file</translation>
+        <translation>AppImage, AppImageLauncherFS'ye kaydedilemedi: harita dosyası açılamadı </translation>
     </message>
     <message>
         <source>Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</source>
-        <translation type="vanished">Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</translation>
+        <translation>AppImage, AppImageLauncherFS'ye kaydedilemedi: AppImage için sanal dosya bulunamadı</translation>
     </message>
     <message>
         <source>Failed to register AppImage in AppImageLauncherFS: unknown failure</source>
-        <translation type="vanished">Failed to register AppImage in AppImageLauncherFS: unknown failure</translation>
+        <translation>AppImage, AppImageLauncherFS'ye kaydedilemedi: bilinmeyen hata</translation>
     </message>
     <message>
         <location line="+8"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImage çöp kutusu temizlenemedi: %1</translation>
     </message>
     <message>
         <location line="+49"/>
         <source>Unknown AppImageLauncher option: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilinmeyen AppImageLauncher seçeneği: %1</translation>
     </message>
     <message>
         <location line="+12"/>
         <location filename="../src/ui/remove_main.cpp" line="-74"/>
         <location filename="../src/ui/update_main.cpp" line="-99"/>
         <source>Error: no such file or directory: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata: böyle bir dosya veya dizin yok: %1</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../src/ui/update_main.cpp" line="+7"/>
         <source>Not an AppImage: %1</source>
-        <translation type="unfinished"></translation>
+        <translatio>Uygulama AppImage değil: %1</translation>
     </message>
     <message>
         <location line="+162"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Entegre AppImages'ın depolandığı dizin şu anda şu şekilde ayarlanmıştır:
+%1></translation>
     </message>
     <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
