@@ -49,7 +49,7 @@
     <message>
         <location line="+20"/>
         <source>Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Simge</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -88,10 +88,10 @@ p, li { white-space: pre-wrap; }
 
 Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.</source>
-        <translation type="vanished">AppImage has already been integrated, but it is not in the current integration destination directory.
+        <translation>AppImage zaten entegre edilmiştir, ancak mevcut entegrasyon hedef dizininde değil.
 
-Do you want to move it into the new destination?
-Choosing No will run the AppImage once, and leave the AppImage in its current directory.</translation>
+Yeni hedefe taşımak istiyor musunuz?
+Hayır'ı seçmek, AppImage'ı bir kez çalıştıracak ve AppImage'ı mevcut dizininde bırakacaktır.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -102,7 +102,10 @@ Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>AppImage %1 zaten entegre edilmiştir, ancak mevcut entegrasyon hedef dizininde değil.
+
+Yeni hedefe taşımak istiyor musunuz?
+Hayır'ı seçmek, AppImage'ı bir kez çalıştıracak ve AppImage'ı mevcut dizininde bırakacaktır.</translation>
     </message>
     <message>
         <location filename="../src/shared/shared.cpp" line="+1232"/>
@@ -113,7 +116,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
     <message>
         <location filename="../src/ui/main.cpp" line="+23"/>
         <source>Failed to unregister AppImage before re-integrating it</source>
-        <translation type="unfinished"></translation>
+        <translation>tekrar entegre edilmeden önce kaydı silme başarısız oldu</translation>
     </message>
     <message>
         <location filename="../src/shared/shared.cpp" line="-485"/>
@@ -121,7 +124,10 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
 Could not open file for reading:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Masaüstü dosya çevirileri ayrıştırılamadı:
+Dosya okumak için açılamadı:
+
+%1</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -129,12 +135,15 @@ Could not open file for reading:
 Invalid syntax:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Masaüstü dosya çevirileri ayrıştırılamadı:
+Geçersiz söz dizimi:
+
+%1</translation>
     </message>
     <message>
         <location line="+409"/>
         <source>File %1 is owned by another user: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya %1 diğer kullanıcıya ait: %2</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -145,19 +154,19 @@ Invalid syntax:
         <source>File %1 is owned by another user: %2
 
 Relaunch with their permissions?</source>
-        <translation type="vanished">File %1 is owned by another user: %2
+        <translation type="vanished">Dosya %1 diğer kullanıcıya ait: %2
 
-Relaunch with their permissions?</translation>
+İzinleriyle yeniden başlatılsın mı?</translation>
     </message>
     <message>
         <location line="+52"/>
         <source>Failed to run permissions helper, exited with return code %1</source>
-        <translation type="unfinished"></translation>
+        <translation>İzin yardımcısı çalıştırılamadı, %1 dönüş koduyla çıkıldı</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Could not find suitable permissions helper, aborting</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygun izin yardımcısı bulunamadı, iptal ediliyor</translation>
     </message>
 </context>
 <context>
@@ -176,7 +185,7 @@ Relaunch with their permissions?</translation>
     <message>
         <location filename="../src/ui/main.cpp" line="-362"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImageLauncher şu anda %1 AppImages türünü desteklemiyor.</translation>
     </message>
     <message>
         <location line="+7"/>
