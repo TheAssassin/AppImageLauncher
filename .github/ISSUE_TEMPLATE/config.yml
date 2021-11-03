@@ -1,0 +1,12 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: 💡 AppImageKit issue tracker
+    url: https://github.com/AppImage/AppImageKit
+    about: Issues regarding AppImages in general need to be opened there.
+  - name: 💡 libappimage issue tracker
+    url: https://github.com/AppImage/libappimage
+    about: The right place to open issues about the desktop integration of AppImages.
+  - name: 💬 IRC Webchat
+    url: https://web.libera.chat/#appimage
+    about: Chat with the AppImage community in #appimage on the Libera.Chat IRC network
