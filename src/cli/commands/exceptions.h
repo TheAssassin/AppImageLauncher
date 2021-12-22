@@ -36,6 +36,11 @@ namespace appimagelauncher {
             public:
                 using UsageError::UsageError;
             };
+
+            class WouldNotIntegrateError : public CliError {
+            public:
+                using CliError::CliError;
+            };
         }
     }
 }

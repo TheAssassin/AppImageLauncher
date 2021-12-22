@@ -40,8 +40,9 @@ int main(int argc, char** argv) {
         qerr() << parser.helpText().toStdString().c_str() << endl;
 
         qerr() << "Available commands:" << endl;
-        qerr() << "  integrate    Integrate AppImages passed as commandline arguments" << endl;
-        qerr() << "  unintegrate  Unintegrate AppImages passed as commandline arguments" << endl;
+        qerr() << "  integrate        Integrate AppImages passed as commandline arguments" << endl;
+        qerr() << "  unintegrate      Unintegrate AppImages passed as commandline arguments" << endl;
+        qerr() << "  would-integrate  Report whether AppImage would be integrated (exits with 0 if yes, any other code if not)" << endl;
 
         return 2;
     }
