@@ -1,0 +1,88 @@
+name: "Bug report"
+description: "Report a bug to help us improve AppImageLauncher"
+labels: ["bug", "needs verification"]
+body:
+- type: markdown
+  attributes:
+    value: |
+      Thank you for making AppImageLauncher better by reporting a bug. Please fill in as much information as possible about your bog so that we do not have to play "information ping-pong" but can help you immediately.
+
+      If this is the first time you report a bug, please read https://www.chiark.greenend.org.uk/~sgtatham/bugs.html.
+
+      Please note: this is an issue tracker. ***Questions may not be asked here.*** Instead, please visit the IRC channel `#appimage` on Libera.Chat. See https://docs.appimage.org/contact.html for more information.
+- type: checkboxes
+  id: pre-submit-checks
+  attributes:
+    label: Pre-submit checks
+    description: |
+      Before submitting a bug report, please make sure you check the following boxes. Otherwise, your issue will not be processed.
+    options:
+      - label: I [checked for similar issues](https://github.com/TheAssassin/AppImageLauncher/issues?q=) beforehand, but could not find any, not even closed ones. I could not add my bug report to any existing issue.
+        required: true
+      - label: I am going to take the time to to fill in all the required details. I know that the bug report will be dismissed otherwise.
+        required: true
+- type: textarea
+  id: description
+  attributes:
+    label: Describe the bug
+    description: Please describe the bug as precisely as possible. You cannot add too many details, every information is important!
+    placeholder: While clicking on button [...], the application unexpectedly [...]
+  validations:
+    required: true
+- type: textarea
+  id: expected-behavior
+  attributes:
+    label: Expected behavior
+    description: Describe what you think should have happened instead as precisely as possible.
+    placeholder: "I expected to see [...]"
+  validations:
+    required: true
+- type: textarea
+  id: to-reproduce
+  attributes:
+    label: Steps to reproduce the issue
+    description: |
+      We need to reproduce the issue in a neutral environment in order to understand what causes it.
+      Please describe the steps needed to do to trigger the bug as detailedly as possible.
+    placeholder: |
+      1. Go to [...]
+      2. Click on [...]
+      3. Scroll down to [...]
+      4. See the error message
+- type: textarea
+  id: screenshots
+  attributes:
+    label: Screenshots
+    description: Please add screenshots if possible that visualize your problem and/or show how to reproduce the bug.
+    placeholder: ![screenshot describing the issue](https://raw.githubusercontent.com/TheAssassin/AppImageLauncher/master/resources/doc/screenshot.png)
+- type: textarea
+  id: distro
+  attributes:
+    label: Distribution and desktop environment
+    description: |
+      We need precise information about your computer's operating system. Please include version numbers.
+      You can find guides about varying distributions and desktop environments on [this Wiki page](https://github.com/TheAssassin/AppImageLauncher/wiki/Find-information-about-distribution-and-desktop-environment).
+  validations:
+    required: true
+- type: textarea
+  id: appimagelauncher-version
+  attributes:
+    label: Installed AppImageLauncher version
+    description: Please post the output of `AppImageLauncher --appimagelauncher-version`.
+    placeholder: For example, AppImageLauncher version 2.2.0 (git commit ea0984c), built on 2021-12-22 22:03:21 UTC
+  validations:
+    required: true
+- type: textarea
+  id: appimages-tried
+  attributes:
+    label: List of AppImages you tried
+    description: Please post a list of AppImages you tried (including the information whether they work or not, a version number or filename, ideally also a URL)
+    placeholder: |
+      - FreeCAD 0.19.3 (working), https://github.com/FreeCAD/FreeCAD/releases/download/0.19.3/FreeCAD_0.19.3-Linux-Conda_glibc2.12-x86_64.AppImage
+      - Subsurface Divelog 5.0.5 (broken), using download button on https://subsurface.github.io/de/download/
+- type: textarea
+  id: additional-context
+  attributes:
+    label: Additional context
+    description: Any other information you'd like to include.
+

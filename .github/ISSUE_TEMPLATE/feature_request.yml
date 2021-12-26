@@ -1,0 +1,63 @@
+name: "Feature request"
+description: "Suggest an idea for this project"
+labels: ["enhancement"]
+body:
+- type: markdown
+  attributes:
+    value: |
+      Thank you for making AppImageLauncher better by suggesting a feature. Your ideas are highly welcome! It's a tool for you, the users, after all.
+
+      Please try to describe your proposal as precisely as possible, including as many details as you can. Please don't hesitate to add screenshots or mockups.
+
+      Please note: this is an issue tracker. ***Questions may not be asked here.*** Instead, please visit the IRC channel `#appimage` on Libera.Chat. See https://docs.appimage.org/contact.html for more
+- type: checkboxes
+  id: pre-submit-checks
+  attributes:
+    label: Pre-submit checks
+    description: |
+      Before submitting a bug report, please make sure you check the following boxes. Otherwise, your issue will not be processed.
+    options:
+      - label: I checked for similar issues beforehand, but could not find any. I could not add my proposal to any existing issue.
+        required: true
+      - label: I am going to take the time to to fill in all the required details. I know that the bug report will be dismissed otherwise.
+        required: true
+- type: textarea
+  id: description
+  attributes:
+    label: Feature description
+    description: Is your feature request to a problem? Please describe your suggestion as detailedly as possible.
+    placeholder: I would like to have another button that [...]
+  validations:
+    required: true
+- type: textarea
+  id: proposed-solution
+  attributes:
+    label: Proposed solution
+    description: Describe the solution you would like to see.
+    placeholder: Instead of the current blue button, I would like a yellow button that says [...]
+  validations:
+    required: true
+- type: textarea
+  id: alternatives
+  attributes:
+    label: Alternative solutions you considered
+    description: |
+      Please list alternative solutions or features you considered to cover your use case. Ideally, include their pros and cons.
+- type: textarea
+  id: additional-context
+  attributes:
+    label: Additional context
+    description: Any other information you'd like to include, for instance, screnshots, mockups, etc.
+---
+
+**Is your feature request related to a problem? Please describe.**
+A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+
+**Describe the solution you'd like**
+A clear and concise description of what you want to happen.
+
+**Describe alternatives you've considered**
+A clear and concise description of any alternative solutions or features you've considered.
+
+**Additional context**
+Add any other context or screenshots about the feature request here.
