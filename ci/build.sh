@@ -109,25 +109,17 @@ cmake .
 # build Debian package
 cpack -V -G DEB
 
-# skip RPM and source tarball build on bionic
-if [ "$DIST" == "xenial" ]; then
-    # build RPM package
-    cpack -V -G RPM
+# build RPM package
+cpack -V -G RPM
 
-    # build source tarball
-    # generates a lot of output, therefore not run in verbose mode
-    cpack --config CPackSourceConfig.cmake
+# build source tarball
+# generates a lot of output, therefore not run in verbose mode
+cpack --config CPackSourceConfig.cmake
 
-    # generate log for debugging
-    # CPack is very verbose, therefore we generate a file and upload it
-    cpack --config CPackSourceConfig.cmake -V
-fi
+# generate log for debugging
+# CPack is very verbose, therefore we generate a file and upload it
+cpack --config CPackSourceConfig.cmake -V
 
-# move AppImages to old cwd
-if [ "$DIST" == "xenial" ]; then
-    mv appimagelauncher*.{deb,rpm}* appimagelauncher*.tar* "$OLD_CWD"/
-else
-    mv appimagelauncher*.deb* "$OLD_CWD"/
-fi
+mv appimagelauncher*.{deb,rpm}* appimagelauncher*.tar* "$OLD_CWD"/
 
 popd
