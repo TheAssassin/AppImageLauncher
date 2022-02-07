@@ -288,13 +288,11 @@ bool FileSystemWatcher::updateWatchedDirectories(QDirSet watchedDirectories) {
     // so when they'll be created, we'll notice
     {
         // erase-remove doesn't work with sets apparently (see https://stackoverflow.com/a/26833313)
-        // therefore we use a simple custom algorithm
-        auto it = watchedDirectories.begin();
-        while (it != watchedDirectories.end()) {
+        // therefore we use a simple linear search to remove non-existing directories
+        for (auto it = watchedDirectories.begin(); it != watchedDirectories.end(); ++it) {
             if (!it->exists()) {
+                std::cout << "Directory " << it->path().toStdString() << " does not exist, skipping" << std::endl;
                 it = watchedDirectories.erase(it);
-            } else {
-                ++it;
             }
         }
     }

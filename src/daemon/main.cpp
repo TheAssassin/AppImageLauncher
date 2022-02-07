@@ -62,6 +62,11 @@ void initialSearchForAppImages(const QDirSet& dirsToSearch, Worker& worker) {
     std::cout << "Searching for existing AppImages" << std::endl;
 
     for (const auto& dir : dirsToSearch) {
+        if (!dir.exists()) {
+            std::cout << "Directory " << dir.path().toStdString() << " does not exist, skipping" << std::endl;
+            continue;
+        }
+
         std::cout << "Searching directory: " << dir.absolutePath().toStdString() << std::endl;
 
         for (QDirIterator it(dir); it.hasNext();) {
