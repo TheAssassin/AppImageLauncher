@@ -335,7 +335,7 @@ QSet<QString> additionalAppImagesLocations(const bool includeAllMountPoints) {
     // integrate AppImages from mounted filesystems, if requested
     // we don't want to read files from any FUSE mounted filesystems nor from any virtual filesystems
     // to
-    static const auto validFilesystems = {"ext2", "ext3", "ext4", "ntfs", "vfat"};
+    static const auto validFilesystems = {"ext2", "ext3", "ext4", "ntfs", "vfat", "btrfs"};
 
     static const auto blacklistedMountPointPrefixes = {
         "/var/lib/schroot",
