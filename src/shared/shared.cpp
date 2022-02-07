@@ -458,6 +458,12 @@ QDirSet daemonDirectoriesToWatch(const std::shared_ptr<QSettings>& config) {
 
     // of course we need to watch the main integration directory
     const auto defaultDestination = integratedAppImagesDestination();
+
+    // make sure it exists, otherwise the daemon doesn't have anything to do
+    if (!defaultDestination.exists()) {
+        defaultDestination.mkdir(".");
+    }
+
     watchedDirectories.insert(defaultDestination);
 
     // however, there's likely additional ones to watch, like a system-wide Applications directory
