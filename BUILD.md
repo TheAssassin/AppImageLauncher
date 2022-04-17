@@ -1,5 +1,7 @@
 # How to build AppImageLauncher
 
+**Note:** This file was contributed by a user. It may be out of date.
+
 If there are no pre-build binaries for your platform you may consider to build AppImageLauncher yourself. Please follow these instructions.
 
 
