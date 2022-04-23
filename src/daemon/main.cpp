@@ -1,7 +1,6 @@
 // system includes
 #include <deque>
 #include <iostream>
-#include <set>
 #include <sstream>
 #include <sys/stat.h>
 
@@ -15,10 +14,9 @@
 
 // local includes
 #include "shared.h"
-#include "filesystemwatcher.h"
-#include "worker.h"
+#include "daemon.h"
 
-#define UPDATE_WATCHED_DIRECTORIES_INTERVAL 30 * 1000
+using namespace appimagelauncher::daemon;
 
 /**
  * Read the modification time of the file pointed by <filePath>
@@ -57,45 +55,6 @@ QTimer* setupBinaryUpdatesMonitor(char* const* argv) {
     return timer;
 }
 
-void initialSearchForAppImages(const QDirSet& dirsToSearch, Worker& worker) {
-    // initial search for AppImages; if AppImages are found, they will be integrated, unless they already are
-    std::cout << "Searching for existing AppImages" << std::endl;
-
-    for (const auto& dir : dirsToSearch) {
-        if (!dir.exists()) {
-            std::cout << "Directory " << dir.path().toStdString() << " does not exist, skipping" << std::endl;
-            continue;
-        }
-
-        std::cout << "Searching directory: " << dir.absolutePath().toStdString() << std::endl;
-
-        for (QDirIterator it(dir); it.hasNext();) {
-            const auto& path = it.next();
-
-            if (QFileInfo(path).isFile()) {
-                const auto appImageType = appimage_get_type(path.toStdString().c_str(), false);
-                const auto isAppImage = 0 < appImageType && appImageType <= 2;
-
-                if (isAppImage) {
-                    // at application startup, we don't want to integrate AppImages that have been integrated already,
-                    // as that it slows down very much
-                    // the integration will be updated as soon as any of these AppImages is run with AppImageLauncher
-                    std::cout << "Found AppImage: " << path.toStdString() << std::endl;
-
-                    if (!appimage_is_registered_in_system(path.toStdString().c_str())) {
-                        std::cout << "AppImage is not integrated yet, integrating" << std::endl;
-                        worker.scheduleForIntegration(path);
-                    } else if (!desktopFileHasBeenUpdatedSinceLastUpdate(path)) {
-                        std::cout << "AppImage has been integrated already but needs to be reintegrated" << std::endl;
-                        worker.scheduleForIntegration(path);
-                    } else {
-                        std::cout << "AppImage integrated already, skipping" << std::endl;
-                    }
-                }
-            }
-        }
-    }
-}
 
 int main(int argc, char* argv[]) {
     // make sure shared won't try to use the UI
@@ -131,80 +90,14 @@ int main(int argc, char* argv[]) {
     // parse arguments
     parser.process(app);
 
-    // load config file
-    const auto config = getConfig();
-
-    const auto listWatchedDirectories = parser.isSet(listWatchedDirectoriesOption);
-
-    QDirSet watchedDirectories = daemonDirectoriesToWatch(config);
+    auto* daemon = new Daemon(&app);
 
     // this option is for debugging the
-    if (listWatchedDirectories) {
-        for (const auto& watchedDir : watchedDirectories) {
+    if (parser.isSet(listWatchedDirectoriesOption)) {
+        for (const auto& watchedDir : daemon->watchedDirectories()) {
             std::cout << watchedDir.absolutePath().toStdString() << std::endl;
         }
         return 0;
-    }
-
-    // time to create the watcher object
-    FileSystemWatcher watcher(watchedDirectories);
-
-    // create a daemon worker instance
-    // it is used to integrate all AppImages initially, and to integrate files found via inotify
-    Worker worker;
-
-    // we we update the watched directories, the file system watcher can calculate whether there's new directories
-    // to watch
-    // these
-    QObject::connect(&watcher, &FileSystemWatcher::newDirectoriesToWatch, &app, [&worker](const QDirSet& newDirs) {
-        if (newDirs.empty()) {
-            qDebug() << "No new directories to watch detected";
-        } else {
-            std::cout << "Discovered new directories to watch, integrating existing AppImages initially" << std::endl;
-
-            initialSearchForAppImages(newDirs, worker);
-
-            // (re-)integrate all AppImages at once
-            worker.executeDeferredOperations();
-        }
-    });
-
-    // whenever a formerly watched directory disappears, we want to clean the menu from entries pointing to AppImages
-    // in this directory
-    // a good example for this situation is a removable drive that has been unplugged from the computer
-    QObject::connect(&watcher, &FileSystemWatcher::directoriesToWatchDisappeared, &app,
-        [](const QDirSet& disappearedDirs) {
-
-        if (disappearedDirs.empty()) {
-            qDebug() << "No directories disappeared";
-        } else {
-            std::cout << "Directories to watch disappeared, unintegrating AppImages formerly found in there"
-                      << std::endl;
-
-            if (!cleanUpOldDesktopIntegrationResources(true)) {
-                std::cerr << "Error: Failed to clean up old desktop integration resources" << std::endl;
-            }
-        }
-    });
-
-    // search directories to watch once initially
-    // we *have* to do this even though we connect this signal above, as the first update occurs in the constructor
-    // and we cannot connect signals before construction has finished for obvious reasons
-    initialSearchForAppImages(watcher.directories(), worker);
-
-    // (re-)integrate all AppImages at once
-    worker.executeDeferredOperations();
-
-    // we regularly want to update
-    {
-        auto* timer = new QTimer(&app);
-        timer->setInterval(UPDATE_WATCHED_DIRECTORIES_INTERVAL);
-        QTimer::connect(
-            timer, &QTimer::timeout, &app,[&watcher]() {
-                watcher.updateWatchedDirectories(daemonDirectoriesToWatch());
-            }
-        );
-        timer->start();
     }
 
     // after (re-)integrating all AppImages, clean up old desktop integration resources before start
@@ -212,23 +105,22 @@ int main(int argc, char* argv[]) {
         std::cout << "Failed to clean up old desktop integration resources" << std::endl;
     }
 
-    std::cout << "Watching directories: ";
-    for (const auto& dir : watcher.directories()) {
-        std::cout << dir.absolutePath().toStdString().c_str() << " ";
-    }
-    std::cout << std::endl;
+    auto watchedDirectoriesStringList = [daemon]() {
+        QStringList rv;
+        for (const auto& dir : daemon->watchedDirectories()) {
+            rv << dir.path();
+        }
+        return rv;
+    }();
 
-    FileSystemWatcher::connect(&watcher, &FileSystemWatcher::fileChanged, &worker, &Worker::scheduleForIntegration,
-                               Qt::QueuedConnection);
-    FileSystemWatcher::connect(&watcher, &FileSystemWatcher::fileRemoved, &worker, &Worker::scheduleForUnintegration,
-                               Qt::QueuedConnection);
+    qInfo() << "Watching directories:" << watchedDirectoriesStringList;
 
-    if (!watcher.startWatching()) {
+    if (!daemon->startWatching()) {
         std::cerr << "Could not start watching directories" << std::endl;
         return 1;
     }
 
-    QObject::connect(&app, &QCoreApplication::aboutToQuit, &watcher, &FileSystemWatcher::stopWatching);
+    QCoreApplication::connect(&app, &QCoreApplication::aboutToQuit, daemon, &Daemon::slotStopWatching);
 
     auto* binaryUpdatesMonitor = setupBinaryUpdatesMonitor(argv);
     binaryUpdatesMonitor->start();

@@ -3,29 +3,36 @@
 
 // library includes
 #include <QObject>
+#include <QLoggingCategory>
 
 #pragma once
 
-class Worker : public QObject {
-    Q_OBJECT
+namespace appimagelauncher::daemon {
 
-private:
-    class PrivateData;
-    std::shared_ptr<PrivateData> d = nullptr;
+    Q_DECLARE_LOGGING_CATEGORY(workerCat)
 
-public:
-    Worker();
+    class Worker : public QObject {
+        Q_OBJECT
 
-signals:
-    void startTimer();
+    private:
+        class PrivateData;
+        std::shared_ptr<PrivateData> d = nullptr;
 
-public slots:
-    void scheduleForIntegration(const QString& path);
-    void scheduleForUnintegration(const QString& path);
+    public:
+        explicit Worker(QObject* parent = nullptr);
 
-public slots:
-    void executeDeferredOperations();
+    signals:
+        void startTimer();
 
-private slots:
-    void startTimerIfNecessary();
-};
+    public slots:
+        void scheduleForIntegration(const QString& path);
+        void scheduleForUnintegration(const QString& path);
+
+    public slots:
+        void executeDeferredOperations();
+
+    private slots:
+        void startTimerIfNecessary();
+    };
+
+}

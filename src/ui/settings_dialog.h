@@ -39,5 +39,5 @@ private:
     void addDirectoryToWatchToListView(const QString& dirPath);
 
     Ui::SettingsDialog* ui;
-    std::shared_ptr<QSettings> settingsFile;
+    QSettings* settingsFile;
 };

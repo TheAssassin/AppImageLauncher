@@ -177,33 +177,23 @@ void createConfigFile(int askToMove,
     }
 }
 
-
-std::shared_ptr<QSettings> getConfig() {
+QSettings* getConfig(QObject* parent) {
     auto configFilePath = getConfigFilePath();
 
-    // if the file does not exist, we'll just use the standard location
-    // while in theory it would have been possible to just write the default location to the file, if we'd ever change
-    // it again, we'd leave a lot of systems in the old state, and would have to write some complex code to resolve
-    // the situation
-    // therefore, the file is simply created, but left empty intentionally
-    if (!QFileInfo::exists(configFilePath)) {
-        return nullptr;
-    }
-
-    auto rv = std::make_shared<QSettings>(configFilePath, QSettings::IniFormat);
+    auto* settings = new QSettings(configFilePath, QSettings::IniFormat, parent);
 
     // expand ~ in paths in the config file with $HOME
     const auto keysContainingPath = {
         "AppImageLauncher/destination",
     };
     for (const QString& keyContainingPath : keysContainingPath){
-        if (rv->contains(keyContainingPath)) {
-            auto newValue = expandTilde(rv->value(keyContainingPath).toString());
-            rv->setValue(keyContainingPath, newValue);
+        if (settings->contains(keyContainingPath)) {
+            auto newValue = expandTilde(settings->value(keyContainingPath).toString());
+            settings->setValue(keyContainingPath, newValue);
         }
     }
 
-    return rv;
+    return settings;
 }
 
 // TODO: check if this works with Wayland
@@ -404,15 +394,14 @@ QSet<QString> additionalAppImagesLocations(const bool includeAllMountPoints) {
     return additionalLocations;
 }
 
-bool shallMonitorMountedFilesystems(std::shared_ptr<QSettings> config) {
-    return config != nullptr &&
-           config->value("appimagelauncherd/monitor_mounted_filesystems", "false").toBool();
+bool shallMonitorMountedFilesystems(const QSettings* config) {
+    Q_ASSERT(config != nullptr);
+
+    return config->value("appimagelauncherd/monitor_mounted_filesystems", "false").toBool();
 }
 
-QDirSet getAdditionalDirectoriesFromConfig(const std::shared_ptr<QSettings>& config) {
-    // getConfig might've returned a null pointer, therefore we have to check this before proceeding
-    if (config == nullptr)
-        return {};
+QDirSet getAdditionalDirectoriesFromConfig(const QSettings* config) {
+    Q_ASSERT(config != nullptr);
 
     constexpr auto configKey = "appimagelauncherd/additional_directories_to_watch";
     const auto configValue = config->value(configKey, "").toString();
@@ -453,8 +442,8 @@ QDirSet getAdditionalDirectoriesFromConfig(const std::shared_ptr<QSettings>& con
     return additionalDirs;
 }
 
-QDirSet daemonDirectoriesToWatch(const std::shared_ptr<QSettings>& config) {
-    auto watchedDirectories = QDirSet();
+QDirSet daemonDirectoriesToWatch(const QSettings* config) {
+    QDirSet watchedDirectories;
 
     // of course we need to watch the main integration directory
     const auto defaultDestination = integratedAppImagesDestination();
@@ -468,7 +457,7 @@ QDirSet daemonDirectoriesToWatch(const std::shared_ptr<QSettings>& config) {
 
     // however, there's likely additional ones to watch, like a system-wide Applications directory
     {
-        bool monitorMountedFilesystems = config != nullptr && shallMonitorMountedFilesystems(config);
+        bool monitorMountedFilesystems = shallMonitorMountedFilesystems(config);
 
         const auto additionalDirs = additionalAppImagesLocations(monitorMountedFilesystems);
 

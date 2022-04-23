@@ -9,9 +9,8 @@
 #include "ui_settings_dialog.h"
 #include "shared.h"
 
-SettingsDialog::SettingsDialog(QWidget* parent) :
-        QDialog(parent),
-        ui(new Ui::SettingsDialog) {
+SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent), ui(new Ui::SettingsDialog),
+                                                  settingsFile(getConfig(this)) {
     ui->setupUi(this);
 
     ui->applicationsDirLineEdit->setPlaceholderText(integratedAppImagesDestination().absolutePath());
@@ -98,14 +97,6 @@ void SettingsDialog::addDirectoryToWatchToListView(const QString& dirPath) {
 }
 
 void SettingsDialog::loadSettings() {
-    settingsFile = getConfig();
-
-    // make sure settingsFile is populated, even if it's just an empty settings object
-    // this prevents segfaults when querying data from it
-    if (settingsFile == nullptr) {
-        settingsFile.reset(new QSettings{});
-    }
-
     const auto daemonIsEnabled = settingsFile->value("AppImageLauncher/enable_daemon", "true").toBool();
     const auto askMoveChecked = settingsFile->value("AppImageLauncher/ask_to_move", "true").toBool();
 

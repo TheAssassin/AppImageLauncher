@@ -15,35 +15,40 @@
 
 #pragma once
 
-class FileSystemWatcherError : public std::runtime_error {
-public:
-    explicit FileSystemWatcherError(const QString& message) : std::runtime_error(message.toStdString().c_str()) {};
-};
+namespace appimagelauncher::daemon {
 
-class FileSystemWatcher : public QObject {
-    Q_OBJECT
+    class FileSystemWatcherError : public std::runtime_error {
+    public:
+        explicit FileSystemWatcherError(const QString& message) : std::runtime_error(message.toStdString().c_str()) {};
+    };
 
-private:
-    class PrivateData;
-    std::shared_ptr<PrivateData> d;
+    class FileSystemWatcher : public QObject {
+        Q_OBJECT
 
-public:
-    explicit FileSystemWatcher(const QDir& directory);
-    explicit FileSystemWatcher(const QDirSet& paths);
-    FileSystemWatcher();
+    private:
+        class PrivateData;
 
-public slots:
-    bool startWatching();
-    bool stopWatching();
-    void readEvents();
-    bool updateWatchedDirectories(QDirSet watchedDirectories);
+        std::shared_ptr<PrivateData> d;
 
-public:
-    QDirSet directories();
+    public:
+        explicit FileSystemWatcher(const QDir& directory, QObject* parent = nullptr);
+        explicit FileSystemWatcher(const QDirSet& paths, QObject* parent = nullptr);
+        explicit FileSystemWatcher(QObject* parent = nullptr);
 
-signals:
-    void fileChanged(QString path);
-    void fileRemoved(QString path);
-    void newDirectoriesToWatch(QDirSet set);
-    void directoriesToWatchDisappeared(QDirSet set);
-};
+    public slots:
+        bool startWatching();
+        bool stopWatching();
+        void readEvents();
+        bool updateWatchedDirectories(QDirSet watchedDirectories);
+
+    public:
+        QDirSet directories();
+
+    signals:
+        void fileChanged(QString path);
+        void fileRemoved(QString path);
+        void newDirectoriesToWatch(QDirSet set);
+        void directoriesToWatchDisappeared(QDirSet set);
+    };
+
+}

@@ -72,7 +72,7 @@ void createConfigFile(int askToMove, const QString& destination, int enableDaemo
 QString expandTilde(QString path);
 
 // load config file and return it
-std::shared_ptr<QSettings> getConfig();
+QSettings* getConfig(QObject* parent = nullptr);
 
 // return directory into which the integrated AppImages will be moved
 QDir integratedAppImagesDestination();
@@ -83,7 +83,7 @@ QSet<QString> additionalAppImagesLocations(bool includeValidMountPoints = false)
 
 // calculate list of directories the daemon has to watch
 // AppImages inside there should furthermore not be moved out of there and into the main integration directory
-QDirSet daemonDirectoriesToWatch(const std::shared_ptr<QSettings>& config = nullptr);
+QDirSet daemonDirectoriesToWatch(const QSettings* config);
 
 // build path to standard location for integrated AppImages
 QString buildPathToIntegratedAppImage(const QString& pathToAppImage);
