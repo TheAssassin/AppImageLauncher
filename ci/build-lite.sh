@@ -69,10 +69,10 @@ chmod -v +x linuxdeploy*-"$ARCH".AppImage
 
 VERSION=$(src/cli/ail-cli --version | awk '{print $3}')
 
-travis_build="$GITHUB_RUN_NUMBER"
+gha_build="$GITHUB_RUN_NUMBER"
 
-if [[ "$travis_build" != "" ]]; then
-    VERSION="${VERSION}-travis${travis_build}"
+if [[ "$gha_build" != "" ]]; then
+    VERSION="${VERSION}-gha${gha_build}"
 else
     VERSION="${VERSION}-local"
 fi
