@@ -89,7 +89,11 @@ if [ "$ARCH" == "arm64" ]; then
         "-DCMAKE_C_COMPILER=clang-8"
         "-DCMAKE_CXX_COMPILER=clang++-8"
     )
+    # RPM-based Linux distributions use aarch64 instead of arm64 as ARM64 architecture name.
+    ARCH="aarch64"
 fi
+
+export CPACK_RPM_PACKAGE_ARCHITECTURE="${ARCH}"
 
 cmake "$REPO_ROOT" "${cmake_args[@]}" 
 
