@@ -50,33 +50,28 @@ foreach(i libappimage libappimageupdate libappimageupdate-qt)
 endforeach()
 
 if(NOT BUILD_LITE)
-    # TODO: find alternative to the following "workaround" (a pretty dirty hack, actually...)
-    # bundle update-binfmts as a fallback for distros which don't have it installed
-    find_program(UPDATE_BINFMTS
-        NAMES update-binfmts
-        PATHS /usr/sbin
-    )
+    # unfortunately, due to a cyclic dependency, we need to hardcode parts of this variable, which is included in the
+    # install scripts and the binfmt.d config
+    set(BINFMT_INTERPRETER_PATH ${CMAKE_INSTALL_PREFIX}/${_private_libdir}/binfmt-interpreter)
 
-    if(NOT UPDATE_BINFMTS STREQUAL UPDATE_BINFMTS-NOTFOUND AND EXISTS ${UPDATE_BINFMTS})
-        message(STATUS "Found update-binfmts, bundling: ${UPDATE_BINFMTS}")
-        install(
-            FILES /usr/sbin/update-binfmts
-            PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
-            DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
-        )
-    else()
-        message(WARNING "update-binfmts could not be found. Please install the binfmt-support package if you intend to build RPM packages.")
+    # according to https://www.kernel.org/doc/html/latest/admin-guide/binfmt-misc.html, we must make sure the
+    # interpreter string does not exceed 127 characters
+    set(BINFMT_INTERPRETER_PATH_LENGTH_MAX 127)
+    string(LENGTH BINFMT_INTERPRETER_PATH BINFMT_INTERPRETER_PATH_LENGTH)
+
+    if(BINFMT_INTERPRETER_PATH_LENGTH GREATER BINFMT_INTERPRETER_PATH_LENGTH_MAX)
+        message(FATAL_ERROR "interpreter path exceeds maximum length of ${BINFMT_INTERPRETER_PATH_LENGTH_MAX}")
     endif()
 
     # binfmt.d config file -- used as a fallback, if update-binfmts is not available
     configure_file(
-        ${PROJECT_SOURCE_DIR}/resources/binfmt.d/appimage.conf.in
-        ${PROJECT_BINARY_DIR}/resources/binfmt.d/appimage.conf
+        ${PROJECT_SOURCE_DIR}/resources/binfmt.d/appimagelauncher.conf.in
+        ${PROJECT_BINARY_DIR}/resources/binfmt.d/appimagelauncher.conf
         @ONLY
     )
     # caution: don't use ${CMAKE_INSTALL_LIBDIR} here, it's really just lib/binfmt.d
     install(
-        FILES ${PROJECT_BINARY_DIR}/resources/binfmt.d/appimage.conf
+        FILES ${PROJECT_BINARY_DIR}/resources/binfmt.d/appimagelauncher.conf
         DESTINATION lib/binfmt.d COMPONENT APPIMAGELAUNCHER
     )
 endif()

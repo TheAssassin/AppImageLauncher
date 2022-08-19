@@ -1,0 +1,5 @@
+# Launch AppImages with AppImageLauncher
+# we use the F (fix binary) mode to make sure the interpreter is available in all namespaces/cgroups/changerooots
+# without having to have the binary in a specific place
+:appimage-type1:M:8:AI\x01::@BINFMT_INTERPRETER_PATH@:F
+:appimage-type2:M:8:AI\x02::@BINFMT_INTERPRETER_PATH@:F

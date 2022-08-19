@@ -5,6 +5,7 @@ project(appimage-binfmt-bypass)
 
 # configure names globally
 set(bypass_bin binfmt-bypass)
+set(binfmt_interpreter binfmt-interpreter)
 set(bypass_lib lib${bypass_bin})
 set(preload_lib ${bypass_bin}-preload)
 # we're not using "i386" or "armhf" but instead the more generic "32bit" suffix, making things a little easier in the
@@ -118,17 +119,24 @@ else()
     target_link_libraries(${bypass_lib} PRIVATE rt)
 endif()
 
-# the binary uses the library, so let's make sure it's up to date before we build the bypass binary
-add_dependencies(${bypass_bin} ${preload_lib})
-if(build_32bit_preload_library)
-    add_dependencies(${bypass_bin} ${preload_lib_32bit})
-endif()
+add_executable(${bypass_bin} bypass_main.cpp)
+target_link_libraries(${bypass_bin} ${bypass_lib})
+target_compile_options(${bypass_bin}
+    PRIVATE -DCOMPONENT_NAME="bin"
+)
+
+add_executable(${binfmt_interpreter} interpreter_main.cpp)
+target_link_libraries(${binfmt_interpreter} ${bypass_lib})
+target_compile_definitions(${binfmt_interpreter}
+    PRIVATE -DCOMPONENT_NAME="interpreter"
+    PRIVATE -DAPPIMAGELAUNCHER_PATH="${CMAKE_INSTALL_PREFIX}/${_bindir}/$<TARGET_FILE_NAME:AppImageLauncher>"
+)
 
 # no need to set rpath on bypass binary, it doesn't depend on any private libraries
 # the preload lib is used via its absolute path anyway
 
 install(
-    TARGETS ${bypass_bin} ${preload_lib}
+    TARGETS ${bypass_bin} ${preload_lib} ${binfmt_interpreter}
     RUNTIME DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
     LIBRARY DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
 )
