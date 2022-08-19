@@ -210,7 +210,7 @@ int bypassBinfmtAndRunAppImage(const std::string& appimage_path, const std::vect
         char* preload_lib_path = find_preload_library(is_32bit_elf(appimage_path));
 
         if (preload_lib_path == nullptr) {
-            log_error("could not find preload library path");
+            log_error("could not find preload library path\n");
             return EXIT_CODE_FAILURE;
         }
 
