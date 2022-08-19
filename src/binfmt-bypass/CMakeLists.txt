@@ -131,6 +131,11 @@ target_compile_options(${binfmt_interpreter}
     PRIVATE -DCOMPONENT_NAME="interpreter"
     PRIVATE -DAPPIMAGELAUNCHER_PATH="${CMAKE_INSTALL_PREFIX}/${_bindir}/$<TARGET_FILE_NAME:AppImageLauncher>"
 )
+# static linking makes the F (fix binary) mode more reliable, as the binary as well as all its resources are completely
+# preloaded by binfmt-misc, avoiding runtime dependencies on libc, libstdc++ etc.
+target_link_options(${binfmt_interpreter}
+    PRIVATE -static -static-libgcc -static-libstdc++
+)
 
 # no need to set rpath on bypass binary, it doesn't depend on any private libraries
 # the preload lib is used via its absolute path anyway
