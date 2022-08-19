@@ -127,7 +127,7 @@ target_compile_options(${bypass_bin}
 
 add_executable(${binfmt_interpreter} interpreter_main.cpp)
 target_link_libraries(${binfmt_interpreter} ${bypass_lib})
-target_compile_definitions(${binfmt_interpreter}
+target_compile_options(${binfmt_interpreter}
     PRIVATE -DCOMPONENT_NAME="interpreter"
     PRIVATE -DAPPIMAGELAUNCHER_PATH="${CMAKE_INSTALL_PREFIX}/${_bindir}/$<TARGET_FILE_NAME:AppImageLauncher>"
 )
