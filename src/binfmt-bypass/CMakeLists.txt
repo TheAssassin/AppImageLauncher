@@ -5,7 +5,8 @@ project(appimage-binfmt-bypass)
 
 # configure names globally
 set(bypass_bin binfmt-bypass)
-set(preload_lib binfmt-bypass-preload)
+set(bypass_lib lib${bypass_bin})
+set(preload_lib ${bypass_bin}-preload)
 # we're not using "i386" or "armhf" but instead the more generic "32bit" suffix, making things a little easier in the
 # code
 set(preload_lib_32bit ${preload_lib}_32bit)
@@ -43,11 +44,11 @@ function(make_preload_lib_target target_name)
     # we need to build with -fPIC, otherwise we can't use it with $LD_PRELOAD
     add_library(${target_name} SHARED preload.c logging.h)
     target_link_libraries(${target_name} PRIVATE dl)
-    target_compile_options(${target_name} PRIVATE
-        -fPIC
-        -DCOMPONENT_NAME="lib"
+    target_compile_options(${target_name}
+        PRIVATE -fPIC
+        PRIVATE -DCOMPONENT_NAME="preload"
         # hide all symbols by default
-        -fvisibility=hidden
+        PRIVATE -fvisibility=hidden
     )
     # compatibility with CMake < 3.13
     set_target_properties(${target_name} PROPERTIES LINK_OPTIONS
@@ -79,17 +80,22 @@ if(build_32bit_preload_library)
 endif()
 
 
-# binary that extracts the runtime, patches it and launches it, preloading the library
-add_executable(${bypass_bin} main.cpp elf.cpp logging.h elf.h)
-target_link_libraries(${bypass_bin} PRIVATE dl)
-target_compile_options(${bypass_bin} PRIVATE
-    -DPRELOAD_LIB_NAME="$<TARGET_FILE_NAME:${preload_lib}>"
-    -DCOMPONENT_NAME="bin"
-    -D_GNU_SOURCE
+# the lib provides an algorithm to extract the runtime, patch it and launch it, preloading our preload lib to make the
+# AppImage think it is launched normally
+# static linking is preferred, since we do not want to deal with an installed .so file, rpaths etc.
+add_library(${bypass_lib} STATIC lib.cpp elf.cpp logging.h elf.h)
+target_link_libraries(${bypass_lib} PUBLIC dl)
+# we need to include the preload lib headers (see below) from the binary dir
+target_include_directories(${bypass_lib} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
+target_compile_options(${bypass_lib}
+    PRIVATE -DPRELOAD_LIB_NAME="$<TARGET_FILE_NAME:${preload_lib}>"
+    PUBLIC -D_GNU_SOURCE
+    # obviously needs to be private, otherwise the value leaks into users of this lib
+    PRIVATE -DCOMPONENT_NAME="lib"
 )
 if(build_32bit_preload_library)
-    target_compile_options(${bypass_bin} PRIVATE
-        -DPRELOAD_LIB_NAME_32BIT="$<TARGET_FILE_NAME:${preload_lib_32bit}>"
+    target_compile_options(${bypass_lib}
+        PRIVATE -DPRELOAD_LIB_NAME_32BIT="$<TARGET_FILE_NAME:${preload_lib_32bit}>"
     )
 endif()
 
@@ -106,10 +112,10 @@ check_c_source_compiles("
 )
 
 if(HAVE_MEMFD_CREATE)
-    target_compile_options(${bypass_bin} PRIVATE -DHAVE_MEMFD_CREATE)
+    target_compile_options(${bypass_lib} PUBLIC -DHAVE_MEMFD_CREATE)
 else()
     message(WARNING "memfd_create not available, falling back to shm_open")
-    target_link_libraries(${bypass_bin} PRIVATE rt)
+    target_link_libraries(${bypass_lib} PRIVATE rt)
 endif()
 
 # the binary uses the library, so let's make sure it's up to date before we build the bypass binary

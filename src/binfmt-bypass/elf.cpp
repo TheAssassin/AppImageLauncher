@@ -117,7 +117,7 @@ bool is_32bit_elf(std::ifstream& ifs) {
     throw std::logic_error{"ELF binary is neither 32-bit nor 64-bit"};
 }
 
-bool is_32bit_elf(const char* filename) {
+bool is_32bit_elf(const std::string& filename) {
     std::ifstream ifs(filename);
 
     if (!ifs) {
@@ -128,7 +128,7 @@ bool is_32bit_elf(const char* filename) {
     return is_32bit_elf(ifs);
 }
 
-ssize_t elf_binary_size(const char* filename) {
+ssize_t elf_binary_size(const std::string& filename) {
     std::ifstream ifs(filename);
 
     if (!ifs) {

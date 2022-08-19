@@ -1,6 +1,6 @@
+
 // system headers
 #include <cstdio>
-#include <iostream>
 #include <sys/mman.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -12,6 +12,7 @@
 // own headers
 #include "elf.h"
 #include "logging.h"
+#include "lib.h"
 
 #define EXIT_CODE_FAILURE 0xff
 
@@ -120,14 +121,14 @@ char* find_preload_library(bool is_32bit) {
     char* own_binary_path = realpath("/proc/self/exe", nullptr);
 
     if (own_binary_path == nullptr) {
-        log_error("could not detect own binary's path");
+        log_error("could not detect own binary's path\n");
         return nullptr;
     }
 
     char* dir_path = dirname(own_binary_path);
 
     if (dir_path == nullptr) {
-        log_error("could not detect own binary's directory path");
+        log_error("could not detect own binary's directory path\n");
     }
 
     auto path_size = strlen(dir_path) + 1 + strlen(PRELOAD_LIB_NAME) + 1;
@@ -169,28 +170,20 @@ void forwardSignal(int signal) {
     }
 }
 
-int main(int argc, char** argv) {
-    if (argc <= 1) {
-        log_message("Usage: %s <AppImage file> [...]\n", argv[0]);
-        return EXIT_CODE_FAILURE;
-    }
-
-    const auto* appimage_filename = argv[1];
-    log_debug("AppImage filename: %s\n", appimage_filename);
-
+int bypassBinfmtAndRunAppImage(const std::string& appimage_path, const std::vector<char*>& target_args) {
     // read size of AppImage runtime (i.e., detect size of ELF binary)
-    const auto size = elf_binary_size(appimage_filename);
+    const auto size = elf_binary_size(appimage_path.c_str());
 
     if (size < 0) {
-        std::cerr << "failed to detect runtime size" << std::endl;
+        log_error("failed to detect runtime size\n");
         return EXIT_CODE_FAILURE;
     }
 
 #ifdef HAVE_MEMFD_CREATE
     // create "file" in memory, copy runtime there and patch out magic bytes
-    int runtime_fd = create_memfd_with_patched_runtime(appimage_filename, size);
+    int runtime_fd = create_memfd_with_patched_runtime(appimage_path.c_str(), size);
 #else
-    int runtime_fd = create_shm_fd_with_patched_runtime(appimage_filename, size);
+    int runtime_fd = create_shm_fd_with_patched_runtime(appimage_filename.c_str(), size);
 #endif
 
     if (runtime_fd < 0) {
@@ -203,18 +196,18 @@ int main(int argc, char** argv) {
         // create new argv array, using passed filename as argv[0]
         std::vector<char*> new_argv;
 
-        new_argv.push_back(strdup(appimage_filename));
+        new_argv.push_back(strdup(appimage_path.c_str()));
 
         // insert remaining args, if any
-        for (int i = 2; i < argc; ++i) {
-            new_argv.push_back(argv[i]);
+        for (const auto& arg : target_args) {
+            new_argv.push_back(strdup(arg));
         }
 
         // needs to be null terminated, of course
         new_argv.push_back(nullptr);
 
         // preload our library
-        char* preload_lib_path = find_preload_library(is_32bit_elf(appimage_filename));
+        char* preload_lib_path = find_preload_library(is_32bit_elf(appimage_path));
 
         if (preload_lib_path == nullptr) {
             log_error("could not find preload library path");
@@ -226,7 +219,7 @@ int main(int argc, char** argv) {
         setenv("LD_PRELOAD", preload_lib_path, true);
 
         // calculate absolute path to AppImage, for use in the preloaded lib
-        char* abs_appimage_path = realpath(appimage_filename, nullptr);
+        char* abs_appimage_path = realpath(appimage_path.c_str(), nullptr);
         log_debug("absolute AppImage path: %s\n", abs_appimage_path);
         setenv("REDIRECT_APPIMAGE", abs_appimage_path, true);
 

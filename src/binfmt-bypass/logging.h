@@ -7,11 +7,11 @@
 #include <string.h>
 
 #ifndef COMPONENT_NAME
-#define COMPONENT_NAME "unknown"
+#error component name undefined
 #endif
 
 static int v_log_message(const char* const format, va_list args) {
-    static const char prefix[] = "[appimage-binfmt-bypass/" COMPONENT_NAME "] ";
+    static const char prefix[] = "[appimagelauncher-binfmt-bypass/" COMPONENT_NAME "] ";
 
     char* patched_format = (char*) (malloc(strlen(format) + strlen(prefix) + 1));
     strcpy(patched_format, prefix);
