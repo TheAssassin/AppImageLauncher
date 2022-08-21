@@ -80,24 +80,49 @@ if(build_32bit_preload_library)
     endif()
 endif()
 
+# we need to make the library below fully self-contained so that it works in other cgroups (e.g., in Docker containers)
+# out of the box
+# this allows us to check whether the path is available, and otherwise create a temporary file and use that then
+# this is a workaround to existing issues using AppImages in Docker with AppImageLauncher installed on the host system
+check_program(NAME xxd)
+
+add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${preload_lib}.h
+    COMMAND xxd -i $<TARGET_FILE_NAME:${preload_lib}> ${preload_lib}.h
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    DEPENDS ${preload_lib}
+    VERBATIM
+)
+
+# same story for 32-bit lib
+if (build_32bit_preload_library)
+    add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${preload_lib_32bit}.h
+        COMMAND xxd -i $<TARGET_FILE_NAME:${preload_lib_32bit}> ${preload_lib_32bit}.h
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        DEPENDS ${preload_lib_32bit}
+        VERBATIM
+    )
+endif()
 
 # the lib provides an algorithm to extract the runtime, patch it and launch it, preloading our preload lib to make the
 # AppImage think it is launched normally
 # static linking is preferred, since we do not want to deal with an installed .so file, rpaths etc.
-add_library(${bypass_lib} STATIC lib.cpp elf.cpp logging.h elf.h)
+add_library(${bypass_lib} STATIC lib.cpp elf.cpp logging.h elf.h ${CMAKE_CURRENT_BINARY_DIR}/${preload_lib}.h)
 target_link_libraries(${bypass_lib} PUBLIC dl)
 # we need to include the preload lib headers (see below) from the binary dir
 target_include_directories(${bypass_lib} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 target_compile_options(${bypass_lib}
-    PRIVATE -DPRELOAD_LIB_NAME="$<TARGET_FILE_NAME:${preload_lib}>"
+    PRIVATE -DPRELOAD_LIB_PATH="${CMAKE_INSTALL_PREFIX}/${_private_libdir}/$<TARGET_FILE_NAME:${preload_lib}>"
     PUBLIC -D_GNU_SOURCE
     # obviously needs to be private, otherwise the value leaks into users of this lib
     PRIVATE -DCOMPONENT_NAME="lib"
-)
+    )
 if(build_32bit_preload_library)
     target_compile_options(${bypass_lib}
-        PRIVATE -DPRELOAD_LIB_NAME_32BIT="$<TARGET_FILE_NAME:${preload_lib_32bit}>"
+        PRIVATE -DPRELOAD_LIB_PATH_32BIT="${CMAKE_INSTALL_PREFIX}/${_private_libdir}/$<TARGET_FILE_NAME:${preload_lib_32bit}>"
     )
+    target_sources(${bypass_lib} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/${preload_lib_32bit}.h)
 endif()
 
 include(CheckCSourceCompiles)

@@ -1,4 +1,3 @@
-
 // system headers
 #include <cstdio>
 #include <sys/mman.h>
@@ -7,12 +6,19 @@
 #include <wait.h>
 #include <vector>
 #include <memory.h>
-#include <libgen.h>
+#include <memory>
+#include <stdexcept>
+#include <cassert>
 
 // own headers
 #include "elf.h"
 #include "logging.h"
 #include "lib.h"
+#include "binfmt-bypass-preload.h"
+
+#ifdef PRELOAD_LIB_PATH_32BIT
+    #include "binfmt-bypass-preload_32bit.h"
+#endif
 
 #define EXIT_CODE_FAILURE 0xff
 
@@ -116,42 +122,60 @@ int create_shm_fd_with_patched_runtime(const char* const appimage_filename, cons
 
 #endif
 
-char* find_preload_library(bool is_32bit) {
-    // we expect the library to be placed next to this binary
-    char* own_binary_path = realpath("/proc/self/exe", nullptr);
-
-    if (own_binary_path == nullptr) {
-        log_error("could not detect own binary's path\n");
-        return nullptr;
-    }
-
-    char* dir_path = dirname(own_binary_path);
-
-    if (dir_path == nullptr) {
-        log_error("could not detect own binary's directory path\n");
-    }
-
-    auto path_size = strlen(dir_path) + 1 + strlen(PRELOAD_LIB_NAME) + 1;
-
-#ifdef PRELOAD_LIB_NAME_32BIT
-    path_size += strlen(PRELOAD_LIB_NAME_32BIT);
-#endif
-
-    char* result = static_cast<char*>(malloc(path_size));
-    sprintf(result, "%s/", dir_path);
-
-#ifdef PRELOAD_LIB_NAME_32BIT
+std::string find_preload_library(bool is_32bit) {
+    // since we use the F (fix binary) binfmt mode nowadays to enable the use of the interpreter in different cgroups,
+    // namespaces or changeroots, we can no longer rely on the path to the interpreter to find the preload libs
+    // also, we compile in the absolute path to AppImageLauncher anyway
+    // therefore, we can just compile in the paths to the libs as well
+    // since we also compile in the contents of the preload libraries, this is merely just an optimization so we do not
+    // have to write and maintain the library files in the majority of all cases (that is, using AppImages regularly
+    // on some desktop or generally a host system)
+    // our workflow is: check whether the (right) preload lib exists on the system, otherwise return an empty string
+    // the creation of a library file needs to be handled by the caller then
+#ifdef PRELOAD_LIB_PATH_32BIT
     if (is_32bit) {
-        strcat(result, PRELOAD_LIB_NAME_32BIT);
-    } else {
-        strcat(result, PRELOAD_LIB_NAME);
+        return PRELOAD_LIB_PATH_32BIT;
     }
-#else
-    strcat(result, PRELOAD_LIB_NAME);
 #endif
 
-    return result;
+    return PRELOAD_LIB_PATH;
 }
+
+/**
+ * Create a temporary file within the shm file system and maintain its existence using the RAII principle.
+ * This is a first attempt, creating the files within /tmp. Future versions could try to put the files next to the
+ * AppImage, use a reproducible path to create the lib file just once, use shm_open etc.
+ */
+class TemporaryPreloadLibFile {
+public:
+    TemporaryPreloadLibFile(const unsigned char* libContents, const std::streamsize libContentsSize) {
+        char tempFilePattern[] = "/tmp/appimagelauncher-preload-XXXXXX.so";
+
+        _fd = mkstemps(tempFilePattern, 3);
+        if (_fd == -1) {
+            throw std::runtime_error("could not create temporary preload lib file");
+        }
+
+        _path = tempFilePattern;
+
+        if (write(_fd, libContents, libContentsSize) != libContentsSize) {
+            throw std::runtime_error("failed to write contents to temporary preload lib");
+        }
+    }
+
+    ~TemporaryPreloadLibFile() {
+        close(_fd);
+        unlink(_path.c_str());
+    };
+
+    std::string path() {
+        return _path;
+    }
+
+private:
+    int _fd;
+    std::string _path;
+};
 
 // need to keep track of the subprocess pid in a global variable, as signal handlers in C(++) are simple interrupt
 // handlers that are not aware of any state in main()
@@ -207,16 +231,38 @@ int bypassBinfmtAndRunAppImage(const std::string& appimage_path, const std::vect
         new_argv.push_back(nullptr);
 
         // preload our library
-        char* preload_lib_path = find_preload_library(is_32bit_elf(appimage_path));
+        std::string preload_lib_path = find_preload_library(is_32bit_elf(appimage_path));
 
-        if (preload_lib_path == nullptr) {
-            log_error("could not find preload library path\n");
-            return EXIT_CODE_FAILURE;
+        // may or may not be used, but must survive until this application terminates
+        std::unique_ptr<TemporaryPreloadLibFile> temporaryPreloadLibFile;
+
+        if (access(preload_lib_path.c_str(), F_OK) != 0) {
+            log_warning("could not find preload library path, using temporary file\n");
+
+#ifdef PRELOAD_LIB_PATH_32BIT
+            if (is_32bit_elf(appimage_path)) {
+                temporaryPreloadLibFile = std::make_unique<TemporaryPreloadLibFile>(
+                    libbinfmt_bypass_preload_32bit_so,
+                    libbinfmt_bypass_preload_32bit_so_len
+                );
+            }
+#endif
+
+            if (temporaryPreloadLibFile == nullptr) {
+                temporaryPreloadLibFile = std::make_unique<TemporaryPreloadLibFile>(
+                    libbinfmt_bypass_preload_so,
+                    libbinfmt_bypass_preload_so_len
+                );
+            }
+
+            assert(temporaryPreloadLibFile != nullptr);
+
+            preload_lib_path = temporaryPreloadLibFile->path();
         }
 
-        log_debug("library to preload: %s\n", preload_lib_path);
+        log_debug("library to preload: %s\n", preload_lib_path.c_str());
 
-        setenv("LD_PRELOAD", preload_lib_path, true);
+        setenv("LD_PRELOAD", preload_lib_path.c_str(), true);
 
         // calculate absolute path to AppImage, for use in the preloaded lib
         char* abs_appimage_path = realpath(appimage_path.c_str(), nullptr);
