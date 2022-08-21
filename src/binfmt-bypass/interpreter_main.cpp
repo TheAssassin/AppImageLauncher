@@ -27,12 +27,28 @@ int main(int argc, char** argv) {
     const std::string appImagePath = argv[1];
     std::vector<char*> args(&argv[2], &argv[argc]);
 
+    // optimistic approach
+    bool useAppImageLauncher = true;
+
     if (!executableExists(APPIMAGELAUNCHER_PATH)) {
         log_message(
             "AppImageLauncher not found at %s, launching AppImage directly: %s\n",
             APPIMAGELAUNCHER_PATH,
             appImagePath.c_str()
         );
+        useAppImageLauncher = false;
+    }
+
+    if (getenv("APPIMAGELAUNCHER_DISABLE") != nullptr) {
+        log_message(
+            "APPIMAGELAUNCHER_DISABLE set, launching AppImage directly: %s\n",
+            APPIMAGELAUNCHER_PATH,
+            appImagePath.c_str()
+        );
+        useAppImageLauncher = false;
+    }
+
+    if (!useAppImageLauncher) {
         return bypassBinfmtAndRunAppImage(argv[1], args);
     }
 
