@@ -125,11 +125,11 @@ fi
 # install more recent CMake version which fixes some linking issue in CMake < 3.10
 # Fixes https://github.com/TheAssassin/AppImageLauncher/issues/106
 # Upstream bug: https://gitlab.kitware.com/cmake/cmake/issues/17389
-CMAKE_ARCH="$ARCH"
-if [[ "$CMAKE_ARCH" == "arm64"* ]]; then
-    CMAKE_ARCH=arm64v8
+cmake_arch="$ARCH"
+if [[ "$cmake_arch" == "arm64"* ]]; then
+    cmake_arch=aarch64
 fi
-wget https://artifacts.assassinate-you.net/prebuilt-cmake/continuous/cmake-v3.24.1-ubuntu_"$DIST"-"${CMAKE_ARCH:-"${ARCH}"}".tar.gz -qO- | \
+wget https://artifacts.assassinate-you.net/prebuilt-cmake/continuous/cmake-v3.24.1-ubuntu_"$DIST"-"${cmake_arch:-"${ARCH}"}".tar.gz -qO- | \
     tar xz -C/usr/local --strip-components=1
 
 if [[ "$BUILD_LITE" != "" ]]; then
