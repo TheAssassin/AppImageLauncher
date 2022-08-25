@@ -129,7 +129,7 @@ CMAKE_ARCH="$ARCH"
 if [[ "$CMAKE_ARCH" == "arm64"* ]]; then
     CMAKE_ARCH=arm64v8
 fi
-wget https://artifacts.assassinate-you.net/prebuilt-cmake/continuous/cmake-v3.19.1-ubuntu_xenial-"$CMAKE_ARCH".tar.gz -qO- | \
+wget https://artifacts.assassinate-you.net/prebuilt-cmake/continuous/cmake-v3.24.1-ubuntu_"$DIST"-"$CMAKE_ARCH".tar.gz -qO- | \
     tar xz -C/usr/local --strip-components=1
 
 if [[ "$BUILD_LITE" != "" ]]; then
