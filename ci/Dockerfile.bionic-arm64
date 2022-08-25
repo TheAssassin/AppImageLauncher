@@ -1,6 +1,6 @@
 FROM arm64v8/ubuntu:bionic
 
-ENV ARCH=arm64 DIST=xenial CI=1
+ENV ARCH=arm64 DIST=bionic CI=1 CMAKE_ARCH=aarch64
 
 COPY install-deps.sh /
 RUN bash -xe install-deps.sh
