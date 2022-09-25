@@ -62,7 +62,7 @@ Enter `./appimagelauncher-lite...AppImage install`. in a terminal, and it integr
 
 ## About
 
-Currently, desktop environments consider exexutables a security risk, and would rather have users use the app stores they include.
+Currently, desktop environments consider executables a security risk, and would rather have users use the app stores they include.
 
 The ability to easily run them, however, isn't all that's needed to provide a good AppImage desktop experience. Making them accessible from the application menus and launchers is a level of "desktop integration" that can't be provided by the AppImages themselves properly (even though some AppImages ship with a "desktop integration script" prompting the user to do so). There are too many impliciations requiring external software, especially regarding cleanup and removal of AppImages. (If applications are simply made executable, they're still spread all over the users' personal files and folders.) The average user will not find a "Downloads" directory full of AppImages with cryptic filenames friendly.
 
