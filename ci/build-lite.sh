@@ -6,7 +6,7 @@ if [ "$ARCH" == "" ]; then
 fi
 
 set -x
-set -e
+set -eo pipefail
 
 # use RAM disk if possible
 if [ -d /dev/shm ] && mount | grep /dev/shm | grep -v -q noexec; then

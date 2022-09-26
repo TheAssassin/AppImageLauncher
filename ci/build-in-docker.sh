@@ -6,7 +6,7 @@ if [[ "$DIST" == "" ]] || [[ "$ARCH" == "" ]]; then
 fi
 
 set -x
-set -e
+set -eo pipefail
 
 cd "$(readlink -f "$(dirname "$0")")"
 

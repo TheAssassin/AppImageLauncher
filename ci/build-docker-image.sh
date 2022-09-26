@@ -6,7 +6,7 @@ if [[ "$DIST" == "" ]] || [[ "$ARCH" == "" ]]; then
 fi
 
 set -x
-set -e
+set -eo pipefail
 
 # the other script sources this script, therefore we have to support that use case
 if [[ "${BASH_SOURCE[*]}" != "" ]]; then
