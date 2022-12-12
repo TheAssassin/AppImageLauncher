@@ -14,12 +14,6 @@ jobs:
           - NAME: bionic i386
             ARCH: i386
             DIST: bionic
-          - NAME: bionic arm64
-            ARCH: arm64
-            DIST: bionic
-          - NAME: bionic armhf
-            ARCH: armhf
-            DIST: bionic
           - NAME: Lite AppImage bionic x86_64
             ARCH: x86_64
             DIST: bionic
