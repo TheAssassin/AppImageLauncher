@@ -1,12 +1,6 @@
 # required for pkg-config module's imported target feature
 cmake_minimum_required(VERSION 3.6)
 
-# note for self: include libappimage before AppImageUpdate to use the version here, not the one shipped with AppImageUpdate
-# the AppImageUpdate submodule tends to be out of date
-if(NOT USE_SYSTEM_LIBAPPIMAGE)
-    add_subdirectory(libappimage EXCLUDE_FROM_ALL)
-endif()
-
 # used by the update helper
 if(ENABLE_UPDATE_HELPER)
     set(BUILD_QT_UI On CACHE BOOL "" FORCE)
