@@ -46,8 +46,8 @@ install(
 
 # AppImage update helper
 if(ENABLE_UPDATE_HELPER)
-    add_executable(update update_main.cpp resources.qrc)
-    target_link_libraries(update shared translationmanager libappimage libappimageupdate-qt)
+    add_executable(update update.ui update_main.cpp resources.qrc)
+    target_link_libraries(update shared translationmanager libappimage libappimageupdate-qt Qt5::Quick Qt5::QuickWidgets Qt5::Qml)
     # see AppImageLauncher for a description
     set_target_properties(update PROPERTIES INSTALL_RPATH "\$ORIGIN")
 

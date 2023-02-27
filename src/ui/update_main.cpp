@@ -6,14 +6,12 @@
 #include <QApplication>
 #include <QCheckBox>
 #include <QCommandLineParser>
-#include <QDir>
 #include <QFile>
-#include <QFileDialog>
-#include <QFileInfo>
 #include <QLibraryInfo>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QTranslator>
+#include <QThread>
 extern "C" {
     #include <appimage/appimage.h>
 }
@@ -22,6 +20,125 @@ extern "C" {
 // local includes
 #include "shared.h"
 #include "translationmanager.h"
+#include "ui_update.h"
+
+using namespace appimage::update::qt;
+
+class UpdateDialog : public QDialog {
+    Q_OBJECT
+
+public:
+    explicit UpdateDialog(const QString& pathToAppImage) : _pathToAppImage(pathToAppImage), _ui(new Ui::UpdateDialog), _updater(new QtUpdater(pathToAppImage)) {
+        // configure UI
+        _ui->setupUi(this);
+
+        _ui->stackedWidget->setCurrentIndex(0);
+
+        // these three calls are needed to give the QQuickWidget the same background color as its parent window
+        _ui->spinnerQuickWidget->setAttribute(Qt::WA_AlwaysStackOnTop);
+        _ui->spinnerQuickWidget->setAttribute(Qt::WA_TranslucentBackground);
+        _ui->spinnerQuickWidget->setClearColor(Qt::transparent);
+
+        _ui->spinnerQuickWidget->setSource(QUrl::fromLocalFile(":/update_spinner.qml"));
+
+        // can't add the widget to the page directly in the .ui file since the constructor needs parameters
+        _ui->updaterPage->layout()->addWidget(_updater);
+
+        // make sure the QDialog resizes with the spoiler
+        layout()->setSizeConstraint(QLayout::SetFixedSize);
+
+        // make sure that when the embedded dialog closes, the parent dialog closes, too
+        connect(_updater, &QDialog::finished, this, &QDialog::done);
+
+        // set up updater
+        _updater->enableRunUpdatedAppImageButton(false);
+
+        connect(
+            _updater,
+            &QtUpdater::newStatusMessage,
+            this,
+            [this](const std::string& newMessage) {
+                if (_updaterStatusMessages.tellp() > 0)
+                    _updaterStatusMessages << std::endl;
+
+                _updaterStatusMessages << newMessage;
+            }
+        );
+
+        connect(this, &UpdateDialog::updateCheckFinished, this, [this](int updateCheckResult) {
+            switch (updateCheckResult) {
+                case 1:
+                    clearStatusMessages();
+                    _ui->stackedWidget->setCurrentWidget(_ui->updaterPage);
+                    _updater->update();
+                    return;
+                case 0: {
+                    _ui->errorTitleLabel->setText(tr("No updates found"));
+                    _ui->errorMessageLabel->setText(tr("Could not find updates for AppImage %1").arg(_pathToAppImage));
+                    connect(_ui->errorButtonBox, &QDialogButtonBox::clicked, this, &QDialog::accept);
+                    break;
+                }
+                case -1: {
+                    _ui->errorTitleLabel->setText(tr("No update information found"));
+                    _ui->errorMessageLabel->setText(
+                        tr("Could not find update information in AppImage:\n%1"
+                           "\n"
+                           "\n"
+                           "The AppImage doesn't support updating. Please ask the authors to embed "
+                           "update information to allow for easy updating."
+                        ).arg(_pathToAppImage)
+                    );
+                    connect(_ui->errorButtonBox, &QDialogButtonBox::clicked, this, &QDialog::reject);
+                    break;
+                }
+                default: {
+                    _ui->errorTitleLabel->setText(tr("Update check failed"));
+                    _ui->errorMessageLabel->setText(tr("Failed to check for updates:\n%1").arg(_pathToAppImage));
+                    connect(_ui->errorButtonBox, &QDialogButtonBox::clicked, this, &QDialog::reject);
+                    break;
+                }
+            }
+
+            _ui->stackedWidget->setCurrentWidget(_ui->errorPage);
+            qCritical() << statusMessages();
+        });
+
+        asyncCheckForUpdate();
+    }
+
+    ~UpdateDialog() override {
+        // TODO: parenting in libappimageupdate
+        delete _updater;
+    }
+
+    QString statusMessages() const {
+        return QString::fromStdString(_updaterStatusMessages.str());
+    }
+
+    void clearStatusMessages() {
+        _updaterStatusMessages.clear();
+    }
+
+    void asyncCheckForUpdate() {
+        // TODO: implement an async update check in libappimageupdate
+        auto* thread = QThread::create([this]() {
+            auto updateCheckResult = _updater->checkForUpdates();
+            emit updateCheckFinished(updateCheckResult);
+        });
+        thread->start();
+    }
+
+signals:
+    void updateCheckFinished(int checkResult);
+
+private:
+    const QString _pathToAppImage;
+    Ui::UpdateDialog* _ui;
+    QtUpdater *_updater;
+    std::ostringstream _updaterStatusMessages;
+};
+
+#include "update_main.moc"
 
 
 int main(int argc, char** argv) {
@@ -70,142 +187,8 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    appimage::update::qt::QtUpdater updater(pathToAppImage);
-    updater.enableRunUpdatedAppImageButton(false);
+    auto dialog = new UpdateDialog(pathToAppImage);
+    dialog->show();
 
-    std::ostringstream updaterStatusMessages;
-
-    updater.connect(
-        &updater,
-        &appimage::update::qt::QtUpdater::newStatusMessage,
-        &updater,
-        [&updater, &updaterStatusMessages](const std::string& newMessage) {
-            if (!(updaterStatusMessages.tellp() <= 0))
-                updaterStatusMessages << std::endl;
-
-            updaterStatusMessages << newMessage;
-        }
-    );
-
-    auto updateCheckResult = updater.checkForUpdates();
-
-    switch (updateCheckResult) {
-        case 1:
-            // update available, continue after switch block
-            break;
-        case 0: {
-            QMessageBox::information(
-                nullptr,
-                QObject::tr("No updates found"),
-                QObject::tr("Could not find updates for AppImage %1").arg(pathToAppImage)
-            );
-            return 0;
-        }
-        case -1: {
-            QMessageBox::information(
-                nullptr,
-                QObject::tr("No update information found"),
-                QObject::tr("Could not find update information in AppImage:\n%1"
-                            "\n"
-                            "\n"
-                            "The AppImage doesn't support updating. Please ask the authors to embed "
-                            "update information to allow for easy updating.").arg(pathToAppImage)
-            );
-            return 0;
-        }
-        default: {
-            QMessageBox::information(
-                nullptr,
-                QObject::tr("Error"),
-                QObject::tr("Failed to check for updates:\n\n%1").arg(updaterStatusMessages.str().c_str())
-            );
-            return 1;
-        }
-    }
-
-    // clear existing status messages before performing the actual update
-    updaterStatusMessages.clear();
-
-    bool removeAfterUpdate = false;
-
-    {
-        const auto message = QObject::tr("An update has been found for the AppImage %1").arg(pathToAppImage) +
-                             "\n\n" +
-                             QObject::tr("Do you want to perform the update?") + "\n";
-
-        QMessageBox messageBox(QMessageBox::Icon::Question, "Update found", message, QMessageBox::Ok | QMessageBox::Cancel);
-
-        QCheckBox removeCheckBox(QObject::tr("Remove old AppImage after successful update"));
-        removeCheckBox.setChecked(false);
-
-        messageBox.setCheckBox(&removeCheckBox);
-
-        switch (messageBox.exec()) {
-            case QMessageBox::Ok:
-                break;
-            default:
-                return 0;
-        }
-
-        removeAfterUpdate = removeCheckBox.isChecked();
-    }
-
-    checkAuthorizationAndShowDialogIfNecessary(pathToAppImage, "Update anyway?");
-
-    auto rv = updater.exec();
-
-    // if the update has failed, return immediately
-    if (rv != 0) {
-        QMessageBox::information(
-            nullptr,
-            QObject::tr("Error"),
-            QObject::tr("Failed to update AppImage:\n\n%1").arg(updaterStatusMessages.str().c_str())
-        );
-
-        return rv;
-    }
-
-    // get path to new file, un-integrate old file, remove it, and register updated AppImage
-    QString pathToUpdatedAppImage;
-
-    if (!updater.pathToNewFile(pathToUpdatedAppImage))
-        return 1;
-
-    // sanity check
-    if (!QFile::exists(pathToUpdatedAppImage)) {
-        criticalUpdaterError(QObject::tr("File reported as updated does not exist: %1").arg(pathToUpdatedAppImage));
-        return 1;
-    }
-
-    const auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
-
-    if (!appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str())) {
-        if (!installDesktopFileAndIcons(pathToUpdatedAppImage)) {
-            criticalUpdaterError(QObject::tr("Failed to register updated AppImage in system"));
-            return 1;
-        }
-    }
-
-    // a crappy attempt to prevent deletion of the updated AppImage in a rare case (see below)
-    const auto pathToIntegratedUpdatedAppImage = buildPathToIntegratedAppImage(pathToUpdatedAppImage);
-
-    if (removeAfterUpdate) {
-        // make sure not to delete the updated(!) AppImage if the filenames of the new and old file are equal
-        // in this case, a warning is shown, asking the user whether to overwrite the old file, and in that case we
-        // don't need to unregister nor delete the file
-        if (pathToIntegratedAppImage != pathToIntegratedUpdatedAppImage) {
-            if (appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false) != 0) {
-                criticalUpdaterError(QObject::tr("Failed to unregister old AppImage in system"));
-                return 1;
-            }
-
-            if (!QFile::remove(pathToAppImage)) {
-                criticalUpdaterError(QObject::tr("Failed to remove old AppImage"));
-                return 1;
-            }
-        }
-    }
-
-    // we're done!
-    return 0;
+    return QApplication::exec();
 }

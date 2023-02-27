@@ -2,5 +2,6 @@
 <RCC version="1.0">
     <qresource>
         <file alias="AppImageLauncher.svg">../../resources/icons/hicolor/scalable/apps/AppImageLauncher.svg</file>
+        <file alias="update_spinner.qml">update_spinner.qml</file>
     </qresource>
 </RCC>

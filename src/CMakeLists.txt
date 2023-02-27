@@ -16,7 +16,7 @@ set(CMAKE_AUTOUIC ON)
 # Compile resource files
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Widgets DBus)
+find_package(Qt5 REQUIRED COMPONENTS Core Widgets DBus Quick QuickWidgets Qml)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(glib REQUIRED glib-2.0>=2.40 IMPORTED_TARGET)
