@@ -66,6 +66,7 @@ packages=(
     rpm2cpio
     liblzma-dev
     argagg-dev
+    libgcrypt20-dev
 
     # cross-compiling for 32-bit is only really easy with clang, where we can specify the target as a compiler option
     # clang -target arm-linux-gnueabihf ...
