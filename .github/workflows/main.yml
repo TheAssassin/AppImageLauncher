@@ -8,25 +8,25 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - NAME: bionic x86_64
+          - NAME: focal x86_64
             ARCH: x86_64
-            DIST: bionic
-          - NAME: bionic i386
+            DIST: focal
+          - NAME: focal i386
             ARCH: i386
-            DIST: bionic
-          - NAME: bionic arm64
+            DIST: focal
+          - NAME: focal arm64
             ARCH: arm64
-            DIST: bionic
-          - NAME: bionic armhf
+            DIST: focal
+          - NAME: focal armhf
             ARCH: armhf
-            DIST: bionic
-          - NAME: Lite AppImage bionic x86_64
+            DIST: focal
+          - NAME: Lite AppImage focal x86_64
             ARCH: x86_64
-            DIST: bionic
+            DIST: focal
             BUILD_LITE: 1
-          - NAME: Lite AppImage bionic i386
+          - NAME: Lite AppImage focal i386
             ARCH: i386
-            DIST: bionic
+            DIST: focal
             BUILD_LITE: 1
 
     name: ${{ matrix.NAME }}
