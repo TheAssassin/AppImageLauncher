@@ -34,6 +34,10 @@ esac
 
 set -x
 
+echo 'tzdata tzdata/Areas select Europe' | debconf-set-selections
+echo 'tzdata tzdata/Zones/Europe select Paris' | debconf-set-selections
+export DEBIAN_FRONTEND=noninteractive
+
 packages=(
     libcurl4-openssl-dev
     libfuse-dev
@@ -118,7 +122,7 @@ cmake_arch="$ARCH"
 if [[ "$cmake_arch" == "arm64"* ]]; then
     cmake_arch=aarch64
 fi
-wget https://artifacts.assassinate-you.net/prebuilt-cmake/continuous/cmake-v3.24.1-ubuntu_"$DIST"-"${cmake_arch:-"${ARCH}"}".tar.gz -qO- | \
+wget https://artifacts.assassinate-you.net/prebuilt-cmake/continuous/cmake-v3.25.2-ubuntu_"$DIST"-"${cmake_arch:-"${ARCH}"}".tar.gz -qO- | \
     tar xz -C/usr/local --strip-components=1
 
 if [[ "$BUILD_LITE" != "" ]]; then
