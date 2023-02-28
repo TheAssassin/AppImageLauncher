@@ -11,9 +11,6 @@ jobs:
           - NAME: focal x86_64
             ARCH: x86_64
             DIST: focal
-          - NAME: focal i386
-            ARCH: i386
-            DIST: focal
           - NAME: focal arm64
             ARCH: arm64
             DIST: focal
@@ -22,10 +19,6 @@ jobs:
             DIST: focal
           - NAME: Lite AppImage focal x86_64
             ARCH: x86_64
-            DIST: focal
-            BUILD_LITE: 1
-          - NAME: Lite AppImage focal i386
-            ARCH: i386
             DIST: focal
             BUILD_LITE: 1
 
