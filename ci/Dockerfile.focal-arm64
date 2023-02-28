@@ -1,6 +1,6 @@
-FROM arm64v8/ubuntu:bionic
+FROM arm64v8/ubuntu:focal
 
-ENV ARCH=arm64 DIST=bionic CI=1 CMAKE_ARCH=aarch64
+ENV ARCH=arm64 DIST=focal CI=1 CMAKE_ARCH=aarch64
 
 COPY ci/install-deps.sh /
 RUN bash -xe install-deps.sh

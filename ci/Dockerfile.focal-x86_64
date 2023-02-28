@@ -1,12 +1,11 @@
-FROM i386/ubuntu:bionic
+FROM ubuntu:focal
 
-ENV ARCH=i386 DIST=bionic BUILD_LITE=1 CI=1
+ENV ARCH=x86_64 DIST=focal CI=1
 
 COPY ci/install-deps.sh /
 RUN bash -xe install-deps.sh
 
-COPY lib/AppImageUpdate/ci/pkgconfig/*.pc /usr/lib/i386-linux-gnu/pkgconfig/
-RUN sed -i 's|x86_64|i386|g' /usr/lib/i386-linux-gnu/pkgconfig/*.pc
+COPY lib/AppImageUpdate/ci/pkgconfig/*.pc /usr/lib/x86_64-linux-gnu/pkgconfig/
 
 RUN git clone https://github.com/nlohmann/json.git -b v3.11.2 --depth=1 && \
     cd json && \
@@ -20,8 +19,6 @@ RUN git clone https://github.com/nlohmann/json.git -b v3.11.2 --depth=1 && \
 # work around bug in FindCURL.cmake, which does not parse the pkg-config provided protocols and features into lists causing
 # the comparison in the loop to yield false negative results
 RUN rm /usr/lib/x86_64-linux-gnu/pkgconfig/libcurl.pc
-
-ENTRYPOINT ["/bin/bash", "-c", "set -x && source /opt/qt*/bin/qt*env.sh || true && export QT_SELECT=5 && exec \"$0\" \"$@\""]
 
 # create unprivileged user for non-build-script use of this image
 # build-in-docker.sh will likely not use this one, as it enforces the caller's uid inside the container
