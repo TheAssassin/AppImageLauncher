@@ -61,7 +61,6 @@ packages=(
     libboost-filesystem-dev
     librsvg2-dev
     librsvg2-bin
-    libssl1.0.0
     rpm
     rpm2cpio
     liblzma-dev
