@@ -24,7 +24,7 @@ case "$ARCH" in
 esac
 
 case "$DIST" in
-    xenial|bionic)
+    focal)
         ;;
     *)
         echo "Error: unsupported distribution: $DIST"
@@ -70,9 +70,7 @@ packages=(
 
     # cross-compiling for 32-bit is only really easy with clang, where we can specify the target as a compiler option
     # clang -target arm-linux-gnueabihf ...
-    # we must use clang > 3.8.0, and newer versions should work as drop-in replacement, so we can just use the newest
-    # clang available on xenial on all platforms
-    clang-8
+    clang
 )
 
 if [[ "$BUILD_LITE" == "" ]]; then
@@ -84,7 +82,7 @@ if [[ "$BUILD_LITE" == "" ]]; then
 else
     apt-get update
     apt-get -y --no-install-recommends install software-properties-common
-    add-apt-repository -y ppa:beineri/opt-qt-5.15.2-"$DIST"
+    add-apt-repository -y ppa:beineri/opt-qt-5.15.4-"$DIST"
     packages+=(
         qt515base
         qt515declarative
