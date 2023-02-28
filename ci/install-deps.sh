@@ -71,6 +71,7 @@ packages=(
     argagg-dev
     libgcrypt20-dev
     libgpgme-dev
+    patchelf
 
     # cross-compiling for 32-bit is only really easy with clang, where we can specify the target as a compiler option
     # clang -target arm-linux-gnueabihf ...
@@ -79,6 +80,8 @@ packages=(
     qtbase5-dev
     qt5-qmake
     qtdeclarative5-dev
+    qtchooser
+    qtbase5-dev-tools
 )
 
 # install 32-bit build dependencies and multilib/cross compilers for binfmt-bypass's 32-bit preload library
