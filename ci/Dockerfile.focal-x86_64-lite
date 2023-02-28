@@ -11,7 +11,7 @@ COPY lib/AppImageUpdate/ci/pkgconfig/*.pc /usr/lib/x86_64-linux-gnu/pkgconfig/
 # the comparison in the loop to yield false negative results
 RUN rm /usr/lib/x86_64-linux-gnu/pkgconfig/libcurl.pc
 
-ENTRYPOINT ["/bin/bash", "-c", "set -x && source /opt/qt*/bin/qt*env.sh || true && export QT_SELECT=5 && exec \"$0\" \"$@\""]
+ENTRYPOINT ["/bin/bash", "-c", "set -x && export QT_SELECT=5 && exec \"$0\" \"$@\""]
 
 # create unprivileged user for non-build-script use of this image
 # build-in-docker.sh will likely not use this one, as it enforces the caller's uid inside the container

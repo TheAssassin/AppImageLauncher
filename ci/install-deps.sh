@@ -128,18 +128,6 @@ fi
 wget https://artifacts.assassinate-you.net/prebuilt-cmake/continuous/cmake-v3.25.2-ubuntu_"$DIST"-"${cmake_arch:-"${ARCH}"}".tar.gz -qO- | \
     tar xz -C/usr/local --strip-components=1
 
-if [[ "$BUILD_LITE" != "" ]]; then
-    # https://github.com/TheAssassin/AppImageLauncher/issues/199
-    apt-get update
-    apt-get -y install libgtk2.0-dev libgl1-mesa-dev
-    source /opt/qt*/bin/qt*env.sh || true
-    git clone http://code.qt.io/qt/qtstyleplugins.git
-    cd qtstyleplugins
-    qmake
-    make -j"$(nproc)"
-    make install
-fi
-
 pushd /tmp
     git clone https://github.com/nlohmann/json.git -b v3.11.2 --depth=1
     pushd json
