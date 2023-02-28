@@ -151,11 +151,11 @@ pushd /tmp
     rm -rf json/
 
     git clone https://github.com/NixOS/patchelf -b 0.17.2 --depth=1
-    pushd json
+    pushd patchelf
         mkdir build
         cd build
         cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local
         make -j "$(nproc --ignore=1)" install
     popd
-    rm -rf json/
+    rm -rf patchelf/
 popd
