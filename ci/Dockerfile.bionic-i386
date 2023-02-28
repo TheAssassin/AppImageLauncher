@@ -2,8 +2,24 @@ FROM i386/ubuntu:bionic
 
 ENV ARCH=i386 DIST=bionic CI=1
 
-COPY ./install-deps.sh /
+COPY ci/install-deps.sh /
 RUN bash -xe install-deps.sh
+
+COPY lib/AppImageUpdate/ci/pkgconfig/*.pc /usr/lib/i386-linux-gnu/pkgconfig/
+RUN sed -i 's|x86_64|i386|g' /usr/lib/i386-linux-gnu/pkgconfig/*.pc
+
+RUN git clone https://github.com/nlohmann/json.git -b v3.11.2 --depth=1 && \
+    cd json && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local && \
+    make -j "$(nproc --ignore=1)" install && \
+    cd ../.. && \
+    rm -rf json/
+
+# work around bug in FindCURL.cmake, which does not parse the pkg-config provided protocols and features into lists causing
+# the comparison in the loop to yield false negative results
+RUN rm /usr/lib/x86_64-linux-gnu/pkgconfig/libcurl.pc
 
 # create unprivileged user for non-build-script use of this image
 # build-in-docker.sh will likely not use this one, as it enforces the caller's uid inside the container

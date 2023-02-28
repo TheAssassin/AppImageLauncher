@@ -8,16 +8,16 @@ fi
 set -x
 set -eo pipefail
 
-cd "$(readlink -f "$(dirname "$0")")"
+cd "$(readlink -f "$(dirname "$0")")"/..
 
 # sets variables $image, $dockerfile
-source build-docker-image.sh
+source ci/build-docker-image.sh
 
 # figure out which build script to use
 if [[ "$BUILD_LITE" == "" ]]; then
-    build_script=build.sh
+    build_script=ci/build.sh
 else
-    build_script=build-lite.sh
+    build_script=ci/build-lite.sh
 fi
 
 DOCKER_OPTS=()
@@ -42,7 +42,6 @@ fi
 uid="$(id -u)"
 # run build
 docker run -e DIST -e ARCH -e GITHUB_RUN_NUMBER -e GITHUB_RUN_ID --rm -i --user "$uid" \
-     "${DOCKER_OPTS[@]}" -v "$(readlink -f ..):/ws" \
+     "${DOCKER_OPTS[@]}" -v "$(readlink -f .):/ws" \
      "$image" \
-     bash -xc "export CI=1 && cd /ws && source ci/$build_script"
-
+     bash -xc "export CI=1 && cd /ws && source $build_script"

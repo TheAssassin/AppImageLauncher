@@ -10,14 +10,14 @@ set -eo pipefail
 
 # the other script sources this script, therefore we have to support that use case
 if [[ "${BASH_SOURCE[*]}" != "" ]]; then
-    this_dir="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")"
+    this_dir="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")"/..
 else
-    this_dir="$(readlink -f "$(dirname "$0")")"
+    this_dir="$(readlink -f "$(dirname "$0")")"/..
 fi
 
 # needed to keep user ID in and outside Docker in sync to be able to write to workspace directory
 image=quay.io/appimagelauncher/build:"$DIST"-"$ARCH"
-dockerfile="$this_dir"/Dockerfile."$DIST"-"$ARCH"
+dockerfile="$this_dir"/ci/Dockerfile."$DIST"-"$ARCH"
 
 if [[ "$BUILD_LITE" != "" ]]; then
     image="$image"-lite
@@ -30,7 +30,7 @@ if [ ! -f "$dockerfile" ]; then
 fi
 
 # speed up build by pulling last built image from quay.io and building the docker file using the old image as a base
-docker pull "$image" || true
+#docker pull "$image" || true
 # if the image hasn't changed, this should be a no-op
 docker build --pull --cache-from "$image" -t "$image" -f "$dockerfile" "$this_dir"
 
