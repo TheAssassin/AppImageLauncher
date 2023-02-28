@@ -71,7 +71,6 @@ packages=(
     argagg-dev
     libgcrypt20-dev
     libgpgme-dev
-    patchelf
 
     # cross-compiling for 32-bit is only really easy with clang, where we can specify the target as a compiler option
     # clang -target arm-linux-gnueabihf ...
@@ -140,3 +139,23 @@ if [[ "$BUILD_LITE" != "" ]]; then
     make -j"$(nproc)"
     make install
 fi
+
+pushd /tmp
+    git clone https://github.com/nlohmann/json.git -b v3.11.2 --depth=1
+    pushd json
+        mkdir build
+        cd build
+        cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local
+        make -j "$(nproc --ignore=1)" install
+    popd
+    rm -rf json/
+
+    git clone https://github.com/NixOS/patchelf -b 0.17.2 --depth=1
+    pushd json
+        mkdir build
+        cd build
+        cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local
+        make -j "$(nproc --ignore=1)" install
+    popd
+    rm -rf json/
+popd

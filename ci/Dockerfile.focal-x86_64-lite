@@ -7,15 +7,6 @@ RUN bash -xe install-deps.sh
 
 COPY lib/AppImageUpdate/ci/pkgconfig/*.pc /usr/lib/x86_64-linux-gnu/pkgconfig/
 
-RUN git clone https://github.com/nlohmann/json.git -b v3.11.2 --depth=1 && \
-    cd json && \
-    mkdir build && \
-    cd build && \
-    cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local && \
-    make -j "$(nproc --ignore=1)" install && \
-    cd ../.. && \
-    rm -rf json/
-
 # work around bug in FindCURL.cmake, which does not parse the pkg-config provided protocols and features into lists causing
 # the comparison in the loop to yield false negative results
 RUN rm /usr/lib/x86_64-linux-gnu/pkgconfig/libcurl.pc
