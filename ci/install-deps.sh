@@ -84,7 +84,7 @@ if [[ "$BUILD_LITE" == "" ]]; then
 else
     apt-get update
     apt-get -y --no-install-recommends install software-properties-common
-    add-apt-repository -y ppa:beineri/opt-qt-5.15.4-"$DIST"
+    add-apt-repository -y ppa:beineri/opt-qt-5.15.2-"$DIST"
     packages+=(
         qt515base
         qt515declarative
