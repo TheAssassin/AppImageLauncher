@@ -10,7 +10,7 @@ RUN sed -i 's|x86_64|aarch64|g' /usr/lib/aarch64-linux-gnu/pkgconfig/*.pc
 
 # work around bug in FindCURL.cmake, which does not parse the pkg-config provided protocols and features into lists causing
 # the comparison in the loop to yield false negative results
-RUN rm /usr/lib/x86_64-linux-gnu/pkgconfig/libcurl.pc
+RUN rm /usr/lib/aarch64-linux-gnu/pkgconfig/libcurl.pc
 
 # create unprivileged user for non-build-script use of this image
 # build-in-docker.sh will likely not use this one, as it enforces the caller's uid inside the container
