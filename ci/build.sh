@@ -86,8 +86,8 @@ fi
 if [ "$ARCH" == "arm64" ]; then
     # only clang allows for easy cross-compilation of a 32-bit version of the binfmt-bypass preload lib
     cmake_args+=(
-        "-DCMAKE_C_COMPILER=clang-8"
-        "-DCMAKE_CXX_COMPILER=clang++-8"
+        "-DCMAKE_C_COMPILER=clang"
+        "-DCMAKE_CXX_COMPILER=clang++"
     )
     # RPM-based Linux distributions use aarch64 instead of arm64 as ARM64 architecture name.
     ARCH="aarch64"
