@@ -14,9 +14,6 @@ jobs:
           - NAME: focal arm64
             ARCH: arm64
             DIST: focal
-          - NAME: focal armhf
-            ARCH: armhf
-            DIST: focal
           - NAME: Lite AppImage focal x86_64
             ARCH: x86_64
             DIST: focal
