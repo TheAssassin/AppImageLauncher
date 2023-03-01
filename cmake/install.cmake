@@ -31,7 +31,7 @@ set(_rpath "\$ORIGIN/${_rpath}")
 # or /usr/lib/x86_64-... or wherever the OS puts its libraries
 # for some reason, using TARGETS ... doesn't work here, therefore using the absolute file path
 file(GLOB libappimage_files ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/lib/libappimage/src/libappimage/libappimage.so*)
-file(GLOB libappimageupdate_files ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/src/libappimageupdate.so*)
+file(GLOB libappimageupdate_files ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/src/updater/libappimageupdate.so*)
 file(GLOB libappimageupdate-qt_files ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/src/qt-ui/libappimageupdate-qt.so*)
 
 foreach(i libappimage libappimageupdate libappimageupdate-qt)
