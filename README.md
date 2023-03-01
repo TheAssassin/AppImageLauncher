@@ -118,23 +118,12 @@ Compatibility table (likely incomplete.) Please, feel free to open PRs to add di
 
 | Release filename | Build system | Compatible distributions (incomplete) |
 | ---------------- | ------------ | ------------------------------------- |
-| `appimagelauncher-<version>.xenial_(amd64,i386).deb` | Ubuntu Xenial | Ubuntu Xenial (16.04), Debian Stretch (9), Netrunner 17.01 |
-| `appimagelauncher-<version>.bionic_(amd64,i386).deb` | Ubuntu Bionic | Ubuntu Bionic (18.04), Ubuntu Disco (19.04), Ubuntu Eoan (19.10) and newer, Debian buster (10) and newer, Netrunner 19.01, 19.08 and newer |
-| ~~`appimagelauncher-<version>.disco_(amd64,i386).deb`~~  | ~~Ubuntu Disco~~  | ~~Ubuntu Disco (19.04)~~ |
-| ~~`appimagelauncher-<version>.eoan_(amd64,i386).deb`~~   | ~~Ubuntu Eoan~~   | ~~Ubuntu Eoan (19.10) and newer~~ |
-| ~~`appimagelauncher-<version>.buster_(amd64,i386).deb`~~ | ~~Debian Buster~~ | ~~Debian Buster (10) and newer, Netrunner 19.01 and 19.08~~ |
-| `appimagelauncher-<version>.(i386,x86_64).rpm`       | Ubuntu Xenial | openSUSE Leap 42 and newer, possibly openSUSE Tumbleweed, SUSE Enterprise Linux, RHEL 7, CentOS 7 |
-
-  - Ubuntu Trusty (14.04) and newer
-    - **Important:** Ubuntu Bionic (and newer) broke with the backwards compatibility of its `libcurl` packages, therefore users of these systems need to install the special `bionic` package
-  - Debian stable (Jessie, 8) and newer
-  - Netrunner 17 and newer
-  - openSUSE Leap 42 and newer
-  - openSUSE Tumbleweed
+| `appimagelauncher-<version>.focal_(amd64,i386).deb`  | Ubuntu Focal | Ubuntu Focal (20.04) and newer, Debian Bullseye (11) and newer |
+| `appimagelauncher-<version>.(i386,x86_64).rpm`       | Ubuntu Focal | openSUSE Leap 15.3 and newer, Fedora 34 and newer |
 
 The installation of packages on systems with a set of packages similar to one of the listed ones (e.g., Linux Mint, Fedora, etc.) should work as well.
 
-**Note:** For Ubuntu 19.04 and newer as well as derivatives, there's two PPAs (personal package archives) available providing a simple way to install and update AppImageLauncher (thanks [Peter Jonas](https://github.com/shoogle) for creating and maintaining them):
+**Note:** Ubuntu users (and users of derivatives such as Linux Mint) may use either of the two available PPAs (personal package archives) available providing a simple way to install and update AppImageLauncher (thanks [Peter Jonas](https://github.com/shoogle) for creating and maintaining them):
 
   - stable (provides all releases): https://launchpad.net/~appimagelauncher-team/+archive/ubuntu/stable
   - daily (latest and greatest but possibly unstable): https://launchpad.net/~appimagelauncher-team/+archive/ubuntu/daily
