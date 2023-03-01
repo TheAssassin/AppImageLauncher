@@ -2,7 +2,11 @@
 
 set -euo pipefail
 
-glibc_ok_version="2.4"
+if [[ "$ARCH" == "arm64"* ]]; then
+    glibc_ok_version="2.17"
+else
+    glibc_ok_version="2.4"
+fi
 
 find_too_new_symbols() {
     glibc_symbols=( "$(nm --dynamic --undefined-only --with-symbol-versions "$1" | grep "GLIBC_")" )
