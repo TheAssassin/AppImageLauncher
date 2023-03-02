@@ -2,11 +2,17 @@
 
 set -euo pipefail
 
-if [[ "$ARCH" == "arm64"* ]]; then
-    glibc_ok_version="2.17"
-else
-    glibc_ok_version="2.4"
-fi
+case "$ARCH" in
+    aarch64)
+        glibc_ok_version="2.17"
+        ;;
+    x86_64)
+        glibc_ok_version="2.4"
+        ;;
+    *)
+        echo "Cannot fix preload library for unknown architecture: $ARCH"
+        exit 2
+esac
 
 find_too_new_symbols() {
     glibc_symbols=( "$(nm --dynamic --undefined-only --with-symbol-versions "$1" | grep "GLIBC_")" )
