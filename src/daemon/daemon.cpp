@@ -89,7 +89,7 @@ namespace appimagelauncher::daemon {
 
         for (const auto& dir : dirsToSearch) {
             if (!dir.exists()) {
-                qCInfo(daemonCat) << "Directory " << dir.path() << " does not exist, skipping";
+                qDebug() << "Directory " << dir.path() << " does not exist, skipping";
                 continue;
             }
 
