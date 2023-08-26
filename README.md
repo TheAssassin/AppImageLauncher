@@ -141,7 +141,7 @@ The installation of packages on systems with a set of packages similar to one of
 
 Manjaro and Netrunner Rolling users can install AppImageLauncher with a distribution-provided package called `appimagelauncher`.
 
-Arch Linux, Manjaro, Antergos and Netrunner Rolling users can use AUR to install AppImageLauncher by installing [appimagelauncher](https://aur.archlinux.org/packages/appimagelauncher) or  [appimagelauncher-git](https://aur.archlinux.org/packages/appimagelauncher-git) (possibly broken see [#574](https://github.com/TheAssassin/AppImageLauncher/issues/574)) (thanks @NuLogicSystems for setting up the build). 
+Arch Linux, Manjaro, Antergos and Netrunner Rolling users can use AUR to install AppImageLauncher by installing [appimagelauncher](https://aur.archlinux.org/packages/appimagelauncher) or [appimagelauncher-git](https://aur.archlinux.org/packages/appimagelauncher-git) (possibly broken, see [#574](https://github.com/TheAssassin/AppImageLauncher/issues/574)) (thanks @NuLogicSystems for setting up the build). 
 
 Other systems derived from the listed ones, such as for instance Linux Mint (Ubuntu), should support AppImageLauncher as well.
 If they don't, please don't hesitate to create an issue.
