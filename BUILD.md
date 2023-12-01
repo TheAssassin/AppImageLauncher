@@ -36,6 +36,11 @@ All dependencies need to be installed as development libraries. Some names may d
  - libcurl
  - boost
 
+For Ubuntu/Debian systems, this might look like:
+
+```bash
+sudo apt install make cmake libglib2.0-dev libcairo2-dev librsvg2-dev libfuse-dev libarchive-dev libxpm-dev libcurl4-openssl-dev libboost-all-dev qtbase5-dev qtdeclarative5-dev qttools5-dev-tools patchelf libc6-dev libc6-dev gcc-multilib g++-multilib
+```
 
 ## Build
 
@@ -46,7 +51,7 @@ export PREFIX="/usr/local/"
 mkdir build
 cd build
 
-cmake .. -DCMAKE_INSTALL_PREFIX="$PREFIX"
+cmake .. -DCMAKE_INSTALL_PREFIX="$PREFIX" -DUSE_SYSTEM_BOOST=true
 
 # See https://github.com/TheAssassin/AppImageLauncher/issues/251 for more details why this is required
 make libappimage libappimageupdate libappimageupdate-qt
