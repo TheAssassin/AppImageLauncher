@@ -188,7 +188,8 @@
                <string>Add new directory to list</string>
               </property>
               <property name="icon">
-               <iconset theme="add"/>
+               <iconset theme="list-add">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>
@@ -201,7 +202,8 @@
                <string>Remove selected directory from list</string>
               </property>
               <property name="icon">
-               <iconset theme="remove"/>
+               <iconset theme="list-remove">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>
