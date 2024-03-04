@@ -23,9 +23,13 @@ public:
 
 protected slots:
     void onChooseAppsDirClicked();
+    void onChooseSymlinkDirClicked();
     void onAddDirectoryToWatchButtonClicked();
+    void onSymlinkAddButtonClicked();
     void onRemoveDirectoryToWatchButtonClicked();
     void onDirectoryToWatchItemActivated(QListWidgetItem* item);
+    void onRemoveSymlinkButtonClicked();
+    void onSymlinkItemActivated(QListWidgetItem* item);
 
     void onDialogAccepted();
 
@@ -37,6 +41,7 @@ private:
     void toggleDaemon();
 
     void addDirectoryToWatchToListView(const QString& dirPath);
+    void addSymlinkToListView(const QString& symlinkName);
 
     Ui::SettingsDialog* ui;
     QSettings* settingsFile;

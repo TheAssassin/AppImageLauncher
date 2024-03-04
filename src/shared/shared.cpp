@@ -107,8 +107,10 @@ QString getConfigFilePath() {
 
 void createConfigFile(int askToMove,
                       const QString& destination,
+                      const QString& symlinkPath,
                       int enableDaemon,
                       const QStringList& additionalDirsToWatch,
+                      const QStringList& symlinks,
                       int monitorMountedFilesystems) {
     auto configFilePath = getConfigFilePath();
 
@@ -136,6 +138,22 @@ void createConfigFile(int askToMove,
     } else {
         file.write("destination = ");
         file.write(destination.toUtf8());
+        file.write("\n");
+    }
+
+    if (symlinkPath.isEmpty()) {
+        file.write("# symlinkpath = ~/.local/bin\n");
+    } else {
+        file.write("symlinkpath = ");
+        file.write(symlinkPath.toUtf8());
+        file.write("\n");
+    }
+
+    if(symlinks.empty()) {
+        file.write("# symlinks = ~/.local/bin/coolApp\n");
+    } else {
+        file.write("symlinks = ");
+        file.write(symlinks.join(':').toUtf8());
         file.write("\n");
     }
 
@@ -262,6 +280,25 @@ QDir integratedAppImagesDestination() {
 
     return DEFAULT_INTEGRATION_DESTINATION;
 }
+
+QDir integratedSymlinkDestination() {
+    auto config = getConfig();
+    static const QString keyName("AppImageLauncher/symlinkpath");
+
+    QString symlinkPath = DEFAULT_SYMLINK_DESTINATION;
+
+    if (config != nullptr && config->contains(keyName))
+        symlinkPath = config->value(keyName).toString();
+
+    QDir dir(symlinkPath);
+
+    if (!dir.exists(symlinkPath)) {
+        dir.mkpath(symlinkPath);
+    }
+
+    return symlinkPath;
+}
+
 
 class Mount {
 private:
@@ -965,6 +1002,10 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
                 return INTEGRATION_FAILED;
             }
         }
+
+        static const std::string command = "sudo ln -s " + pathToIntegratedAppImage.toStdString() + " /usr/bin/teste";
+
+        QProcess::execute(command.c_str());
     }
 
     if (!installDesktopFileAndIcons(pathToIntegratedAppImage))

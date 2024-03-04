@@ -3,6 +3,8 @@
 #include <QFileDialog>
 #include <QFileIconProvider>
 #include <QStandardPaths>
+#include <QInputDialog>
+#include <QProcess>
 
 // local
 #include "settings_dialog.h"
@@ -28,10 +30,15 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent), ui(new Ui::Se
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &SettingsDialog::onDialogAccepted);
     connect(ui->chooseAppsDirToolButton, &QToolButton::released, this, &SettingsDialog::onChooseAppsDirClicked);
+    connect(ui->chooseSymlinkDirButton, &QToolButton::released, this, &SettingsDialog::onChooseSymlinkDirClicked);
     connect(ui->additionalDirsAddButton, &QToolButton::released, this, &SettingsDialog::onAddDirectoryToWatchButtonClicked);
     connect(ui->additionalDirsRemoveButton, &QToolButton::released, this, &SettingsDialog::onRemoveDirectoryToWatchButtonClicked);
     connect(ui->additionalDirsListWidget, &QListWidget::itemActivated, this, &SettingsDialog::onDirectoryToWatchItemActivated);
     connect(ui->additionalDirsListWidget, &QListWidget::itemClicked, this, &SettingsDialog::onDirectoryToWatchItemActivated);
+    connect(ui->symlinkList, &QListWidget::itemActivated, this, &SettingsDialog::onSymlinkItemActivated);
+    connect(ui->symlinkList, &QListWidget::itemClicked, this, &SettingsDialog::onSymlinkItemActivated);
+    connect(ui->addLinkButton, &QToolButton::released, this, &SettingsDialog::onSymlinkAddButtonClicked);
+    connect(ui->removeLinkButton, &QToolButton::released, this, &SettingsDialog::onRemoveSymlinkButtonClicked);
 
     QStringList availableFeatures;
 
@@ -96,6 +103,46 @@ void SettingsDialog::addDirectoryToWatchToListView(const QString& dirPath) {
     ui->additionalDirsListWidget->addItem(item);
 }
 
+void SettingsDialog::addSymlinkToListView(const QString& symlinkName) {
+    // empty paths are not permitted
+    if (symlinkName.isEmpty())
+        return;
+
+    // Doesn't add duplicated items.
+    QList currentItems = ui->symlinkList->findItems(symlinkName, Qt::MatchFlag::MatchExactly);
+    if(!currentItems.empty() && currentItems.first() != nullptr) {
+        return;
+    }
+
+    const QFile file(symlinkName);
+
+    QIcon icon;
+
+    auto findIcon = [](const std::initializer_list<QString>& names) {
+        for (const auto& i : names) {
+            auto icon = QIcon::fromTheme(i, loadIconWithFallback(i));
+
+            if (!icon.isNull())
+                return icon;
+        }
+
+        return QIcon{};
+    };
+
+    if (file.exists()) {
+        icon = findIcon({"emblem-symbolic-link"});
+    } else {
+        icon = findIcon({"emblem-unreadable"});
+    }
+
+    if (icon.isNull()) {
+        qDebug() << "item icon unavailable, using fallback";
+    }
+
+    auto* item = new QListWidgetItem(icon, symlinkName);
+    ui->symlinkList->addItem(item);
+}
+
 void SettingsDialog::loadSettings() {
     const auto daemonIsEnabled = settingsFile->value("AppImageLauncher/enable_daemon", "true").toBool();
     const auto askMoveChecked = settingsFile->value("AppImageLauncher/ask_to_move", "true").toBool();
@@ -104,10 +151,20 @@ void SettingsDialog::loadSettings() {
         ui->daemonIsEnabledCheckBox->setChecked(daemonIsEnabled);
         ui->askMoveCheckBox->setChecked(askMoveChecked);
         ui->applicationsDirLineEdit->setText(settingsFile->value("AppImageLauncher/destination").toString());
+        ui->symlinkLineEdit->setText(integratedSymlinkDestination().absolutePath());
 
         const auto additionalDirsPath = settingsFile->value("appimagelauncherd/additional_directories_to_watch", "").toString();
         for (const auto& dirPath : additionalDirsPath.split(":")) {
             addDirectoryToWatchToListView(dirPath);
+        }
+
+        const auto symlinks = settingsFile->value("AppImageLauncher/symlinks", "").toString();
+        for (const auto& linkPath : symlinks.split(":")) {
+            QFile file(linkPath);
+
+            if(file.exists()) {
+                addSymlinkToListView(linkPath);
+            }
         }
     }
 }
@@ -119,12 +176,21 @@ void SettingsDialog::onDialogAccepted() {
 
 void SettingsDialog::saveSettings() {
     QStringList additionalDirsToWatch;
+    QStringList symlinks;
 
     {
         QListWidgetItem* currentItem;
 
         for (int i = 0; (currentItem = ui->additionalDirsListWidget->item(i)) != nullptr; ++i) {
             additionalDirsToWatch << currentItem->text();
+        }
+    }
+
+    {
+        QListWidgetItem* currentItem;
+
+        for (int i = 0; (currentItem = ui->symlinkList->item(i)) != nullptr; ++i) {
+            symlinks << currentItem->text();
         }
     }
 
@@ -146,8 +212,10 @@ void SettingsDialog::saveSettings() {
 
     createConfigFile(ui->askMoveCheckBox->isChecked(),
                      ui->applicationsDirLineEdit->text(),
+                     ui->symlinkLineEdit->text(),
                      ui->daemonIsEnabledCheckBox->isChecked(),
                      additionalDirsToWatch,
+                     symlinks,
                      monitorMountedFilesystems);
 
     // reload settings
@@ -185,6 +253,23 @@ void SettingsDialog::onChooseAppsDirClicked() {
     }
 }
 
+void SettingsDialog::onChooseSymlinkDirClicked() {
+    QFileDialog fileDialog(this);
+
+    fileDialog.setFileMode(QFileDialog::DirectoryOnly);
+    fileDialog.setWindowTitle(tr("Select Symlinks directory"));
+    fileDialog.setDirectory(integratedSymlinkDestination().absolutePath());
+
+    // Gtk+ >= 3 segfaults when trying to use the native dialog, therefore we need to enforce the Qt one
+    // See #218 for more information
+    fileDialog.setOption(QFileDialog::DontUseNativeDialog, true);
+
+    if (fileDialog.exec()) {
+        QString dirPath = fileDialog.selectedFiles().first();
+        ui->symlinkLineEdit->setText(dirPath);
+    }
+}
+
 void SettingsDialog::onAddDirectoryToWatchButtonClicked() {
     QFileDialog fileDialog(this);
 
@@ -199,6 +284,35 @@ void SettingsDialog::onAddDirectoryToWatchButtonClicked() {
     if (fileDialog.exec()) {
         QString dirPath = fileDialog.selectedFiles().first();
         addDirectoryToWatchToListView(dirPath);
+    }
+}
+
+void SettingsDialog::onSymlinkAddButtonClicked() {
+    QFileDialog fileDialog(this);
+
+    fileDialog.setFileMode(QFileDialog::ExistingFile);
+    fileDialog.selectMimeTypeFilter("*.AppImage");
+    fileDialog.setDirectory(integratedAppImagesDestination().absolutePath());
+
+    fileDialog.setOption(QFileDialog::DontUseNativeDialog, true);
+
+    if (fileDialog.exec()) {
+        QString filePath = fileDialog.selectedFiles().first();
+        QInputDialog symlinkNameDialog(this);
+
+        symlinkNameDialog.setInputMode(QInputDialog::TextInput);
+        symlinkNameDialog.setOkButtonText("Add");
+        symlinkNameDialog.setLabelText("Select the symlink name");
+        if (symlinkNameDialog.exec()) {
+            QString linkName = symlinkNameDialog.textValue();
+            QString fullSymlinkPath = integratedSymlinkDestination().absolutePath() + "/" + linkName;
+            system(QString("ln -s %1 %2").arg(filePath, fullSymlinkPath).toStdString().c_str());
+            addSymlinkToListView(fullSymlinkPath);
+
+            // As the actions is taken right way, it should apply the settings
+            // may create another function to update just this entry
+            saveSettings();
+        }
     }
 }
 
@@ -222,7 +336,34 @@ void SettingsDialog::onRemoveDirectoryToWatchButtonClicked() {
     }
 }
 
+void SettingsDialog::onRemoveSymlinkButtonClicked() {
+    auto* widget = ui->symlinkList;
+
+    auto* currentItem = widget->currentItem();
+
+    if (currentItem == nullptr)
+        return;
+
+    const auto index = widget->row(currentItem);
+
+    system(QString("rm %1").arg(currentItem->text()).toStdString().c_str());
+
+    // after taking it, we have to delete it ourselves, Qt docs say
+    auto deletedItem = widget->takeItem(index);
+    delete deletedItem;
+
+    // we should deactivate the remove button once the last item is gone
+    if (widget->item(0) == nullptr) {
+        ui->removeLinkButton->setEnabled(false);
+    }
+}
+
 void SettingsDialog::onDirectoryToWatchItemActivated(QListWidgetItem* item) {
     // we activate the button based on whether there's an item selected
     ui->additionalDirsRemoveButton->setEnabled(item != nullptr);
+}
+
+void SettingsDialog::onSymlinkItemActivated(QListWidgetItem* item) {
+    // we activate the button based on whether there's an item selected
+    ui->removeLinkButton->setEnabled(item != nullptr);
 }

@@ -137,7 +137,7 @@ public:
 
     void writeConfigFile() {
         bool askToMove = firstRunDialog->askMoveCheckBox->checkState() == Qt::Checked;
-        createConfigFile(askToMove ? 1 : 0, destinationDir, -1);
+        createConfigFile(askToMove ? 1 : 0, destinationDir, "", -1);
     }
 };
 

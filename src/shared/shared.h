@@ -24,6 +24,9 @@ enum IntegrationState {
 // currently hardcoded, can not be changed by users
 static const auto DEFAULT_INTEGRATION_DESTINATION = QString(getenv("HOME")) + "/Applications/";
 
+static const auto DEFAULT_SYMLINK_DESTINATION = QString(getenv("HOME")) + "/.local/bin";
+
+
 // little convenience method to display warnings
 void displayWarning(const QString& message);
 
@@ -65,8 +68,8 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
 // askToMove and enableDaemon both are bools but represented as int to add some sort of "unset" state
 // < 0: unset; 0 = false; > 0 = true
 // destination is a string that, when empty, will be interpreted as "use default"
-void createConfigFile(int askToMove, const QString& destination, int enableDaemon,
-                      const QStringList& additionalDirsToWatch = {}, int monitorMountedFilesystems = -1);
+void createConfigFile(int askToMove, const QString& destination, const QString& symlinkPath, int enableDaemon,
+                      const QStringList& additionalDirsToWatch = {}, const QStringList& symlinks = {} , int monitorMountedFilesystems = -1);
 
 // replaces ~ character in paths with real home directory, if necessary and possible
 QString expandTilde(QString path);
@@ -76,6 +79,9 @@ QSettings* getConfig(QObject* parent = nullptr);
 
 // return directory into which the integrated AppImages will be moved
 QDir integratedAppImagesDestination();
+
+// return directory into which the integrated symlinks will be placed
+QDir integratedSymlinkDestination();
 
 // additional directories to monitor for AppImages, and to permit AppImages to be within (i.e., shall not ask whether
 // to move to the main location, if they're in one of these, it's all good)
