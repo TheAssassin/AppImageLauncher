@@ -56,15 +56,6 @@ function(make_preload_lib_target target_name)
         # hide all symbols by default
         -fvisibility=hidden
     )
-
-    # a bit of a hack, but it seems to make binfmt bypass work in really old Docker images (e.g., CentOS <= 7)
-    add_custom_command(
-        TARGET ${target_name}
-        POST_BUILD
-        COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/fix-preload-library.sh $<TARGET_FILE_NAME:${target_name}>
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        VERBATIM
-    )
 endfunction()
 
 make_preload_lib_target(${preload_lib})
@@ -95,21 +86,23 @@ endif()
 # this is a workaround to existing issues using AppImages in Docker with AppImageLauncher installed on the host system
 check_program(NAME xxd)
 
-function(generate_preload_lib_header target_name)
-    add_custom_command(
-        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${target_name}.h
-        COMMAND xxd -i $<TARGET_FILE_NAME:${target_name}> ${target_name}.h
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        DEPENDS ${target_name}
-        VERBATIM
-    )
-endfunction()
-
-generate_preload_lib_header(${preload_lib})
+add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${preload_lib}.h
+    COMMAND xxd -i $<TARGET_FILE_NAME:${preload_lib}> ${preload_lib}.h
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    DEPENDS ${preload_lib}
+    VERBATIM
+)
 
 # same story for 32-bit lib
 if (build_32bit_preload_library)
-    generate_preload_lib_header(${preload_lib_32bit})
+    add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${preload_lib_32bit}.h
+        COMMAND xxd -i $<TARGET_FILE_NAME:${preload_lib_32bit}> ${preload_lib_32bit}.h
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        DEPENDS ${preload_lib_32bit}
+        VERBATIM
+    )
 endif()
 
 # the lib provides an algorithm to extract the runtime, patch it and launch it, preloading our preload lib to make the
