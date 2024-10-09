@@ -3,7 +3,7 @@
 set -eo pipefail
 
 echo "Removing AppImageLauncher as interpreter for AppImages"
-(set -x; systemctl restart systemd-binfmt)
+systemctl try-restart systemd-binfmt.service || echo "ERROR: failed to execute 'systemctl try-restart systemd-binfmt.service', apply/remove binfmt integration manually" >&2
 
 update_notifier="/usr/share/update-notifier/notify-reboot-required"
 if [ -x "$update_notifier" ]; then
