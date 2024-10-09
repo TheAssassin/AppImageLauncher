@@ -14,7 +14,7 @@ You can download the source either using Git or by mannually downloading a tarba
 The branch can be customized by setting the `-b` or `--branch` argument. Select `stable` to download the current stable source or use `master` to get the most current unstable source containing the latest features.
 
 ```shell
-git clone https://github.com/TheAssassin/AppImageLauncher.git -b stable
+git clone https://github.com/TheAssassin/AppImageLauncher.git -b master
 cd AppImageLauncher
 git submodule update --init --recursive
 ```
@@ -62,8 +62,8 @@ make
 
 Now you may create a distribution package or alternatively install the source for testing purpose.
 
-*Note: This may harm your system. It's highly recommended to build and install distribution packages instead.*
+Directly running `make install` will carry a high risk of breaking your system, so it's suggested that you use `checkinstall` instead.  Install `checkinstall` with your system's package manager, and then run the installation via checkinstall.
 
 ```shell
-sudo make install
+sudo checkinstall
 ```
