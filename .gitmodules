@@ -1,3 +1,0 @@
-[submodule "lib/AppImageUpdate"]
-	path = lib/AppImageUpdate
-	url = https://github.com/AppImageCommunity/AppImageUpdate.git

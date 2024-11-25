@@ -2,7 +2,7 @@
 # it will replace such paths with relative ones
 # see https://reproducible-builds.org/docs/build-path/ for more information
 
-cmake_minimum_required(VERSION 3.4)
+cmake_minimum_required(VERSION 3.5)
 
 include(CheckCCompilerFlag)
 

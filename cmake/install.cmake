@@ -1,3 +1,6 @@
+# required by file(CHMOD ...)
+cmake_minimum_required(VERSION 3.19)
+
 # define private libraries install destination
 include(GNUInstallDirs)
 
@@ -26,28 +29,19 @@ set(_abs_private_libdir ${CMAKE_INSTALL_PREFIX}/${_private_libdir})
 file(RELATIVE_PATH _rpath ${_abs_bindir} ${_abs_private_libdir})
 set(_rpath "\$ORIGIN/${_rpath}")
 
-
 # install libappimage.so into lib/appimagekit to avoid overwriting a libappimage potentially installed into /usr/lib
 # or /usr/lib/x86_64-... or wherever the OS puts its libraries
-# for some reason, using TARGETS ... doesn't work here, therefore using the absolute file path
-file(GLOB libappimage_files ${PROJECT_BINARY_DIR}/lib/libappimage/src/libappimage/libappimage.so*)
-file(GLOB libappimageupdate_files ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/src/libappimageupdate.so*)
-file(GLOB libappimageupdate-qt_files ${PROJECT_BINARY_DIR}/lib/AppImageUpdate/src/qt-ui/libappimageupdate-qt.so*)
+install(
+    TARGETS libappimage
+    LIBRARY DESTINATION "${_private_libdir}" COMPONENT APPIMAGELAUNCHER
+)
 
-foreach(i libappimage libappimageupdate libappimageupdate-qt)
-    # prevent unnecessary messages
-    if(NOT i STREQUAL libappimage OR NOT USE_SYSTEM_LIBAPPIMAGE)
-        if(NOT ${i}_files)
-            message(WARNING "Could not find ${i} library files, cannot bundle; if you want to bundle the files, please re-run cmake before calling make install")
-        else()
-            install(
-                FILES
-                ${${i}_files}
-                DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
-            )
-        endif()
-    endif()
-endforeach()
+if(ENABLE_UPDATE_HELPER)
+    install(
+        TARGETS libappimageupdate libappimageupdate-qt
+        LIBRARY DESTINATION "${_private_libdir}" COMPONENT APPIMAGELAUNCHER
+    )
+endif()
 
 if(NOT BUILD_LITE)
     # unfortunately, due to a cyclic dependency, we need to hardcode parts of this variable, which is included in the
@@ -73,6 +67,18 @@ if(NOT BUILD_LITE)
     install(
         FILES ${PROJECT_BINARY_DIR}/resources/binfmt.d/appimagelauncher.conf
         DESTINATION lib/binfmt.d COMPONENT APPIMAGELAUNCHER
+    )
+
+    # prepare postinst and prerm hooks to Debian package
+    configure_file(
+        ${PROJECT_SOURCE_DIR}/resources/install-scripts/post-install.in
+        ${PROJECT_BINARY_DIR}/cmake/debian/postinst
+        @ONLY
+    )
+    configure_file(
+        ${PROJECT_SOURCE_DIR}/resources/install-scripts/post-uninstall.in
+        ${PROJECT_BINARY_DIR}/cmake/debian/postrm
+        @ONLY
     )
 endif()
 
