@@ -39,7 +39,8 @@ target_link_libraries(remove shared translationmanager libappimage)
 set_target_properties(remove PROPERTIES INSTALL_RPATH "\$ORIGIN")
 
 install(
-    TARGETS remove
+    TARGETS
+    remove
     RUNTIME DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
 )
 
@@ -52,7 +53,8 @@ if(ENABLE_UPDATE_HELPER)
     set_target_properties(update PROPERTIES INSTALL_RPATH "\$ORIGIN")
 
     install(
-        TARGETS update
+        TARGETS
+        update
         RUNTIME DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
     )
 endif()

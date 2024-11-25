@@ -1,23 +1,6 @@
 #! /bin/bash
 
-if [[ "$DIST" == "" ]] || [[ "$ARCH" == "" ]]; then
-    echo "Usage: env DIST=... ARCH=... bash $0"
-    exit 2
-fi
-
-# this script is supposed to be run on Debian(-like) distros currently
-# therefore, we abort if we can't detect such an environment
-# for instance, we automatically set the debian compat level for CMake to $DIST, and also want to build (working) .deb archives
-dist_id="$(cat /etc/*release | grep -E '^ID=' | cut -d= -f2)"
-dist_like_id="$(cat /etc/*release | grep -E '^ID_LIKE=' | cut -d= -f2)"
-
-if [[ "$dist_id" != "debian" ]] && [[ "$dist_like_id" != "debian" ]]; then
-    echo "Error: this script can only be used on Debian(-like) distributions"
-    exit 2
-fi
-
-set -x
-set -eo pipefail
+set -euo pipefail
 
 # use RAM disk if possible
 if [ -d /dev/shm ] && mount | grep /dev/shm | grep -v -q noexec; then
@@ -61,69 +44,59 @@ cmake_args=(
     "-DCMAKE_INSTALL_PREFIX=/usr"
     "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
     "-DCPACK_DEBIAN_COMPATIBILITY_LEVEL=$DIST"
-    "-DCI_BUILD=ON"
     "-DBUILD_TESTING=OFF"
+    "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
 )
+
+if [[ "${BUILD_LITE:-}" != "" ]]; then
+    cmake_args+=("-DBUILD_LITE=ON")
+fi
 
 export QT_SELECT=qt5
 
-if [ "$ARCH" == "i386" ]; then
-    cmake_args+=(
-        "-DCMAKE_TOOLCHAIN_FILE=$REPO_ROOT/cmake/toolchains/i386-linux-gnu.cmake"
-        "-DUSE_SYSTEM_XZ=ON"
-        "-DUSE_SYSTEM_LIBARCHIVE=ON"
-    )
+cmake "$REPO_ROOT" "${cmake_args[@]}"
 
-    if [ "$DIST" == "xenial" ]; then
-        export QT_SELECT=qt5-i386-linux-gnu
-    fi
-fi
+make -j$(nproc)
 
-if [ "$ARCH" == "armhf" ]; then
-    export QT_SELECT=qt5-arm-linux-gnueabihf
-fi
+# prepare AppDir
+make install DESTDIR=AppDir
 
-if [ "$ARCH" == "arm64" ]; then
-    # only clang allows for easy cross-compilation of a 32-bit version of the binfmt-bypass preload lib
-    cmake_args+=(
-        "-DCMAKE_C_COMPILER=clang-8"
-        "-DCMAKE_CXX_COMPILER=clang++-8"
-    )
-    # RPM-based Linux distributions use aarch64 instead of arm64 as ARM64 architecture name.
-    ARCH="aarch64"
-fi
+ARCH="$(dpkg --print-architecture)"
+[[ "$ARCH" == "amd64" ]] && ARCH=x86_64
 
-export CPACK_RPM_PACKAGE_ARCHITECTURE="${ARCH}"
+# build release formats
+wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-"$ARCH".AppImage
+wget https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-"$ARCH".AppImage
+wget https://github.com/linuxdeploy/linuxdeploy-plugin-native_packages/releases/download/continuous/linuxdeploy-plugin-native_packages-x86_64.AppImage
+chmod -v +x linuxdeploy*-"$ARCH".AppImage
 
-cmake "$REPO_ROOT" "${cmake_args[@]}" 
+VERSION=$(src/cli/ail-cli --version | awk '{print $3}')
 
-# now, compile
-if [[ "$CI" == "" ]]; then
-    nproc="$(nproc --ignore=1)"
+gha_build="$GITHUB_RUN_NUMBER"
+
+if [[ "$gha_build" != "" ]]; then
+    VERSION="${VERSION}-gha${gha_build}"
 else
-    nproc="$(nproc)"
+    VERSION="${VERSION}-local"
 fi
 
-nproc=1
-make -j "$nproc"
+VERSION="${VERSION}~$(cd "$REPO_ROOT" && git rev-parse --short HEAD)"
 
-# re-run cmake to find built shared objects with the globs, and update the CPack files
-cmake .
+# might seem pointless, but it's necessary to have the version number written inside the AppImage as well
+export VERSION
 
-# build Debian package
-cpack -V -G DEB
+OUTPUT="$(echo appimagelauncher-lite-"$VERSION"-"$ARCH".AppImage | tr '~' -)"
+export OUTPUT
 
-# build RPM package
-cpack -V -G RPM
+export APPIMAGE_EXTRACT_AND_RUN=1
 
-# build source tarball
-# generates a lot of output, therefore not run in verbose mode
-cpack --config CPackSourceConfig.cmake
+# since we extracted common parts from the installer built into the AppRun script, we have to copy the "library" script
+# before building an AppImage
+install "$REPO_ROOT"/resources/appimagelauncher-lite-installer-common.sh "$(readlink -f AppDir/)"
 
-# generate log for debugging
-# CPack is very verbose, therefore we generate a file and upload it
-cpack --config CPackSourceConfig.cmake -V
+./linuxdeploy-"$ARCH".AppImage --plugin qt --appdir "$(readlink -f AppDir)" --custom-apprun "$REPO_ROOT"/resources/appimagelauncher-lite-AppRun.sh --output native_packages \
+    -d "$REPO_ROOT"/resources/appimagelauncher-lite.desktop \
+    -e "$(find AppDir/usr/lib/{,*/}appimagelauncher/remove | head -n1)" \
+    -e "$(find AppDir/usr/lib/{,*/}appimagelauncher/update | head -n1)"
 
-mv appimagelauncher*.{deb,rpm}* appimagelauncher*.tar* "$OLD_CWD"/
-
-popd
+mv "$OUTPUT" "$OLD_CWD"

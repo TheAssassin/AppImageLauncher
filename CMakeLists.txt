@@ -13,7 +13,7 @@ include(cmake/reproducible_builds.cmake)
 
 # support for ccache
 # call CMake with -DUSE_CCACHE=ON to make use of it
-set(USE_CCACHE OFF CACHE BOOL "")
+option(USE_CCACHE OFF)
 if(USE_CCACHE)
     find_program(CCACHE ccache)
     if(CCACHE)
@@ -29,21 +29,42 @@ endif()
 include(GNUInstallDirs)
 
 # if there's a system libappimage package on the system, we can use that directly
-set(USE_SYSTEM_LIBAPPIMAGE OFF CACHE BOOL "")
+option(USE_SYSTEM_LIBAPPIMAGE OFF)
 
 # if the system version should be used, import globally _before_ including third-party stuff and own executables/libs
 if(USE_SYSTEM_LIBAPPIMAGE)
     find_package(libappimage REQUIRED)
 endif()
 
+include(FetchContent)
+
+# AppImageUpdate is needed for the updater UI (and libappimage)
+FetchContent_Declare(AppImageUpdate
+    GIT_REPOSITORY https://github.com/AppImageCommunity/AppImageUpdate.git
+    GIT_TAG 2.0.0-alpha-1-20241016
+    EXCLUDE_FROM_ALL
+)
+
+# work around Wimplicit-function-declaration in ancient squashfuse code
+set(DEPENDENCIES_CFLAGS "-Wno-implicit-function-declaration" CACHE STRING "" FORCE)
+
+# note: for the time being, we require AppImageUpdate to be fetched during build, even if only to make libappimage available
+FetchContent_MakeAvailable(AppImageUpdate)
+
+option(ENABLE_UPDATE_HELPER ON)
+if(ENABLE_UPDATE_HELPER)
+    # instruct AppImageUpdate to build the Qt UI
+    set(BUILD_QT_UI ON CACHE BOOL "" FORCE)
+endif()
+
+
 # optional; if AppImageUpdate dependency is not viable, the update helper can be disabled
-set(ENABLE_UPDATE_HELPER ON CACHE BOOL "")
+option(ENABLE_UPDATE_HELPER ON)
 
 # install resources, bundle libraries privately, etc.
 # initializes important installation destination variables, therefore must be included before adding subdirectories
 include(cmake/install.cmake)
 
-add_subdirectory(lib)
 add_subdirectory(src)
 
 # contains install configs for resource files
@@ -51,12 +72,3 @@ add_subdirectory(resources)
 
 # translation management
 add_subdirectory(i18n)
-
-# packaging
-include(cmake/cpack_general.cmake)
-include(cmake/cpack_source.cmake)
-include(cmake/cpack_deb.cmake)
-include(cmake/cpack_rpm.cmake)
-
-# must be the last instruction
-include(CPack)

@@ -124,7 +124,7 @@ target_compile_options(${bypass_lib}
     PUBLIC -D_GNU_SOURCE
     # obviously needs to be private, otherwise the value leaks into users of this lib
     PRIVATE -DCOMPONENT_NAME="lib"
-    )
+)
 if(build_32bit_preload_library)
     target_compile_options(${bypass_lib}
         PRIVATE -DPRELOAD_LIB_PATH_32BIT="${CMAKE_INSTALL_PREFIX}/${_private_libdir}/$<TARGET_FILE_NAME:${preload_lib_32bit}>"
@@ -174,12 +174,12 @@ target_link_options(${binfmt_interpreter}
 
 install(
     TARGETS ${bypass_bin} ${preload_lib} ${binfmt_interpreter}
-    RUNTIME DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
-    LIBRARY DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
+    RUNTIME DESTINATION bin COMPONENT APPIMAGELAUNCHER
+    LIBRARY DESTINATION lib COMPONENT APPIMAGELAUNCHER
 )
 if(build_32bit_preload_library)
     install(
         TARGETS ${preload_lib}
-        LIBRARY DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
+        LIBRARY DESTINATION lib
     )
 endif()
