@@ -1,12 +1,11 @@
 #! /bin/bash
 
-if [[ "$DIST" == "" ]] || [[ "$ARCH" == "" ]]; then
-    echo "Usage: env ARCH=... DIST=... bash $0"
+if [[ "$DOCKER_PLATFORM" == "" ]]; then
+    echo "Usage: env $DOCKER_PLATFORM=... bash $0"
     exit 1
 fi
 
-set -x
-set -eo pipefail
+set -euo pipefail
 
 # the other script sources this script, therefore we have to support that use case
 if [[ "${BASH_SOURCE[*]}" != "" ]]; then
@@ -15,31 +14,47 @@ else
     this_dir="$(readlink -f "$(dirname "$0")")"
 fi
 
-# needed to keep user ID in and outside Docker in sync to be able to write to workspace directory
-image=quay.io/appimagelauncher/build:"$DIST"-"$ARCH"
-dockerfile="$this_dir"/Dockerfile."$DIST"-"$ARCH"
+image=ghcr.io/theassassin/appimagelauncher-build
 
-if [[ "$BUILD_LITE" != "" ]]; then
-    image="$image"-lite
-    dockerfile="$dockerfile"-lite
+docker_command=(
+    docker buildx build
+    --pull
+    --platform "$DOCKER_PLATFORM"
+    --build-arg DOCKER_PLATFORM="$DOCKER_PLATFORM"
+
+    # we can always cache from the image
+    --cache-from type=registry,ref="$image"
+
+    --tag "$image"
+)
+
+if [[ "${GITHUB_CI:-}" != "" ]]; then
+    docker_command+=(
+        --cache-to inline
+    )
+else
+    echo ci
 fi
 
-if [ ! -f "$dockerfile" ]; then
-    echo "Error: $dockerfile could not be found"
-    exit 1
-fi
 
-# speed up build by pulling last built image from quay.io and building the docker file using the old image as a base
-docker pull "$image" || true
+# depending on the type of the build (and thus caching), we need different flags to be set
+
+
+docker_command+=(
+   "$this_dir"
+)
+
+# using inline cache to speed up builds by fetching the image from the GitHub registry first
+# this should speed up local builds as well
 # if the image hasn't changed, this should be a no-op
-docker build --pull --cache-from "$image" -t "$image" -f "$dockerfile" "$this_dir"
+"${docker_command[@]}"
 
 # push built image as cache for future builds to registry
 # we can do that immediately once the image has been built successfully; if its definition ever changes it will be
 # rebuilt anyway
 # credentials shall only be available on (protected) master branch
 set +x
-if [[ "$DOCKER_USERNAME" != "" ]]; then
+if [[ "${DOCKER_USERNAME:-}" != "" ]]; then
     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin quay.io
     docker push "$image"
 fi
