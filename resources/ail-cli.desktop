@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Exec=ail-cli
+Name=AppImageLauncher CLI
+Icon=AppImageLauncher
+Terminal=false
+Categories=Utility;
+NoDisplay=true
+X-AppImage-Integrate=false
+StartupWMClass=AppImageLauncher
