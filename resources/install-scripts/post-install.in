@@ -6,6 +6,12 @@ echo "Installing AppImageLauncher as interpreter for AppImages"
 
 # as there's no _real_ package that we could use as a dependency to take care of the kernel module,
 # we need to make sure that the kernel module is loaded manually
-modprobe -v binfmt_misc
+if which modprobe &> /dev/null; then
+    if ! modprobe -v binfmt_misc; then
+        echo "modprobe failed, binfmt_misc might be unavailable"
+    fi
+else
+    echo "modprobe not found, cannot enable binfmt_misc, skipping"
+fi
 
 (set -x; systemctl restart systemd-binfmt)
