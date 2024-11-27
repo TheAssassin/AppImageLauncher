@@ -22,6 +22,8 @@ install(
     FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/appimagelauncher.desktop
     ${CMAKE_CURRENT_SOURCE_DIR}/appimagelaunchersettings.desktop
+    ${CMAKE_CURRENT_SOURCE_DIR}/appimagelauncherd.desktop
+    ${CMAKE_CURRENT_SOURCE_DIR}/ail-cli.desktop
     DESTINATION ${CMAKE_INSTALL_DATADIR}/applications COMPONENT APPIMAGELAUNCHER
 )
 
