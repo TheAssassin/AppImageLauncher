@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Exec=appimagelauncherd
+Name=appimagelauncherd
+Icon=appimagelauncherd
+Terminal=true
+Categories=Utility;
+NoDisplay=true
+X-AppImage-Integrate=false
