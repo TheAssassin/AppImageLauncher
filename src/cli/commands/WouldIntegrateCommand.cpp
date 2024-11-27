@@ -75,7 +75,7 @@ namespace appimagelauncher {
                         throw WouldNotIntegrateError("Terminal AppImages should not be integrated");
                     }
 
-                    qerr() << "AppImage should be integrated";
+                    qerr() << "AppImage should be integrated" << endl;
                 }
             }
         }
