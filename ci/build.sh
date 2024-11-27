@@ -43,9 +43,9 @@ cmake_args=(
     "-DCMAKE_CXX_COMPILER=clang++"
     "-DCMAKE_INSTALL_PREFIX=/usr"
     "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
-    "-DCPACK_DEBIAN_COMPATIBILITY_LEVEL=$DIST"
     "-DBUILD_TESTING=OFF"
     "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
+    "-DENABLE_UPDATE_HELPER=ON"
 )
 
 if [[ "${BUILD_LITE:-}" != "" ]]; then
@@ -72,7 +72,7 @@ chmod -v +x linuxdeploy*-"$ARCH".AppImage
 
 VERSION=$(src/cli/ail-cli --version | awk '{print $3}')
 
-gha_build="$GITHUB_RUN_NUMBER"
+gha_build="${GITHUB_RUN_NUMBER:-}"
 
 if [[ "$gha_build" != "" ]]; then
     VERSION="${VERSION}-gha${gha_build}"

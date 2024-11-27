@@ -174,12 +174,12 @@ target_link_options(${binfmt_interpreter}
 
 install(
     TARGETS ${bypass_bin} ${preload_lib} ${binfmt_interpreter}
-    RUNTIME DESTINATION bin COMPONENT APPIMAGELAUNCHER
-    LIBRARY DESTINATION lib COMPONENT APPIMAGELAUNCHER
+    RUNTIME DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
+    LIBRARY DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
 )
 if(build_32bit_preload_library)
     install(
         TARGETS ${preload_lib}
-        LIBRARY DESTINATION lib
+        LIBRARY DESTINATION ${_private_libdir}
     )
 endif()

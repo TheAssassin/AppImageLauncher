@@ -41,15 +41,12 @@ include(FetchContent)
 # AppImageUpdate is needed for the updater UI (and libappimage)
 FetchContent_Declare(AppImageUpdate
     GIT_REPOSITORY https://github.com/AppImageCommunity/AppImageUpdate.git
-    GIT_TAG 2.0.0-alpha-1-20241016
+    GIT_TAG 2.0.0-alpha-1-20241125
     EXCLUDE_FROM_ALL
 )
 
 # work around Wimplicit-function-declaration in ancient squashfuse code
 set(DEPENDENCIES_CFLAGS "-Wno-implicit-function-declaration" CACHE STRING "" FORCE)
-
-# note: for the time being, we require AppImageUpdate to be fetched during build, even if only to make libappimage available
-FetchContent_MakeAvailable(AppImageUpdate)
 
 option(ENABLE_UPDATE_HELPER ON)
 if(ENABLE_UPDATE_HELPER)
@@ -57,9 +54,8 @@ if(ENABLE_UPDATE_HELPER)
     set(BUILD_QT_UI ON CACHE BOOL "" FORCE)
 endif()
 
-
-# optional; if AppImageUpdate dependency is not viable, the update helper can be disabled
-option(ENABLE_UPDATE_HELPER ON)
+# note: for the time being, we require AppImageUpdate to be fetched during build, even if only to make libappimage available
+FetchContent_MakeAvailable(AppImageUpdate)
 
 # install resources, bundle libraries privately, etc.
 # initializes important installation destination variables, therefore must be included before adding subdirectories

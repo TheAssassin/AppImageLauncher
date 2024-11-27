@@ -1,3 +1,6 @@
+# required by file(CHMOD ...)
+cmake_minimum_required(VERSION 3.19)
+
 # define private libraries install destination
 include(GNUInstallDirs)
 
@@ -28,8 +31,17 @@ set(_rpath "\$ORIGIN/${_rpath}")
 
 # install libappimage.so into lib/appimagekit to avoid overwriting a libappimage potentially installed into /usr/lib
 # or /usr/lib/x86_64-... or wherever the OS puts its libraries
-install(TARGETS libappimage LIBRARY DESTINATION "${_private_libdir}")
+install(
+    TARGETS libappimage
+    LIBRARY DESTINATION "${_private_libdir}" COMPONENT APPIMAGELAUNCHER
+)
 
+if(ENABLE_UPDATE_HELPER)
+    install(
+        TARGETS libappimageupdate libappimageupdate-qt
+        LIBRARY DESTINATION "${_private_libdir}" COMPONENT APPIMAGELAUNCHER
+    )
+endif()
 
 if(NOT BUILD_LITE)
     # unfortunately, due to a cyclic dependency, we need to hardcode parts of this variable, which is included in the
@@ -55,6 +67,18 @@ if(NOT BUILD_LITE)
     install(
         FILES ${PROJECT_BINARY_DIR}/resources/binfmt.d/appimagelauncher.conf
         DESTINATION lib/binfmt.d COMPONENT APPIMAGELAUNCHER
+    )
+
+    # prepare postinst and prerm hooks to Debian package
+    configure_file(
+        ${PROJECT_SOURCE_DIR}/resources/install-scripts/post-install.in
+        ${PROJECT_BINARY_DIR}/cmake/debian/postinst
+        @ONLY
+    )
+    configure_file(
+        ${PROJECT_SOURCE_DIR}/resources/install-scripts/post-uninstall.in
+        ${PROJECT_BINARY_DIR}/cmake/debian/postrm
+        @ONLY
     )
 endif()
 
