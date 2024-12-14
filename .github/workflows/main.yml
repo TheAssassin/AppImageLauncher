@@ -8,25 +8,19 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - NAME: bionic x86_64
+          - NAME: Packages x86_64
             ARCH: x86_64
-            DIST: bionic
-          - NAME: bionic i386
+          - NAME: Packages i386
             ARCH: i386
-            DIST: bionic
-          - NAME: bionic arm64
+          - NAME: Packages arm64
             ARCH: arm64
-            DIST: bionic
-          - NAME: bionic armhf
+          - NAME: Packages armhf
             ARCH: armhf
-            DIST: bionic
-          - NAME: Lite AppImage bionic x86_64
+          - NAME: Lite AppImage x86_64
             ARCH: x86_64
-            DIST: bionic
             BUILD_LITE: 1
-          - NAME: Lite AppImage bionic i386
+          - NAME: Lite AppImage i386
             ARCH: i386
-            DIST: bionic
             BUILD_LITE: 1
 
     name: ${{ matrix.NAME }}
@@ -47,9 +41,9 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       - name: Archive artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: build
+          name: build ${{ matrix.NAME }}
           path: |
               appimagelauncher*.deb*
               appimagelauncher*.rpm*
@@ -63,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
       - name: Inspect directory after downloading artifacts
         run: ls -alFR
       - name: Create release and upload artifacts
