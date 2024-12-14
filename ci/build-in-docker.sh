@@ -13,13 +13,6 @@ cd "$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")"
 # sets variables $image, $dockerfile
 source build-docker-image.sh
 
-# figure out which build script to use
-if [[ "${BUILD_LITE:-}" == "" ]]; then
-    build_script=build.sh
-else
-    build_script=build-lite.sh
-fi
-
 DOCKER_OPTS=()
 # fix for https://stackoverflow.com/questions/51195528/rcc-error-in-resource-qrc-cannot-find-file-png
 if [ "${CI:-}" != "" ]; then
@@ -41,8 +34,8 @@ fi
 #   b) allow the build scripts to "mv" the binaries into the /out directory
 uid="$(id -u)"
 # run build
-docker run -e DIST -e ARCH -e GITHUB_RUN_NUMBER -e GITHUB_RUN_ID --rm -i --user "$uid" \
+docker run -e DIST -e ARCH -e GITHUB_RUN_NUMBER -e GITHUB_RUN_ID --rm -i --user "$uid" -w /ws -e CI=1 \
      "${DOCKER_OPTS[@]}" -v "$(readlink -f ..):/ws" \
      "$image" \
-     bash -xc "export CI=1 && cd /ws && source ci/$build_script"
+     bash ci/build.sh
 
