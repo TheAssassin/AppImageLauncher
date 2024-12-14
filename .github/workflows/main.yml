@@ -10,17 +10,12 @@ jobs:
         include:
           - NAME: Packages x86_64
             DOCKER_PLATFORM: linux/amd64
-          - NAME: Packages i386
-            DOCKER_PLATFORM: linux/386
           - NAME: Packages arm64
             DOCKER_PLATFORM: linux/arm64/v8
           - NAME: Packages armhf
             DOCKER_PLATFORM: linux/arm/v7
           - NAME: Lite AppImage x86_64
             DOCKER_PLATFORM: linux/amd64
-            BUILD_LITE: 1
-          - NAME: Lite AppImage i386
-            DOCKER_PLATFORM: linux/386
             BUILD_LITE: 1
 
     name: ${{ matrix.NAME }}
