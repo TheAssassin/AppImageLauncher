@@ -30,6 +30,12 @@ jobs:
           submodules: 'recursive'
       - name: Set up QEMU integration for Docker
         run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build in Docker
         run: bash -ex ci/build-in-docker.sh
         env:
