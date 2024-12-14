@@ -45,10 +45,11 @@ cmake_args=(
     "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
     "-DBUILD_TESTING=OFF"
     "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
-    "-DENABLE_UPDATE_HELPER=ON"
 )
 
-if [[ "${BUILD_LITE:-}" != "" ]]; then
+if [[ "${BUILD_LITE:-}" == "" ]]; then
+    cmake_args+=("-DENABLE_UPDATE_HELPER=ON")
+else
     cmake_args+=("-DBUILD_LITE=ON")
 fi
 
@@ -67,8 +68,6 @@ ARCH="$(dpkg --print-architecture)"
 # build release formats
 wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-"$ARCH".AppImage
 wget https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-"$ARCH".AppImage
-wget https://github.com/linuxdeploy/linuxdeploy-plugin-native_packages/releases/download/continuous/linuxdeploy-plugin-native_packages-x86_64.AppImage
-chmod -v +x linuxdeploy*-"$ARCH".AppImage
 
 VERSION=$(src/cli/ail-cli --version | awk '{print $3}')
 
@@ -80,23 +79,90 @@ else
     VERSION="${VERSION}-local"
 fi
 
-VERSION="${VERSION}~$(cd "$REPO_ROOT" && git rev-parse --short HEAD)"
+# should be overwritten for every output plugin below, this is a fallback only
+export LINUXDEPLOY_OUTPUT_APP_NAME=appimagelauncher
 
-# might seem pointless, but it's necessary to have the version number written inside the AppImage as well
-export VERSION
-
-OUTPUT="$(echo appimagelauncher-lite-"$VERSION"-"$ARCH".AppImage | tr '~' -)"
-export OUTPUT
+LINUXDEPLOY_OUTPUT_VERSION="${VERSION}~$(cd "$REPO_ROOT" && git rev-parse --short HEAD)"
+export LINUXDEPLOY_OUTPUT_VERSION
 
 export APPIMAGE_EXTRACT_AND_RUN=1
 
-# since we extracted common parts from the installer built into the AppRun script, we have to copy the "library" script
-# before building an AppImage
-install "$REPO_ROOT"/resources/appimagelauncher-lite-installer-common.sh "$(readlink -f AppDir/)"
+linuxdeploy_extra_args=()
 
-./linuxdeploy-"$ARCH".AppImage --plugin qt --appdir "$(readlink -f AppDir)" --custom-apprun "$REPO_ROOT"/resources/appimagelauncher-lite-AppRun.sh --output native_packages \
-    -d "$REPO_ROOT"/resources/appimagelauncher-lite.desktop \
-    -e "$(find AppDir/usr/lib/{,*/}appimagelauncher/remove | head -n1)" \
-    -e "$(find AppDir/usr/lib/{,*/}appimagelauncher/update | head -n1)"
+if [[ "${BUILD_LITE:-}" == "" ]]; then
+    # configure linuxdeploy-plugin-native_packages
+    export LDNP_PACKAGE_NAME=appimagelauncher
 
-mv "$OUTPUT" "$OLD_CWD"
+    export LDNP_BUILD="deb rpm"
+    export LDNP_DESCRIPTION=""
+    export LDNP_SHORT_DESCRIPTION=""
+
+    case "$ARCH" in
+        x86_64)
+            rpm_build_arch=x86_64
+            deb_build_arch=amd64
+            ;;
+        i?86)
+            rpm_build_arch=i386
+            deb_build_arch=i386
+            ;;
+        armhf|aarch64)
+            deb_build_arch="$ARCH"
+            rpm_build_arch="$ARCH"
+            ;;
+        *)
+            echo "Unsupported architecture: $ARCH"
+            exit 2
+            ;;
+    esac
+
+    # common meta info
+    export LDNP_META_URL="https://github.com/TheAssassin/AppImageLauncher"
+    export LDNP_META_BUG_URL="https://github.com/TheAssassin/AppImageLauncher/issues"
+    export LDNP_META_VENDOR="TheAssassin"
+
+    export LDNP_META_DEB_DEPENDS="systemd, libgl1, libfontconfig1, libharfbuzz0b, libfribidi0"
+    export LDNP_META_DEB_BUILD_ARCH="$deb_build_arch"
+    export LDNP_META_DEB_PRE_DEPENDS="bash"
+    export LDNP_DEB_EXTRA_DEBIAN_FILES="${BUILD_DIR}/cmake/debian/postinst;${BUILD_DIR}/cmake/debian/postrm"
+
+    export LDNP_META_RPM_REQUIRES="systemd libGL.so.1 libfontconfig.so.1 libfreetype.so.6 libfribidi.so.0 libgpg-error.so.0 libharfbuzz.so.0"
+    export LDNP_META_RPM_BUILD_ARCH="$rpm_build_arch"
+    export LDNP_RPM_SCRIPTLET_POST="${BUILD_DIR}/cmake/debian/postinst"
+    export LDNP_RPM_SCRIPTLET_PREUN="${BUILD_DIR}/cmake/debian/postrm"
+
+    # updater is not available for the lite build
+    linuxdeploy_extra_args+=(
+        -e "$(find AppDir/usr/lib/*/appimagelauncher/update | head -n1)"
+        --output native_packages
+    )
+
+    wget https://github.com/linuxdeploy/linuxdeploy-plugin-native_packages/releases/download/continuous/linuxdeploy-plugin-native_packages-x86_64.AppImage
+else
+    linuxdeploy_extra_args+=(
+        --custom-apprun "$REPO_ROOT"/resources/appimagelauncher-lite-AppRun.sh
+        --output appimage
+    )
+
+    LDAI_OUTPUT="$(echo appimagelauncher-lite-"$VERSION"-"$ARCH".AppImage | tr '~' -)"
+    export LDAI_OUTPUT
+
+    # since we extracted common parts from the installer built into the AppRun script, we have to copy the "library" script
+    # before building an AppImage
+    install "$REPO_ROOT"/resources/appimagelauncher-lite-installer-common.sh "$(readlink -f AppDir/)"
+fi
+
+chmod -v +x linuxdeploy*-"$ARCH".AppImage
+
+./linuxdeploy-"$ARCH".AppImage -v0 \
+    --appdir "$(readlink -f AppDir)" \
+    --plugin qt \
+    -d AppDir/usr/share/applications/appimagelauncher.desktop \
+    -e "$(find AppDir/usr/lib/*/appimagelauncher/remove | head -n1)" \
+    "${linuxdeploy_extra_args[@]}"
+
+if [[ "${BUILD_LITE:-}" == "" ]]; then
+    mv "$LDNP_PACKAGE_NAME"*.{rpm,deb} "$OLD_CWD"
+else
+    mv "$LDAI_OUTPUT" "$OLD_CWD"
+fi
