@@ -69,6 +69,9 @@ packages=(
     nlohmann-json3-dev
     libgpgme-dev
     libzstd-dev
+
+    # linuxdeploy-plugin-native_packages
+    pipx
 )
 
 # install 32-bit build dependencies and multilib/cross compilers for binfmt-bypass's 32-bit preload library

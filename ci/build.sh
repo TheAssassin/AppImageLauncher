@@ -137,7 +137,7 @@ if [[ "${BUILD_LITE:-}" == "" ]]; then
         --output native_packages
     )
 
-    wget https://github.com/linuxdeploy/linuxdeploy-plugin-native_packages/releases/download/continuous/linuxdeploy-plugin-native_packages-x86_64.AppImage
+    pipx install git+https://github.com/linuxdeploy/linuxdeploy-plugin-native_packages
 else
     linuxdeploy_extra_args+=(
         --custom-apprun "$REPO_ROOT"/resources/appimagelauncher-lite-AppRun.sh
