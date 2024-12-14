@@ -16,6 +16,10 @@ fi
 
 image=ghcr.io/theassassin/appimagelauncher-build
 
+if [[ "${BUILD_LITE:-}" != "" ]]; then
+    image="${image}:lite"
+fi
+
 docker_command=(
     docker buildx build
     --pull
