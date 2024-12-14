@@ -92,7 +92,16 @@ apt-get -y --no-install-recommends install "${packages[@]}"
 
 # install more recent CMake
 cmake_arch="$(dpkg --print-architecture)"
-[[ "$cmake_arch" == "amd64" ]] && cmake_arch=x86_64
+
+case "$cmake_arch" in
+    amd64)
+        cmake_arch=x86_64
+        ;;
+    arm64)
+        cmake_arch=aarch64
+        ;;
+esac
+
 wget https://artifacts.assassinate-you.net/prebuilt-cmake/cmake-v3.29.6-ubuntu-focal-"${cmake_arch}".tar.gz -O - | \
     tar xz --strip-components=1 -C /usr
 
