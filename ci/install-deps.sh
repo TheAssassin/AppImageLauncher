@@ -15,10 +15,10 @@ if [[ "$CI" == "" ]]; then
 fi
 
 case "$DOCKER_PLATFORM" in
-    linux/amd64|linux/arm32/v7|linux/arm64/v8)
+    linux/amd64|linux/arm/v7|linux/arm64/v8)
         ;;
     *)
-        echo "Error: unsupported architecture: $ARCH"
+        echo "Error: unsupported architecture: $DOCKER_PLATFORM"
         exit 4
         ;;
 esac
