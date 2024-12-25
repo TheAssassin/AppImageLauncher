@@ -137,7 +137,16 @@ if [[ "${BUILD_LITE:-}" == "" ]]; then
         --output native_packages
     )
 
-    pipx install git+https://github.com/linuxdeploy/linuxdeploy-plugin-native_packages
+    # tools like pipx would have side effects on the build host and it's generally a bit overkill for our purpose
+    if which python3.13 &> /dev/null; then
+        # python3.13, installed from the deadsnakes PPA for the Docker builds
+        python3() {
+            python3.13 "$@"
+        }
+    fi
+    python3 -m venv venv
+    venv/bin/pip install git+https://github.com/linuxdeploy/linuxdeploy-plugin-native_packages
+    export PATH="$PWD/venv/bin:$PATH"
 else
     linuxdeploy_extra_args+=(
         --custom-apprun "$REPO_ROOT"/resources/appimagelauncher-lite-AppRun.sh

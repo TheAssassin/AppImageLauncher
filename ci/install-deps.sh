@@ -25,6 +25,31 @@ esac
 
 set -x
 
+# this array collects all the packages we want to install
+# running as few operations as possible is a runtime optimization
+packages=()
+
+# install 32-bit build dependencies and multilib/cross compilers for binfmt-bypass's 32-bit preload library
+# must be done before apt-get update, otherwise the packages cannot be found during installation
+if [[ "$DOCKER_PLATFORM" == "linux/amd64" ]]; then
+    dpkg --add-architecture i386
+    packages+=(
+        libc6-dev:i386
+    )
+elif [[ "$DOCKER_PLATFORM" == "linux/arm64/v8" ]]; then
+    dpkg --add-architecture armhf
+    packages+=(
+        libc6-dev:armhf
+    )
+fi
+
+# allow setup of PPA
+apt-get update
+apt-get install -y software-properties-common
+
+# we depend on the deadsnakes PPA to provide a sufficiently recent Python to linuxdeploy-plugin-native_packages
+add-apt-repository -y ppa:deadsnakes/ppa
+
 packages=(
     libcurl4-openssl-dev
     libfuse-dev
@@ -71,26 +96,13 @@ packages=(
     libzstd-dev
 
     # linuxdeploy-plugin-native_packages
-    pipx
+    # see also above re. deadsnakes PPA
+    python3.13-venv
 )
-
-# install 32-bit build dependencies and multilib/cross compilers for binfmt-bypass's 32-bit preload library
-if [[ "$DOCKER_PLATFORM" == "linux/amd64" ]]; then
-    dpkg --add-architecture i386
-    packages+=(
-        libc6-dev:i386
-    )
-elif [[ "$DOCKER_PLATFORM" == "linux/arm64/v8" ]]; then
-    dpkg --add-architecture armhf
-    packages+=(
-        libc6-dev:armhf
-    )
-fi
 
 # headless install
 export DEBIAN_FRONTEND=noninteractive
 
-apt-get update
 apt-get -y --no-install-recommends install "${packages[@]}"
 
 # install more recent CMake
