@@ -8,6 +8,10 @@ ENV CI=1
 ARG DOCKER_PLATFORM
 ENV DOCKER_PLATFORM="${DOCKER_PLATFORM}"
 
+# we need to provide some writable $HOME for the (random) used ID we use in the build script
+RUN install -d -m 0777 /home/user
+ENV HOME=/home/user
+
 # let the install script do the heavy lifting (easier than replicating the complex behavior in a Dockerfile)
 COPY install-deps.sh /
 RUN bash -xe install-deps.sh
