@@ -63,7 +63,17 @@ make -j$(nproc)
 make install DESTDIR=AppDir
 
 ARCH="$(dpkg --print-architecture)"
-[[ "$ARCH" == "amd64" ]] && ARCH=x86_64
+
+# "translate" to linuxdeploy/AppImage architecture
+# note: linuxdeploy and AppImage differ in i386/i686, but we don't support that any more anyway
+case "$ARCH" in
+    amd64)
+        ARCH=x86_64
+        ;;
+    arm64)
+        ARCH=aarch64
+        ;;
+esac
 
 # build release formats
 wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-"$ARCH".AppImage
