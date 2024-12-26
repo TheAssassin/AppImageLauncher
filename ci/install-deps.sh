@@ -68,6 +68,7 @@ packages=(
     libtool
     patch
     wget
+    curl
     vim-common
     desktop-file-utils
     pkg-config
@@ -105,7 +106,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 apt-get -y --no-install-recommends install "${packages[@]}"
 
-# install more recent CMake
+# install more recent CMake and patchelf
 cmake_arch="$(dpkg --print-architecture)"
 
 case "$cmake_arch" in
@@ -115,14 +116,17 @@ case "$cmake_arch" in
     arm64)
         cmake_arch=aarch64
         ;;
+    armhf)
+        patchelf_arch=armv7l
+        ;;
 esac
 
-wget https://artifacts.assassinate-you.net/prebuilt-cmake/cmake-v3.29.6-ubuntu-focal-"${cmake_arch}".tar.gz -O - | \
+patchelf_arch="${patchelf_arch:-$cmake_arch}"
+
+curl -L https://artifacts.assassinate-you.net/prebuilt-cmake/cmake-v3.29.6-ubuntu-focal-"${cmake_arch}".tar.gz | \
     tar xz --strip-components=1 -C /usr
 
-# install recent patchelf
-patchelf_arch="$cmake_arch"
-wget https://github.com/NixOS/patchelf/releases/download/0.18.0/patchelf-0.18.0-"$patchelf_arch".tar.gz -O- | tar xz -C/usr/local
+curl -L https://github.com/NixOS/patchelf/releases/download/0.18.0/patchelf-0.18.0-"$patchelf_arch".tar.gz | tar xz -C/usr/local
 
   # g{cc,++}-multilib usually install these dependencies for us
   # however, as the multilib stuff is not available for ARM, we have to install these dev packages ourselves
