@@ -2,7 +2,9 @@
 
 set -euo pipefail
 
-glibc_ok_version="2.4"
+# 2.17 ensures compatibility with CentOS 7 and beyond
+# cf. https://gist.github.com/wagenet/35adca1a032cec2999d47b6c40aa45b1
+glibc_ok_version="2.17"
 
 find_too_new_symbols() {
     glibc_symbols=( "$(nm --dynamic --undefined-only --with-symbol-versions "$1" | grep "GLIBC_")" )
