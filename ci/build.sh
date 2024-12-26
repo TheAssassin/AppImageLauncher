@@ -173,6 +173,11 @@ fi
 
 chmod -v +x linuxdeploy*-"$ARCH".AppImage
 
+# workaround for QEMU
+for appimage in *.AppImage; do
+    dd if=/dev/zero bs=1 count=3 seek=8 conv=notrunc of="$appimage"
+done
+
 ./linuxdeploy-"$ARCH".AppImage -v0 \
     --appdir "$(readlink -f AppDir)" \
     --plugin qt \
