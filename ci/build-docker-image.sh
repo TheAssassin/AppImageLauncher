@@ -48,7 +48,7 @@ docker_command=(
 if [[ "${GITHUB_ACTIONS:-}" != "" ]]; then
     echo "Going to push built image"
     docker_command+=(
-        --cache-to inline
+        --cache-to type=inline
         --push
     )
 fi
