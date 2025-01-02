@@ -26,6 +26,13 @@ fi
 
 image=ghcr.io/theassassin/appimagelauncher-build
 branch="$(git rev-parse --abbrev-ref HEAD)"
+# append platform to Docker image tag since we can't push separate (multi-arch) images to the same name without
+# creating the manifest manually
+# see https://github.com/docker/build-push-action/issues/671
+platform_suffix="$(echo -n "$DOCKER_PLATFORM" | tr -c 'A-Za-z0-9-' '_')"
+
+current_branch_tag="${image}:${branch}_${platform_suffix}"
+master_branch_tag="${image}:master_${platform_suffix}"
 
 docker_command=(
     docker buildx build
@@ -36,10 +43,10 @@ docker_command=(
     --build-arg DOCKER_PLATFORM="$DOCKER_PLATFORM"
 
     # cache from the current branch's image
-    --cache-from type=registry,ref="$image:$branch"
+    --cache-from type=registry,ref="$current_branch_tag"
 
     # we can always cache from the master branch's image
-    --cache-from type=registry,ref="$image:master"
+    --cache-from type=registry,ref="$master_branch_tag"
 
     --tag "$image:$branch"
 )
@@ -49,7 +56,7 @@ if [[ "${GITHUB_ACTIONS:-}" != "" ]]; then
     echo "Going to push built image"
     docker_command+=(
         --cache-to type=inline
-        --output type=registry,ref="$image:$branch"
+        --push
     )
 fi
 
