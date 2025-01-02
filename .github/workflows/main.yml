@@ -38,9 +38,6 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build in Docker
         run: bash -ex ci/build-in-docker.sh
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       - name: Archive artifacts
         uses: actions/upload-artifact@v4
         with:
