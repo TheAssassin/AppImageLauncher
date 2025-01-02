@@ -48,7 +48,7 @@ docker_command=(
     # we can always cache from the master branch's image
     --cache-from type=registry,ref="$master_branch_tag"
 
-    --tag "$image:$branch"
+    --tag "$current_branch_tag"
 )
 
 # if we are building on GitHub actions, we can also push the resulting image
