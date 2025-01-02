@@ -14,12 +14,6 @@ else
     this_dir="$(readlink -f "$(dirname "$0")")"
 fi
 
-image=ghcr.io/theassassin/appimagelauncher-build
-
-if [[ "${BUILD_LITE:-}" != "" ]]; then
-    image="${image}:lite"
-fi
-
 # we need a "docker-container" type builder to make use of all the buildx features regarding caching and multi-arch
 # support
 builder_name="appimagelauncher-builder"
@@ -30,6 +24,9 @@ else
     echo "Using existing Docker builder $builder_name found"
 fi
 
+image=ghcr.io/theassassin/appimagelauncher-build
+branch="$(git rev-parse --abbrev-ref HEAD)"
+
 docker_command=(
     docker buildx build
     --builder "$builder_name"
@@ -38,10 +35,13 @@ docker_command=(
     --platform "$DOCKER_PLATFORM"
     --build-arg DOCKER_PLATFORM="$DOCKER_PLATFORM"
 
-    # we can always cache from the image
-    --cache-from type=registry,ref="$image"
+    # cache from the current branch's image
+    --cache-from type=registry,ref="$image:$branch"
 
-    --tag "$image"
+    # we can always cache from the master branch's image
+    --cache-from type=registry,ref="$image:master"
+
+    --tag "$image:$branch"
 )
 
 # if we are building on GitHub actions, we can also push the resulting image
