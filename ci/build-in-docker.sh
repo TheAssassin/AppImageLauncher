@@ -36,6 +36,6 @@ uid="$(id -u)"
 # run build
 docker run -e DIST -e ARCH -e GITHUB_RUN_NUMBER -e GITHUB_RUN_ID --rm -i --user "$uid" -w /ws -e CI=1 \
      "${DOCKER_OPTS[@]}" -v "$(readlink -f ..):/ws" \
-     "$image:$branch" \
+     "$current_branch_tag" \
      bash ci/build.sh
 
