@@ -132,7 +132,7 @@ if [[ "${BUILD_LITE:-}" == "" ]]; then
     export LDNP_META_VENDOR="TheAssassin"
 
     export LDNP_META_DEB_DEPENDS="systemd, libgl1, libfontconfig1, libharfbuzz0b, libfribidi0"
-    export LDNP_META_DEB_BUILD_ARCH="$deb_build_arch"
+    export LDNP_META_DEB_ARCHITECTURE="$deb_build_arch"
     export LDNP_META_DEB_PRE_DEPENDS="bash"
     export LDNP_DEB_EXTRA_DEBIAN_FILES="${BUILD_DIR}/cmake/debian/postinst;${BUILD_DIR}/cmake/debian/postrm"
 
