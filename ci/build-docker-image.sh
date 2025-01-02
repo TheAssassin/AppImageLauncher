@@ -45,7 +45,7 @@ docker_command=(
 )
 
 # if we are building on GitHub actions, we can also push the resulting image
-if [[ "${GITHUB_CI:-}" != "" ]]; then
+if [[ "${GITHUB_ACTIONS:-}" != "" ]]; then
     echo "Going to push built image"
     docker_command+=(
         --cache-to inline
