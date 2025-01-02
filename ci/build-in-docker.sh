@@ -34,7 +34,7 @@ fi
 #   b) allow the build scripts to "mv" the binaries into the /out directory
 uid="$(id -u)"
 # run build
-docker run -e DIST -e ARCH -e GITHUB_RUN_NUMBER -e GITHUB_RUN_ID --rm -i --user "$uid" -w /ws -e CI=1 \
+docker run -e BUILD_LITE -e DIST -e ARCH -e GITHUB_RUN_NUMBER -e GITHUB_RUN_ID --rm -i --user "$uid" -w /ws -e CI=1 \
      "${DOCKER_OPTS[@]}" -v "$(readlink -f ..):/ws" \
      "$current_branch_tag" \
      bash ci/build.sh
