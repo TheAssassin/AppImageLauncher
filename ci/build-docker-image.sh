@@ -20,8 +20,20 @@ if [[ "${BUILD_LITE:-}" != "" ]]; then
     image="${image}:lite"
 fi
 
+# we need a "docker-container" type builder to make use of all the buildx features regarding caching and multi-arch
+# support
+builder_name="appimagelauncher-builder"
+if ! docker buildx inspect "$builder_name" &>/dev/null; then
+    echo "Docker builder $builder_name not found, creating"
+    docker buildx create --name="$builder_name" --driver=docker-container --bootstrap
+else
+    echo "Using existing Docker builder $builder_name found"
+fi
+
 docker_command=(
     docker buildx build
+    --builder "$builder_name"
+    --load  # --output=type=docker
     --pull
     --platform "$DOCKER_PLATFORM"
     --build-arg DOCKER_PLATFORM="$DOCKER_PLATFORM"
@@ -32,17 +44,14 @@ docker_command=(
     --tag "$image"
 )
 
+# if we are building on GitHub actions, we can also push the resulting image
 if [[ "${GITHUB_CI:-}" != "" ]]; then
+    echo "Going to push built image"
     docker_command+=(
         --cache-to inline
+        --push
     )
-else
-    echo ci
 fi
-
-
-# depending on the type of the build (and thus caching), we need different flags to be set
-
 
 docker_command+=(
    "$this_dir"
@@ -52,13 +61,3 @@ docker_command+=(
 # this should speed up local builds as well
 # if the image hasn't changed, this should be a no-op
 "${docker_command[@]}"
-
-# push built image as cache for future builds to registry
-# we can do that immediately once the image has been built successfully; if its definition ever changes it will be
-# rebuilt anyway
-# credentials shall only be available on (protected) master branch
-set +x
-if [[ "${DOCKER_USERNAME:-}" != "" ]]; then
-    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin quay.io
-    docker push "$image"
-fi
