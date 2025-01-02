@@ -49,7 +49,7 @@ if [[ "${GITHUB_ACTIONS:-}" != "" ]]; then
     echo "Going to push built image"
     docker_command+=(
         --cache-to type=inline
-        --push
+        --output type=registry,ref="$image:$branch"
     )
 fi
 
