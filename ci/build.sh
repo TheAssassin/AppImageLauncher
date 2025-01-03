@@ -178,6 +178,8 @@ for appimage in *.AppImage; do
     dd if=/dev/zero bs=1 count=3 seek=8 conv=notrunc of="$appimage"
 done
 
+ldd AppDir/usr/bin/AppImageLauncherSettings
+
 ./linuxdeploy-"$ARCH".AppImage -v0 \
     --appdir "$(readlink -f AppDir)" \
     --plugin qt \
