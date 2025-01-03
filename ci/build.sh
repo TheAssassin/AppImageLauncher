@@ -116,9 +116,13 @@ if [[ "${BUILD_LITE:-}" == "" ]]; then
             rpm_build_arch=i386
             deb_build_arch=i386
             ;;
-        armhf|aarch64)
-            deb_build_arch="$ARCH"
-            rpm_build_arch="$ARCH"
+        aarch64)
+            rpm_build_arch=arm64
+            deb_build_arch=aarch64
+            ;;
+        armhf)
+            deb_build_arch=armhf
+            rpm_build_arch=armv7hl
             ;;
         *)
             echo "Unsupported architecture: $ARCH"
