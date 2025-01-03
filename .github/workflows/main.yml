@@ -23,7 +23,7 @@ jobs:
       DOCKER_PLATFORM: ${{ matrix.DOCKER_PLATFORM }}
       DIST: ${{ matrix.DIST }}
       BUILD_LITE: ${{ matrix.BUILD_LITE }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
         with:
