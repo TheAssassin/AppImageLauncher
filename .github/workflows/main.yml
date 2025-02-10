@@ -9,12 +9,16 @@ jobs:
       matrix:
         include:
           - NAME: Packages x86_64
+            RUNS_ON: ubuntu-24.04
             DOCKER_PLATFORM: linux/amd64
           - NAME: Packages arm64
+            RUNS_ON: ubuntu-24.04-arm
             DOCKER_PLATFORM: linux/arm64/v8
           - NAME: Packages armhf
+            RUNS_ON: ubuntu-24.04-arm
             DOCKER_PLATFORM: linux/arm/v7
           - NAME: Lite AppImage x86_64
+            RUNS_ON: ubuntu-24.04
             DOCKER_PLATFORM: linux/amd64
             BUILD_LITE: 1
 
@@ -23,13 +27,11 @@ jobs:
       DOCKER_PLATFORM: ${{ matrix.DOCKER_PLATFORM }}
       DIST: ${{ matrix.DIST }}
       BUILD_LITE: ${{ matrix.BUILD_LITE }}
-    runs-on: ubuntu-24.04
+    runs-on: ${{ matrix.RUNS_ON }}
     steps:
       - uses: actions/checkout@v2
         with:
           submodules: 'recursive'
-      - name: Set up QEMU integration for Docker
-        uses: docker/setup-qemu-action@v3
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
