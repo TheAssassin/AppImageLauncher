@@ -11,7 +11,7 @@ jobs:
           - NAME: Packages x86_64
             RUNS_ON: ubuntu-24.04
             DOCKER_PLATFORM: linux/amd64
-          - NAME: Packages arm64
+          - NAME: Packages aarch64
             RUNS_ON: ubuntu-24.04-arm
             DOCKER_PLATFORM: linux/arm64/v8
           - NAME: Packages armhf
@@ -20,6 +20,14 @@ jobs:
           - NAME: Lite AppImage x86_64
             RUNS_ON: ubuntu-24.04
             DOCKER_PLATFORM: linux/amd64
+            BUILD_LITE: 1
+          - NAME: Lite AppImage aarch64
+            RUNS_ON: ubuntu-24.04-arm
+            DOCKER_PLATFORM: linux/arm64/v8
+            BUILD_LITE: 1
+          - NAME: Lite AppImage armhf
+            RUNS_ON: ubuntu-24.04-arm
+            DOCKER_PLATFORM: linux/arm/v7
             BUILD_LITE: 1
 
     name: ${{ matrix.NAME }}
