@@ -25,7 +25,7 @@ else
 fi
 
 image=ghcr.io/theassassin/appimagelauncher-build
-branch="$(git rev-parse --abbrev-ref HEAD)"
+branch="$(git rev-parse --abbrev-ref HEAD | tr -c 'A-Za-z0-9-' '_')"
 # append platform to Docker image tag since we can't push separate (multi-arch) images to the same name without
 # creating the manifest manually
 # see https://github.com/docker/build-push-action/issues/671
