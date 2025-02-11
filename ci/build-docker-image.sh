@@ -52,7 +52,9 @@ docker_command=(
 )
 
 # if we are building on GitHub actions, we can also push the resulting image
-if [[ "${GITHUB_ACTIONS:-}" != "" ]]; then
+# we skip pull request builds, though; regular branch builds will push the built images (if possible)
+# also, skip Dependabot builds, it is not allowed to push images
+if [[ "${GITHUB_ACTIONS:-}" != "" ]] && [[ "${GITHUB_EVENT_NAME:-}" != "pull_request" ]] && [[ "${GITHUB_ACTOR:-}" != "dependabot" ]]; then
     echo "Going to push built image"
     docker_command+=(
         --cache-to type=inline
