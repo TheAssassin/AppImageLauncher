@@ -238,11 +238,13 @@ int bypassBinfmtAndRunAppImage(const std::string& appimage_path, const std::vect
         // preload our library
         auto preload_lib_path = find_preload_library(is_32bit_elf(appimage_path));
 
+        log_debug("preload lib path: %s\n", preload_lib_path.string().c_str());
+
         // may or may not be used, but must survive until this application terminates
         std::unique_ptr<TemporaryPreloadLibFile> temporaryPreloadLibFile;
 
         if (!std::filesystem::exists(preload_lib_path)) {
-            log_warning("could not find preload library path, creating new temporary file for it\n");
+            log_warning("could not find preload library, creating new temporary file for it\n");
 
 #ifdef PRELOAD_LIB_NAME_32BIT
             if (is_32bit_elf(appimage_path)) {
