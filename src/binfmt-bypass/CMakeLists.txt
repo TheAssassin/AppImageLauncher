@@ -120,14 +120,14 @@ target_link_libraries(${bypass_lib} PUBLIC dl)
 # we need to include the preload lib headers (see below) from the binary dir
 target_include_directories(${bypass_lib} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 target_compile_options(${bypass_lib}
-    PRIVATE -DPRELOAD_LIB_PATH="${CMAKE_INSTALL_PREFIX}/${_private_libdir}/$<TARGET_FILE_NAME:${preload_lib}>"
+    PRIVATE -DPRELOAD_LIB_NAME="$<TARGET_FILE_NAME:${preload_lib}>"
     PUBLIC -D_GNU_SOURCE
     # obviously needs to be private, otherwise the value leaks into users of this lib
     PRIVATE -DCOMPONENT_NAME="lib"
 )
 if(build_32bit_preload_library)
     target_compile_options(${bypass_lib}
-        PRIVATE -DPRELOAD_LIB_PATH_32BIT="${CMAKE_INSTALL_PREFIX}/${_private_libdir}/$<TARGET_FILE_NAME:${preload_lib_32bit}>"
+        PRIVATE -DPRELOAD_LIB_NAME_32BIT="$<TARGET_FILE_NAME:${preload_lib_32bit}>"
     )
     target_sources(${bypass_lib} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/${preload_lib_32bit}.h)
 endif()

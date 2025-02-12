@@ -61,7 +61,7 @@ void __init() {
 char* __abs_appimage_path() {
     __init();
 
-    static const char env_var_name[] = "REDIRECT_APPIMAGE";
+    static const char env_var_name[] = "TARGET_APPIMAGE";
 
     char* appimage_var = getenv(env_var_name);
 
