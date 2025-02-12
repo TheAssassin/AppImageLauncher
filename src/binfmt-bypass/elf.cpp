@@ -164,7 +164,7 @@ bool is_32bit_elf(const std::string& filename) {
     std::ifstream ifs(filename);
 
     if (!ifs) {
-        log_error("could not open file\n");
+        log_error("could not open file: %s\n", filename.c_str());
         return -1;
     }
 
