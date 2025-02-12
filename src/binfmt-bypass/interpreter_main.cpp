@@ -33,7 +33,6 @@ int main(int argc, char** argv) {
     if (!executableExists(APPIMAGELAUNCHER_PATH)) {
         log_message(
             "AppImageLauncher not found at %s, launching AppImage directly: %s\n",
-            APPIMAGELAUNCHER_PATH,
             appImagePath.c_str()
         );
         useAppImageLauncher = false;
@@ -42,7 +41,6 @@ int main(int argc, char** argv) {
     if (getenv("APPIMAGELAUNCHER_DISABLE") != nullptr) {
         log_message(
             "APPIMAGELAUNCHER_DISABLE set, launching AppImage directly: %s\n",
-            APPIMAGELAUNCHER_PATH,
             appImagePath.c_str()
         );
         useAppImageLauncher = false;
