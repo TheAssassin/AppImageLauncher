@@ -43,10 +43,17 @@ if(ENABLE_UPDATE_HELPER)
     )
 endif()
 
+option(BINFMT_INTERPRETER_PATH_PREPEND_LD_P_NATIVE_PACKAGES_PREFIX "")
+
 if(NOT BUILD_LITE)
     # unfortunately, due to a cyclic dependency, we need to hardcode parts of this variable, which is included in the
     # install scripts and the binfmt.d config
     set(BINFMT_INTERPRETER_PATH ${CMAKE_INSTALL_PREFIX}/${_private_libdir}/binfmt-interpreter)
+
+    if(BINFMT_INTERPRETER_PATH_PREPEND_LD_P_NATIVE_PACKAGES_PREFIX)
+        message(STATUS "Prepending prefix ${BINFMT_INTERPRETER_PATH_PREPEND_LD_P_NATIVE_PACKAGES_PREFIX} to binfmt interpreter path")
+        set(BINFMT_INTERPRETER_PATH "${BINFMT_INTERPRETER_PATH_PREPEND_LD_P_NATIVE_PACKAGES_PREFIX}${BINFMT_INTERPRETER_PATH}")
+    endif()
 
     # according to https://www.kernel.org/doc/html/latest/admin-guide/binfmt-misc.html, we must make sure the
     # interpreter string does not exceed 127 characters
