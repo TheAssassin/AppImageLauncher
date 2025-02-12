@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -eo pipefail
+set -euo pipefail
 
 echo "Installing AppImageLauncher as interpreter for AppImages"
 
