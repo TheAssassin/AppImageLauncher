@@ -3,6 +3,13 @@
 #include <string>
 
 /**
+ * Check whether file is linked staticallly.
+ * @param filename path to ELF file
+ * @return true if file is statically linked, false otherwise
+ */
+bool is_statically_linked_elf(const std::string& filename);
+
+/**
  * Calculate size of ELF binary. Useful e.g., to estimate the size of the runtime in an AppImage.
  * @param filename path to ELF file
  * @return size of ELF part in bytes
