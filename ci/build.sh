@@ -45,6 +45,8 @@ cmake_args=(
     "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
     "-DBUILD_TESTING=OFF"
     "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
+    # TODO: we don't necessarily want to hardcode this here
+    "-DBINFMT_INTERPRETER_PATH_PREPEND_LD_P_NATIVE_PACKAGES_PREFIX=/opt/appimagelauncher.AppDir/"
 )
 
 if [[ "${BUILD_LITE:-}" == "" ]]; then
