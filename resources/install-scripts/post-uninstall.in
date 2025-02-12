@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -eo pipefail
+set -euo pipefail
 
 echo "Removing AppImageLauncher as interpreter for AppImages"
 (set -x; systemctl restart systemd-binfmt)
