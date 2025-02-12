@@ -434,6 +434,21 @@ int main(int argc, char** argv) {
             return integrateAndRunAppImage();
         case IntegrationDialog::RunOnce:
             return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
+        case IntegrationDialog::Settings:{
+
+            auto makeVectorBuffer = [](const std::string& str) {
+                    std::vector<char> strBuffer(str.size() + 1, '\0');
+                    strncpy(strBuffer.data(), str.c_str(), str.size());
+                    return strBuffer;
+                };
+
+            const QString ownBinaryDirPath = QFileInfo(getOwnBinaryPath().get()).dir().absolutePath();
+            auto settingsBinBuffer = makeVectorBuffer((ownBinaryDirPath+"/AppImageLauncherSettings").toStdString());
+            char* settingsBin = settingsBinBuffer.data();
+
+            char* settingsArgs[] = {settingsBin, nullptr};
+            return execv(settingsBin, settingsArgs);
+        }
         default:
             displayError(QObject::tr("Unexpected result from the integration dialog."));
             return 1;
