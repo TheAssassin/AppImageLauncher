@@ -6,6 +6,7 @@
 // library includes
 #include <QDir>
 #include <QObject>
+#include <QLoggingCategory>
 #include <QSet>
 #include <QString>
 #include <QThread>
@@ -16,6 +17,8 @@
 #pragma once
 
 namespace appimagelauncher::daemon {
+
+    Q_DECLARE_LOGGING_CATEGORY(fswCat)
 
     class FileSystemWatcherError : public std::runtime_error {
     public:
