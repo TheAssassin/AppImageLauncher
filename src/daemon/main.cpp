@@ -80,6 +80,15 @@ int main(int argc, char* argv[]) {
         throw std::runtime_error("could not add Qt command line option for some reason");
     }
 
+    QCommandLineOption debugOption(
+        "debug",
+        QObject::tr("Enable debug logging")
+    );
+
+    if (!parser.addOption(debugOption)) {
+        throw std::runtime_error("could not add Qt command line option for some reason");
+    }
+
     QCoreApplication app(argc, argv);
 
     {
@@ -92,6 +101,12 @@ int main(int argc, char* argv[]) {
 
     // parse arguments
     parser.process(app);
+
+    if (!parser.isSet(debugOption)) {
+        QLoggingCategory::setFilterRules("*.debug=false");
+    } else {
+        QLoggingCategory::setFilterRules("*.debug=true");
+    }
 
     auto* daemon = new Daemon(&app);
 
