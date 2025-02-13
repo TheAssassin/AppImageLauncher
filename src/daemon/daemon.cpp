@@ -50,12 +50,6 @@ namespace appimagelauncher::daemon {
              }
          });
 
-
-        // search directories to watch once initially
-        // we *have* to do this even though we connect this signal above, as the first update occurs in the constructor
-        // and we cannot connect signals before construction has finished for obvious reasons
-        initialSearchForAppImages(_watcher->directories());
-
         // (re-)integrate all AppImages at once
         _worker->executeDeferredOperations();
 
@@ -82,6 +76,11 @@ namespace appimagelauncher::daemon {
     void Daemon::initialSearchForAppImages(const QDirSet& dirsToSearch) {
         // initial search for AppImages; if AppImages are found, they will be integrated, unless they already are
         qCInfo(daemonCat) << "Searching for existing AppImages";
+
+        if (dirsToSearch.empty()) {
+            qCWarning(daemonCat) << "No directories to search provided initially, skipping";
+            return;
+        }
 
         for (const auto& dir : dirsToSearch) {
             if (!dir.exists()) {
@@ -120,6 +119,11 @@ namespace appimagelauncher::daemon {
     }
 
     bool Daemon::startWatching() {
+        // search directories to watch once initially
+        // we *have* to do this even though we connect this signal above, as the first update occurs in the constructor
+        // and we cannot connect signals before construction has finished for obvious reasons
+        initialSearchForAppImages(_watcher->directories());
+
         return _watcher->startWatching();
     }
 
