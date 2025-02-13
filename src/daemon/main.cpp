@@ -123,15 +123,7 @@ int main(int argc, char* argv[]) {
         std::cout << "Failed to clean up old desktop integration resources" << std::endl;
     }
 
-    auto watchedDirectoriesStringList = [daemon]() {
-        QStringList rv;
-        for (const auto& dir : daemon->watchedDirectories()) {
-            rv << dir.path();
-        }
-        return rv;
-    }();
-
-    qInfo() << "Watching directories:" << watchedDirectoriesStringList;
+    qInfo() << "Watching directories:" << daemon->watchedDirectories();
 
     if (!daemon->startWatching()) {
         std::cerr << "Could not start watching directories" << std::endl;
