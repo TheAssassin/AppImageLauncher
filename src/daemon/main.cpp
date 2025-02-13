@@ -60,6 +60,9 @@ int main(int argc, char* argv[]) {
     // make sure shared won't try to use the UI
     setenv("_FORCE_HEADLESS", "1", 1);
 
+    // improve default logging format
+    qSetMessagePattern("[%{type}] %{category}: %{message}");
+
     QCommandLineParser parser;
     parser.setApplicationDescription(
         QObject::tr(
