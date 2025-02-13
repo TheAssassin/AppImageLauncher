@@ -119,6 +119,9 @@ namespace appimagelauncher::daemon {
     }
 
     bool Daemon::startWatching() {
+        // make sure the watched directories list is up to date
+        _watcher->updateWatchedDirectories(watchedDirectories());
+
         // search directories to watch once initially
         // we *have* to do this even though we connect this signal above, as the first update occurs in the constructor
         // and we cannot connect signals before construction has finished for obvious reasons
