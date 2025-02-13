@@ -13,10 +13,6 @@ using namespace std::chrono_literals;
 
 #define UPDATE_WATCHED_DIRECTORIES_INTERVAL 30s
 
-namespace {
-
-}
-
 namespace appimagelauncher::daemon {
 
     Q_LOGGING_CATEGORY(daemonCat, "appimagelauncher.daemon")
