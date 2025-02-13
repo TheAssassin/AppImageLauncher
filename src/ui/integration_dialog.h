@@ -14,7 +14,8 @@ Q_OBJECT
 public:
     enum ResultingAction {
         IntegrateAndRun,
-        RunOnce
+        RunOnce,
+        Settings
     };
 
     explicit IntegrationDialog(QString pathToAppImage, QString integratedAppImagesDestinationPath,
@@ -28,6 +29,8 @@ protected:
     Q_SLOT void onPushButtonIntegrateAndRunReleased();
 
     Q_SLOT void onPushButtonRunOnceReleased();
+
+    Q_SLOT void onPushButtonSettingsReleased();
 
     ResultingAction resultAction;
 
