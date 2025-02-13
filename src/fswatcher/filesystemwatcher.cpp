@@ -4,7 +4,6 @@
 #include <unistd.h>
 
 // library includes
-#include <QDebug>
 #include <QDir>
 #include <QMutex>
 #include <QTimer>
@@ -29,6 +28,8 @@ namespace {
 
 
 namespace appimagelauncher::daemon {
+
+    Q_LOGGING_CATEGORY(fswCat, "appimagelauncher.daemon.filesystemwatcher")
 
     class FileSystemWatcher::PrivateData {
     public:
@@ -111,10 +112,10 @@ namespace appimagelauncher::daemon {
         bool startWatching(const QDir& directory) {
             static const auto mask = fileChangeEvents | fileRemovalEvents;
 
-            qDebug() << "start watching directory " << directory;
+            qCDebug(fswCat) << "start watching directory " << directory;
 
             if (!directory.exists()) {
-                qDebug() << "Warning: directory " << directory.absolutePath() << " does not exist, skipping";
+                qCDebug(fswCat) << "Warning: directory " << directory.absolutePath() << " does not exist, skipping";
                 return true;
             }
 
@@ -122,7 +123,7 @@ namespace appimagelauncher::daemon {
 
             if (watchFd == -1) {
                 const auto error = errno;
-                std::cerr << "Failed to start watching: " << strerror(error) << std::endl;
+                qCCritical(fswCat) << "Failed to start watching: " << strerror(error);
                 return false;
             }
 
@@ -161,11 +162,11 @@ namespace appimagelauncher::daemon {
             // therefore, we can remove the file descriptor from the map in any case
             watchFdMap.erase(watchFd);
 
-            qDebug() << "stop watching watchfd " << watchFd;
+            qCDebug(fswCat) << "stop watching watchfd " << watchFd;
 
             if (inotify_rm_watch(inotifyFd, watchFd) == -1) {
                 const auto error = errno;
-                std::cerr << "Failed to stop watching: " << strerror(error) << std::endl;
+                qCCritical(fswCat) << "Failed to stop watching: " << strerror(error);
                 return false;
             }
 
@@ -180,7 +181,7 @@ namespace appimagelauncher::daemon {
                 const auto watchFd = pair.first;
 
                 if (!stopWatching(watchFd)) {
-                    std::cerr << "Warning: Failed to stop watching on file descriptor " << watchFd << std::endl;
+                    qCCritical(fswCat) << "Warning: Failed to stop watching on file descriptor " << watchFd;
                 }
             }
 
@@ -233,7 +234,7 @@ namespace appimagelauncher::daemon {
             QMutexLocker lock{d->mutex};
 
             if (d->isRunning) {
-                qDebug() << "tried to start file system watcher while it's running already";
+                qCDebug(fswCat) << "tried to start file system watcher while it's running already";
                 return true;
             }
         }
@@ -255,7 +256,7 @@ namespace appimagelauncher::daemon {
             QMutexLocker lock{d->mutex};
 
             if (!d->isRunning) {
-                qDebug() << "tried to stop file system watcher while stopped";
+                qCDebug(fswCat) << "tried to stop file system watcher while stopped";
                 return true;
             }
         }
@@ -298,7 +299,7 @@ namespace appimagelauncher::daemon {
             // therefore we use a simple linear search to remove non-existing directories
             for (auto it = watchedDirectories.begin(); it != watchedDirectories.end(); ++it) {
                 if (!it->exists()) {
-                    std::cout << "Directory " << it->path().toStdString() << " does not exist, skipping" << std::endl;
+                    qCDebug(fswCat) << "Directory " << it->path() << " does not exist, skipping";
                     it = watchedDirectories.erase(it);
                 }
             }
