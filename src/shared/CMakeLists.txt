@@ -1,4 +1,4 @@
-add_library(shared STATIC shared.h shared.cpp types.h)
+add_library(shared STATIC shared.h shared.cpp types.h types.cpp)
 target_link_libraries(shared PUBLIC PkgConfig::glib Qt5::Core Qt5::Widgets Qt5::DBus libappimage translationmanager trashbin)
 if(ENABLE_UPDATE_HELPER)
     target_link_libraries(shared PUBLIC libappimageupdate)

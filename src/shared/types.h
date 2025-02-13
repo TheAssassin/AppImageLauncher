@@ -4,6 +4,7 @@
 #include <set>
 
 // library headers
+#include <QDebug>
 #include <QDir>
 
 struct QDirComparator {
@@ -14,3 +15,6 @@ public:
 };
 
 typedef std::set<QDir, QDirComparator> QDirSet;
+
+
+QDebug operator<<(QDebug debug, const QDirSet &set);
