@@ -23,7 +23,7 @@ namespace appimagelauncher::daemon {
         // to watch these
         QObject::connect(_watcher, &FileSystemWatcher::newDirectoriesToWatch, this, [this](const QDirSet& newDirs) {
             if (newDirs.empty()) {
-                qDebug() << "No new directories to watch detected";
+                qCDebug(daemonCat) << "No new directories to watch detected";
             } else {
                 qCInfo(daemonCat) << "Discovered new directories to watch, integrating existing AppImages initially";
 
@@ -40,7 +40,7 @@ namespace appimagelauncher::daemon {
         // a good example for this situation is a removable drive that has been unplugged from the computer
         QObject::connect(_watcher, &FileSystemWatcher::directoriesToWatchDisappeared, this, [](const QDirSet& disappearedDirs) {
              if (disappearedDirs.empty()) {
-                 qDebug() << "No directories disappeared";
+                 qCDebug(daemonCat) << "No directories disappeared";
              } else {
                  qCInfo(daemonCat) << "Directories to watch disappeared, unintegrating AppImages formerly found in there";
 
