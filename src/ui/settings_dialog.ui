@@ -127,6 +127,71 @@
         </widget>
        </item>
        <item>
+        <widget class="QGroupBox" name="excludeGroupBox">
+         <property name="locale">
+          <locale language="English" country="UnitedStates"/>
+         </property>
+         <property name="title">
+          <string>Add directories and AppImage files which should bypass the launcher</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QListWidget" name="excludeListWidget"/>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="excludeButtonsLayout">
+            <item>
+             <widget class="QToolButton" name="excludeAddFileButton">
+              <property name="toolTip">
+               <string>Add new files to list</string>
+              </property>
+              <property name="icon">
+               <iconset theme="document-new"/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="excludeAddDirectoryButton">
+              <property name="toolTip">
+               <string>Add new directories to list</string>
+              </property>
+              <property name="icon">
+               <iconset theme="folder-new"/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="excludeRemoveButton">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="toolTip">
+               <string>Remove selected entry from list</string>
+              </property>
+              <property name="icon">
+               <iconset theme="list-remove"/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="excludeVerticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>15</width>
+                <height>13</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
