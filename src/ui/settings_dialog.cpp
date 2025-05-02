@@ -99,10 +99,14 @@ void SettingsDialog::addDirectoryToWatchToListView(const QString& dirPath) {
 void SettingsDialog::loadSettings() {
     const auto daemonIsEnabled = settingsFile->value("AppImageLauncher/enable_daemon", "true").toBool();
     const auto askMoveChecked = settingsFile->value("AppImageLauncher/ask_to_move", "true").toBool();
+    const auto createCliSymlinks = settingsFile->value("AppImageLauncher/create_cli_symlinks", "true").toBool();
+    const auto useSimplifiedNames = settingsFile->value("AppImageLauncher/use_simplified_names", "true").toBool();
 
     if (settingsFile) {
         ui->daemonIsEnabledCheckBox->setChecked(daemonIsEnabled);
         ui->askMoveCheckBox->setChecked(askMoveChecked);
+        ui->createCliSymlinksCheckBox->setChecked(createCliSymlinks);
+        ui->useSimplifiedNamesCheckBox->setChecked(useSimplifiedNames);
         ui->applicationsDirLineEdit->setText(settingsFile->value("AppImageLauncher/destination").toString());
 
         const auto additionalDirsPath = settingsFile->value("appimagelauncherd/additional_directories_to_watch", "").toString();
@@ -148,10 +152,15 @@ void SettingsDialog::saveSettings() {
                      ui->applicationsDirLineEdit->text(),
                      ui->daemonIsEnabledCheckBox->isChecked(),
                      additionalDirsToWatch,
-                     monitorMountedFilesystems);
+                     monitorMountedFilesystems,
+                     ui->createCliSymlinksCheckBox->isChecked(),
+                     ui->useSimplifiedNamesCheckBox->isChecked());
 
     // reload settings
     loadSettings();
+    
+    // Synchroniser les liens symboliques pour les AppImages déjà intégrées
+    synchronizeSymlinksForIntegratedAppImages();
 }
 
 void SettingsDialog::toggleDaemon() {
