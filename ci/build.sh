@@ -119,8 +119,8 @@ if [[ "${BUILD_LITE:-}" == "" ]]; then
             deb_build_arch=i386
             ;;
         aarch64)
-            rpm_build_arch=arm64
-            deb_build_arch=aarch64
+            rpm_build_arch=aarch64
+            deb_build_arch=arm64
             ;;
         armhf)
             deb_build_arch=armhf
