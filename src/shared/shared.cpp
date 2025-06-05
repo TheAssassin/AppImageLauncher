@@ -109,7 +109,9 @@ void createConfigFile(int askToMove,
                       const QString& destination,
                       int enableDaemon,
                       const QStringList& additionalDirsToWatch,
-                      int monitorMountedFilesystems) {
+                      int monitorMountedFilesystems,
+                      int createCliSymlinks,
+                      int useSimplifiedNames) {
     auto configFilePath = getConfigFilePath();
 
     QFile file(configFilePath);
@@ -134,9 +136,7 @@ void createConfigFile(int askToMove,
     if (destination.isEmpty()) {
         file.write("# destination = ~/Applications\n");
     } else {
-        file.write("destination = ");
-        file.write(destination.toUtf8());
-        file.write("\n");
+        file.write("destination = " + destination.toUtf8() + "\n");
     }
 
     if (enableDaemon < 0) {
@@ -151,16 +151,42 @@ void createConfigFile(int askToMove,
         file.write("\n");
     }
 
-    file.write("\n\n");
+    if (createCliSymlinks < 0) {
+        file.write("# create_cli_symlinks = true\n");
+    } else {
+        file.write("create_cli_symlinks = ");
+        if (createCliSymlinks == 0) {
+            file.write("false");
+        } else {
+            file.write("true");
+        }
+        file.write("\n");
+    }
 
-    // daemon configs
-    file.write("[appimagelauncherd]\n");
+    if (useSimplifiedNames < 0) {
+        file.write("# use_simplified_names = true\n");
+    } else {
+        file.write("use_simplified_names = ");
+        if (useSimplifiedNames == 0) {
+            file.write("false");
+        } else {
+            file.write("true");
+        }
+        file.write("\n");
+    }
+
+    file.write("\n\n[appimagelauncherd]\n");
 
     if (additionalDirsToWatch.empty()) {
         file.write("# additional_directories_to_watch = ~/otherApplications:/even/more/applications\n");
     } else {
         file.write("additional_directories_to_watch = ");
-        file.write(additionalDirsToWatch.join(':').toUtf8());
+        for (int i = 0; i < additionalDirsToWatch.size(); i++) {
+            file.write(additionalDirsToWatch[i].toUtf8());
+
+            if (i < additionalDirsToWatch.size() - 1)
+                file.write(":");
+        }
         file.write("\n");
     }
 
@@ -898,6 +924,73 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
         QDBusConnection::sessionBus().send(message);
     }
 
+    // Vérifier si l'option est activée (par défaut activée)
+    auto config = getConfig();
+    if (config == nullptr || !config->contains("AppImageLauncher/create_cli_symlinks") ||
+        config->value("AppImageLauncher/create_cli_symlinks").toBool()) {
+        
+        // Créer le lien symbolique normal basé sur le hash
+        QString pathToLocalBin = QDir::homePath() + "/.local/bin/";
+        QDir localBinDir(pathToLocalBin);
+        
+        // Créer le répertoire s'il n'existe pas
+        if (!localBinDir.exists()) {
+            QDir().mkpath(pathToLocalBin);
+        }
+        
+        // Récupérer ou créer un identifiant unique pour le lien (basé sur le hash MD5 de l'AppImage)
+        std::string pathStr = pathToAppImage.toStdString();
+        unsigned char* digest = (unsigned char*)appimage_get_md5(pathStr.c_str());
+        char* md5str = appimage_hexlify((const char*)digest, 16);
+        QString baseName = QFileInfo(pathToAppImage).baseName().replace(" ", "_");
+        QString linkName = baseName + "_" + QString(md5str);
+        free(md5str);
+        free(digest);
+        
+        // Créer le lien symbolique
+        QString targetPath = localBinDir.filePath(linkName);
+        if (QFile::exists(targetPath)) {
+            QFile::remove(targetPath);
+        }
+        QFile::link(pathToAppImage, targetPath);
+        
+        // Vérifier si l'option des noms simplifiés est activée
+        if (config == nullptr || !config->contains("AppImageLauncher/use_simplified_names") ||
+            config->value("AppImageLauncher/use_simplified_names").toBool()) {
+            
+            // Extraire un nom de commande adapté
+            QString commandName = getCommandNameMapping(pathToAppImage);
+            
+            // Si aucun mappage n'existe encore, en créer un nouveau
+            if (commandName.isEmpty()) {
+                commandName = extractCommandName(pathToAppImage);
+                
+                // Vérifier s'il y a un conflit de noms
+                QString simplifiedLinkPath = pathToLocalBin + commandName;
+                
+                if (QFile::exists(simplifiedLinkPath)) {
+                    // En cas de conflit, ajouter un suffixe numérique
+                    int suffix = 1;
+                    while (QFile::exists(simplifiedLinkPath + "-" + QString::number(suffix))) {
+                        suffix++;
+                    }
+                    commandName = commandName + "-" + QString::number(suffix);
+                    simplifiedLinkPath = pathToLocalBin + commandName;
+                }
+                
+                // Enregistrer le mappage pour une utilisation ultérieure
+                registerCommandNameMapping(pathToAppImage, commandName);
+            }
+            
+            // Créer le lien symbolique simplifié
+            QString simplifiedLinkPath = pathToLocalBin + commandName;
+            if (QFile::exists(simplifiedLinkPath)) {
+                QFile::remove(simplifiedLinkPath);
+            }
+            QFile::link(pathToAppImage, simplifiedLinkPath);
+        }
+    }
+
     return true;
 }
 
@@ -1288,10 +1381,23 @@ QString pathToPrivateDataDirectory() {
 
 bool unregisterAppImage(const QString& pathToAppImage) {
     auto rv = appimage_unregister_in_system(pathToAppImage.toStdString().c_str(), false);
-
+    
     if (rv != 0)
         return false;
-
+    
+    // Supprimer le lien symbolique normal
+    removeSymlinkFromPath(pathToAppImage);
+    
+    // Supprimer le lien symbolique simplifié
+    QString commandName = getCommandNameMapping(pathToAppImage);
+    if (!commandName.isEmpty()) {
+        QString simplifiedLinkPath = QDir::homePath() + "/.local/bin/" + commandName;
+        if (QFile::exists(simplifiedLinkPath)) {
+            QFile::remove(simplifiedLinkPath);
+        }
+        removeCommandNameMapping(pathToAppImage);
+    }
+    
     return true;
 }
 
@@ -1369,4 +1475,362 @@ void setUpFallbackIconPaths(QWidget* parent) {
         // now replace the button's actual icon with the fallback-enabled one
         button->setIcon(newIcon);
     }
+}
+
+bool isLocalBinInPath() {
+    const QString localBinPath = QDir::homePath() + "/.local/bin";
+    
+    // Récupérer le PATH depuis les variables d'environnement
+    const QString pathEnv = qEnvironmentVariable("PATH");
+    const QStringList pathDirs = pathEnv.split(":", Qt::SkipEmptyParts);
+    
+    // Vérifier si le répertoire est dans le PATH
+    return pathDirs.contains(localBinPath);
+}
+
+bool createSymlinkInPath(const QString& pathToAppImage) {
+    // Obtenir le nom de fichier de l'AppImage
+    QFileInfo appImageInfo(pathToAppImage);
+    
+    // Utiliser le basename sans extension pour le lien symbolique
+    QString baseName = appImageInfo.completeBaseName();
+    
+    // Sanitiser le nom (remplacer les espaces et autres caractères problématiques)
+    baseName.replace(QRegularExpression("[^a-zA-Z0-9_-]"), "_");
+    
+    // Vérifier s'il existe déjà une AppImage avec le même basename
+    // Si c'est le cas, ajouter un suffixe (un hash md5 par exemple)
+    QString linkName = baseName;
+    
+    QDir localBinDir(QDir::homePath() + "/.local/bin");
+    
+    // Créer le répertoire ~/.local/bin s'il n'existe pas
+    if (!localBinDir.exists()) {
+        if (!localBinDir.mkpath(".")) {
+            std::cerr << "Failed to create directory " << localBinDir.path().toStdString() << std::endl;
+            return false;
+        }
+    }
+    
+    // Si un lien portant ce nom existe déjà mais pointe vers un fichier différent
+    QString existingLinkPath = localBinDir.filePath(linkName);
+    if (QFile::exists(existingLinkPath)) {
+        QFileInfo existingLinkInfo(existingLinkPath);
+        
+        // Si c'est un lien symbolique qui pointe vers un autre fichier
+        if (existingLinkInfo.isSymLink() && 
+            QFileInfo(existingLinkInfo.symLinkTarget()).canonicalFilePath() != 
+            QFileInfo(pathToAppImage).canonicalFilePath()) {
+            
+            // Ajouter un suffixe basé sur un hash md5 pour éviter les conflits
+            QString digest = getAppImageDigestMd5(pathToAppImage);
+            if (!digest.isEmpty()) {
+                linkName = baseName + "_" + digest.left(8);
+            } else {
+                // Si pas de digest disponible, utiliser un timestamp
+                linkName = baseName + "_" + QString::number(QDateTime::currentSecsSinceEpoch());
+            }
+        } else if (!existingLinkInfo.isSymLink()) {
+            // Si c'est un fichier normal et non un lien, ne pas l'écraser
+            std::cerr << "A file with name " << linkName.toStdString() 
+                      << " already exists in " << localBinDir.path().toStdString() 
+                      << " and is not a symlink" << std::endl;
+            return false;
+        }
+    }
+    
+    // Créer le lien symbolique
+    QString targetPath = localBinDir.filePath(linkName);
+    
+    // Supprimer le lien existant s'il pointe vers la même AppImage
+    if (QFile::exists(targetPath)) {
+        if (!QFile::remove(targetPath)) {
+            std::cerr << "Failed to remove existing symlink " << targetPath.toStdString() << std::endl;
+            return false;
+        }
+    }
+    
+    if (!QFile::link(appImageInfo.absoluteFilePath(), targetPath)) {
+        std::cerr << "Failed to create symlink from " << appImageInfo.absoluteFilePath().toStdString() 
+                  << " to " << targetPath.toStdString() << std::endl;
+        return false;
+    }
+    
+    // Afficher un avertissement si ~/.local/bin n'est pas dans le PATH
+    if (!isLocalBinInPath()) {
+        std::cerr << "Warning: ~/.local/bin is not in PATH. " 
+                  << "You may need to add it to your PATH to use the command-line shortcut." << std::endl;
+    }
+    
+    return true;
+}
+
+bool removeSymlinkFromPath(const QString& pathToAppImage) {
+    // Obtenir le nom de fichier de l'AppImage
+    QFileInfo appImageInfo(pathToAppImage);
+    
+    // Utiliser le basename sans extension pour le lien symbolique
+    QString baseName = appImageInfo.completeBaseName();
+    
+    // Sanitiser le nom comme lors de la création
+    baseName.replace(QRegularExpression("[^a-zA-Z0-9_-]"), "_");
+    
+    QDir localBinDir(QDir::homePath() + "/.local/bin");
+    if (!localBinDir.exists()) {
+        // Rien à supprimer si le répertoire n'existe pas
+        return true;
+    }
+    
+    // Vérifier si le lien standard existe
+    QString standardLinkPath = localBinDir.filePath(baseName);
+    if (QFile::exists(standardLinkPath)) {
+        QFileInfo linkInfo(standardLinkPath);
+        
+        // Vérifier si c'est un lien symbolique qui pointe vers notre AppImage
+        if (linkInfo.isSymLink() &&
+            QFileInfo(linkInfo.symLinkTarget()).canonicalFilePath() == 
+            QFileInfo(pathToAppImage).canonicalFilePath()) {
+            
+            if (!QFile::remove(standardLinkPath)) {
+                std::cerr << "Failed to remove symlink " << standardLinkPath.toStdString() << std::endl;
+                return false;
+            }
+            return true;
+        }
+    }
+    
+    // Si le lien standard n'existait pas ou ne pointait pas vers notre AppImage,
+    // chercher un lien avec suffixe MD5
+    QString digest = getAppImageDigestMd5(pathToAppImage);
+    if (!digest.isEmpty()) {
+        QString hashLinkPath = localBinDir.filePath(baseName + "_" + digest.left(8));
+        
+        if (QFile::exists(hashLinkPath)) {
+            QFileInfo linkInfo(hashLinkPath);
+            
+            if (linkInfo.isSymLink() &&
+                QFileInfo(linkInfo.symLinkTarget()).canonicalFilePath() == 
+                QFileInfo(pathToAppImage).canonicalFilePath()) {
+                
+                if (!QFile::remove(hashLinkPath)) {
+                    std::cerr << "Failed to remove symlink " << hashLinkPath.toStdString() << std::endl;
+                    return false;
+                }
+                return true;
+            }
+        }
+    }
+    
+    // Aucun lien trouvé pointant vers cette AppImage
+    return true;
+}
+
+bool synchronizeSymlinksForIntegratedAppImages() {
+    bool success = true;
+    QDir appsDir = integratedAppImagesDestination();
+    
+    // Vérifier si l'option est activée
+    auto config = getConfig();
+    const bool createSymlinks = config == nullptr || !config->contains("AppImageLauncher/create_cli_symlinks") ||
+                               config->value("AppImageLauncher/create_cli_symlinks").toBool();
+    
+    if (!createSymlinks) {
+        // Si l'option est désactivée, supprimer tous les liens existants
+        QDir localBinDir(QDir::homePath() + "/.local/bin");
+        if (!localBinDir.exists()) {
+            return true; // Rien à faire si le répertoire n'existe pas
+        }
+        
+        QStringList entries = localBinDir.entryList(QDir::Files | QDir::NoDotAndDotDot);
+        for (const QString& entry : entries) {
+            QString linkPath = localBinDir.absoluteFilePath(entry);
+            
+            if (QFileInfo(linkPath).isSymLink()) {
+                QString target = QFile::symLinkTarget(linkPath);
+                
+                // Vérifier si la cible est dans le répertoire des AppImages intégrées
+                if (target.startsWith(appsDir.absolutePath())) {
+                    QFile::remove(linkPath);
+                }
+            }
+        }
+        
+        // Effacer tous les mappages de noms de commande
+        QSettings mappings(getCommandNameMappingFilePath(), QSettings::IniFormat);
+        mappings.clear();
+        
+        return true;
+    }
+    
+    // Si l'option est activée, synchroniser les liens
+    QStringList appImages = appsDir.entryList(QStringList() << "*.AppImage", QDir::Files);
+    
+    // Vérifier si le répertoire ~/.local/bin existe, sinon le créer
+    QString localBinPath = QDir::homePath() + "/.local/bin";
+    QDir localBinDir(localBinPath);
+    if (!localBinDir.exists()) {
+        QDir().mkpath(localBinPath);
+    }
+    
+    // Vérifier si l'option des noms simplifiés est activée
+    const bool useSimplifiedNames = config == nullptr || !config->contains("AppImageLauncher/use_simplified_names") ||
+                                config->value("AppImageLauncher/use_simplified_names").toBool();
+    
+    // Collecter les noms existants pour détecter les conflits
+    QStringList existingNames;
+    
+    for (const QString& appImageName : appImages) {
+        QString appImagePath = appsDir.absoluteFilePath(appImageName);
+        
+        // Créer le lien symbolique normal
+        std::string pathStr = appImagePath.toStdString();
+        unsigned char* digest = (unsigned char*)appimage_get_md5(pathStr.c_str());
+        char* md5str = appimage_hexlify((const char*)digest, 16);
+        QString baseName = QFileInfo(appImagePath).baseName().replace(" ", "_");
+        QString linkName = baseName + "_" + QString(md5str);
+        free(md5str);
+        free(digest);
+        
+        QString linkPath = localBinPath + "/" + linkName;
+        if (QFile::exists(linkPath)) {
+            QFile::remove(linkPath);
+        }
+        QFile::link(appImagePath, linkPath);
+        
+        // Si l'option des noms simplifiés est activée, gérer également ces liens
+        if (useSimplifiedNames) {
+            // Vérifier si un mappage existe déjà
+            QString commandName = getCommandNameMapping(appImagePath);
+            
+            // Si pas de mappage, en créer un nouveau
+            if (commandName.isEmpty()) {
+                commandName = extractCommandName(appImagePath);
+                
+                // Gérer les conflits
+                QString baseName = commandName;
+                int suffix = 1;
+                while (existingNames.contains(commandName)) {
+                    commandName = baseName + "-" + QString::number(suffix);
+                    suffix++;
+                }
+                
+                registerCommandNameMapping(appImagePath, commandName);
+            }
+            
+            existingNames.append(commandName);
+            
+            // Créer ou mettre à jour le lien symbolique simplifié
+            QString simplifiedLinkPath = localBinPath + "/" + commandName;
+            if (QFile::exists(simplifiedLinkPath)) {
+                QFile::remove(simplifiedLinkPath);
+            }
+            QFile::link(appImagePath, simplifiedLinkPath);
+        } else {
+            // Si les noms simplifiés sont désactivés, supprimer les liens et mappages existants
+            QString commandName = getCommandNameMapping(appImagePath);
+            if (!commandName.isEmpty()) {
+                QString simplifiedLinkPath = localBinPath + "/" + commandName;
+                if (QFile::exists(simplifiedLinkPath)) {
+                    QFile::remove(simplifiedLinkPath);
+                }
+                removeCommandNameMapping(appImagePath);
+            }
+        }
+    }
+    
+    return success;
+}
+
+QString sanitizeCommandName(const QString& name) {
+    QString result = name.toLower();
+    // Remplacer espaces et caractères spéciaux
+    result.replace(QRegExp("[^a-zA-Z0-9_-]"), "-");
+    // Éviter les doublons de séparateurs
+    result.replace(QRegExp("-+"), "-");
+    // Supprimer les tirets au début et à la fin
+    result = result.trimmed();
+    while (result.startsWith("-")) {
+        result = result.mid(1);
+    }
+    while (result.endsWith("-")) {
+        result = result.left(result.length() - 1);
+    }
+    return result;
+}
+
+QString getCommandNameMappingFilePath() {
+    QDir configDir = QDir(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation));
+    configDir.mkpath("appimagelauncher");
+    return configDir.absoluteFilePath("appimagelauncher/command_mappings.conf");
+}
+
+void registerCommandNameMapping(const QString& pathToAppImage, const QString& commandName) {
+    QSettings mappings(getCommandNameMappingFilePath(), QSettings::IniFormat);
+    mappings.setValue(pathToAppImage, commandName);
+}
+
+QString getCommandNameMapping(const QString& pathToAppImage) {
+    QSettings mappings(getCommandNameMappingFilePath(), QSettings::IniFormat);
+    return mappings.value(pathToAppImage).toString();
+}
+
+void removeCommandNameMapping(const QString& pathToAppImage) {
+    QSettings mappings(getCommandNameMappingFilePath(), QSettings::IniFormat);
+    mappings.remove(pathToAppImage);
+}
+
+QString extractCommandName(const QString& pathToAppImage) {
+    // 1. Extraire le nom du fichier .desktop à partir du chemin de l'AppImage
+    char* desktopFilePath = nullptr;
+    
+    // On génère le hash MD5 comme AppImageLauncher le fait
+    std::string pathStr = pathToAppImage.toStdString();
+    const char* path = pathStr.c_str();
+    unsigned char* digest = (unsigned char*)appimage_get_md5(path);
+    
+    if (digest != nullptr) {
+        char* id = appimage_hexlify((const char*)digest, 16);
+        desktopFilePath = appimage_registered_desktop_file_path(path, id, false);
+        free(id);
+        free(digest);
+    }
+    
+    QString commandName;
+    
+    // 2. Si le fichier .desktop existe, on l'analyse
+    if (desktopFilePath != nullptr && QFile::exists(desktopFilePath)) {
+        QSettings desktopFile(QString(desktopFilePath), QSettings::IniFormat);
+        desktopFile.beginGroup("Desktop Entry");
+        
+        // 3. Essayer différents champs dans l'ordre de priorité
+        QString execField = desktopFile.value("Exec").toString();
+        QString nameField = desktopFile.value("Name").toString();
+        
+        // 4. Nettoyer le champ Exec pour obtenir juste le nom de la commande
+        if (!execField.isEmpty()) {
+            // Extraire le premier mot avant les arguments
+            QString command = execField.split(" ").first();
+            // Supprimer chemins et extensions
+            command = QFileInfo(command).baseName();
+            if (!command.isEmpty()) {
+                commandName = sanitizeCommandName(command);
+                free(desktopFilePath);
+                return commandName;
+            }
+        }
+        
+        // 5. Utiliser le champ Name comme fallback
+        if (!nameField.isEmpty()) {
+            commandName = sanitizeCommandName(nameField);
+            free(desktopFilePath);
+            return commandName;
+        }
+        
+        free(desktopFilePath);
+    }
+    
+    // 6. Fallback sur le nom du fichier AppImage
+    commandName = sanitizeCommandName(QFileInfo(pathToAppImage).baseName());
+    
+    return commandName;
 }
