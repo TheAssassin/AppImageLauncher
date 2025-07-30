@@ -122,11 +122,7 @@ Compatibility table (likely incomplete.) Please, feel free to open PRs to add di
 | `appimagelauncher-<version>.bionic_(amd64,i386).deb` | Ubuntu Bionic (18.04) and newer, LMDE 6 "Faye" |
 | `appimagelauncher-<version>.(i386,x86_64).rpm`       | rpm-based | openSUSE Leap 42 and newer, possibly openSUSE Tumbleweed, SUSE Enterprise Linux, RHEL 7, CentOS 7 |
 
-
-Note: Ubuntu Bionic (and newer) broke with the backwards compatibility of its `libcurl` packages, therefore users of these systems need to install the special `bionic` package
-
-
-Manjaro and Netrunner Rolling users can install AppImageLauncher with a distribution-provided package called `appimagelauncher`.
+The reason there are two ubuntu packages is because ubuntu Bionic (and newer) broke with the backwards compatibility of its `libcurl` packages, therefore users of these systems need to install the special `bionic` package.
 
 Arch Linux, Manjaro, Antergos and Netrunner Rolling users can use AUR to install AppImageLauncher by installing [appimagelauncher](https://aur.archlinux.org/packages/appimagelauncher) or [appimagelauncher-git](https://aur.archlinux.org/packages/appimagelauncher-git) (possibly broken, see [#574](https://github.com/TheAssassin/AppImageLauncher/issues/574)) (thanks @NuLogicSystems for setting up the build). 
 
