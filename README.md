@@ -120,30 +120,17 @@ Compatibility table (likely incomplete.) Please, feel free to open PRs to add di
 | ---------------- | ------------ | ------------------------------------- |
 | `appimagelauncher-<version>.xenial_(amd64,i386).deb` | Ubuntu Xenial | Ubuntu Xenial (16.04), Debian Stretch (9), Netrunner 17.01 |
 | `appimagelauncher-<version>.bionic_(amd64,i386).deb` | Ubuntu Bionic (18.04) and newer, LMDE 6 "Faye" |
-| ~~`appimagelauncher-<version>.disco_(amd64,i386).deb`~~  | ~~Ubuntu Disco~~  | ~~Ubuntu Disco (19.04)~~ |
-| ~~`appimagelauncher-<version>.eoan_(amd64,i386).deb`~~   | ~~Ubuntu Eoan~~   | ~~Ubuntu Eoan (19.10) and newer~~ |
-| ~~`appimagelauncher-<version>.buster_(amd64,i386).deb`~~ | ~~Debian Buster~~ | ~~Debian Buster (10) and newer, Netrunner 19.01 and 19.08~~ |
-| `appimagelauncher-<version>.(i386,x86_64).rpm`       | Ubuntu Xenial | openSUSE Leap 42 and newer, possibly openSUSE Tumbleweed, SUSE Enterprise Linux, RHEL 7, CentOS 7 |
+| `appimagelauncher-<version>.(i386,x86_64).rpm`       | rpm-based | openSUSE Leap 42 and newer, possibly openSUSE Tumbleweed, SUSE Enterprise Linux, RHEL 7, CentOS 7 |
 
-  - Ubuntu Trusty (14.04) and newer
-    - **Important:** Ubuntu Bionic (and newer) broke with the backwards compatibility of its `libcurl` packages, therefore users of these systems need to install the special `bionic` package
-  - Debian stable (Jessie, 8) and newer
-  - Netrunner 17 and newer
-  - openSUSE Leap 42 and newer
-  - openSUSE Tumbleweed
 
-The installation of packages on systems with a set of packages similar to one of the listed ones (e.g., Linux Mint, Fedora, etc.) should work as well.
+Note: Ubuntu Bionic (and newer) broke with the backwards compatibility of its `libcurl` packages, therefore users of these systems need to install the special `bionic` package
 
-**Note:** For Ubuntu 19.04 and newer as well as derivatives, there's two PPAs (personal package archives) available providing a simple way to install and update AppImageLauncher (thanks [Peter Jonas](https://github.com/shoogle) for creating and maintaining them):
-
-  - stable (provides all releases): https://launchpad.net/~appimagelauncher-team/+archive/ubuntu/stable
-  - daily (latest and greatest but possibly unstable): https://launchpad.net/~appimagelauncher-team/+archive/ubuntu/daily
 
 Manjaro and Netrunner Rolling users can install AppImageLauncher with a distribution-provided package called `appimagelauncher`.
 
 Arch Linux, Manjaro, Antergos and Netrunner Rolling users can use AUR to install AppImageLauncher by installing [appimagelauncher](https://aur.archlinux.org/packages/appimagelauncher) or [appimagelauncher-git](https://aur.archlinux.org/packages/appimagelauncher-git) (possibly broken, see [#574](https://github.com/TheAssassin/AppImageLauncher/issues/574)) (thanks @NuLogicSystems for setting up the build). 
 
-Other systems derived from the listed ones, such as for instance Linux Mint (Ubuntu), should support AppImageLauncher as well.
+Other systems derived from the listed ones, such as for instance Linux Mint (Ubuntu), Fedora (rpm) should support AppImageLauncher as well.
 If they don't, please don't hesitate to create an issue.
 
 **Note:** Feel free to request support for other distributions by [opening an issue](https://github.com/TheAssassin/AppImageLauncher/issues/new).
