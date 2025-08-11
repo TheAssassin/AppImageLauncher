@@ -70,7 +70,6 @@ jobs:
         run: ls -alFR
       - name: Create release and upload artifacts
         env:
-          DEBUG: "1"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WEBDAV_URL: ${{ secrets.WEBDAV_URL }}
           WEBDAV_USER: ${{ secrets.WEBDAV_USER }}
