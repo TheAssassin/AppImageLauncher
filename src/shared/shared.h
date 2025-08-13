@@ -66,7 +66,7 @@ IntegrationState integrateAppImage(const QString& pathToAppImage, const QString&
 // < 0: unset; 0 = false; > 0 = true
 // destination is a string that, when empty, will be interpreted as "use default"
 void createConfigFile(int askToMove, const QString& destination, int enableDaemon,
-                      const QStringList& additionalDirsToWatch = {}, int monitorMountedFilesystems = -1);
+                      const QStringList& additionalDirsToWatch = {}, int monitorMountedFilesystems = -1, int createCliSymlinks = -1, int useSimplifiedNames = -1);
 
 // replaces ~ character in paths with real home directory, if necessary and possible
 QString expandTilde(QString path);
@@ -131,3 +131,70 @@ QIcon loadIconWithFallback(const QString& iconName);
 
 // sets up paths to fallback icons bundled with AppImageLauncher
 void setUpFallbackIconPaths(QWidget*);
+
+/**
+ * Crée un lien symbolique dans ~/.local/bin pour une AppImage
+ * @param pathToAppImage Chemin vers l'AppImage
+ * @return true si le lien a été créé avec succès, false sinon
+ */
+bool createSymlinkInPath(const QString& pathToAppImage);
+
+/**
+ * Supprime le lien symbolique correspondant à une AppImage
+ * @param pathToAppImage Chemin vers l'AppImage
+ * @return true si le lien a été supprimé avec succès, false sinon
+ */
+bool removeSymlinkFromPath(const QString& pathToAppImage);
+
+/**
+ * Vérifie si ~/.local/bin est dans le PATH de l'utilisateur
+ * @return true si ~/.local/bin est dans le PATH, false sinon
+ */
+bool isLocalBinInPath();
+
+/**
+ * Synchronise les liens symboliques pour toutes les AppImages intégrées
+ * en fonction de la configuration actuelle
+ * @return true si la synchronisation a réussi, false sinon
+ */
+bool synchronizeSymlinksForIntegratedAppImages();
+
+/**
+ * Extrait un nom de commande approprié depuis une AppImage
+ * @param pathToAppImage Chemin vers l'AppImage
+ * @return Nom de commande convenable (sans espaces ni caractères spéciaux)
+ */
+QString extractCommandName(const QString& pathToAppImage);
+
+/**
+ * Assainit un nom pour en faire un nom de commande valide
+ * @param name Nom brut
+ * @return Nom assaini pour utilisation en ligne de commande
+ */
+QString sanitizeCommandName(const QString& name);
+
+/**
+ * Obtient le chemin vers le fichier de configuration des mappages de noms de commande
+ * @return Chemin vers le fichier de configuration
+ */
+QString getCommandNameMappingFilePath();
+
+/**
+ * Enregistre la liaison entre une AppImage et son nom de commande simplifié
+ * @param pathToAppImage Chemin vers l'AppImage
+ * @param commandName Nom de commande simplifié
+ */
+void registerCommandNameMapping(const QString& pathToAppImage, const QString& commandName);
+
+/**
+ * Récupère le nom de commande simplifié pour une AppImage
+ * @param pathToAppImage Chemin vers l'AppImage
+ * @return Nom de commande simplifié ou chaîne vide si non trouvé
+ */
+QString getCommandNameMapping(const QString& pathToAppImage);
+
+/**
+ * Supprime la liaison entre une AppImage et son nom de commande
+ * @param pathToAppImage Chemin vers l'AppImage
+ */
+void removeCommandNameMapping(const QString& pathToAppImage);
