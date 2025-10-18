@@ -14,9 +14,7 @@ function(ail_generate_translations)
     add_custom_command(
         TARGET i18n POST_BUILD
         COMMAND ${LUPDATE} "${ARGV0}" -ts "${ARGV1}" -locations relative
-        MAIN_DEPENDENCY "${ARGV0}"
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-
     )
 endfunction()
 
@@ -32,7 +30,6 @@ endforeach()
 add_custom_command(
     TARGET i18n POST_BUILD
     COMMAND ./auto-translate.py ui.en.ts
-    MAIN_DEPENDENCY "${ARGV0}"
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
@@ -48,9 +45,7 @@ function(ail_generate_qm)
     add_custom_command(
         TARGET l10n POST_BUILD
         COMMAND ${LRELEASE} "${ARGV0}" -qm "${ARGV1}"
-        MAIN_DEPENDENCY "${ARGV0}"
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-
     )
 endfunction()
 
@@ -73,7 +68,6 @@ foreach(JSON_FILE IN LISTS JSON_FILES)
         TARGET l10n POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy ${JSON_FILENAME} ${target_dir}/${JSON_FILENAME}
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        MAIN_DEPENDENCY ${JSON_FILE}
     )
 endforeach()
 
