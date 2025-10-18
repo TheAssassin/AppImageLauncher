@@ -138,7 +138,7 @@ ssize_t get_pt_dynamic_offset(std::ifstream& ifs)
 bool is_32bit_elf(std::ifstream& ifs) {
     if (!ifs) {
         log_error("failed to read e_ident from ELF file\n");
-        return -1;
+        return false;
     }
 
     // for the beginning, we just need to read e_ident to determine ELF class (i.e., either 32-bit or 64-bit)
@@ -165,7 +165,7 @@ bool is_32bit_elf(const std::string& filename) {
 
     if (!ifs) {
         log_error("could not open file: %s\n", filename.c_str());
-        return -1;
+        return false;
     }
 
     return is_32bit_elf(ifs);
@@ -174,7 +174,7 @@ bool is_32bit_elf(const std::string& filename) {
 bool is_statically_linked_elf(std::ifstream& ifs) {
     if (!ifs) {
         log_error("failed to read e_ident from ELF file\n");
-        return -1;
+        return false;
     }
 
     ssize_t pt_dynamic_offset;
@@ -193,7 +193,7 @@ bool is_statically_linked_elf(const std::string& filename) {
 
     if (!ifs) {
         log_error("could not open file: %s\n", filename.c_str());
-        return -1;
+        return false;
     }
 
     return is_statically_linked_elf(ifs);
