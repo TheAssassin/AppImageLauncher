@@ -10,7 +10,7 @@
 #error component name undefined
 #endif
 
-static int v_log_message(const char* const format, va_list args) {
+inline static int v_log_message(const char* const format, va_list args) {
     static const char prefix[] = "[appimagelauncher-binfmt-bypass/" COMPONENT_NAME "] ";
 
     char* patched_format = (char*) (malloc(strlen(format) + strlen(prefix) + 1));
@@ -20,7 +20,7 @@ static int v_log_message(const char* const format, va_list args) {
     return vfprintf(stderr, patched_format, args);
 }
 
-static int v_log_message_prefix(const char* const prefix, const char* const format, va_list args) {
+inline static int v_log_message_prefix(const char* const prefix, const char* const format, va_list args) {
     char* patched_format = (char*) (malloc(strlen(format) + strlen(prefix) + 2 + 1));
     strcpy(patched_format, prefix);
     strcat(patched_format, ": ");
@@ -29,7 +29,7 @@ static int v_log_message_prefix(const char* const prefix, const char* const form
     return v_log_message(patched_format, args);
 }
 
-static int log_message(const char* const format, ...) {
+inline static int log_message(const char* const format, ...) {
     va_list args;
     va_start(args, format);
 
@@ -40,7 +40,7 @@ static int log_message(const char* const format, ...) {
     return result;
 }
 
-static void log_debug(const char* const format, ...) {
+inline static void log_debug(const char* const format, ...) {
     if (getenv("DEBUG") == NULL) {
         return;
     }
@@ -53,7 +53,7 @@ static void log_debug(const char* const format, ...) {
     va_end(args);
 }
 
-static void log_error(const char* const format, ...) {
+inline static void log_error(const char* const format, ...) {
     va_list args;
     va_start(args, format);
 
@@ -63,7 +63,7 @@ static void log_error(const char* const format, ...) {
 }
 
 
-static void log_warning(const char* const format, ...) {
+inline static void log_warning(const char* const format, ...) {
     va_list args;
     va_start(args, format);
 
