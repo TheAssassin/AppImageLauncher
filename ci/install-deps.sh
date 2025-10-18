@@ -43,6 +43,8 @@ elif [[ "$DOCKER_PLATFORM" == "linux/arm64/v8" ]]; then
     )
 fi
 
+export DEBIAN_FRONTEND=noninteractive
+
 # allow setup of PPA
 apt-get update
 apt-get install -y software-properties-common
