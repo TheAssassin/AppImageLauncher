@@ -125,7 +125,7 @@ esac
 
 patchelf_arch="${patchelf_arch:-$cmake_arch}"
 
-curl -L https://artifacts.assassinate-you.net/prebuilt-cmake/cmake-v3.29.6-ubuntu-focal-"${cmake_arch}".tar.gz | \
+curl -L https://artifacts.assassinate-you.net/prebuilt-cmake/cmake-v3.29.6-ubuntu-jammy-"${cmake_arch}".tar.gz | \
     tar xz --strip-components=1 -C /usr
 
 curl -L https://github.com/NixOS/patchelf/releases/download/0.18.0/patchelf-0.18.0-"$patchelf_arch".tar.gz | tar xz -C/usr/local
