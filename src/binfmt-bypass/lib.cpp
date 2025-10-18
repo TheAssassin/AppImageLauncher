@@ -210,9 +210,9 @@ int bypassBinfmtAndRunAppImage(const std::string& appimage_path, const std::vect
 
 #ifdef HAVE_MEMFD_CREATE
     // create "file" in memory, copy runtime there and patch out magic bytes
-    int runtime_fd = create_memfd_with_patched_runtime(appimage_path.c_str(), size);
+    const int runtime_fd = create_memfd_with_patched_runtime(appimage_path.c_str(), size);
 #else
-    int runtime_fd = create_shm_fd_with_patched_runtime(appimage_filename.c_str(), size);
+    const int runtime_fd = create_shm_fd_with_patched_runtime(appimage_filename.c_str(), size);
 #endif
 
     if (runtime_fd < 0) {
