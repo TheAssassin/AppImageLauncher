@@ -1,7 +1,7 @@
 #! /bin/bash
 
 if [[ "$DOCKER_PLATFORM" == "" ]]; then
-    echo "Usage: env $DOCKER_PLATFORM=... bash $0"
+    echo "Usage: env DOCKER_PLATFORM=... bash $0"
     exit 1
 fi
 
