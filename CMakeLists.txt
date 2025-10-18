@@ -41,7 +41,7 @@ include(FetchContent)
 # AppImageUpdate is needed for the updater UI (and libappimage)
 FetchContent_Declare(AppImageUpdate
     GIT_REPOSITORY https://github.com/AppImageCommunity/AppImageUpdate.git
-    GIT_TAG 2.0.0-alpha-1-20241225
+    GIT_TAG 2.0.0-alpha-1-20251018
     EXCLUDE_FROM_ALL
 )
 
