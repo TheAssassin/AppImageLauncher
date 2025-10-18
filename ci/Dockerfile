@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM ubuntu:jammy
 
 # tell scripts that we're building in an automated release scenario
 ENV CI=1
