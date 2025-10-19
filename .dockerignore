@@ -1,0 +1,5 @@
+# ignore everything but ci/ and lib/AppImageUpdate/ci/
+# note that the last line that matches a file decides, so ! rules after * decide which files to include
+*
+!ci/
+!lib/AppImageUpdate/ci/
