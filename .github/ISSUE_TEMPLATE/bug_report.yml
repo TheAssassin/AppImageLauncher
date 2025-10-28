@@ -75,7 +75,7 @@ body:
 - type: textarea
   id: appimages-tried
   attributes:
-    label: List of AppImages you tried
+    label: List of AppImages you tried (ideally with URL)
     description: Please post a list of AppImages you tried (including the information whether they work or not, a version number or filename, ideally also a URL)
     placeholder: |
       - FreeCAD 0.19.3 (working), https://github.com/FreeCAD/FreeCAD/releases/download/0.19.3/FreeCAD_0.19.3-Linux-Conda_glibc2.12-x86_64.AppImage
