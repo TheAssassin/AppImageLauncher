@@ -109,9 +109,12 @@ if [[ "${BUILD_LITE:-}" == "" ]]; then
     export LDNP_DESCRIPTION=""
     export LDNP_SHORT_DESCRIPTION=""
 
+    rpm_lib_suffix=""
+
     case "$ARCH" in
         x86_64)
             rpm_build_arch=x86_64
+            rpm_lib_suffix="()(64bit)"
             deb_build_arch=amd64
             ;;
         i?86)
@@ -142,7 +145,16 @@ if [[ "${BUILD_LITE:-}" == "" ]]; then
     export LDNP_META_DEB_PRE_DEPENDS="bash"
     export LDNP_DEB_EXTRA_DEBIAN_FILES="${BUILD_DIR}/cmake/debian/postinst;${BUILD_DIR}/cmake/debian/postrm"
 
-    export LDNP_META_RPM_REQUIRES="systemd libGL.so.1 libfontconfig.so.1 libfreetype.so.6 libfribidi.so.0 libgpg-error.so.0 libharfbuzz.so.0"
+    rpm_requires=(
+        "systemd"
+        "libGL.so.1${rpm_lib_suffix}"
+        "libfontconfig.so.1${rpm_lib_suffix}"
+        "libfreetype.so.6${rpm_lib_suffix}"
+        "libfribidi.so.0${rpm_lib_suffix}"
+        "libgpg-error.so.0${rpm_lib_suffix}"
+        "libharfbuzz.so.0${rpm_lib_suffix}"
+    )
+    export LDNP_META_RPM_REQUIRES="${rpm_requires[*]}"
     export LDNP_META_RPM_BUILD_ARCH="$rpm_build_arch"
     export LDNP_RPM_SCRIPTLET_POST="${BUILD_DIR}/cmake/debian/postinst"
     export LDNP_RPM_SCRIPTLET_PREUN="${BUILD_DIR}/cmake/debian/postrm"
