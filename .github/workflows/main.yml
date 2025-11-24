@@ -37,7 +37,7 @@ jobs:
       BUILD_LITE: ${{ matrix.BUILD_LITE }}
     runs-on: ${{ matrix.RUNS_ON }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           submodules: 'recursive'
       - name: Login to GitHub Container Registry
