@@ -37,6 +37,26 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QCheckBox" name="createCliSymlinksCheckBox">
+            <property name="text">
+             <string>Create command-line shortcuts in ~/.local/bin for integrated AppImages</string>
+            </property>
+            <property name="toolTip">
+             <string>Allows you to run integrated AppImages directly from the terminal</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="useSimplifiedNamesCheckBox">
+            <property name="text">
+             <string>Use simplified names for command-line shortcuts</string>
+            </property>
+            <property name="toolTip">
+             <string>Creates commands with simple names like "krita" instead of complex hash-based names</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
