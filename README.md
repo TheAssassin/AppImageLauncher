@@ -106,6 +106,7 @@ It scans a predefined set of directories including `~/Downloads` and `~/.bin`, m
   * [CHRIS R MILLER](https://chrisrmiller.com/2019/05/29/integrate-appimages-into-your-linux-distro/) (English)
   * [doLys Forum](https://dolys.fr/forums/topic/gerer-les-appimage-sous-linux/) (French)
   * [LINUXUSER](https://linux-user.gr/t/eykolh-chrhsh-efarmogwn-appimage/2066) (Greek)
+  * [Linuxnews.de: AppImage in den Desktop integrieren](https://linuxnews.de/appimages-in-den-desktop-integrieren/) (German)
 
 
 ## Installation
