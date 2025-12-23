@@ -1,0 +1,7 @@
+#!/sbin/openrc-run
+
+#OpenRC user service
+
+description="AppImageLauncher daemon"
+supervisor="supervise-daemon"
+command="@CMAKE_INSTALL_PREFIX@/bin/appimagelauncherd"
