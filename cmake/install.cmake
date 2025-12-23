@@ -89,14 +89,32 @@ if(NOT BUILD_LITE)
     )
 endif()
 
-# install systemd service configuration for appimagelauncherd
-configure_file(
-    ${PROJECT_SOURCE_DIR}/resources/appimagelauncherd.service.in
-    ${PROJECT_BINARY_DIR}/resources/appimagelauncherd.service
-    @ONLY
-)
-# caution: don't use ${CMAKE_INSTALL_LIBDIR} here, it's really just lib/systemd/user
-install(
-    FILES ${PROJECT_BINARY_DIR}/resources/appimagelauncherd.service
-    DESTINATION lib/systemd/user/ COMPONENT APPIMAGELAUNCHER
-)
+if (SERVICE_TYPE STREQUAL "systemd")
+    # install systemd service configuration for appimagelauncherd
+    configure_file(
+        ${PROJECT_SOURCE_DIR}/resources/appimagelauncherd.service.in
+        ${PROJECT_BINARY_DIR}/resources/appimagelauncherd.service
+        @ONLY
+    )
+    # caution: don't use ${CMAKE_INSTALL_LIBDIR} here, it's really just lib/systemd/user
+    install(
+        FILES ${PROJECT_BINARY_DIR}/resources/appimagelauncherd.service
+        DESTINATION lib/systemd/user/ COMPONENT APPIMAGELAUNCHER
+    )
+    message("Using SystemD service")
+elseif (SERVICE_TYPE STREQUAL "openrc")
+    # install openrc service configuration for appimagelauncherd
+    #
+    # the output file name will be the name of the service
+    # so it must be "appimagelauncherd"
+    configure_file(
+        ${PROJECT_SOURCE_DIR}/resources/appimagelauncherd_openrc.in
+        ${PROJECT_BINARY_DIR}/resources/appimagelauncherd
+        @ONLY
+    )
+    install(
+        FILES ${PROJECT_BINARY_DIR}/resources/appimagelauncherd
+        DESTINATION /etc/user/init.d COMPONENT APPIMAGELAUNCHER
+    )
+    message("Using OpenRC service")
+endif()

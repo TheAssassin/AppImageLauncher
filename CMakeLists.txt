@@ -48,7 +48,7 @@ FetchContent_Declare(AppImageUpdate
 # work around Wimplicit-function-declaration in ancient squashfuse code
 set(DEPENDENCIES_CFLAGS "-Wno-implicit-function-declaration" CACHE STRING "" FORCE)
 
-option(ENABLE_UPDATE_HELPER ON)
+option(ENABLE_UPDATE_HELPER "" ON)
 if(ENABLE_UPDATE_HELPER)
     # instruct AppImageUpdate to build the Qt UI
     set(BUILD_QT_UI ON CACHE BOOL "" FORCE)
@@ -56,6 +56,11 @@ endif()
 
 # note: for the time being, we require AppImageUpdate to be fetched during build, even if only to make libappimage available
 FetchContent_MakeAvailable(AppImageUpdate)
+
+# choose what init system to target (for daemon user service)
+# set by adding -DSERVICE_TYPE="<type>" when calling cmake
+# options: systemd, openrc
+set(SERVICE_TYPE "systemd" CACHE STRING "init service provider to target")
 
 # install resources, bundle libraries privately, etc.
 # initializes important installation destination variables, therefore must be included before adding subdirectories
