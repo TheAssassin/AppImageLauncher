@@ -114,6 +114,9 @@ elseif (SERVICE_TYPE STREQUAL "openrc")
     )
     install(
         FILES ${PROJECT_BINARY_DIR}/resources/appimagelauncherd
+        PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
+                    GROUP_READ GROUP_EXECUTE
+                    WORLD_READ WORLD_EXECUTE
         DESTINATION etc/user/init.d COMPONENT APPIMAGELAUNCHER
     )
     message("Using OpenRC service")
