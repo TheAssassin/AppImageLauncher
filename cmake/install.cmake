@@ -114,7 +114,7 @@ elseif (SERVICE_TYPE STREQUAL "openrc")
     )
     install(
         FILES ${PROJECT_BINARY_DIR}/resources/appimagelauncherd
-        DESTINATION /etc/user/init.d COMPONENT APPIMAGELAUNCHER
+        DESTINATION etc/user/init.d COMPONENT APPIMAGELAUNCHER
     )
     message("Using OpenRC service")
 endif()
