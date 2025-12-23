@@ -48,7 +48,7 @@ FetchContent_Declare(AppImageUpdate
 # work around Wimplicit-function-declaration in ancient squashfuse code
 set(DEPENDENCIES_CFLAGS "-Wno-implicit-function-declaration" CACHE STRING "" FORCE)
 
-option(ENABLE_UPDATE_HELPER "" ON)
+option(ENABLE_UPDATE_HELPER ON)
 if(ENABLE_UPDATE_HELPER)
     # instruct AppImageUpdate to build the Qt UI
     set(BUILD_QT_UI ON CACHE BOOL "" FORCE)
