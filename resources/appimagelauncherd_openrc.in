@@ -1,0 +1,9 @@
+#!/sbin/openrc-run
+
+#OpenRC user service
+
+description="AppImageLauncher daemon"
+supervisor="supervise-daemon"
+respawn_delay=10
+command="@CMAKE_INSTALL_PREFIX@/bin/appimagelauncherd"
+output_log="${XDG_STATE_HOME}/appimagelauncherd"

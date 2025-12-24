@@ -57,6 +57,16 @@ endif()
 # note: for the time being, we require AppImageUpdate to be fetched during build, even if only to make libappimage available
 FetchContent_MakeAvailable(AppImageUpdate)
 
+# choose what init service system to target (for daemon user service)
+# set by adding -DSERVICE_TYPE="<type>" when calling cmake
+# options: systemd, openrc
+set(SERVICE_TYPE "systemd" CACHE STRING "init service provider to target")
+if (SERVICE_TYPE STREQUAL "systemd")
+    add_definitions(-DSERVICE_TYPE_SYSTEMD)
+elseif (SERVICE_TYPE STREQUAL "openrc")
+    add_definitions(-DSERVICE_TYPE_OPENRC)
+endif()
+
 # install resources, bundle libraries privately, etc.
 # initializes important installation destination variables, therefore must be included before adding subdirectories
 include(cmake/install.cmake)
