@@ -49,7 +49,7 @@
     <message>
         <location line="+20"/>
         <source>Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Simge</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -68,12 +68,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location line="+41"/>
         <source>Integrate and run</source>
-        <translation type="unfinished"></translation>
+        <translation>Entegre et ve çalıştır</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Run once</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir kere çalıştır</translation>
     </message>
 </context>
 <context>
@@ -88,10 +88,10 @@ p, li { white-space: pre-wrap; }
 
 Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.</source>
-        <translation type="vanished">AppImage has already been integrated, but it is not in the current integration destination directory.
+        <translation>AppImage zaten entegre edilmiştir, ancak mevcut entegrasyon hedef dizininde değil.
 
-Do you want to move it into the new destination?
-Choosing No will run the AppImage once, and leave the AppImage in its current directory.</translation>
+Yeni hedefe taşımak istiyor musunuz?
+Hayır'ı seçmek, AppImage'ı bir kez çalıştıracak ve AppImage'ı mevcut dizininde bırakacaktır.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -102,7 +102,10 @@ Do you want to move it into the new destination?
 Choosing No will run the AppImage once, and leave the AppImage in its current directory.
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>AppImage %1 zaten entegre edilmiştir, ancak mevcut entegrasyon hedef dizininde değil.
+
+Yeni hedefe taşımak istiyor musunuz?
+Hayır'ı seçmek, AppImage'ı bir kez çalıştıracak ve AppImage'ı mevcut dizininde bırakacaktır.</translation>
     </message>
     <message>
         <location filename="../src/shared/shared.cpp" line="+1232"/>
@@ -113,7 +116,7 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
     <message>
         <location filename="../src/ui/main.cpp" line="+23"/>
         <source>Failed to unregister AppImage before re-integrating it</source>
-        <translation type="unfinished"></translation>
+        <translation>tekrar entegre edilmeden önce kaydı silme başarısız oldu</translation>
     </message>
     <message>
         <location filename="../src/shared/shared.cpp" line="-485"/>
@@ -121,7 +124,10 @@ Choosing No will run the AppImage once, and leave the AppImage in its current di
 Could not open file for reading:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Masaüstü dosya çevirileri ayrıştırılamadı:
+Dosya okumak için açılamadı:
+
+%1</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -129,12 +135,15 @@ Could not open file for reading:
 Invalid syntax:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Masaüstü dosya çevirileri ayrıştırılamadı:
+Geçersiz söz dizimi:
+
+%1</translation>
     </message>
     <message>
         <location line="+409"/>
         <source>File %1 is owned by another user: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya %1 diğer kullanıcıya ait: %2</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -145,19 +154,19 @@ Invalid syntax:
         <source>File %1 is owned by another user: %2
 
 Relaunch with their permissions?</source>
-        <translation type="vanished">File %1 is owned by another user: %2
+        <translation>Dosya %1 diğer kullanıcıya ait: %2
 
-Relaunch with their permissions?</translation>
+İzinleriyle yeniden başlatılsın mı?</translation>
     </message>
     <message>
         <location line="+52"/>
         <source>Failed to run permissions helper, exited with return code %1</source>
-        <translation type="unfinished"></translation>
+        <translation>İzin yardımcısı çalıştırılamadı, %1 dönüş koduyla çıkıldı</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Could not find suitable permissions helper, aborting</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygun izin yardımcısı bulunamadı, iptal ediliyor</translation>
     </message>
 </context>
 <context>
@@ -176,76 +185,76 @@ Relaunch with their permissions?</translation>
     <message>
         <location filename="../src/ui/main.cpp" line="-362"/>
         <source>AppImageLauncher does not support type %1 AppImages at the moment.</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImageLauncher şu anda %1 AppImages türünü desteklemiyor.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Could not make AppImage executable: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImage yürütülebilir yapılamadı: %1</translation>
     </message>
     <message>
         <source>Failed to open AppImage for reading: %1</source>
-        <translation type="vanished">Failed to open AppImage for reading: %1</translation>
+        <translation>AppImage'ı okumak için açılamadı: %1</translation>
     </message>
     <message>
         <source>Failed to create temporary directory</source>
-        <translation type="vanished">Failed to create temporary directory</translation>
+        <translation>Geçici dizin oluşturulamadı</translation>
     </message>
     <message>
         <source>Failed to create temporary copy of type 1 AppImage</source>
-        <translation type="vanished">Failed to create temporary copy of type 1 AppImage</translation>
+        <translation>AppImage 1 türünün geçici kopyası oluşturulamadı</translation>
     </message>
     <message>
         <source>Failed to open temporary AppImage copy for writing</source>
-        <translation type="vanished">Failed to open temporary AppImage copy for writing</translation>
+        <translation>Yazmak için geçici AppImage kopyası açılamadı</translation>
     </message>
     <message>
         <source>Failed to remove magic bytes from temporary AppImage copy</source>
-        <translation type="vanished">Failed to remove magic bytes from temporary AppImage copy</translation>
+        <translation>geçici AppImage kopyasından magic baytları kaldırmak için ailed</translation>
     </message>
     <message>
         <source>execv() failed: %1</source>
         <comment>error message</comment>
-        <translation type="vanished">execv() failed: %1</translation>
+        <translation>execv() başarısız: %1</translation>
     </message>
     <message>
         <source>runtime not found: no such file or directory: %1</source>
-        <translation type="vanished">runtime not found: no such file or directory: %1</translation>
+        <translation>runtime bulunamadı: böyle bir dosya veya dizin yok: %1</translation>
     </message>
     <message>
         <location line="+40"/>
         <source>execv() failed: %1</source>
-        <translation type="unfinished">execv() failed: %1</translation>
+        <translation>execv() hatası: %1</translation>
     </message>
     <message>
         <location line="+70"/>
         <source>Usage: %1 [options] &lt;path&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanım: %1 [seçenekler] &lt;path&gt;</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Desktop integration helper for AppImages, for use by Linux distributions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Linux dağıtımları tarafından kullanılmak üzere AppImages için masaüstü entegrasyon yardımcısı.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Options:</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçenekler:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Display this help and exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu yardımı göster ve çık</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Display version and exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Sürümü göster ve çık</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Arguments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Argümanlar:</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -264,66 +273,67 @@ Relaunch with their permissions?</translation>
     </message>
     <message>
         <source>Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</source>
-        <translation type="vanished">Failed to register AppImage in AppImageLauncherFS: error while trying to start appimagelauncherfs.service</translation>
+        <translation>AppImage, AppImageLauncherFS'ye kaydedilemedi: appimagelauncherfs.service'i başlatmaya çalışırken hata oluştu </translation>
     </message>
     <message>
         <source>Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</source>
-        <translation type="vanished">Failed to register AppImage in AppImageLauncherFS: failed to register AppImage path %1</translation>
+        <translation>AppImage, AppImageLauncherFS'ye kaydedilemedi: %1 AppImage yolu kaydedilemedi</translation>
     </message>
     <message>
         <source>Failed to register AppImage in AppImageLauncherFS: could not open map file</source>
-        <translation type="vanished">Failed to register AppImage in AppImageLauncherFS: could not open map file</translation>
+        <translation>AppImage, AppImageLauncherFS'ye kaydedilemedi: harita dosyası açılamadı </translation>
     </message>
     <message>
         <source>Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</source>
-        <translation type="vanished">Failed to register AppImage in AppImageLauncherFS: could not find virtual file for AppImage</translation>
+        <translation>AppImage, AppImageLauncherFS'ye kaydedilemedi: AppImage için sanal dosya bulunamadı</translation>
     </message>
     <message>
         <source>Failed to register AppImage in AppImageLauncherFS: unknown failure</source>
-        <translation type="vanished">Failed to register AppImage in AppImageLauncherFS: unknown failure</translation>
+        <translation>AppImage, AppImageLauncherFS'ye kaydedilemedi: bilinmeyen hata</translation>
     </message>
     <message>
         <location line="+8"/>
         <location filename="../src/ui/remove_main.cpp" line="+1"/>
         <source>Failed to clean up AppImage trash bin: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImage çöp kutusu temizlenemedi: %1</translation>
     </message>
     <message>
         <location line="+49"/>
         <source>Unknown AppImageLauncher option: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilinmeyen AppImageLauncher seçeneği: %1</translation>
     </message>
     <message>
         <location line="+12"/>
         <location filename="../src/ui/remove_main.cpp" line="-74"/>
         <location filename="../src/ui/update_main.cpp" line="-99"/>
         <source>Error: no such file or directory: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata: böyle bir dosya veya dizin yok: %1</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../src/ui/update_main.cpp" line="+7"/>
         <source>Not an AppImage: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulama AppImage değil: %1</translation>
     </message>
     <message>
         <location line="+162"/>
         <source>The directory the integrated AppImages are stored in is currently set to:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Entegre AppImages'ın depolandığı dizin şu anda şu şekilde ayarlanmıştır:
+%1></translation>
     </message>
     <message>
         <source>The directory the integrated AppImages are stored in is currently set to: %1</source>
-        <translation type="vanished">The directory the integrated AppImages are stored in is currently set to: %1</translation>
+        <translation>Entegre AppImages'ın depolandığı dizin şu anda şu şekilde ayarlandı: %1</translation>
     </message>
     <message>
         <source>Removes AppImages after desktop integration, for use by Linux distributions</source>
-        <translation type="vanished">Removes AppImages after desktop integration, for use by Linux distributions</translation>
+        <translation>Linux dağıtımları tarafından kullanılmak üzere masaüstü entegrasyonundan sonra AppImages'ı kaldırır</translation>
     </message>
     <message>
         <source>AppImageLauncher remove</source>
         <comment>remove helper app name</comment>
-        <translation type="vanished">AppImageLauncher remove</translation>
+        <translation>AppImageLauncher kaldır</translation>
     </message>
     <message>
         <source>Helper to delete integrated AppImages easily, e.g., from the application launcher&apos;s context menuz</source>
