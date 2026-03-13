@@ -103,7 +103,7 @@ It scans a predefined set of directories including `~/Downloads` and `~/.bin`, m
   * [manjaro.site](https://manjaro.site/how-to-install-appimage-launcher-on-ubuntu-19-04/) (English)
   * [CubicleNate's Techpad](https://cubiclenate.com/2020/01/09/appimagelauncher-appimage-manager-on-opensuse/) (English)
     + See also: [CubicleNate's Techpad](https://cubiclenate.com/2020/01/10/noodlings-lighting-the-emby-server-with-kdenlive/)
-  * [CHRIS R MILLER](https://chrisrmiller.com/2019/05/29/integrate-appimages-into-your-linux-distro/) (English)
+  * [CHRIS R MILLER](https://www.chrisrmiller.com/integrate-appimages-into-your-linux-distro/) (English)
   * [doLys Forum](https://dolys.fr/forums/topic/gerer-les-appimage-sous-linux/) (French)
   * [LINUXUSER](https://linux-user.gr/t/eykolh-chrhsh-efarmogwn-appimage/2066) (Greek)
 
