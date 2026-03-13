@@ -267,6 +267,10 @@ int main(int argc, char** argv) {
         system("systemctl --user stop    appimagelauncherd.service");
     }
 
+    if (isPathExcluded(config, pathToAppImage)) {
+        return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
+    }
+
     // beyond the next block, the code requires a UI
     // as we don't want to offer integration over a headless connection, we just run the AppImage
     if (isHeadless()) {
