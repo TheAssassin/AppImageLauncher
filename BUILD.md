@@ -42,6 +42,10 @@ For Ubuntu/Debian systems, this might look like:
 sudo apt install make cmake libglib2.0-dev libcairo2-dev librsvg2-dev libfuse-dev libarchive-dev libxpm-dev libcurl4-openssl-dev libboost-all-dev qtbase5-dev qtdeclarative5-dev qttools5-dev-tools patchelf libc6-dev libc6-dev gcc-multilib g++-multilib
 ```
 
+## Options
+By default, AppImageLauncher is built for System-D based systems.
+OpenRC can be targeted instead by adding `-DSERVICE_TYPE="openrc"`.
+
 ## Build
 
 Please update the `PREFIX` if you want. The prefix is the location the final application will be installed to. Usual locations may be `/usr/local` (default), `/usr`, `~/.local` or `/opt`.
