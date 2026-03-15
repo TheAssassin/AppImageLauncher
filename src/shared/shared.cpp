@@ -1,3 +1,6 @@
+#include <QTemporaryDir>
+#include <QProcess>
+#include <QCryptographicHash>
 // system includes
 #include <fstream>
 #include <iostream>
@@ -610,24 +613,495 @@ QString privateLibDirPath(const QString& srcSubdirName) {
 }
 #endif
 
-bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveCollisions) {
-    if (appimage_register_in_system(pathToAppImage.toStdString().c_str(), false) != 0) {
-        displayError(QObject::tr("Failed to register AppImage in system via libappimage"));
+static QString desktopShortcutStateDir() {
+    auto dataLocation = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+    if (dataLocation.isEmpty())
+        dataLocation = QDir::home().filePath(".local/share");
+
+    const auto dir = QDir(dataLocation).filePath("appimagelauncher/desktop-shortcut-state");
+    QDir().mkpath(dir);
+    return dir;
+}
+
+static QString desktopShortcutStatePath(const QString& desktopFilePath) {
+    const auto key = QString::fromLatin1(
+        QCryptographicHash::hash(
+            QFileInfo(desktopFilePath).absoluteFilePath().toUtf8(),
+            QCryptographicHash::Md5
+        ).toHex()
+    );
+
+    return QDir(desktopShortcutStateDir()).filePath(key + ".state");
+}
+
+static void markDesktopShortcutManaged(const QString& desktopFilePath) {
+    const auto statePath = desktopShortcutStatePath(desktopFilePath);
+    QFile f(statePath);
+    if (f.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        f.write(QFileInfo(desktopFilePath).absoluteFilePath().toUtf8());
+        f.close();
+    }
+}
+
+static void clearDesktopShortcutManaged(const QString& desktopFilePath) {
+    QFile::remove(desktopShortcutStatePath(desktopFilePath));
+}
+
+static bool shouldCreateDesktopShortcut() {
+    const auto forceValue = qEnvironmentVariable("APPIMAGELAUNCHER_CREATE_DESKTOP_SHORTCUT");
+    if (!forceValue.isEmpty()) {
+        const auto lowered = forceValue.trimmed().toLower();
+        return lowered == "1" || lowered == "true" || lowered == "yes" || lowered == "on";
+    }
+
+    const auto currentDesktop = qEnvironmentVariable("XDG_CURRENT_DESKTOP").toLower();
+    const auto sessionDesktop = qEnvironmentVariable("DESKTOP_SESSION").toLower();
+
+    return currentDesktop.contains("kde") ||
+           currentDesktop.contains("plasma") ||
+           sessionDesktop.contains("plasma");
+}
+
+static QString sanitizeDesktopShortcutName(QString name) {
+    name = name.trimmed();
+
+    if (name.isEmpty())
+        name = "AppImage";
+
+    name.replace("/", "_");
+    name.replace(QRegularExpression(R"(\s+)"), " ");
+    name.remove(QRegularExpression(R"([<>:"\\|?*\x00-\x1F])"));
+
+    if (name.isEmpty())
+        name = "AppImage";
+
+    return name + ".desktop";
+}
+
+static bool createDesktopShortcutFromIntegratedDesktopFile(const QString& desktopFilePath) {
+    const auto currentDesktop = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
+    const auto sessionDesktop = qEnvironmentVariable("DESKTOP_SESSION");
+    const auto forceValue = qEnvironmentVariable("APPIMAGELAUNCHER_CREATE_DESKTOP_SHORTCUT");
+
+
+    if (!shouldCreateDesktopShortcut()) {
+        qInfo() << "Skipping desktop shortcut creation because desktop environment is not supported";
+        return true;
+    }
+
+    auto desktopDir = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+    if (desktopDir.isEmpty())
+        desktopDir = QDir::home().filePath("Desktop");
+
+
+    if (desktopDir.isEmpty()) {
+        qWarning() << "Desktop directory is empty";
         return false;
+    }
+
+    if (!QDir().mkpath(desktopDir)) {
+        qWarning() << "Failed to create desktop directory:" << desktopDir;
+        return false;
+    }
+
+    if (!QFileInfo::exists(desktopFilePath)) {
+        qWarning() << "Integrated desktop file does not exist:" << desktopFilePath;
+        return false;
+    }
+
+    std::shared_ptr<GKeyFile> desktopFile(g_key_file_new(), gKeyFileDeleter);
+
+    if (!g_key_file_load_from_file(
+            desktopFile.get(),
+            desktopFilePath.toStdString().c_str(),
+            G_KEY_FILE_KEEP_TRANSLATIONS,
+            nullptr
+        )) {
+        qWarning() << "Failed to load integrated desktop file:" << desktopFilePath;
+        return false;
+    }
+
+    std::shared_ptr<char> nameValue(
+        g_key_file_get_string(
+            desktopFile.get(),
+            G_KEY_FILE_DESKTOP_GROUP,
+            G_KEY_FILE_DESKTOP_KEY_NAME,
+            nullptr
+        ),
+        [](char* p) { g_free(p); }
+    );
+
+    QString prettyName;
+    if (nameValue != nullptr)
+        prettyName = QString::fromUtf8(nameValue.get());
+
+    if (prettyName.trimmed().isEmpty())
+        prettyName = QFileInfo(desktopFilePath).completeBaseName();
+
+    const auto targetPath = QDir(desktopDir).filePath(sanitizeDesktopShortcutName(prettyName));
+    const auto statePath = desktopShortcutStatePath(desktopFilePath);
+
+    if (QFile::exists(statePath)) {
+        if (QFile::exists(targetPath)) {
+            return true;
+        }
+
+        return true;
+    }
+
+    if (QFile::exists(targetPath)) {
+        qInfo() << "Desktop shortcut already exists on first encounter, marking as managed without recreating:" << targetPath;
+        markDesktopShortcutManaged(desktopFilePath);
+        return true;
+    }
+
+
+    if (!QFile::copy(desktopFilePath, targetPath)) {
+        qWarning() << "Failed to copy desktop file to desktop:" << desktopFilePath << "=>" << targetPath;
+        return false;
+    }
+
+    makeExecutable(targetPath.toStdString().c_str());
+    markDesktopShortcutManaged(desktopFilePath);
+
+    return true;
+}
+
+static QString sanitizeIntegrationStem(QString name) {
+    name = QFileInfo(name).completeBaseName().trimmed();
+
+    if (name.isEmpty())
+        name = "AppImage";
+
+    name.replace("/", "_");
+    name.replace(QRegularExpression(R"([^A-Za-z0-9._]+)"), "_");
+    name.replace(QRegularExpression(R"(_+)"), "_");
+    name = name.trimmed();
+
+    if (name.isEmpty())
+        name = "AppImage";
+
+    return name;
+}
+
+static QString appImageIntegrationId(const QString& pathToAppImage) {
+    return QString::fromLatin1(
+        QCryptographicHash::hash(
+            QFileInfo(pathToAppImage).absoluteFilePath().toUtf8(),
+            QCryptographicHash::Md5
+        ).toHex()
+    );
+}
+
+static QString extractAppImageRoot(const QString& pathToAppImage, QTemporaryDir& tempDir) {
+    if (!tempDir.isValid())
+        return {};
+
+    QProcess proc;
+    proc.setWorkingDirectory(tempDir.path());
+    proc.start(pathToAppImage, {"--appimage-extract"});
+
+    if (!proc.waitForStarted())
+        return {};
+
+    if (!proc.waitForFinished(-1))
+        return {};
+
+    if (proc.exitStatus() != QProcess::NormalExit || proc.exitCode() != 0) {
+        qWarning() << "Fallback extract failed for" << pathToAppImage
+                   << "stdout:" << proc.readAllStandardOutput()
+                   << "stderr:" << proc.readAllStandardError();
+        return {};
+    }
+
+    const QStringList commonRoots = {
+        "AppDir",
+        "squashfs-root",
+        "dwarfs-root"
+    };
+
+    for (const auto& name : commonRoots) {
+        const auto candidate = QDir(tempDir.path()).filePath(name);
+        if (QFileInfo(candidate).isDir())
+            return candidate;
+    }
+
+    QDirIterator it(tempDir.path(), QDir::Dirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+    while (it.hasNext()) {
+        const auto candidate = it.next();
+        if (QFileInfo(QDir(candidate).filePath("AppRun")).exists())
+            return candidate;
+    }
+
+    return {};
+}
+
+static QString createStableManagedLauncherPath(const QString& pathToAppImage, const QString& integrationId) {
+    auto dataLocation = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+    if (dataLocation.isEmpty())
+        dataLocation = QDir::home().filePath(".local/share");
+
+    const auto targetDir = QDir(dataLocation).filePath("appimagelauncher/managed");
+    QDir().mkpath(targetDir);
+
+    const auto managedPath = QDir(targetDir).filePath(QString("appimagekit_%1.AppImage").arg(integrationId));
+
+    QFile::remove(managedPath);
+    if (!QFile::link(pathToAppImage, managedPath)) {
+        qWarning() << "Failed to create managed launcher link:" << managedPath << "->" << pathToAppImage;
+        return pathToAppImage;
+    }
+
+    return managedPath;
+}
+
+static QString copyFallbackIcons(const QString& extractedRoot, const QString& integrationId, const QString& originalIconName) {
+    const auto trimmedIconName = originalIconName.trimmed();
+
+
+    if (trimmedIconName.isEmpty()) {
+        qWarning() << "Fallback desktop file has empty Icon= entry";
+        return {};
+    }
+
+    auto dataLocation = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+    if (dataLocation.isEmpty())
+        dataLocation = QDir::home().filePath(".local/share");
+
+    const auto hicolorRoot = QDir(extractedRoot).filePath("usr/share/icons/hicolor");
+    const auto pixmapsRoot = QDir(extractedRoot).filePath("usr/share/pixmaps");
+
+    const auto lowerIconName = trimmedIconName.toLower();
+
+    QString iconFileName;
+    QString iconBaseName;
+    QString iconSuffix;
+
+    if (
+        lowerIconName.endsWith(".png") ||
+        lowerIconName.endsWith(".svg") ||
+        lowerIconName.endsWith(".svgz") ||
+        lowerIconName.endsWith(".xpm") ||
+        lowerIconName.endsWith(".ico")
+    ) {
+        iconFileName = QFileInfo(trimmedIconName).fileName();
+        iconBaseName = QFileInfo(trimmedIconName).completeBaseName();
+        iconSuffix = QFileInfo(trimmedIconName).suffix().toLower();
+    } else {
+        iconFileName = trimmedIconName;
+        iconBaseName = trimmedIconName;
+    }
+
+    QStringList patterns = {
+        trimmedIconName,
+        iconFileName,
+        iconBaseName + ".png",
+        iconBaseName + ".svg",
+        iconBaseName + ".svgz",
+        iconBaseName + ".xpm",
+        iconBaseName + ".ico"
+    };
+    patterns.removeDuplicates();
+
+    QString installedIconKey;
+
+    auto copyIcon = [&](const QString& sourceIconPath, const QString& targetDir) {
+        const auto suffix = QFileInfo(sourceIconPath).suffix().isEmpty() ? QString("png") : QFileInfo(sourceIconPath).suffix();
+        const auto baseName = QFileInfo(sourceIconPath).completeBaseName();
+        installedIconKey = QString("appimagekit_%1_%2").arg(integrationId, baseName);
+
+        QDir().mkpath(targetDir);
+        const auto targetPath = QDir(targetDir).filePath(installedIconKey + "." + suffix);
+
+        QFile::remove(targetPath);
+        if (!QFile::copy(sourceIconPath, targetPath)) {
+            qWarning() << "Failed to copy fallback icon:" << sourceIconPath << "->" << targetPath;
+            return;
+        }
+
+    };
+
+    if (QFileInfo(trimmedIconName).isAbsolute() && QFileInfo(trimmedIconName).exists()) {
+        copyIcon(trimmedIconName, QDir(dataLocation).filePath("icons/hicolor/256x256/apps"));
+        if (!installedIconKey.isEmpty())
+            return installedIconKey;
+    }
+
+    if (QFileInfo(hicolorRoot).isDir()) {
+        QDirIterator it(hicolorRoot, patterns, QDir::Files, QDirIterator::Subdirectories);
+        while (it.hasNext()) {
+            const auto sourceIconPath = it.next();
+            const auto relativeDir = QDir(hicolorRoot).relativeFilePath(QFileInfo(sourceIconPath).path());
+            const auto targetDir = QDir(dataLocation).filePath("icons/hicolor/" + relativeDir);
+            copyIcon(sourceIconPath, targetDir);
+        }
+    }
+
+    if (installedIconKey.isEmpty() && QFileInfo(pixmapsRoot).isDir()) {
+        QDirIterator it(pixmapsRoot, patterns, QDir::Files, QDirIterator::Subdirectories);
+        while (it.hasNext()) {
+            const auto sourceIconPath = it.next();
+            const auto targetDir = QDir(dataLocation).filePath("icons/hicolor/256x256/apps");
+            copyIcon(sourceIconPath, targetDir);
+        }
+    }
+
+    if (installedIconKey.isEmpty()) {
+        QDirIterator it(extractedRoot, QDir::Files, QDirIterator::Subdirectories);
+        while (it.hasNext()) {
+            const auto sourceIconPath = it.next();
+            const auto fileInfo = QFileInfo(sourceIconPath);
+            const auto fn = fileInfo.fileName();
+            const auto bn = fileInfo.completeBaseName();
+
+            if (
+                fn.compare(iconFileName, Qt::CaseInsensitive) == 0 ||
+                bn.compare(iconBaseName, Qt::CaseInsensitive) == 0
+            ) {
+                const auto targetDir = QDir(dataLocation).filePath("icons/hicolor/256x256/apps");
+                copyIcon(sourceIconPath, targetDir);
+                if (!installedIconKey.isEmpty())
+                    break;
+            }
+        }
+    }
+
+    if (installedIconKey.isEmpty())
+        qWarning() << "No fallback icon found for" << trimmedIconName;
+
+    return installedIconKey;
+}
+
+static bool installDesktopFileAndIconsFallback(const QString& pathToAppImage) {
+
+    QTemporaryDir tempDir;
+    const auto extractedRoot = extractAppImageRoot(pathToAppImage, tempDir);
+
+    if (extractedRoot.isEmpty()) {
+        qWarning() << "Could not find extracted AppDir for" << pathToAppImage;
+        return false;
+    }
+
+    QString sourceDesktopFilePath;
+    QDirIterator desktopIt(extractedRoot, {"*.desktop"}, QDir::Files, QDirIterator::Subdirectories);
+    while (desktopIt.hasNext()) {
+        const auto candidate = desktopIt.next();
+        const auto fileName = QFileInfo(candidate).fileName();
+
+        if (fileName.startsWith("appimagekit_", Qt::CaseInsensitive))
+            continue;
+
+        if (fileName.contains("AppImageLauncher", Qt::CaseInsensitive))
+            continue;
+
+        sourceDesktopFilePath = candidate;
+        break;
+    }
+
+    if (sourceDesktopFilePath.isEmpty()) {
+        qWarning() << "No desktop file found in extracted AppDir for" << pathToAppImage;
+        return false;
+    }
+
+    std::shared_ptr<GKeyFile> desktopFile(g_key_file_new(), gKeyFileDeleter);
+    if (!g_key_file_load_from_file(
+            desktopFile.get(),
+            sourceDesktopFilePath.toStdString().c_str(),
+            G_KEY_FILE_KEEP_TRANSLATIONS,
+            nullptr
+        )) {
+        qWarning() << "Failed to load fallback desktop file:" << sourceDesktopFilePath;
+        return false;
+    }
+
+    auto dataLocation = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+    if (dataLocation.isEmpty())
+        dataLocation = QDir::home().filePath(".local/share");
+
+    const auto applicationsDir = QDir(dataLocation).filePath("applications");
+    QDir().mkpath(applicationsDir);
+
+    const auto integrationId = appImageIntegrationId(pathToAppImage);
+    const auto managedPath = createStableManagedLauncherPath(pathToAppImage, integrationId);
+    const auto desktopStem = sanitizeIntegrationStem(QFileInfo(sourceDesktopFilePath).completeBaseName());
+    const auto targetDesktopFilePath = QDir(applicationsDir).filePath(
+        QString("appimagekit_%1-%2.desktop").arg(integrationId, desktopStem)
+    );
+
+    std::shared_ptr<char> iconValue(
+        g_key_file_get_string(
+            desktopFile.get(),
+            G_KEY_FILE_DESKTOP_GROUP,
+            G_KEY_FILE_DESKTOP_KEY_ICON,
+            nullptr
+        ),
+        [](char* p) { g_free(p); }
+    );
+
+    const auto originalIconName = iconValue != nullptr ? QString::fromUtf8(iconValue.get()) : QString{};
+    const auto installedIconKey = copyFallbackIcons(extractedRoot, integrationId, originalIconName);
+
+    g_key_file_set_string(
+        desktopFile.get(),
+        G_KEY_FILE_DESKTOP_GROUP,
+        G_KEY_FILE_DESKTOP_KEY_EXEC,
+        managedPath.toStdString().c_str()
+    );
+
+    g_key_file_set_string(
+        desktopFile.get(),
+        G_KEY_FILE_DESKTOP_GROUP,
+        G_KEY_FILE_DESKTOP_KEY_TRY_EXEC,
+        managedPath.toStdString().c_str()
+    );
+
+    if (!installedIconKey.isEmpty()) {
+        g_key_file_set_string(
+            desktopFile.get(),
+            G_KEY_FILE_DESKTOP_GROUP,
+            G_KEY_FILE_DESKTOP_KEY_ICON,
+            installedIconKey.toStdString().c_str()
+        );
+    }
+
+    // fallback path: omit X-AppImageLauncher-Version for now
+
+    GError* saveError = nullptr;
+    if (!g_key_file_save_to_file(desktopFile.get(), targetDesktopFilePath.toStdString().c_str(), &saveError)) {
+        qWarning() << "Failed to save fallback desktop file:" << targetDesktopFilePath
+                   << (saveError != nullptr ? saveError->message : "unknown error");
+        if (saveError != nullptr)
+            g_error_free(saveError);
+        return false;
+    }
+
+    makeExecutable(targetDesktopFilePath.toStdString().c_str());
+
+    if (!createDesktopShortcutFromIntegratedDesktopFile(targetDesktopFilePath)) {
+        qWarning() << "Failed to create desktop shortcut for fallback desktop file:" << targetDesktopFilePath;
+    }
+
+    return true;
+}
+
+bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveCollisions) {
+    if (appimage_register_in_system(pathToAppImage.toStdString().c_str(), false) < 0) {
+        qWarning() << "libappimage registration failed, trying extraction fallback for" << pathToAppImage;
+        return installDesktopFileAndIconsFallback(pathToAppImage);
     }
 
     const auto* desktopFilePath = appimage_registered_desktop_file_path(pathToAppImage.toStdString().c_str(), nullptr, false);
 
     // sanity check -- if the file doesn't exist, the function returns NULL
     if (desktopFilePath == nullptr) {
-        displayError(QObject::tr("Failed to find integrated desktop file"));
-        return false;
+        qWarning() << "Standard integration path unavailable, trying extraction fallback for" << pathToAppImage;
+        return installDesktopFileAndIconsFallback(pathToAppImage);
     }
 
     // check that file exists
     if (!QFile(desktopFilePath).exists()) {
-        displayError(QObject::tr("Couldn't find integrated AppImage's desktop file"));
-        return false;
+        qWarning() << "Integrated desktop file missing, trying extraction fallback for" << pathToAppImage;
+        return installDesktopFileAndIconsFallback(pathToAppImage);
     }
 
     /* write AppImageLauncher specific entries to desktop file
@@ -891,6 +1365,10 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
     // TODO: handle this in libappimage
     makeExecutable(desktopFilePath);
 
+    if (!createDesktopShortcutFromIntegratedDesktopFile(QString::fromUtf8(desktopFilePath))) {
+        qWarning() << "Failed to create desktop shortcut for" << desktopFilePath;
+    }
+
     // notify KDE/Plasma about icon change
     {
         auto message = QDBusMessage::createSignal(QStringLiteral("/KIconLoader"), QStringLiteral("org.kde.KIconLoader"), QStringLiteral("iconChanged"));
@@ -1044,6 +1522,62 @@ bool isInDirectory(const QString& pathToAppImage, const QDir& directory) {
     return directory == QFileInfo(pathToAppImage).absoluteDir();
 }
 
+static QString managedLauncherDirPrefix() {
+    auto dataLocation = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+    if (dataLocation.isEmpty())
+        dataLocation = QDir::home().filePath(".local/share");
+
+    return QDir(dataLocation).filePath("appimagelauncher/managed") + "/";
+}
+
+static bool removePathEvenIfBroken(const QString& path, bool verbose, const char* label) {
+    if (path.trimmed().isEmpty())
+        return true;
+
+    QFileInfo fi(path);
+    if (!fi.exists() && !fi.isSymLink())
+        return true;
+
+    if (verbose)
+        std::cout << label << " " << path.toStdString() << std::endl;
+
+    return QFile::remove(path);
+}
+
+static QString desktopShortcutPathFromDesktopFile(GKeyFile* desktopFile) {
+    std::shared_ptr<char> nameValue(
+        g_key_file_get_string(
+            desktopFile,
+            G_KEY_FILE_DESKTOP_GROUP,
+            G_KEY_FILE_DESKTOP_KEY_NAME,
+            nullptr
+        ),
+        [](char* p) { g_free(p); }
+    );
+
+    if (nameValue == nullptr)
+        return {};
+
+    auto desktopDir = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+    if (desktopDir.isEmpty())
+        desktopDir = QDir::home().filePath("Desktop");
+
+    return QDir(desktopDir).filePath(
+        sanitizeDesktopShortcutName(QString::fromUtf8(nameValue.get()))
+    );
+}
+
+static QString managedLauncherPathFromTryExec(const std::shared_ptr<char>& tryExecValue) {
+    if (tryExecValue == nullptr)
+        return {};
+
+    const auto tryExec = QString::fromUtf8(tryExecValue.get()).trimmed();
+    if (!tryExec.startsWith(managedLauncherDirPrefix()))
+        return {};
+
+    return tryExec;
+}
+
 bool cleanUpOldDesktopIntegrationResources(bool verbose) {
     auto dirPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/applications";
 
@@ -1098,10 +1632,13 @@ bool cleanUpOldDesktopIntegrationResources(bool verbose) {
             if (verbose)
                 std::cout << "AppImage no longer exists, cleaning up resources: " << appImagePath.toStdString() << std::endl;
 
-            if (verbose)
-                std::cout << "Removing desktop file: " << desktopFilePath.toStdString() << std::endl;
+            const auto shortcutPath = desktopShortcutPathFromDesktopFile(desktopFile.get());
+            const auto managedLauncherPath = managedLauncherPathFromTryExec(tryExecValue);
 
-            QFile(desktopFilePath).remove();
+            removePathEvenIfBroken(shortcutPath, verbose, "Removing desktop shortcut:");
+            removePathEvenIfBroken(managedLauncherPath, verbose, "Removing managed launcher:");
+            clearDesktopShortcutManaged(desktopFilePath);
+            removePathEvenIfBroken(desktopFilePath, verbose, "Removing desktop file:");
 
             // TODO: clean up related resources such as icons or MIME definitions
 

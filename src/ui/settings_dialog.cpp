@@ -6,12 +6,65 @@
 
 // local
 #include "settings_dialog.h"
+#include <QStyle>
 #include "ui_settings_dialog.h"
 #include "shared.h"
 
 SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent), ui(new Ui::SettingsDialog),
                                                   settingsFile(getConfig(this)) {
     ui->setupUi(this);
+
+    auto iconUsable = [](const QIcon& icon) {
+        return !icon.isNull() && !icon.pixmap(22, 22).isNull();
+    };
+
+    auto themedIcon = [this, &iconUsable](const QStringList& names, QStyle::StandardPixmap fallbackPixmap) {
+        for (const auto& name : names) {
+            if (QIcon::hasThemeIcon(name)) {
+                auto icon = QIcon::fromTheme(name);
+                if (iconUsable(icon))
+                    return icon;
+            }
+
+            auto fallback = loadIconWithFallback(name);
+            if (iconUsable(fallback))
+                return fallback;
+        }
+
+        auto stdIcon = style()->standardIcon(fallbackPixmap);
+        if (iconUsable(stdIcon))
+            return stdIcon;
+
+        return QIcon();
+    };
+
+    {
+        auto icon = themedIcon({"document-open-folder", "folder-open", "folder"}, QStyle::SP_DirOpenIcon);
+        if (iconUsable(icon)) {
+            ui->chooseAppsDirToolButton->setText("");
+            ui->chooseAppsDirToolButton->setIcon(icon);
+        }
+    }
+
+    {
+        auto icon = themedIcon({"list-add", "folder-new", "document-new"}, QStyle::SP_FileDialogNewFolder);
+        if (iconUsable(icon)) {
+            ui->additionalDirsAddButton->setText("");
+            ui->additionalDirsAddButton->setIcon(icon);
+        } else {
+            ui->additionalDirsAddButton->setText("+");
+        }
+    }
+
+    {
+        auto icon = themedIcon({"list-remove", "edit-delete", "remove"}, QStyle::SP_TrashIcon);
+        if (iconUsable(icon)) {
+            ui->additionalDirsRemoveButton->setText("");
+            ui->additionalDirsRemoveButton->setIcon(icon);
+        } else {
+            ui->additionalDirsRemoveButton->setText("−");
+        }
+    }
 
     ui->applicationsDirLineEdit->setPlaceholderText(integratedAppImagesDestination().absolutePath());
 
