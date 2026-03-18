@@ -14,7 +14,7 @@
 TranslationManager::TranslationManager(QCoreApplication& app) : app(app) {
     // set up translations
     auto qtTranslator = new QTranslator();
-    qtTranslator->load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    qtTranslator->load("qt_" + QLocale::system().name(), QLibraryInfo::path(QLibraryInfo::TranslationsPath));
     app.installTranslator(qtTranslator);
 
     const auto systemLocale = QLocale::system().name();

@@ -4,6 +4,7 @@
 #include <string.h>
 
 // library headers
+#include <QIODevice>
 #include <QTextStream>
 #include <QDebug>
 
@@ -12,3 +13,6 @@
 
 // wrapper for stderr
 #define qerr() QTextStream(stderr, QIODevice::WriteOnly)
+
+// Qt6 moved endl to Qt namespace
+using Qt::endl;

@@ -1,5 +1,4 @@
-# needed for LINK_OPTIONS/target_link_options
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.16)
 
 project(appimage-binfmt-bypass)
 
@@ -51,11 +50,7 @@ function(make_preload_lib_target target_name)
         # hide all symbols by default
         PRIVATE -fvisibility=hidden
     )
-    # compatibility with CMake < 3.13
-    set_target_properties(${target_name} PROPERTIES LINK_OPTIONS
-        # hide all symbols by default
-        -fvisibility=hidden
-    )
+    target_link_options(${target_name} PRIVATE -fvisibility=hidden)
 
     # a bit of a hack, but it seems to make binfmt bypass work in really old Docker images (e.g., CentOS <= 7)
     add_custom_command(
