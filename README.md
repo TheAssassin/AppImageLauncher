@@ -97,8 +97,7 @@ It scans a predefined set of directories including `~/Downloads` and `~/.bin`, m
   * [FreeYourDesktop](https://medium.com/@freeyourdesktopblog/install-manage-appimages-with-appimagelauncher-2a2078c55f37) (English)
     + Please note that AppImageLauncher could *not* be "installed" via AppImage at that time, only recently was a Lite version added, that now can be installed from an AppImage (more info to follow.)
   * [Pardus forum](https://forum.pardus.org.tr/t/appimagelauncher-tek-tiklama-ile-appimage-sisteminizle-butunlestiriniz/11275) (Turkish)
-  * [Linux Team Vietnam](https://linuxteamvietnam.us/cach-chay-ung-dung-dinh-dang-appimage-tren-linux/) (Vietnamese)
-    + Contains a few wrong assumptions: as soon as AppImageLauncher is installed, you do not have to make AppImages executable, you can just double-click them (or otherwise open them, e.g., from your file- or web-browsers' downloads).
+  * [QuanTriMang.com](https://quantrimang.com/cong-nghe/them-appimage-vao-menu-he-thong-linux-193765) (Vietnamese)
   * [RealLinuxUser](https://www.reallinuxuser.com/15-best-things-to-do-after-installing-zorin-os-15/) (English)
   * [manjaro.site](https://manjaro.site/how-to-install-appimage-launcher-on-ubuntu-19-04/) (English)
   * [CubicleNate's Techpad](https://cubiclenate.com/2020/01/09/appimagelauncher-appimage-manager-on-opensuse/) (English)
