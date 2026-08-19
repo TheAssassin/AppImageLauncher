@@ -29,6 +29,16 @@ set(_abs_private_libdir ${CMAKE_INSTALL_PREFIX}/${_private_libdir})
 file(RELATIVE_PATH _rpath ${_abs_bindir} ${_abs_private_libdir})
 set(_rpath "\$ORIGIN/${_rpath}")
 
+# in addition to $ORIGIN, binaries/libraries living in the private libdir need to be able to find the libraries
+# linuxdeploy bundles when deploying the AppDir (e.g., libgpgme, libgpg-error, libassuan pulled in transitively by
+# libappimageupdate). Linuxdeploy always places those in the *flat* usr/lib. Without this, those libraries silently fail
+# to load at runtime (see the remove/update targets for the executable side)
+set(_abs_flat_libdir ${CMAKE_INSTALL_PREFIX}/lib)
+file(RELATIVE_PATH _rpath_flat_libdir ${_abs_private_libdir} ${_abs_flat_libdir})
+set(_rpath_flat_libdir "\$ORIGIN/${_rpath_flat_libdir}")
+
+set_target_properties(libappimage PROPERTIES INSTALL_RPATH "\$ORIGIN;${_rpath_flat_libdir}")
+
 # install libappimage.so into lib/appimagekit to avoid overwriting a libappimage potentially installed into /usr/lib
 # or /usr/lib/x86_64-... or wherever the OS puts its libraries
 install(
@@ -37,6 +47,8 @@ install(
 )
 
 if(ENABLE_UPDATE_HELPER)
+    set_target_properties(libappimageupdate libappimageupdate-qt PROPERTIES INSTALL_RPATH "\$ORIGIN;${_rpath_flat_libdir}")
+
     install(
         TARGETS libappimageupdate libappimageupdate-qt
         LIBRARY DESTINATION "${_private_libdir}" COMPONENT APPIMAGELAUNCHER
