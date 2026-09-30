@@ -35,7 +35,6 @@ print_help() {
     echo "  AppImageLauncherSettings   Display AppImageLauncher Lite configuration utility"
     echo "  cli [or ali-cli]           Run AppImageLauncher cli (use \"cli --help\" for more information)"
     echo "  remove <path>              Run removal helper to remove AppImage <path>"
-    echo "  update <path>              Run update helper to update AppImage <path>"
 }
 
 case "$firstarg" in
@@ -49,9 +48,8 @@ case "$firstarg" in
     cli|ail-cli)
         exec "$APPDIR"/usr/bin/ail-cli "$@"
         ;;
-    remove|update)
-        #exec "$APPDIR"/usr/lib/**/appimagelauncher/"$firstarg" "$@"
-        exec "$APPDIR"/usr/bin/"$firstarg" "$@"
+    remove)
+        exec "$APPDIR"/usr/bin/appimagelauncher-remove "$@"
         ;;
     install)
         if test_globally_installed; then
@@ -117,6 +115,4 @@ EOF
         exit 2
         ;;
 esac
-
-
 
