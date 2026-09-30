@@ -1,17 +1,3 @@
-function(install_legacy_helper_symlink legacy_name target_name)
-    if(NOT BUILD_LITE)
-        set(legacy_helper_path "\$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${_private_libdir}/${legacy_name}")
-        install(CODE "
-            file(REMOVE \"${legacy_helper_path}\")
-            file(CREATE_LINK
-                \"${_bindir_from_private_libdir}/${target_name}\"
-                \"${legacy_helper_path}\"
-                SYMBOLIC
-            )
-        " COMPONENT APPIMAGELAUNCHER)
-    endif()
-endfunction()
-
 if(NOT BUILD_LITE)
     # main AppImageLauncher application
     add_executable(AppImageLauncher main.cpp resources.qrc first-run.cpp first-run.h first-run.ui integration_dialog.cpp integration_dialog.h integration_dialog.ui)
@@ -58,9 +44,6 @@ install(
     RUNTIME DESTINATION ${_bindir} COMPONENT APPIMAGELAUNCHER
 )
 
-install_legacy_helper_symlink(remove appimagelauncher-remove)
-
-
 # AppImage update helper
 if(ENABLE_UPDATE_HELPER)
     add_executable(appimagelauncher-update update.ui update_main.cpp resources.qrc)
@@ -73,6 +56,4 @@ if(ENABLE_UPDATE_HELPER)
         appimagelauncher-update
         RUNTIME DESTINATION ${_bindir} COMPONENT APPIMAGELAUNCHER
     )
-
-    install_legacy_helper_symlink(update appimagelauncher-update)
 endif()

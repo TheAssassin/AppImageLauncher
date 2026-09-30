@@ -29,9 +29,6 @@ set(_abs_private_libdir ${CMAKE_INSTALL_PREFIX}/${_private_libdir})
 file(RELATIVE_PATH _rpath ${_abs_bindir} ${_abs_private_libdir})
 set(_rpath "\$ORIGIN/${_rpath}")
 
-# compatibility symlinks for helpers formerly installed in the private library directory
-file(RELATIVE_PATH _bindir_from_private_libdir ${_abs_private_libdir} ${_abs_bindir})
-
 # install libappimage.so into lib/appimagekit to avoid overwriting a libappimage potentially installed into /usr/lib
 # or /usr/lib/x86_64-... or wherever the OS puts its libraries
 install(
