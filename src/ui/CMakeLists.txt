@@ -1,3 +1,17 @@
+function(install_legacy_helper_symlink legacy_name target_name)
+    if(NOT BUILD_LITE)
+        set(legacy_helper_path "\$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${_private_libdir}/${legacy_name}")
+        install(CODE "
+            file(REMOVE \"${legacy_helper_path}\")
+            file(CREATE_LINK
+                \"${_bindir_from_private_libdir}/${target_name}\"
+                \"${legacy_helper_path}\"
+                SYMBOLIC
+            )
+        " COMPONENT APPIMAGELAUNCHER)
+    endif()
+endfunction()
+
 if(NOT BUILD_LITE)
     # main AppImageLauncher application
     add_executable(AppImageLauncher main.cpp resources.qrc first-run.cpp first-run.h first-run.ui integration_dialog.cpp integration_dialog.h integration_dialog.ui)
@@ -33,28 +47,32 @@ install(
 )
 
 # AppImage removal helper
-add_executable(remove remove_main.cpp remove.ui resources.qrc)
-target_link_libraries(remove shared translationmanager libappimage)
+add_executable(appimagelauncher-remove remove_main.cpp remove.ui resources.qrc)
+target_link_libraries(appimagelauncher-remove shared translationmanager libappimage)
 # see AppImageLauncher for a description
-set_target_properties(remove PROPERTIES INSTALL_RPATH "\$ORIGIN")
+set_target_properties(appimagelauncher-remove PROPERTIES INSTALL_RPATH ${_rpath})
 
 install(
     TARGETS
-    remove
-    RUNTIME DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
+    appimagelauncher-remove
+    RUNTIME DESTINATION ${_bindir} COMPONENT APPIMAGELAUNCHER
 )
+
+install_legacy_helper_symlink(remove appimagelauncher-remove)
 
 
 # AppImage update helper
 if(ENABLE_UPDATE_HELPER)
-    add_executable(update update.ui update_main.cpp resources.qrc)
-    target_link_libraries(update shared translationmanager libappimage libappimageupdate-qt Qt5::Quick Qt5::QuickWidgets Qt5::Qml)
+    add_executable(appimagelauncher-update update.ui update_main.cpp resources.qrc)
+    target_link_libraries(appimagelauncher-update shared translationmanager libappimage libappimageupdate-qt Qt5::Quick Qt5::QuickWidgets Qt5::Qml)
     # see AppImageLauncher for a description
-    set_target_properties(update PROPERTIES INSTALL_RPATH "\$ORIGIN")
+    set_target_properties(appimagelauncher-update PROPERTIES INSTALL_RPATH ${_rpath})
 
     install(
         TARGETS
-        update
-        RUNTIME DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
+        appimagelauncher-update
+        RUNTIME DESTINATION ${_bindir} COMPONENT APPIMAGELAUNCHER
     )
+
+    install_legacy_helper_symlink(update appimagelauncher-update)
 endif()
