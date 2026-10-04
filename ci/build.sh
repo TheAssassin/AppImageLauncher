@@ -52,7 +52,7 @@ cmake_args=(
 if [[ "${BUILD_LITE:-}" == "" ]]; then
     cmake_args+=("-DENABLE_UPDATE_HELPER=ON")
 else
-    cmake_args+=("-DBUILD_LITE=ON")
+    cmake_args+=("-DBUILD_LITE=ON" "-DENABLE_UPDATE_HELPER=OFF")
 fi
 
 export QT_SELECT=qt5
@@ -161,7 +161,7 @@ if [[ "${BUILD_LITE:-}" == "" ]]; then
 
     # updater is not available for the lite build
     linuxdeploy_extra_args+=(
-        -e "$(find AppDir/usr/lib/*/appimagelauncher/update | head -n1)"
+        -e AppDir/usr/bin/appimagelauncher-update
         --output native_packages
     )
 
@@ -202,7 +202,7 @@ ldd AppDir/usr/bin/AppImageLauncherSettings
     --appdir "$(readlink -f AppDir)" \
     --plugin qt \
     -d AppDir/usr/share/applications/appimagelauncher.desktop \
-    -e "$(find AppDir/usr/lib/*/appimagelauncher/remove | head -n1)" \
+    -e AppDir/usr/bin/appimagelauncher-remove \
     "${linuxdeploy_extra_args[@]}"
 
 if [[ "${BUILD_LITE:-}" == "" ]]; then

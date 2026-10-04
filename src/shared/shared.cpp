@@ -598,8 +598,7 @@ QString privateLibDirPath(const QString& srcSubdirName) {
     }
 
     // if there is no such directory like <prefix>/bin/../lib/... or the binary is not found there, there is a chance
-    // the binary is just next to this one (this is the case in the update/remove helpers)
-    // therefore we compare the binary directory path with PRIVATE_LIBDIR
+    // the private libraries are next to this binary, so compare the binary directory path with PRIVATE_LIBDIR
     if (!QDir(privateLibDirPath).exists()) {
         if (privateLibDirPath.contains(PRIVATE_LIBDIR)) {
             privateLibDirPath = ownBinaryDirPath;
@@ -607,6 +606,18 @@ QString privateLibDirPath(const QString& srcSubdirName) {
     }
 
     return privateLibDirPath;
+}
+
+static QString helperExecutablePath(const QString& executableName) {
+    const QDir ownBinaryDir(QFileInfo(getOwnBinaryPath().get()).dir());
+
+    // Installed helpers and helpers launched from the UI build directory live next to the calling executable.
+    const auto adjacentHelperPath = ownBinaryDir.absoluteFilePath(executableName);
+    if (QFileInfo(adjacentHelperPath).isExecutable())
+        return adjacentHelperPath;
+
+    // During development, callers such as appimagelauncherd and ail-cli live in sibling build directories.
+    return QDir(ownBinaryDir.absoluteFilePath("../ui")).absoluteFilePath(executableName);
 }
 #endif
 
@@ -798,8 +809,6 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
 #endif
 
 #ifndef BUILD_LITE
-    auto privateLibDir = privateLibDirPath("ui");
-
     const char helperIconName[] = "AppImageLauncher";
 #else
     const char helperIconName[] = "AppImageLauncher-Lite";
@@ -815,7 +824,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
         std::ostringstream removeExecPath;
 
 #ifndef BUILD_LITE
-        removeExecPath << privateLibDir.toStdString() << "/remove";
+        removeExecPath << helperExecutablePath("appimagelauncher-remove").toStdString();
 #else
         removeExecPath << getenv("HOME") << "/.local/lib/appimagelauncher-lite/appimagelauncher-lite.AppImage remove";
 #endif
@@ -849,11 +858,7 @@ bool installDesktopFileAndIcons(const QString& pathToAppImage, bool resolveColli
 
             std::ostringstream updateExecPath;
 
-#ifndef BUILD_LITE
-            updateExecPath << privateLibDir.toStdString() << "/update";
-#else
-            updateExecPath << getenv("HOME") << "/.local/lib/appimagelauncher-lite/appimagelauncher-lite.AppImage update";
-#endif
+            updateExecPath << helperExecutablePath("appimagelauncher-update").toStdString();
             updateExecPath << " \"" << pathToAppImage.toStdString() << "\"";
 
             g_key_file_set_string(desktopFile.get(), updateSectionName.c_str(), "Exec", updateExecPath.str().c_str());

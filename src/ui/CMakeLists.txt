@@ -33,28 +33,27 @@ install(
 )
 
 # AppImage removal helper
-add_executable(remove remove_main.cpp remove.ui resources.qrc)
-target_link_libraries(remove shared translationmanager libappimage)
+add_executable(appimagelauncher-remove remove_main.cpp remove.ui resources.qrc)
+target_link_libraries(appimagelauncher-remove shared translationmanager libappimage)
 # see AppImageLauncher for a description
-set_target_properties(remove PROPERTIES INSTALL_RPATH "\$ORIGIN")
+set_target_properties(appimagelauncher-remove PROPERTIES INSTALL_RPATH ${_rpath})
 
 install(
     TARGETS
-    remove
-    RUNTIME DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
+    appimagelauncher-remove
+    RUNTIME DESTINATION ${_bindir} COMPONENT APPIMAGELAUNCHER
 )
-
 
 # AppImage update helper
 if(ENABLE_UPDATE_HELPER)
-    add_executable(update update.ui update_main.cpp resources.qrc)
-    target_link_libraries(update shared translationmanager libappimage libappimageupdate-qt Qt5::Quick Qt5::QuickWidgets Qt5::Qml)
+    add_executable(appimagelauncher-update update.ui update_main.cpp resources.qrc)
+    target_link_libraries(appimagelauncher-update shared translationmanager libappimage libappimageupdate-qt Qt5::Quick Qt5::QuickWidgets Qt5::Qml)
     # see AppImageLauncher for a description
-    set_target_properties(update PROPERTIES INSTALL_RPATH "\$ORIGIN")
+    set_target_properties(appimagelauncher-update PROPERTIES INSTALL_RPATH ${_rpath})
 
     install(
         TARGETS
-        update
-        RUNTIME DESTINATION ${_private_libdir} COMPONENT APPIMAGELAUNCHER
+        appimagelauncher-update
+        RUNTIME DESTINATION ${_bindir} COMPONENT APPIMAGELAUNCHER
     )
 endif()
