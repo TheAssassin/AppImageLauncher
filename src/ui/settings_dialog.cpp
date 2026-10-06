@@ -171,7 +171,7 @@ void SettingsDialog::toggleDaemon() {
 void SettingsDialog::onChooseAppsDirClicked() {
     QFileDialog fileDialog(this);
 
-    fileDialog.setFileMode(QFileDialog::DirectoryOnly);
+    fileDialog.setFileMode(QFileDialog::Directory);
     fileDialog.setWindowTitle(tr("Select Applications directory"));
     fileDialog.setDirectory(integratedAppImagesDestination().absolutePath());
 
@@ -188,7 +188,7 @@ void SettingsDialog::onChooseAppsDirClicked() {
 void SettingsDialog::onAddDirectoryToWatchButtonClicked() {
     QFileDialog fileDialog(this);
 
-    fileDialog.setFileMode(QFileDialog::DirectoryOnly);
+    fileDialog.setFileMode(QFileDialog::Directory);
     fileDialog.setWindowTitle(tr("Select additional directory to watch"));
     fileDialog.setDirectory(QStandardPaths::locate(QStandardPaths::HomeLocation, ".", QStandardPaths::LocateDirectory));
 

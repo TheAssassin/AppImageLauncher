@@ -1,5 +1,4 @@
-# in version 3.6 IMPORTED_TARGET has been added to pkg_*_modules
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.16)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -16,7 +15,7 @@ set(CMAKE_AUTOUIC ON)
 # Compile resource files
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Widgets DBus Quick QuickWidgets Qml)
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets DBus Quick QuickWidgets Qml)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(glib REQUIRED glib-2.0>=2.40 IMPORTED_TARGET)
