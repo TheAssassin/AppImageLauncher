@@ -74,10 +74,17 @@ namespace appimagelauncher::daemon {
                     }
 
                     // check for X-AppImage-Integrate=false
-                    if (appimage_shall_not_be_integrated(path.toStdString().c_str())) {
+                    const auto shallNotBeIntegrated = appimage_shall_not_be_integrated(path.toStdString().c_str());
+
+                    if (shallNotBeIntegrated > 0) {
                         QMutexLocker mutexLocker(mutex);
                         std::cout << "WARNING: AppImage shall not be integrated, skipping" << std::endl;
                         return;
+                    }
+
+                    if (shallNotBeIntegrated < 0) {
+                        QMutexLocker mutexLocker(mutex);
+                        std::cout << "WARNING: appimage_shall_not_be_integrated failed, continuing with fallback capable integration" << std::endl;
                     }
 
                     if (!installDesktopFileAndIcons(path)) {
