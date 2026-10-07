@@ -36,7 +36,11 @@ install(
 add_executable(remove remove_main.cpp remove.ui resources.qrc)
 target_link_libraries(remove shared translationmanager libappimage)
 # see AppImageLauncher for a description
-set_target_properties(remove PROPERTIES INSTALL_RPATH "\$ORIGIN")
+# in addition to $ORIGIN (where libappimage.so etc. are installed to), we also need the flat lib dir (see
+# _rpath_flat_libdir in install.cmake), as that's where linuxdeploy bundles transitive dependencies (e.g.,
+# libgpgme, libgpg-error, libassuan pulled in by libappimageupdate) when deploying the AppDir; without it, those
+# libraries silently fail to load at runtime
+set_target_properties(remove PROPERTIES INSTALL_RPATH "\$ORIGIN;${_rpath_flat_libdir}")
 
 install(
     TARGETS
@@ -49,8 +53,8 @@ install(
 if(ENABLE_UPDATE_HELPER)
     add_executable(update update.ui update_main.cpp resources.qrc)
     target_link_libraries(update shared translationmanager libappimage libappimageupdate-qt Qt5::Quick Qt5::QuickWidgets Qt5::Qml)
-    # see AppImageLauncher for a description
-    set_target_properties(update PROPERTIES INSTALL_RPATH "\$ORIGIN")
+    # see remove target above for a description of why the flat lib dir is included, too
+    set_target_properties(update PROPERTIES INSTALL_RPATH "\$ORIGIN;${_rpath_flat_libdir}")
 
     install(
         TARGETS
