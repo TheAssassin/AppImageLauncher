@@ -32,6 +32,11 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent), ui(new Ui::Se
     connect(ui->additionalDirsRemoveButton, &QToolButton::released, this, &SettingsDialog::onRemoveDirectoryToWatchButtonClicked);
     connect(ui->additionalDirsListWidget, &QListWidget::itemActivated, this, &SettingsDialog::onDirectoryToWatchItemActivated);
     connect(ui->additionalDirsListWidget, &QListWidget::itemClicked, this, &SettingsDialog::onDirectoryToWatchItemActivated);
+    connect(ui->excludeAddDirectoryButton, &QToolButton::released, this, &SettingsDialog::onAddExcludeDirButtonClicked);
+    connect(ui->excludeAddFileButton, &QToolButton::released, this, &SettingsDialog::onAddExcludeFileButtonClicked);
+    connect(ui->excludeRemoveButton, &QToolButton::released, this, &SettingsDialog::onRemoveExcludeButtonClicked);
+    connect(ui->excludeListWidget, &QListWidget::itemActivated, this, &SettingsDialog::onExcludeItemActivated);
+    connect(ui->excludeListWidget, &QListWidget::itemClicked, this, &SettingsDialog::onExcludeItemActivated);
 
     QStringList availableFeatures;
 
@@ -96,6 +101,48 @@ void SettingsDialog::addDirectoryToWatchToListView(const QString& dirPath) {
     ui->additionalDirsListWidget->addItem(item);
 }
 
+
+void SettingsDialog::addExcludeToListView(const QString& fileOrDirPath) {
+    // empty paths are not permitted
+    if (fileOrDirPath.isEmpty())
+        return;
+
+    const QFileInfo file(fileOrDirPath);
+
+    // // we don't want to redundantly add the main integration directory
+    // if (dir == integratedAppImagesDestination())
+    //     return;
+
+    QIcon icon;
+
+    auto findIcon = [](const std::initializer_list<QString>& names) {
+        for (const auto& i : names) {
+            auto icon = QIcon::fromTheme(i, loadIconWithFallback(i));
+
+            if (!icon.isNull())
+                return icon;
+        }
+
+        return QIcon{};
+    };
+
+    if (file.isFile()) {
+        icon = findIcon({"application-vnd.appimage"});
+    } else if (file.isDir()) {
+        icon = findIcon({"folder"});
+    } else {
+        // TODO: search for more meaningful icon, "remove" doesn't really show the directory is missing
+        icon = findIcon({"remove"});
+    }
+
+    if (icon.isNull()) {
+        qDebug() << "item icon unavailable, using fallback";
+    }
+
+    auto* item = new QListWidgetItem(icon, fileOrDirPath);
+    ui->excludeListWidget->addItem(item);
+}
+
 void SettingsDialog::loadSettings() {
     const auto daemonIsEnabled = settingsFile->value("AppImageLauncher/enable_daemon", "true").toBool();
     const auto askMoveChecked = settingsFile->value("AppImageLauncher/ask_to_move", "true").toBool();
@@ -108,6 +155,11 @@ void SettingsDialog::loadSettings() {
         const auto additionalDirsPath = settingsFile->value("appimagelauncherd/additional_directories_to_watch", "").toString();
         for (const auto& dirPath : additionalDirsPath.split(":")) {
             addDirectoryToWatchToListView(dirPath);
+        }
+
+        const auto excludePaths = settingsFile->value("AppImageLauncher/exclude_paths", "").toString();
+        for (const auto& excludePath : excludePaths.split(":")) {
+            addExcludeToListView(excludePath);
         }
     }
 }
@@ -125,6 +177,16 @@ void SettingsDialog::saveSettings() {
 
         for (int i = 0; (currentItem = ui->additionalDirsListWidget->item(i)) != nullptr; ++i) {
             additionalDirsToWatch << currentItem->text();
+        }
+    }
+
+    QStringList excludePaths;
+
+    {
+        QListWidgetItem* currentItem;
+
+        for (int i = 0; (currentItem = ui->excludeListWidget->item(i)) != nullptr; ++i) {
+            excludePaths << currentItem->text();
         }
     }
 
@@ -148,7 +210,8 @@ void SettingsDialog::saveSettings() {
                      ui->applicationsDirLineEdit->text(),
                      ui->daemonIsEnabledCheckBox->isChecked(),
                      additionalDirsToWatch,
-                     monitorMountedFilesystems);
+                     monitorMountedFilesystems,
+                     excludePaths);
 
     // reload settings
     loadSettings();
@@ -225,4 +288,67 @@ void SettingsDialog::onRemoveDirectoryToWatchButtonClicked() {
 void SettingsDialog::onDirectoryToWatchItemActivated(QListWidgetItem* item) {
     // we activate the button based on whether there's an item selected
     ui->additionalDirsRemoveButton->setEnabled(item != nullptr);
+}
+
+void SettingsDialog::onAddExcludeDirButtonClicked() {
+    QFileDialog fileDialog(this);
+
+    fileDialog.setFileMode(QFileDialog::DirectoryOnly);
+    fileDialog.setWindowTitle(tr("Select directories to exclude"));
+    fileDialog.setDirectory(QStandardPaths::locate(QStandardPaths::HomeLocation, ".", QStandardPaths::LocateDirectory));
+
+    // Gtk+ >= 3 segfaults when trying to use the native dialog, therefore we need to enforce the Qt one
+    // See #218 for more information
+    fileDialog.setOption(QFileDialog::DontUseNativeDialog, true);
+
+ 
+    if (fileDialog.exec()) {
+        for (const auto& file : fileDialog.selectedFiles()) {
+            addExcludeToListView(file.endsWith('/') ? file : file + '/');
+        }
+    }
+}
+
+void SettingsDialog::onAddExcludeFileButtonClicked() {
+    QFileDialog fileDialog(this);
+
+    fileDialog.setFileMode(QFileDialog::ExistingFile);
+    fileDialog.setWindowTitle(tr("Select files to exclude"));
+    fileDialog.setMimeTypeFilters({"application/vnd.appimage"});
+    fileDialog.setDirectory(QStandardPaths::locate(QStandardPaths::HomeLocation, ".", QStandardPaths::LocateDirectory));
+
+    // Gtk+ >= 3 segfaults when trying to use the native dialog, therefore we need to enforce the Qt one
+    // See #218 for more information
+    fileDialog.setOption(QFileDialog::DontUseNativeDialog, true);
+
+    if (fileDialog.exec()) {
+        for (const auto& file : fileDialog.selectedFiles()) {
+            addExcludeToListView(file);
+        }
+    }
+}
+
+void SettingsDialog::onRemoveExcludeButtonClicked() {
+    auto* widget = ui->excludeListWidget;
+
+    auto* currentItem = widget->currentItem();
+
+    if (currentItem == nullptr)
+        return;
+
+    const auto index = widget->row(currentItem);
+
+    // after taking it, we have to delete it ourselves, Qt docs say
+    auto deletedItem = widget->takeItem(index);
+    delete deletedItem;
+
+    // we should deactivate the remove button once the last item is gone
+    if (widget->item(0) == nullptr) {
+        ui->excludeRemoveButton->setEnabled(false);
+    }
+}
+
+void SettingsDialog::onExcludeItemActivated(QListWidgetItem* item) {
+    // we activate the button based on whether there's an item selected
+    ui->excludeRemoveButton->setEnabled(item != nullptr);
 }

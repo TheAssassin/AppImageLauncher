@@ -27,6 +27,11 @@ protected slots:
     void onRemoveDirectoryToWatchButtonClicked();
     void onDirectoryToWatchItemActivated(QListWidgetItem* item);
 
+    void onAddExcludeDirButtonClicked();
+    void onAddExcludeFileButtonClicked();
+    void onRemoveExcludeButtonClicked();
+    void onExcludeItemActivated(QListWidgetItem* item);
+
     void onDialogAccepted();
 
 private:
@@ -37,6 +42,7 @@ private:
     void toggleDaemon();
 
     void addDirectoryToWatchToListView(const QString& dirPath);
+    void addExcludeToListView(const QString& fileOrDirPath);
 
     Ui::SettingsDialog* ui;
     QSettings* settingsFile;
