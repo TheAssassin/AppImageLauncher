@@ -157,6 +157,7 @@ void SettingsDialog::saveSettings() {
 void SettingsDialog::toggleDaemon() {
     // assumes defaults if config doesn't exist or lacks the related key(s)
     if (settingsFile) {
+#ifdef SERVICE_TYPE_SYSTEMD
         if (settingsFile->value("AppImageLauncher/enable_daemon", "true").toBool()) {
             system("systemctl --user enable  appimagelauncherd.service");
             // we want to actually restart the service to apply the new configuration
@@ -165,6 +166,17 @@ void SettingsDialog::toggleDaemon() {
             system("systemctl --user disable appimagelauncherd.service");
             system("systemctl --user stop    appimagelauncherd.service");
         }
+#elif SERVICE_TYPE_OPENRC
+        if (settingsFile->value("AppImageLauncher/enable_daemon", "true").toBool()) {
+            // enable service and restart
+            system("rc-update add --user appimagelauncherd default");
+            system("rc-service --user appimagelauncherd restart");
+        } else {
+            // disable service and stop it
+            system("rc-update del --user appimagelauncherd default");
+            system("rc-service --user appimagelauncherd stop");
+        }
+#endif
     }
 }
 
