@@ -10,10 +10,11 @@
 #include "ui_integration_dialog.h"
 
 IntegrationDialog::IntegrationDialog(QString pathToAppImage, QString integratedAppImagesDestinationPath,
-                                     QWidget* parent) :
+                                     bool integrateInPlace, QWidget* parent) :
     QDialog(parent), ui(new Ui::IntegrationDialog),
     pathToAppImage(std::move(pathToAppImage)),
-    integratedAppImagesDestinationPath(std::move(integratedAppImagesDestinationPath)) {
+    integratedAppImagesDestinationPath(std::move(integratedAppImagesDestinationPath)),
+    integrateInPlace(integrateInPlace) {
     ui->setupUi(this);
 
     setIcon();
@@ -29,6 +30,22 @@ IntegrationDialog::IntegrationDialog(QString pathToAppImage, QString integratedA
 }
 
 void IntegrationDialog::setMessage() {
+    // the message designed in the .ui file describes integrating and moving the AppImage into the integration
+    // destination directory; when the AppImage is going to be integrated in place, use an alternate message
+    // which does not mention the move
+    if (integrateInPlace) {
+        ui->message->setText(
+            tr("%1 has not been integrated into your system.\n"
+               "\n"
+               "Integrating it will include the AppImage in your application launcher, and leave the file in its "
+               "current location.\n"
+               "\n"
+               "To remove or update the AppImage, please use the context menu of the application icon in your "
+               "task bar or launcher.").arg(pathToAppImage)
+        );
+        return;
+    }
+
     QString message = ui->message->text();
     message = message.arg(pathToAppImage, integratedAppImagesDestinationPath);
     ui->message->setText(message);

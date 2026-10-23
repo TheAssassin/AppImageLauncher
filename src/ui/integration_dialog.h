@@ -18,7 +18,7 @@ public:
     };
 
     explicit IntegrationDialog(QString pathToAppImage, QString integratedAppImagesDestinationPath,
-                               QWidget* parent = nullptr);
+                               bool integrateInPlace = false, QWidget* parent = nullptr);
 
     ~IntegrationDialog() override;
 
@@ -35,6 +35,7 @@ private:
     Ui::IntegrationDialog* ui;
     QString pathToAppImage;
     QString integratedAppImagesDestinationPath;
+    bool integrateInPlace;
 
     void setIcon();
 

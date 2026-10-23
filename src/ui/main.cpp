@@ -283,10 +283,12 @@ int main(int argc, char** argv) {
         displayError("Could not read config file");
     }
 
-    // if the user opted out of the "ask move" thing, we can just run the AppImage
-    if (config->contains("AppImageLauncher/ask_to_move") && !config->value("AppImageLauncher/ask_to_move").toBool()) {
-        return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
-    }
+    // the "ask to move" option is presented in the settings and first run dialogs (a checkbox inside the
+    // "Launcher Dialog" section) as merely controlling whether AppImages are moved into the integration
+    // destination directory; opting out must not disable the launcher dialog altogether, therefore AppImages
+    // are integrated in place instead of not being integrated at all
+    const auto askToMove = !config->contains("AppImageLauncher/ask_to_move") ||
+                           config->value("AppImageLauncher/ask_to_move").toBool();
 
     // check for X-AppImage-Integrate=false
     auto shallNotBeIntegrated = appimage_shall_not_be_integrated(pathToAppImage.toStdString().c_str());
@@ -312,7 +314,11 @@ int main(int argc, char** argv) {
     if (pathToAppImage.startsWith("/tmp/.mount_"))
         return runAppImage(pathToAppImage, appImageArgv.size(), appImageArgv.data());
 
-    const auto pathToIntegratedAppImage = buildPathToIntegratedAppImage(pathToAppImage);
+    // when the user opted out of moving AppImages into the integration destination directory, the AppImage
+    // is integrated in place by using its current path as the target; integrateAppImage() skips the move
+    // if both paths are identical
+    const auto pathToIntegratedAppImage =
+        askToMove ? buildPathToIntegratedAppImage(pathToAppImage) : QString(pathToAppImage);
 
     auto integrateAndRunAppImage = [&pathToAppImage, &pathToIntegratedAppImage, &appImageArgv]() {
         // check whether integration was successful
@@ -350,7 +356,9 @@ int main(int argc, char** argv) {
 
         // assume we have to ask
         // prove me wrong!
-        bool needToAskAboutMoving = true;
+        // if the user opted out of moving AppImages into the integration destination directory, there's no
+        // point in asking them about moving an already integrated AppImage, either
+        bool needToAskAboutMoving = askToMove;
 
         // okay, I'll try to prove you wrong
         {
@@ -420,7 +428,8 @@ int main(int argc, char** argv) {
     }
 
     QString integratedAppImagesDestinationPath = integratedAppImagesDestination().path();
-    auto integrationDialog = new IntegrationDialog(pathToAppImage, integratedAppImagesDestinationPath);
+    auto integrationDialog =
+        new IntegrationDialog(pathToAppImage, integratedAppImagesDestinationPath, !askToMove);
     integrationDialog->show();
 
     // As the integration dialog is the only window in our application we can safely use its exec method
